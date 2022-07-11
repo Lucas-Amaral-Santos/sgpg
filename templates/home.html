@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% include 'navbar.html' %}
+    <div class="container p-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
+
+            
+        <div class="container-sm">
+            <div class="">
+            <h1 class="text-center">SISTEMA GERENCIADOR DA<br> PÓS-GRADUAÇÃO EM CIÊNCIAS<br> MÉDICAS</h1>
+            </div>
+            <div class="texto-introdutorio m-5 text-center">
+            <p>Este sistema tem com finalidade gerenciar alunos e professores<br> do programa de pós graduação em Ciências Médicas da faculdade de<br> Medicina da UFF. Neste sistema constará os dados cadastrais do<br> aluno, assim como notas, trabalhos finais, etc.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row m-2">
+                <div class="col">
+                    <div class="card container" >
+                        <!-- <img src="{% static 'svg/graduation-cap-solid.svg' %}" class="align-self-center" style="height: 400px; width:300px; fill: green;" frameborder="0"></img> -->
+                        {% include 'svg/graduation-cap-solid.html'%}
+                        <div class="card-body">
+                            <div class="card-title">ALUNO</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card container" >
+                        <!-- <img src="{% static 'svg/user-tie-solid.svg' %}" class="align-self-center" style="height: 400px; width: 300px;" frameborder="0"></img> -->
+                        {% include 'svg/user-tie-solid.html' %}
+                        <div class="card-body">
+                            <div class="card-title">PROFESSOR</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col">
+                    <div class="card container" >
+                        <!-- <img src="{% static 'svg/graduation-cap-solid.svg' %}" class="align-self-center" style="height: 400px; width:300px; fill: green;" frameborder="0"></img> -->
+                        {% include 'svg/table-list-solid.html'%}
+                        <div class="card-body">
+                            <div class="card-title">RELATÓRIOS</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card container" >
+                        <!-- <img src="{% static 'svg/user-tie-solid.svg' %}" class="align-self-center" style="height: 400px; width: 300px;" frameborder="0"></img> -->
+                        {% include 'svg/gear-solid.html' %}
+                        <div class="card-body">
+                            <div class="card-title">CONFIGURAÇÕES</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        
+
+
+
+    </div>
+    {% include 'footer.html' %}
+
+    <style>
+        body {
+            background: linear-gradient(180deg, #224EAC 0%, #FFFFFF 40.23%);
+            color: white;
+        }
+
+        .card {
+            background-color: #224EAC;
+            width: 300px;
+            height: 300px;
+            padding: 3%;
+            align-items: center;
+
+        }
+
+        .texto-introdutorio {
+            color: #0E3485;
+        }
+
+        svg {
+            fill:white;
+            /* height: 200px; */
+            /* width: 200px; */
+            align-self: center;
+        }
+    </style>
+
+{% endblock %}
