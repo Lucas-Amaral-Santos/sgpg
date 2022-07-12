@@ -2,24 +2,20 @@
 
 {% load static %}
 {% block title %}
-
+Home
 {% endblock %}
 
 {% block content %}
 
-    {% include 'navbar.html' %}
-    <div class="container p-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
-
+    
+    <div class="body">
+        {% include 'navbar.html' %}
+        <div class="container p-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
             
         <div class="container-sm">
-            <div class="">
-            <h1 class="text-center">SISTEMA GERENCIADOR DA<br> PÓS-GRADUAÇÃO EM CIÊNCIAS<br> MÉDICAS</h1>
-            </div>
-            <div class="texto-introdutorio m-5 text-center">
-            <p>Este sistema tem com finalidade gerenciar alunos e professores<br> do programa de pós graduação em Ciências Médicas da faculdade de<br> Medicina da UFF. Neste sistema constará os dados cadastrais do<br> aluno, assim como notas, trabalhos finais, etc.</p>
-            </div>
+            <h1 class="text-center">SISTEMA GERENCIADOR DA<br>PÓS-GRADUAÇÃO EM CIÊNCIAS MÉDICAS</h1>
         </div>
-        <div class="container">
+        <div class="container mt-5">
             <div class="row m-2">
                 <div class="col">
                     <div class="card container" >
@@ -39,9 +35,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row m-2">
                 <div class="col">
                     <div class="card container" >
                         <!-- <img src="{% static 'svg/graduation-cap-solid.svg' %}" class="align-self-center" style="height: 400px; width:300px; fill: green;" frameborder="0"></img> -->
@@ -62,33 +56,33 @@
                 </div>
             </div>
 
-
-
+    
+                
+    
+        </div>
         </div>
         
-
-
-
     </div>
     {% include 'footer.html' %}
 
     <style>
-        body {
-            background: linear-gradient(180deg, #041945 0%, #224EAC 18.23%, #FFFFFF 38.02%);
+        .body {
+            background: linear-gradient(180deg, #041945 0%, #224EAC 25.23%, #FFFFFF 60.02%);
             color: white;
         }
 
         .card {
             background-color: rgba(41, 55, 84, 1);
-            width: 300px;
-            height: 300px;
-            padding: 3%;
+            width: 200px;
+            height: 200px;
+            padding: 5%;
             align-items: center;
 
         }
 
-        .texto-introdutorio {
-            color: #0E3485;
+        footer{
+            background-color: rgba(41, 55, 84, 1);
+            color: white;
         }
 
         svg {
@@ -96,6 +90,19 @@
             height: 200px;
             width: 200px;
         }
+
+        a {
+            text-decoration: none;
+            color: white;
+
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: white;
+
+        }
+
     </style>
 
 {% endblock %}
