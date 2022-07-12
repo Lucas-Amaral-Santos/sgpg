@@ -1,0 +1,41 @@
+.body {
+    background: linear-gradient(180deg, #041945 0%, #224EAC 25.23%, #FFFFFF 60.02%);
+    color: white;
+}
+
+.card {
+    background-color: rgba(41, 55, 84, 1);
+    width: 200px;
+    height: 200px;
+    padding: 5%;
+    align-items: center;
+
+}
+
+.nav-item {
+    font-size:x-large;
+    text-transform: uppercase;
+
+  }
+
+footer{
+    background-color: rgba(41, 55, 84, 1);
+    color: white;
+}
+
+svg {
+    fill:white;
+    height: 200px;
+    width: 200px;
+}
+
+a {
+    color: white;
+
+}
+
+a:hover {
+    text-decoration: none;
+    color: white;
+
+}
