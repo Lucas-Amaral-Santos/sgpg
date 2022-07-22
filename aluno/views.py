@@ -13,7 +13,7 @@ def cadastra_aluno(request):
                 cpf = form.cleaned_data['cpf'],
                 nome_pai = form.cleaned_data['nome_pai'],
                 nome_mae = form.cleaned_data['nome_mae'],
-                uf = form.cleaned_data['uf'],
+                naturalidade = form.cleaned_data['naturalidade'],
                 nacionalidade = form.cleaned_data['nacionalidade'],
                 dt_nascimento = form.cleaned_data['dt_nascimento'],
                 estado_civil = form.cleaned_data['estado_civil'],
