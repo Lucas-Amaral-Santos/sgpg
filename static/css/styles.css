@@ -1,0 +1,48 @@
+        .body {
+    background: linear-gradient(180deg, #041945 0%, #224EAC 25.23%, #FFFFFF 60.02%);
+    color: white;
+}
+
+.card {
+    background-color: rgba(41, 55, 84, 1);
+    width: 200px;
+    height: 200px;
+    padding: 5%;
+    align-items: center;
+
+}
+
+footer{
+    background-color: rgba(41, 55, 84, 1);
+    color: white;
+}
+
+svg {
+    fill:white;
+    height: 200px;
+    width: 200px;
+}
+
+a {
+    color: white;
+
+}
+
+a:hover {
+    text-decoration: none;
+    color: white;
+
+}
+
+.corcadastro {
+   
+    background-color: rgba(41, 55, 84, 1);
+   
+}
+
+
+label{
+   
+    color:white !important;
+} 
+

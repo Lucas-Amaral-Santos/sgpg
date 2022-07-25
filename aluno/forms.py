@@ -5,4 +5,5 @@ class AlunoForm(ModelForm):
     class Meta:
         model = Aluno
         fields = ['nome', 'cpf', 'nome_pai', 'nome_mae', 'naturalidade', 'nacionalidade', 'dt_nascimento', 'estado_civil', 'identidade',
-                  'identidade_uf', 'identidade_orgao', 'sexo', 'email']
+                 'identidade_uf', 'identidade_orgao', 'sexo', 'email']
+

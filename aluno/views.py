@@ -26,3 +26,10 @@ def cadastra_aluno(request):
             novo_aluno.save()
 
     return render(request, "cadastra_aluno.html", {'form':form})
+
+def lista_aluno(request):
+    alunos = Aluno.objects.all().order_by('nome')
+
+    return render(request, 'pesquisaaluno.html' , {'alunos': alunos})
+
+
