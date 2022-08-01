@@ -4,10 +4,20 @@
     </button>
     <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
       <div class="navbar-nav gap-3">
-        <a class="nav-item nav-link text-light" href="#">Aluno</a>
-        <a class="nav-item nav-link text-light" href="#">Professor</a>
-        <a class="nav-item nav-link text-light" href="#">Relatórios</a>
-        <a class="nav-item nav-link text-light" href="#">Configurações</a>
+        <ul class="navbar-nav gap-3">
+        <li class="dropdown">
+          <a class="nav-item nav-link text-light dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false">Aluno</a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
+            <li><a href="{% url 'aluno:cadastra_aluno' %}" class="dropdown-item">Cadastrar Aluno</a></li>
+          </ul>
+        </li>
+        <li><a class="nav-item nav-link text-light" href="#">Professor</a></li>
+        <li><a class="nav-item nav-link text-light" href="#">Relatórios</a></li>
+        <li>
+          <a class="nav-item nav-link text-light" href="#">Configurações</a>
+        </li>
+      </ul>
       </div>
     </div>
   </nav>

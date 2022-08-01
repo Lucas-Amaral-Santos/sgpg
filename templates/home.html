@@ -16,7 +16,7 @@ Home
         <div class="container mt-5">
             <div class="row m-2">
                 <div class="col">
-                    <a href="{% url 'lista_aluno' %}">
+                <a href="{% url 'aluno:lista_aluno' %}">
                     <div class="card container">
                         <!-- <img src="{% static 'svg/graduation-cap-solid.svg' %}" class="align-self-center" style="height: 400px; width:300px; fill: green;" frameborder="0"></img> -->
                         {% include 'svg/graduation-cap-solid.html'%}
@@ -27,13 +27,15 @@ Home
                 </a>
                 </div>
                 <div class="col">
-                    <div class="card container" >
-                        <!-- <img src="{% static 'svg/user-tie-solid.svg' %}" class="align-self-center" style="height: 400px; width: 300px;" frameborder="0"></img> -->
-                        {% include 'svg/user-tie-solid.html' %}
-                        <div class="card-body">
-                            <div class="card-title">PROFESSOR</div>
-                        </div>
-                    </div>
+                    <a href="{% url 'lista_professor' %}"></a>
+                          <div class="card container" >
+                                <!-- <img src="{% static 'svg/user-tie-solid.svg' %}" class="align-self-center" style="height: 400px; width: 300px;" frameborder="0"></img> -->
+                                {% include 'svg/user-tie-solid.html' %}
+                              <div class="card-body">
+                                   <div class="card-title">PROFESSOR</div>
+                              </div>
+                    </a>
+                           </div>
                 </div>
 
                 <div class="col">

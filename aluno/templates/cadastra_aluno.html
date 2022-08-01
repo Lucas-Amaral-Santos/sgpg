@@ -6,9 +6,9 @@
 {% block content %}
 <div class="corcadastro">
     {% include 'navbar.html' %}
-    <div class="container p-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
+    <div class="container ">
         
-
+<div>
         <form action="" method="POST">
             {% csrf_token %}
             <h1>Informações Pessoais</h1>
@@ -25,7 +25,7 @@
             {{form_residencia|crispy}}
             <h1>Titulação</h1>
             {{form_titulacao|crispy}}
-            <input type="submit">
+            <button class="btn btn-primary m-4" type="submit">Salvar</button>
         </form>
     </div>
 </div>
