@@ -11,11 +11,31 @@
 
         <form action="" method="POST">
             {% csrf_token %}
-            {{form|crispy}}
-
+            <h1>Informações Pessoais</h1>
+            {{form_aluno|crispy}}
+            <h1>Endereço</h1>
+            {{form_endereco|crispy}}
+            <h1>Graduação</h1>
+            {{form_graduacao|crispy}}
+            <h1>Trabalho</h1>
+            {{form_trabalho|crispy}}
+            <h1>Endereço Trabalho</h1>
+            {{form_endereco_trabalho|crispy}}
+            <h1>Residencia</h1>
+            {{form_residencia|crispy}}
+            <h1>Titulação</h1>
+            {{form_titulacao|crispy}}
             <input type="submit">
         </form>
     </div>
 </div>
+
+<style>
+    h1 {
+        color: white;
+        text-align: center;
+        margin: 10px;
+    }
+</style>
 {% include 'footer.html' %}
 {% endblock %}
