@@ -6,9 +6,7 @@
 {% block content %}
 <div class="corcadastro">
     {% include 'navbar.html' %}
-    <div class="container ">
-        
-<div>
+    <div class="flex w-75 container">
         <form action="" method="POST">
             {% csrf_token %}
             <h1>Informações Pessoais</h1>
@@ -25,11 +23,12 @@
             {{form_residencia|crispy}}
             <h1>Titulação</h1>
             {{form_titulacao|crispy}}
+            <div class="d-flex justify-content-center">
             <button class="btn btn-primary m-4" type="submit">Salvar</button>
+            </div>
         </form>
-    </div>
 </div>
-
+</div>
 <style>
     h1 {
         color: white;

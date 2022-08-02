@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -80,6 +81,11 @@ class Aluno(models.Model):
     graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING)
     titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING)
     trabalho = models.OneToOneField(Trabalho, on_delete=models.DO_NOTHING)
+
+    slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
+    updated = models.DateTimeField(auto_now=True)
+    cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='aluno_cadastrado_por')
+
     def save(self, *args, **kwargs):
             self.slug = slugify(self.id)
             super(Aluno, self).save(*args, **kwargs)
