@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('aluno/',include('aluno.urls', namespace='aluno')),
-    path('professor/',include('professor.urls'))
+    path('professor/',include('professor.urls', namespace='professor'))
 
     
     ]
