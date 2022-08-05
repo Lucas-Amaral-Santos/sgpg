@@ -23,6 +23,14 @@ svg {
     width: 200px;
 }
 
+.login_form{
+    color: black;
+}
+
+.cadastro_form {
+    color: white;
+}
+
 a {
     color: white;
 
@@ -39,10 +47,3 @@ a:hover {
     background-color: rgba(41, 55, 84, 1);
    
 }
-
-
-label{
-   
-    color:white !important;
-} 
-

@@ -1,11 +1,11 @@
 from django.forms import ModelForm
-from .models import Aluno, Graduacao, Endereco, Trabalho, Residencia, Titulacao
+from .models import Aluno, Graduacao, Endereco, Trabalho, Residencia, Titulacao, Afastamento
 
 class AlunoForm(ModelForm):
     class Meta:
         model = Aluno
         fields = ['nome', 'cpf', 'nome_pai', 'nome_mae', 'naturalidade', 'nacionalidade', 'dt_nascimento', 'estado_civil', 'identidade',
-                 'identidade_uf', 'identidade_orgao', 'sexo', 'email']
+                 'identidade_uf', 'identidade_orgao', 'sexo', 'email', 'raca', 'etnia']
 
 class EnderecoForm(ModelForm):
     class Meta:
@@ -32,4 +32,9 @@ class ResidenciaForm(ModelForm):
 class TitulacaoForm(ModelForm):
     class Meta:
         model = Titulacao
+        fields = '__all__'
+
+class AfastamentoForm(ModelForm):
+    class Meta:
+        model = Afastamento
         fields = '__all__'

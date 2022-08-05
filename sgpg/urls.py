@@ -16,14 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import home
-
+from registrar.views import logar, logout_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('aluno/',include('aluno.urls', namespace='aluno')),
-    path('professor/',include('professor.urls', namespace='professor'))
-
-    
+    path('professor/',include('professor.urls', namespace='professor')),
+    path('logar/', logar, name='logar'),
+    path('sair', logout_view, name='logout_view')
     ]

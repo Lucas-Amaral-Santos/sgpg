@@ -8,6 +8,7 @@ class Titulacao(models.Model):
     titulacao = models.CharField(max_length=200)
     titulacao_area = models.CharField(max_length=200)
     titulacao_ano = models.IntegerField()
+    data_qualificacao = models.DateField()
     uf = models.CharField(max_length=2)
     instituicao = models.CharField(max_length=200)
     obs_geral = models.TextField()
@@ -77,6 +78,8 @@ class Aluno(models.Model):
     identidade_orgao = models.CharField(max_length=100)
     sexo = models.CharField(max_length=50)
     email = models.EmailField()
+    raca = models.CharField(max_length=50)
+    etnia = models.CharField(max_length=50, blank=True, null=True)
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
     graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING)
     titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING)
@@ -93,3 +96,13 @@ class Aluno(models.Model):
 
     def __str__(self):
 	    return self.nome
+
+
+class Afastamento(models.Model):
+    afastamento = models.CharField(max_length=200)
+    data_ini = models.DateField()
+    data_fim = models.DateField()
+    aluno = models.ManyToManyField(Aluno, related_name="afastamento_aluno")
+
+    def __str__(self):
+        return self.afastamento
