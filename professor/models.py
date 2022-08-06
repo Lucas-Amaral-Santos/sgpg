@@ -22,6 +22,7 @@ class Trabalho(models.Model):
       def __str__(self):
             return self.instituicao
 
+
 class Professor(models.Model):
       nome = models.CharField(max_length=200)
       sexo = models.CharField(max_length=50)
@@ -32,6 +33,7 @@ class Professor(models.Model):
       identidade = models.CharField(max_length=12)
       identidade_uf= models.CharField(max_length=2)
       identidade_orgao = models.CharField(max_length=100)
+      tipo_trab = models.CharField(max_length=100)
       endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
       titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING)
       graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, null=True)

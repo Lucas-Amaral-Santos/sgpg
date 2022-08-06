@@ -29,6 +29,14 @@ svg {
     width: 200px;
 }
 
+.login_form{
+    color: black;
+}
+
+.cadastro_form {
+    color: white;
+}
+
 a {
     color: white;
 

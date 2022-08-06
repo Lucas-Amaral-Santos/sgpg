@@ -9,7 +9,7 @@
     <div class="container p-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
         
 
-        <form action="" method="POST">
+        <form action="" method="POST" class="cadastro_form">
             {% csrf_token %}
             <h1>Informações Pessoais</h1>
             {{form_professor|crispy}}
