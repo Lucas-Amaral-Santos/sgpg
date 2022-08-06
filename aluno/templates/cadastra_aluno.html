@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="corcadastro">
+    {% include 'navbar.html' %}
+    <div class="flex w-75 container">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <h1>Informações Pessoais</h1>
+            {{form_aluno|crispy}}
+            <h1>Endereço</h1>
+            {{form_endereco|crispy}}
+            <h1>Graduação</h1>
+            {{form_graduacao|crispy}}
+            <h1>Trabalho</h1>
+            {{form_trabalho|crispy}}
+            <h1>Endereço Trabalho</h1>
+            {{form_endereco_trabalho|crispy}}
+            <h1>Residencia</h1>
+            {{form_residencia|crispy}}
+            <h1>Titulação</h1>
+            {{form_titulacao|crispy}}
+            <div class="d-flex justify-content-center">
+            <button class="btn btn-primary m-4" type="submit">Salvar</button>
+            </div>
+        </form>
+</div>
+</div>
+<style>
+    h1 {
+        color: white;
+        text-align: center;
+        margin: 10px;
+    }
+</style>
+{% include 'footer.html' %}
+{% endblock %}
