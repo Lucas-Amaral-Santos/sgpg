@@ -1,5 +1,5 @@
 .body {
-    margin-top: 50pt;
+    padding-top: 50pt;
     color: #224EAC;
 }
 
@@ -70,6 +70,6 @@ a.text-light {
 
 .corcadastro {
    
-    background-color: rgba(41, 55, 84, 1);
+    background-color: #224EAC66;
    
 }
