@@ -1,15 +1,24 @@
 .body {
-    background: linear-gradient(180deg, #041945 0%, #224EAC 25.23%, #FFFFFF 60.02%);
-    color: white;
+    margin-top: 50pt;
+    color: #224EAC;
 }
 
 .card {
-    background-color: rgba(41, 55, 84, 1);
+    /* background-color: rgba(41, 55, 84, 1); */
+    /* background-color: #224EAC; */
+    background-color:#efefefe7;
+    border-color: #224EAC;
     width: 200px;
     height: 200px;
     padding: 5%;
     align-items: center;
+    color: #224EAC;
 
+}
+
+.navbar {
+    /* background: linear-gradient(180deg, #dce7ffe7 0%, #dce7ffe7 50.23%, #ffffffe7 100.00%); */
+    background-color: #efefefe7;
 }
 
 .nav-item {
@@ -18,13 +27,19 @@
 
   }
 
+ul {
+    text-transform: uppercase;
+    color: white !important;
+}
+
 footer{
-    background-color: rgba(41, 55, 84, 1);
-    color: white;
+    /* background-color: rgba(41, 55, 84, 1); */
+    background-color: #224EAC;
+    color: white !important;
 }
 
 svg {
-    fill:white;
+    fill:#224EAC;
     height: 200px;
     width: 200px;
 }
@@ -39,6 +54,7 @@ svg {
 
 a {
     color: white;
+    text-decoration: none;
 
 }
 
@@ -46,7 +62,10 @@ a:hover {
     text-decoration: none;
     color: white;
 
+}
 
+a.text-light {
+    color: #224EAC !important;
 }
 
 .corcadastro {
