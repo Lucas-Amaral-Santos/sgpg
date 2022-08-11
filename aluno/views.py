@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm
 from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao
+from django.core.paginator import Paginator
+from django.db.models import Q
 # Create your views here.
 
 def cadastra_aluno(request):
@@ -28,6 +30,7 @@ def cadastra_aluno(request):
                 titulacao_area = form_titulacao.cleaned_data['titulacao_area'],
                 titulacao_ano = form_titulacao.cleaned_data['titulacao_ano'],
                 uf = form_titulacao.cleaned_data['uf'],
+                data_qualificacao = form_titulacao.cleaned_data['data_qualificacao'],
                 instituicao = form_titulacao.cleaned_data['instituicao'],
                 obs_geral = form_titulacao.cleaned_data['obs_geral'],
             )
@@ -88,6 +91,7 @@ def cadastra_aluno(request):
                 email = form_aluno.cleaned_data['email'],
                 raca = form_aluno.cleaned_data['raca'],
                 etnia = form_aluno.cleaned_data['etnia'],
+                cadastrado_por = request.user,
                 endereco = novo_endereco,
                 graduacao = novo_graduacao,
                 titulacao = novo_titulacao,
@@ -106,7 +110,15 @@ def cadastra_aluno(request):
 
 def lista_aluno(request):
     alunos = Aluno.objects.all().order_by('nome')
+    total = alunos.count()
 
-    return render(request, 'pesquisaaluno.html' , {'alunos': alunos})
+    busca = request.GET.get('search')
+    # if busca:
+    #     aluno_lists = Aluno.objects.filter(Q(nome__icontains = busca)| Q(cpf__icontains = busca))
+    #     paginator = Paginator(aluno_lists, 15)
+    #     page = request.GET.get('page')
+    #     alunos = paginator.get_page(page)    
+
+    return render(request, 'lista_aluno.html' , {'alunos': alunos, 'busca': busca, 'total':total})
 
 
