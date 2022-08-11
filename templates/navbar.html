@@ -5,10 +5,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     
-        <a href="{% url 'home' %}" class="mx-5">
+        <a href="{% url 'home' %}" class="">
           <img class="img-responsive" src='{% static "img/PPGCM_sem_fundo.png" %}' width="200">
           </a>
-      <div class="collapse navbar-collapse justify-content-left px-5" id="navbarNavAltMarkup">
+      <div class="collapse navbar-collapse justify-content-center px-5" id="navbarNavAltMarkup">
       <div class="d-flex-inline px-5">
         <ul class="navbar-nav gap-3">
         <li class="dropdown">
@@ -34,5 +34,8 @@
       </ul>
       </div>
     </div>
-    <!-- <img class="img-responsive" src='{% static "img/UFF1.png" %}' width="70"> -->
+    <a href="{% url 'home' %}" class="mx-5">
+      <img class="img-responsive" src='{% static "img/UFF1.png" %}' width="70">
+      </a>
+    <!--  -->
   </nav>
