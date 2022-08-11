@@ -4,37 +4,86 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="corcadastro">
+<div class="">
     {% include 'navbar.html' %}
+    <div class="body container">
     <div class="flex w-75 container">
-        <form action="" method="POST" class="cadastro_form">
+
+
+
+    
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#id_info">Informações Pessoais</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#id_endereco">Endereço</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#id_graduacao">Graduação</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#id_trabalho">Trabalho</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#id_residencia">Residência</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#id_titulacao">Titulação</a>
+              </li>
+          </ul>
+          
+        <form action="" method="POST" class="">
             {% csrf_token %}
+            <div class="tab-content">
+            <div id="id_info" class="tab-pane container active">
             <h1>Informações Pessoais</h1>
             {{form_aluno|crispy}}
+            </div>
+            <div id="id_endereco" class="tab-pane container">
             <h1>Endereço</h1>
             {{form_endereco|crispy}}
+            </div>
+            <div id="id_graduacao" class="tab-pane container">
             <h1>Graduação</h1>
             {{form_graduacao|crispy}}
+            </div>
+            <div id="id_trabalho" class="tab-pane container">
             <h1>Trabalho</h1>
             {{form_trabalho|crispy}}
-            <h1>Endereço Trabalho</h1>
+
+            <h3>Endereço Trabalho</h3>
             {{form_endereco_trabalho|crispy}}
+        </div>
+        <div id="id_residencia" class="tab-pane container">
             <h1>Residencia</h1>
             {{form_residencia|crispy}}
+        </div>
+        <div id="id_titulacao" class="tab-pane container">
             <h1>Titulação</h1>
             {{form_titulacao|crispy}}
+        </div>
+        </div>
             <div class="d-flex justify-content-center">
             <button class="btn btn-primary m-4" type="submit">Salvar</button>
             </div>
         </form>
 </div>
 </div>
+</div>
 <style>
     h1 {
-        color: white;
+        color: #224EAC;
         text-align: center;
         margin: 10px;
     }
+
 </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 {% include 'footer.html' %}
 {% endblock %}

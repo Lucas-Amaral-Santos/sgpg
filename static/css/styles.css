@@ -47,9 +47,6 @@ svg {
     color: black;
 }
 
-.cadastro_form {
-    color: white;
-}
 
 a {
     color: white;
@@ -63,16 +60,16 @@ a:hover {
 
 }
 
-a.text-light {
-    color: #224EAC !important;
-}
 
-.corcadastro {
-   
-    background-color: #224EAC66;
-   
-}
 
 .dropdown:hover>.dropdown-menu {
     display: block;
+}
+
+.nav-link {
+    color: #224EAC !important;
+}
+
+.nav-link.active {
+    font-weight: 700;
 }
