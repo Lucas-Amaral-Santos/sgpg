@@ -66,8 +66,20 @@ a:hover {
     display: block;
 }
 
+.nav-item:hover{
+    /* background-color: rgb(42, 42, 101); */
+    background-image: linear-gradient(30deg, #224EAC, rgb(4, 4, 44)) ;
+    flex-direction:column;
+    border-radius: 2px;
+}
+
 .nav-link {
-    color: #224EAC !important;
+    color: #224EAC;
+}
+
+.nav-link:hover {
+    color: white;
+    font-weight: bolder;
 }
 
 .nav-link.active {
