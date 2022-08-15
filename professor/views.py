@@ -86,4 +86,4 @@ def cadastra_professor(request):
             novo_professor.save()
 
 
-    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao})
+    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_trabalho': form_trabalho, 'form_PosDoutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao})
