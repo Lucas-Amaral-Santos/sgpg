@@ -9,15 +9,20 @@
     <div class="body container">
         <div class="flex w-75 container">
             <h1 class="text-center">{{matricula.numero}} - {{matricula.aluno}}</h1>
-            <section>
-                {{matricula.aluno}}
-                {{matricula.aluno.cpf}}
-                {{matricula.aluno.cidade}}
-            </section>
-            <section>
+            <div class="flex-1 row">
+            
+            <div class="col">
+                {{matricula.aluno}}<br>
+                {{matricula.aluno.cpf}}<br>
+                {{matricula.aluno.endereco.municipio}}<br>
+            </div>
+            <div class="col">
                 {{matricula.numero}}
-            </section>
-            <a class="btn btn-success" href="{% url 'disciplina:cadastra_inscricao' %}">Se increver em disciplina</a>
+            </div>
+        </div>
+            <div class="m-5">
+                <a class="btn btn-success" href="{% url 'disciplina:cadastra_inscricao' %}">Se inscrever em disciplina</a>
+            </div>
         </div>
     </div>
 </div>
