@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from matricula.models import Matricula
 from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm
 from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao
 from django.core.paginator import Paginator
@@ -113,11 +115,11 @@ def lista_aluno(request):
     total = alunos.count()
 
     busca = request.GET.get('search')
-    # if busca:
-    #     aluno_lists = Aluno.objects.filter(Q(nome__icontains = busca)| Q(cpf__icontains = busca))
-    #     paginator = Paginator(aluno_lists, 15)
-    #     page = request.GET.get('page')
-    #     alunos = paginator.get_page(page)    
+    if busca:
+        aluno_lists = Aluno.objects.filter(Q(nome__icontains = busca)| Q(cpf__icontains = busca))
+        paginator = Paginator(aluno_lists, 15)
+        page = request.GET.get('page')
+        alunos = paginator.get_page(page)    
 
     return render(request, 'lista_aluno.html' , {'alunos': alunos, 'busca': busca, 'total':total})
 

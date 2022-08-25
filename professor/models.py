@@ -44,5 +44,5 @@ class Professor(models.Model):
       updated = models.DateTimeField(auto_now=True)
       cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='professor_cadastrado_por')
 
-def __str__(self):
-	    return  self.nome
+      def __str__(self):
+            return  self.nome

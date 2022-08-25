@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'professor',
     'crispy_forms',
     'registrar',
+    'matricula',
+    'disciplina',
 ]
 
 MIDDLEWARE = [
