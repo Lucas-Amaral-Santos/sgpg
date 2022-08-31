@@ -20,7 +20,7 @@ class Matricula(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.id)
-        super(Aluno, self).save(*args, **kwargs)
+        super(Matricula, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.numero

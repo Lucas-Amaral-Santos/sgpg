@@ -3,6 +3,7 @@ from .forms import MatriculaForm
 from .models import Matricula
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 # Create your views here.
 def cadastra_matricula(request):
@@ -14,6 +15,7 @@ def cadastra_matricula(request):
             nova_matricula = Matricula.objects.create(
                 numero = form.cleaned_data['numero'],
                 aluno = form.cleaned_data['aluno'],
+                cadastrado_por = User.objects.get(pk=request.user.id),
             )
 
             nova_matricula.save()
