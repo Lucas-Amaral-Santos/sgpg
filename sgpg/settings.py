@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'registrar',
     'matricula',
     'disciplina',
+    'relatorios',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

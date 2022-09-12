@@ -10,6 +10,7 @@ from django.template.defaultfilters import slugify
 
 class Matricula(models.Model):
     numero = models.CharField(max_length=10)
+
     aluno = models.ForeignKey(Aluno, on_delete=models.DO_NOTHING, related_name='matricula_aluno')
     # inscricao
     # trabalho_final
@@ -23,7 +24,7 @@ class Matricula(models.Model):
         super(Matricula, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.numero
+        return self.aluno
 
 class Bolsa(models.Model):
     nome = models.CharField(max_length=200)
