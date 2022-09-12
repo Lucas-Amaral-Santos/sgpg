@@ -28,6 +28,7 @@
         <li class="dropdown">
           <a class="nav-item nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Professor</a>
           <ul class="dropdown-menu">
+            <li><a href="{% url 'professor:lista_professor' %}" class="dropdown-item">Pesquisar Professor</a></li>
             <li><a href="{% url 'professor:cadastra_professor' %}" class="dropdown-item">Cadastrar Professor</a></li>
           </ul>
         </li>

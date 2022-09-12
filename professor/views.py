@@ -87,3 +87,16 @@ def cadastra_professor(request):
 
 
     return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao})
+
+def lista_professor(request):
+    professores = Professor.objects.all().order_by('nome')
+    total = professores.count()
+
+    busca = request.GET.get('search')
+    if busca:
+        professor_lists = Professor.objects.filter(Q(nome__icontains = busca)| Q(cpf__icontains = busca))
+        paginator = Professor(professor_lists, 15)
+        page = request.GET.get('page')
+        professores = paginator.get_page(page)    
+
+    return render(request, 'lista_professor.html' , {'professores': professores, 'busca': busca, 'total':total})
