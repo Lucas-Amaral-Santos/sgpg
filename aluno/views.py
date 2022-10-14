@@ -33,7 +33,7 @@ def cadastra_aluno(request):
                 titulacao_ano = form_titulacao.cleaned_data['titulacao_ano'],
                 uf = form_titulacao.cleaned_data['uf'],
                 data_qualificacao = form_titulacao.cleaned_data['data_qualificacao'],
-                instituicao = form_titulacao.cleaned_data['instituicao'],
+                instituicao_titulacao = form_titulacao.cleaned_data['instituicao_titulacao'],
                 obs_geral = form_titulacao.cleaned_data['obs_geral'],
             )
 
@@ -42,7 +42,6 @@ def cadastra_aluno(request):
                 residencia_ano_inicio = form_residencia.cleaned_data['residencia_ano_inicio'],
                 residencia_ano_fim = form_residencia.cleaned_data['residencia_ano_fim'],
                 especialidade = form_residencia.cleaned_data['especialidade'],
-                orientador = form_residencia.cleaned_data['orientador'],
                 uf = form_residencia.cleaned_data['uf'],
             )
             

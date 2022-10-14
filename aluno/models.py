@@ -10,7 +10,7 @@ class Titulacao(models.Model):
     titulacao_ano = models.IntegerField(null=True, blank=True)
     data_qualificacao = models.DateField(null=True, blank=True)
     uf = models.CharField(max_length=2, null=True, blank=True)
-    instituicao = models.CharField(max_length=200, null=True, blank=True)
+    instituicao_titulacao = models.CharField(max_length=200, null=True, blank=True)
     obs_geral = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -86,6 +86,7 @@ class Aluno(models.Model):
     sexo = models.CharField(max_length=50, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     etnia = models.CharField(max_length=50, blank=True, null=True)
+    situacao = models.CharField(max_length=50, null=True, blank=True)
     
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
     graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING)

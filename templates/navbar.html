@@ -21,6 +21,8 @@
         <li class="dropdown">
           <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false">Matriculas</a>
           <ul class="dropdown-menu">
+            <li><a href="{% url 'matricula:lista_probatorio' %}" class="dropdown-item">Pesquisar Probatório</a></li>
+            <li><a href="{% url 'matricula:cadastra_probatorio' %}" class="dropdown-item">Cadastrar Probatório</a></li>
             <li><a href="{% url 'matricula:lista_matricula' %}" class="dropdown-item">Pesquisar Matrículas</a></li>
             <li><a href="{% url 'matricula:cadastra_matricula' %}" class="dropdown-item">Cadastrar Matrícula</a></li>
           </ul>

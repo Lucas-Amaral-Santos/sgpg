@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import MatriculaForm
-from .models import Matricula
+from .forms import MatriculaForm, ProbatorioForm
+from .models import Matricula, Probatorio
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -14,7 +14,8 @@ def cadastra_matricula(request):
         if(form.is_valid()):
             nova_matricula = Matricula.objects.create(
                 numero = form.cleaned_data['numero'],
-                aluno = form.cleaned_data['aluno'],
+                probatorio = form.cleaned_data['probatorio'],
+                requisita_bolsa = form.cleaned_data['requisita_bolsa'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
 
@@ -26,12 +27,12 @@ def cadastra_matricula(request):
 
 
 def lista_matricula(request):
-    matriculas = Matricula.objects.all().order_by('aluno')
+    matriculas = Matricula.objects.all().order_by('probatorio')
     total = matriculas.count()
 
     busca = request.GET.get('search')
     if busca:
-        matricula_lists = Matricula.objects.filter(Q(numero__icontains = busca)| Q(aluno__nome__icontains = busca))
+        matricula_lists = Matricula.objects.filter(Q(numero__icontains = busca)| Q(probatorio__aluno__nome__icontains = busca))
         paginator = Paginator(matricula_lists, 15)
         page = request.GET.get('page')
         matriculas = paginator.get_page(page)    
@@ -43,3 +44,36 @@ def detalhe_matricula(request, matricula):
     matricula = Matricula.objects.get(id=matricula)
 
     return render(request, 'detalhe_matricula.html', {'matricula':matricula}) 
+
+
+def cadastra_probatorio(request):
+    form = ProbatorioForm()
+
+    if(request.method == 'POST'):
+        form = ProbatorioForm(request.POST)
+        if(form.is_valid()):
+            novo_probatorio = Probatorio.objects.create(
+                data_inscricao = form.cleaned_data['data_inscricao'],
+                nota = form.cleaned_data['nota'],
+                aluno = form.cleaned_data['aluno'],
+                cadastrado_por = User.objects.get(pk=request.user.id),
+            )
+
+            novo_probatorio.save()
+
+            return redirect('/')
+    
+    return render(request, 'cadastra_matricula.html', {'form':form})
+
+def lista_probatorio(request):
+    probatorios = Probatorio.objects.all().order_by('aluno')
+    total = probatorios.count()
+
+    busca = request.GET.get('search')
+    if busca:
+        probatorio_lists = Probatorio.objects.filter(Q(aluno__cpf__icontains = busca)| Q(aluno__nome__icontains = busca))
+        paginator = Paginator(probatorio_lists, 15)
+        page = request.GET.get('page')
+        probatorios = paginator.get_page(page)    
+
+    return render(request, 'lista_matricula.html' , {'matriculas': probatorios, 'busca': busca, 'total':total})

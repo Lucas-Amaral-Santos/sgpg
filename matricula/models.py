@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from aluno.models import Aluno
 from disciplina.models import DisciplinaOfertada
@@ -19,30 +20,12 @@ class Curso(models.Model):
         self.slug = slugify(self.id)
         super(Curso, self).save(*args, **kwargs)
 
-
-class Inscricao(models.Model):
-
-    disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_disciplina_ofertada')
-    slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
-    updated = models.DateTimeField(auto_now=True)
-    cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='inscricao_cadastrado_por')
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.id)
-        super(Inscricao, self).save(*args, **kwargs)
-
-
-    def __str__(self):
-        return self.disciplina_ofertada
-
 # Create your models here.
 class Probatorio(models.Model):
     data_inscricao = models.DateField()
-    nota = models.FloatField(validators=[MaxValueValidator(0),MinValueValidator(100)])
+    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
     aluno = models.ForeignKey(Aluno, on_delete=models.DO_NOTHING, related_name='probatorio_aluno')
 
-    inscricao_disciplina = models.ForeignKey(Inscricao, on_delete=models.DO_NOTHING, related_name="probatorio_inscricao")
-    curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, related_name="probatorio_curso")
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)
     dt_cadastro = models.DateTimeField(auto_now=True)
@@ -53,15 +36,16 @@ class Probatorio(models.Model):
         super(Probatorio, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.nota
+        return self.aluno.nome
 
 class Matricula(models.Model):
     numero = models.CharField(max_length=10)
 
     probatorio = models.ForeignKey(Probatorio, on_delete=models.DO_NOTHING, related_name='matricula_probatorio')
 
-    inscricao_disciplina = models.ForeignKey(Inscricao, on_delete=models.DO_NOTHING, related_name="matricula_inscricao")
-    curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, related_name="matricula_curso")
+    curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, related_name="matricula_curso", null=True, blank=True)
+    status = models.CharField(max_length=50, default='Matriculado')
+    requisita_bolsa = models.BooleanField()
     # trabalho_final
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
@@ -74,7 +58,8 @@ class Matricula(models.Model):
         super(Matricula, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.aluno
+        return str(self.probatorio.aluno)
+
 
 class Bolsa(models.Model):
     nome = models.CharField(max_length=200)
@@ -94,3 +79,21 @@ class Afastamento(models.Model):
     def __str__(self):
         return self.motivo
 
+
+class Inscricao(models.Model):
+
+    disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_disciplina_ofertada')
+    matricula = models.ForeignKey(Matricula, on_delete=models.DO_NOTHING, related_name="inscricao_matricula")
+    probatorio = models.ForeignKey(Probatorio, on_delete=models.DO_NOTHING, related_name="inscricao_probatorio")
+
+    slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
+    updated = models.DateTimeField(auto_now=True)
+    cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='inscricao_cadastrado_por')
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.id)
+        super(Inscricao, self).save(*args, **kwargs)
+
+
+    def __str__(self):
+        return self.disciplina_ofertada

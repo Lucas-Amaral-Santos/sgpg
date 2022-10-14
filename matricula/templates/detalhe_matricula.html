@@ -4,28 +4,136 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="">
+
     {% include 'navbar.html' %}
     <div class="body container">
-        <div class="flex w-75 container">
-            <h1 class="text-center">{{matricula.numero}} - {{matricula.aluno}}</h1>
-            <div class="flex-1 row">
 
-                <div class="col">
-                    {{matricula.aluno}}<br>
-                    {{matricula.aluno.cpf}}<br>
-                    {{matricula.aluno.endereco.municipio}}<br>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Aluno: {{matricula.probatorio.aluno}}</p>
+            </div>
+            <div class="col-md-6 col-md-offset-2">
+                <p>Matrícula: {{matricula.numero}}</p>
+            </div>
+          </div>
+    
+    
+    <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    CPF: {{matricula.probatorio.aluno.cpf}}
                 </div>
-                <div class="col">
-                    {{matricula.numero}}
+                <div class="col-6">
+                    Curso:
                 </div>
             </div>
-            <div class="m-5">
-                <a class="btn btn-success" href="{% url 'disciplina:cadastra_inscricao' %}">Se inscrever em
-                    disciplina</a>
+            <div class="row">
+                <div class="col-6">
+                    Data de Nascimento: {{matricula.probatorio.dt_nascimento}}
+                </div>
+                <div class="col-6">
+                    Nota Probatório:
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    Município: {{matricula.probatorio.aluno.endereco.municipio}}
+                </div>
+                <div class="col-6">
+                    Semestre/Ano de início:
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    UF: {{matricula.probatorio.aluno.endereco.uf}}
+                </div>
+                <div class="col-6">
+                    Título do Projeto:
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    Titulação: {{matricula.probatorio.aluno.titulacao.titulacao}}
+                </div>
+                <div class="col-6">
+                    Orientador:
+                </div>
+            </div>
+
+        </div>
+      </div>
+
+      <div class="row my-3 gap-2">
+        <button class="btn btn-success col">Adicionar Disciplinas</button>
+        <button class="btn btn-success col">Adicionar Bolsa</button>
+        <button class="btn btn-success col">Adicionar Afastamento</button>  
+    </div>
+
+    <div class="secao-disciplina">
+        <h1>Disciplina</h1>
+        <hr>
+
+        <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <p>Código:</p>
+                    </div>
+                    <div class="col">
+                        <p>Nome:</p>
+                    </div>
+
+                </div>
+
             </div>
         </div>
+
     </div>
-</div>
+    <div class="secao-bolsa">
+        <h1>Bolsa</h1>
+        <hr>
+        <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col">
+                    <p>Tipo:</p>
+                </div>
+                <div class="col">
+                    <p>Agência:</p>
+                </div>
+                <div class="col">
+                    <p>Período:</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="secao-afastamento">
+        <h1>Afastamento</h1>
+        <hr>
+        <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col">
+                    <p>Motivo:</p>
+                </div>
+                <div class="col">
+                    <p>Início:</p>
+                </div>
+                <div class="col">
+                    <p>Fim:</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    </div>
+
 {% include 'footer.html' %}
 {% endblock %}
