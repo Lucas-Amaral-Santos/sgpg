@@ -33,7 +33,7 @@
                     Data de Nascimento: {{matricula.probatorio.dt_nascimento}}
                 </div>
                 <div class="col-6">
-                    Nota Probatório:
+                    Nota Probatório: {{matricula.probatorio.nota}}
                 </div>
             </div>
             <div class="row">
@@ -49,7 +49,7 @@
                     UF: {{matricula.probatorio.aluno.endereco.uf}}
                 </div>
                 <div class="col-6">
-                    Título do Projeto:
+                    Título do Projeto: <a href="" style="color:dodgerblue;">Adicionar Projeto</a>
                 </div>
             </div>
             <div class="row">
@@ -65,9 +65,9 @@
       </div>
 
       <div class="row my-3 gap-2">
-        <button class="btn btn-success col">Adicionar Disciplinas</button>
-        <button class="btn btn-success col">Adicionar Bolsa</button>
-        <button class="btn btn-success col">Adicionar Afastamento</button>  
+        <a class="btn btn-success col" href="{% url 'disciplina:cadastra_disciplina' %}">Adicionar Disciplinas</a>
+        <a class="btn btn-success col">Adicionar Bolsa</a>
+        <a class="btn btn-success col">Adicionar Afastamento</a>  
     </div>
 
     <div class="secao-disciplina">
