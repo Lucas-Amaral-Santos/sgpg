@@ -5,14 +5,19 @@
 
 {% block content %}
 {% include 'navbar.html' %}
-<div class="body container d-flex-inline justify-content-center mb-5">
+<div class="body container d-flex-inline justify-content-center mb-5" style="min-height: 700px;">
 
     <h1 class="text-center">Relatórios</h1>
 
-
-    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-filtro">Filtro</button>
-
-
+    <div class="row gap-2 my-5">
+        <div class="col-3">
+    <button class="btn btn-primary" style="width: 70%;" data-toggle="modal" data-target="#modal-filtro"><i class='fas fa-filter' style='font-size:20px'></i> Filtro</button>
+        </div>
+        <div class="col-3">
+    <button class="btn btn-success" style="width: 70%;" data-toggle="modal" data-target="#modal-filtro"><i class='fa-solid fa-file-csv' style='font-size:20px'></i> Exportar CSV</button>
+</div>
+<hr>
+</div>
     <!-- Modal -->
     <div class="modal fade" id="modal-filtro" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -68,6 +73,8 @@
     
 
 </div>
+
+{% include 'footer.html' %}
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
