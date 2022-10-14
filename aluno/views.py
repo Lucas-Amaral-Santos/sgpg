@@ -91,7 +91,6 @@ def cadastra_aluno(request):
                 identidade_orgao = form_aluno.cleaned_data['identidade_orgao'],
                 sexo = form_aluno.cleaned_data['sexo'],
                 email = form_aluno.cleaned_data['email'],
-                raca = form_aluno.cleaned_data['raca'],
                 etnia = form_aluno.cleaned_data['etnia'],
                 cadastrado_por = request.user,
                 endereco = novo_endereco,

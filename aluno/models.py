@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Titulacao(models.Model):
-    titulacao = models.CharField(max_length=200)
-    titulacao_area = models.CharField(max_length=200)
-    titulacao_ano = models.IntegerField()
-    data_qualificacao = models.DateField()
-    uf = models.CharField(max_length=2)
-    instituicao = models.CharField(max_length=200)
-    obs_geral = models.TextField()
+    titulacao = models.CharField(max_length=200, null=True, blank=True)
+    titulacao_area = models.CharField(max_length=200, null=True, blank=True)
+    titulacao_ano = models.IntegerField(null=True, blank=True)
+    data_qualificacao = models.DateField(null=True, blank=True)
+    uf = models.CharField(max_length=2, null=True, blank=True)
+    instituicao = models.CharField(max_length=200, null=True, blank=True)
+    obs_geral = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.titulacao
@@ -19,34 +19,41 @@ class Titulacao(models.Model):
 
 
 class Residencia(models.Model):
-    instituicao_residencia = models.CharField(max_length=200)
-    residencia_ano_inicio = models.IntegerField()
-    residencia_ano_fim = models.IntegerField()
-    especialidade = models.CharField(max_length=200) 
-    orientador = models.CharField(max_length=200)
-    uf = models.CharField(max_length=2)
+    instituicao_residencia = models.CharField(max_length=200, null=True, blank=True)
+    residencia_ano_inicio = models.IntegerField(null=True, blank=True)
+    residencia_ano_fim = models.IntegerField(null=True, blank=True)
+    especialidade = models.CharField(max_length=200, null=True, blank=True) 
+    uf = models.CharField(max_length=2, null=True, blank=True)
 
     def __str__(self):
         return self.instituicao_residencia
 
 
 class Endereco(models.Model):
-    cep = models.CharField(max_length=8)
-    endereco = models.CharField(max_length=200)
-    municipio = models.CharField(max_length=200)
-    uf = models.CharField(max_length=2)
-    telefone1 = models.CharField(max_length=15)
-    telefone2 = models.CharField(max_length=15)
+    cep = models.CharField(max_length=8, null=True, blank=True)
+    endereco = models.CharField(max_length=200, null=True, blank=True)
+    municipio = models.CharField(max_length=200, null=True, blank=True)
+    uf = models.CharField(max_length=2, null=True, blank=True)
+    telefone1 = models.CharField(max_length=15, null=True, blank=True)
+    telefone2 = models.CharField(max_length=15, null=True, blank=True)
 
     def __str__(self):
 	    return self.municipio
 
 
 class Trabalho(models.Model):
-    trabalho = models.CharField(max_length=200)
-    endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING) 
-    email = models.EmailField()
-    data_termino = models.DateField()
+    VINCULO_CHOICES = (
+        ("Estatutário", "Estatutário"),
+        ("CLT", "CLT"),
+        ("Autônomo", "Autônomo"),
+        ("Outros", "Outros"),
+    )
+
+    trabalho = models.CharField(max_length=200, null=True, blank=True)
+    tipo_vinculo = models.CharField(max_length=200, choices=VINCULO_CHOICES, verbose_name='Tipo de Vínculo:', null=True, blank=True)
+    endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING, null=True, blank=True) 
+    email = models.EmailField(null=True, blank=True)
+    data_termino = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.trabalho
@@ -55,9 +62,9 @@ class Trabalho(models.Model):
 class Graduacao(models.Model):
     graduacao_area = models.CharField(max_length=200) 
     instituicao = models.CharField(max_length=200)
-    local = models.CharField(max_length=200)
-    graduacao_ano_inicio = models.IntegerField()
-    graduacao_ano_fim = models.IntegerField()
+    local = models.CharField(max_length=200, null=True, blank=True)
+    graduacao_ano_inicio = models.IntegerField(null=True, blank=True)
+    graduacao_ano_fim = models.IntegerField(null=True, blank=True)
     residencia = models.OneToOneField(Residencia, on_delete=models.DO_NOTHING)
 
 
@@ -67,19 +74,19 @@ class Graduacao(models.Model):
 class Aluno(models.Model):
     nome = models.CharField(max_length=200)
     cpf = models.CharField(max_length=14)
-    nome_pai = models.CharField(max_length=200)
-    nome_mae = models.CharField(max_length=200)
-    naturalidade = models.CharField(max_length=2)
-    nacionalidade = models.CharField(max_length=100)
+    nome_pai = models.CharField(max_length=200, null=True, blank=True)
+    nome_mae = models.CharField(max_length=200, null=True, blank=True)
+    naturalidade = models.CharField(max_length=2, null=True, blank=True)
+    nacionalidade = models.CharField(max_length=100, null=True, blank=True)
     dt_nascimento = models.DateField()
-    estado_civil = models.CharField(max_length=100)
+    estado_civil = models.CharField(max_length=100, null=True, blank=True)
     identidade = models.CharField(max_length=12)
     identidade_uf = models.CharField(max_length=2)
     identidade_orgao = models.CharField(max_length=100)
-    sexo = models.CharField(max_length=50)
-    email = models.EmailField()
-    raca = models.CharField(max_length=50)
+    sexo = models.CharField(max_length=50, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     etnia = models.CharField(max_length=50, blank=True, null=True)
+    
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
     graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING)
     titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING)
@@ -87,6 +94,7 @@ class Aluno(models.Model):
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)
+    dt_cadastro = models.DateTimeField(auto_now=True)
     cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='aluno_cadastrado_por')
 
     def save(self, *args, **kwargs):

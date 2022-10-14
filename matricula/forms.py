@@ -6,4 +6,4 @@ class MatriculaForm(forms.ModelForm):
 
     class Meta:
         model = Matricula
-        fields = ['numero', 'aluno']
+        fields = ['numero', 'probatorio']
