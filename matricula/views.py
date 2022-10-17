@@ -37,7 +37,7 @@ def lista_matricula(request):
         page = request.GET.get('page')
         matriculas = paginator.get_page(page)    
 
-    return render(request, 'lista_matricula.html' , {'matriculas': matriculas, 'busca': busca, 'total':total})
+    return render(request, 'lista_matricula.html' , {'matriculas': matriculas, 'busca': busca, 'total':total, 'pagina':'Pesquisar Matrícula'})
 
 def detalhe_matricula(request, matricula):
     
@@ -78,7 +78,7 @@ def lista_probatorio(request):
         page = request.GET.get('page')
         probatorios = paginator.get_page(page)    
 
-    return render(request, 'lista_matricula.html' , {'matriculas': probatorios, 'busca': busca, 'total':total})
+    return render(request, 'lista_matricula.html' , {'matriculas': probatorios, 'busca': busca, 'total':total, 'pagina':'Pesquisar Probatório'})
 
 def cadastra_bolsa(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)

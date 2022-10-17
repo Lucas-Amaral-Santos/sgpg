@@ -5,7 +5,7 @@
 {% block content %}
   {% include 'navbar.html' %}
   <div class="body container d-flex-inline justify-content-center mb-5">
-    <h1 class="text-center">Alunos cadastrados</h1>
+    <h1 class="text-center">{{ pagina }}</h1>
 
     <form method='GET' class="m-4">
       <div class="input-group rounded">
@@ -26,7 +26,9 @@
     <table class="table"> 
       <thead>
         <tr>
+          {% if pagina == 'Pesquisar Matrícula' %}
           <th scope="col">Matrícula</th>
+          {% endif %}
           <th scope="col">Nome</th>
           <th scope="col">Email</th>
         </tr>
@@ -34,9 +36,11 @@
       {% for m in matriculas %}
       <a href="">
         <tr onclick="location.href='{% url 'matricula:detalhe_matricula' m.slug %}'" style="cursor: pointer">
+          {% if pagina == 'Pesquisar Matrícula' %}
             <td>{{m.numero}}</td>
-            <td>{{m.aluno.nome}}</td>
-            <td>{{m.aluno.email}}</td>
+          {% endif %}
+            <td>{% if pagina == 'Pesquisar Matrícula' %}{{m.probatorio.aluno.nome}}{% elif pagina == 'Pesquisar Probatório' %}{{m.aluno.nome}}{% endif %}</td>
+            <td>{% if pagina == 'Pesquisar Matrícula' %}{{m.probatorio.aluno.email}}{% elif pagina == 'Pesquisar Probatório' %}{{m.aluno.email}}{% endif %}</td>
         </tr>
       </a>
 
