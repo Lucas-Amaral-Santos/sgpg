@@ -66,8 +66,8 @@
 
       <div class="row my-3 gap-2">
         <a class="btn btn-success col" href="{% url 'disciplina:cadastra_disciplina' %}">Adicionar Disciplinas</a>
-        <a class="btn btn-success col">Adicionar Bolsa</a>
-        <a class="btn btn-success col">Adicionar Afastamento</a>  
+        <a class="btn btn-success col" href="{% url 'matricula:cadastra_bolsa' matricula.slug %}">Adicionar Bolsa</a>
+        <a class="btn btn-success col" href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">Adicionar Afastamento</a>  
     </div>
 
     <div class="secao-disciplina">
@@ -94,43 +94,48 @@
     <div class="secao-bolsa">
         <h1>Bolsa</h1>
         <hr>
+
+        {% for bolsa in bolsas %}
         <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
         <div class="card-body">
 
             <div class="row">
                 <div class="col">
-                    <p>Tipo:</p>
+                    <p><b>Nome:</b> {{ bolsa.nome }}</p> 
                 </div>
                 <div class="col">
-                    <p>Agência:</p>
+                    <p><b>Agência:</b> {{ bolsa.agencia }}</p>
                 </div>
                 <div class="col">
-                    <p>Período:</p>
+                    <p><b>Início da Vigência:</b> {{ bolsa.dt_inicio }}</p>
                 </div>
             </div>
         </div>
         </div>
+        {% endfor %}
     </div>
 
     <div class="secao-afastamento">
         <h1>Afastamento</h1>
         <hr>
+        {% for afastamento in afastamentos %}
         <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
         <div class="card-body">
 
             <div class="row">
                 <div class="col">
-                    <p>Motivo:</p>
+                    <p><b>Motivo:</b> {{ afastamento.motivo }}</p>
                 </div>
                 <div class="col">
-                    <p>Início:</p>
+                    <p><b>Início:</b> {{ afastamento.saida }}</p>
                 </div>
                 <div class="col">
-                    <p>Fim:</p>
+                    <p><b>Fim:</b> {{ afastamento.retorno }}</p>
                 </div>
             </div>
         </div>
         </div>
+        {% endfor %}
     </div>
 
     </div>

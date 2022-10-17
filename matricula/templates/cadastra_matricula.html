@@ -8,6 +8,7 @@
     {% include 'navbar.html' %}
     <div class="container p-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
         
+        <h1 class="text-center">{{pagina}}</h1>
 
         <form action="" method="POST" class="cadastro_form">
             {% csrf_token %}
@@ -18,12 +19,5 @@
     </div>
 </div>
 
-<style>
-    h1 {
-        color: white;
-        text-align: center;
-        margin: 10px;
-    }
-</style>
 {% include 'footer.html' %}
 {% endblock %}

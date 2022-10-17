@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import MatriculaForm, ProbatorioForm
-from .models import Matricula, Probatorio
+from .forms import AfastamentoForm, BolsaForm, MatriculaForm, ProbatorioForm
+from .models import Afastamento, Bolsa, Matricula, Probatorio
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -23,7 +23,7 @@ def cadastra_matricula(request):
 
             return redirect('/')
     
-    return render(request, 'cadastra_matricula.html', {'form':form})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Matricula'})
 
 
 def lista_matricula(request):
@@ -42,8 +42,10 @@ def lista_matricula(request):
 def detalhe_matricula(request, matricula):
     
     matricula = Matricula.objects.get(id=matricula)
+    bolsas = Bolsa.objects.filter(matricula=matricula)
+    afastamentos = Afastamento.objects.filter(matricula=matricula)
 
-    return render(request, 'detalhe_matricula.html', {'matricula':matricula}) 
+    return render(request, 'detalhe_matricula.html', {'matricula':matricula, 'bolsas': bolsas, 'afastamentos': afastamentos}) 
 
 
 def cadastra_probatorio(request):
@@ -63,7 +65,7 @@ def cadastra_probatorio(request):
 
             return redirect('/')
     
-    return render(request, 'cadastra_matricula.html', {'form':form})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Probatório'})
 
 def lista_probatorio(request):
     probatorios = Probatorio.objects.all().order_by('aluno')
@@ -77,3 +79,44 @@ def lista_probatorio(request):
         probatorios = paginator.get_page(page)    
 
     return render(request, 'lista_matricula.html' , {'matriculas': probatorios, 'busca': busca, 'total':total})
+
+def cadastra_bolsa(request, matricula):
+    matricula = Matricula.objects.get(slug=matricula)
+    form = BolsaForm()
+
+    if(request.method == 'POST'):
+        form = BolsaForm(request.POST)
+        if(form.is_valid()):
+            nova_bolsa = Bolsa.objects.create(
+                nome = form.cleaned_data['nome'],
+                agencia = form.cleaned_data['agencia'],
+                dt_inicio = form.cleaned_data['dt_inicio'],
+                iniciacao_cientifica = form.cleaned_data['iniciacao_cientifica'],
+                matricula = matricula
+            )
+
+            nova_bolsa.save()
+
+            return redirect('/')
+    
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Bolsa'})
+
+def cadastra_afastamento(request, matricula):
+    matricula = Matricula.objects.get(slug=matricula)
+    form = AfastamentoForm()
+
+    if(request.method == 'POST'):
+        form = AfastamentoForm(request.POST)
+        if(form.is_valid()):
+            novo_afastamento = Afastamento.objects.create(
+                motivo = form.cleaned_data['motivo'],
+                saida = form.cleaned_data['saida'],
+                retorno = form.cleaned_data['retorno'],
+                matricula = matricula
+            )
+
+            novo_afastamento.save()
+
+            return redirect('/')
+    
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Afastamento'})

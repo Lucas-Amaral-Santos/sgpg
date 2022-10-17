@@ -20,7 +20,7 @@ def cadastra_disciplina(request):
             nova_disciplina.save()
             return redirect('/')
 
-    return render(request, 'cadastra.html', {'form':form})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina': 'Cadastra Disciplina'})
 
 def cadastra_inscricao(request):
     form = DisciplinaOfertadaForm()

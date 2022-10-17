@@ -1,5 +1,5 @@
 from django import forms
-from .models import Matricula, Probatorio
+from .models import Afastamento, Bolsa, Matricula, Probatorio
 
 class MatriculaForm(forms.ModelForm):
 
@@ -13,3 +13,15 @@ class ProbatorioForm(forms.ModelForm):
     class Meta:
         model = Probatorio
         fields = ['data_inscricao', 'nota', 'aluno']
+
+class BolsaForm(forms.ModelForm):
+
+    class Meta:
+        model = Bolsa
+        fields = ['iniciacao_cientifica', 'nome', 'agencia', 'dt_inicio']
+
+class AfastamentoForm(forms.ModelForm):
+
+    class Meta:
+        model = Afastamento
+        fields = ['motivo', 'saida', 'retorno']

@@ -75,6 +75,8 @@ class Afastamento(models.Model):
     motivo = models.CharField(max_length=200)
     saida = models.DateField()
     retorno = models.DateField()
+    matricula = models.ForeignKey(Matricula, on_delete=models.DO_NOTHING, related_name='afastamento_matricula')
+
     dt_cadastro = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.motivo
