@@ -7,16 +7,19 @@
   <div class="body container d-flex-inline justify-content-center mb-5">
     <h1 class="text-center">{{ pagina }}</h1>
 
-    <form method='GET' class="m-4">
+    <form method='GET' class="m-4" id="form-pesquisa">
       <div class="input-group rounded">
         {% if busca == None %}
         <input type='text' class='form-control' placeholder="Pesquise por número de matrícula ou Nome" value='' name='search' id='search'>
         {% else %}
         <input type='text' class='form-control' placeholder="Pesquise por número de matrícula ou Nome" value='{{busca}}' name='search' id='search'>
         {% endif %}
-        <span class="input-group-text border-0" id="search-addon">
+        <div type="submit" onclick="document.getElementById('form-pesquisa').submit();" style="cursor: pointer">
+          <span class="d-flex input-group-text border-0" id="search-addon">
+            
           <i class="fas fa-search"></i>
         </span>
+      </div>
         </div>
     </form>
 
@@ -72,6 +75,12 @@
 
 
   {% include 'footer.html' %}
+  <style>
+    [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+    display: flex;
+}
+  </style>
 <script>
   const ctx = document.getElementById('myChart').getContext('2d');
   const myChart = new Chart(ctx, {

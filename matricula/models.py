@@ -87,6 +87,7 @@ class Inscricao(models.Model):
     disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_disciplina_ofertada')
     matricula = models.ForeignKey(Matricula, on_delete=models.DO_NOTHING, related_name="inscricao_matricula")
     probatorio = models.ForeignKey(Probatorio, on_delete=models.DO_NOTHING, related_name="inscricao_probatorio")
+    # NOTA
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)

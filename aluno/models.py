@@ -49,7 +49,7 @@ class Trabalho(models.Model):
         ("Outros", "Outros"),
     )
 
-    trabalho = models.CharField(max_length=200, null=True, blank=True)
+    trabalho = models.CharField(max_length=200, null=True, blank=True, verbose_name='Trabalho:')
     tipo_vinculo = models.CharField(max_length=200, choices=VINCULO_CHOICES, verbose_name='Tipo de Vínculo:', null=True, blank=True)
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING, null=True, blank=True) 
     email = models.EmailField(null=True, blank=True)
@@ -73,8 +73,8 @@ class Graduacao(models.Model):
 
 class Aluno(models.Model):
     nome = models.CharField(max_length=200)
-    cpf = models.CharField(max_length=14)
-    nome_pai = models.CharField(max_length=200, null=True, blank=True)
+    cpf = models.CharField(max_length=14, verbose_name='CPF:')
+    nome_pai = models.CharField(max_length=200, null=True, blank=True, verbose_name='Nome do pai:')
     nome_mae = models.CharField(max_length=200, null=True, blank=True)
     naturalidade = models.CharField(max_length=2, null=True, blank=True)
     nacionalidade = models.CharField(max_length=100, null=True, blank=True)

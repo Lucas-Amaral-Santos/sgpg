@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from aluno.models import Endereco, Titulacao
 from aluno.forms import EnderecoForm, TitulacaoForm
+from django.core.paginator import Paginator
 from django.db.models import Q
 
 
@@ -97,7 +98,7 @@ def lista_professor(request):
     busca = request.GET.get('search')
     if busca:
         professor_lists = Professor.objects.filter(Q(nome__icontains = busca)| Q(cpf__icontains = busca))
-        paginator = Professor(professor_lists, 15)
+        paginator = Paginator(professor_lists, 15)
         page = request.GET.get('page')
         professores = paginator.get_page(page)    
 

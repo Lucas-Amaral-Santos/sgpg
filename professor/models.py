@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class PosDoutorado(models.Model):
-      concluido = models.BooleanField(null=True, blank=True)
+      concluido = models.BooleanField()
       ano_inicio = models.IntegerField(null=True, blank=True)
       ano_fim = models.IntegerField(null=True, blank=True)
       instituicao = models.CharField(max_length=200, null=True, blank=True)
