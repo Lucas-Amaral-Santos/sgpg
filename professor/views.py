@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 from aluno.models import Endereco, Titulacao
 from aluno.forms import EnderecoForm, TitulacaoForm
+from django.db.models import Q
+
 
 # Create your views here.
 

@@ -94,10 +94,10 @@ WSGI_APPLICATION = 'sgpg.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbi60uofhqgcc7',
-        'USER': 'ipnnbrgmhlfqqs',
-        'PASSWORD': 'e07af21c5cc499be7d466327736272c665bda7db40a54312c3520497593ccaa7',
-        'HOST': 'ec2-54-152-28-9.compute-1.amazonaws.com',   # Or an IP Address that your DB is hosted on
+        'NAME': 'd891raqa2skgvp',
+        'USER': 'dpvpleqvfbpdgd',
+        'PASSWORD': 'eb8d0d989ef3b4fcfe691781ec1d2fcdef9315748495d1690012311ab2e9f207',
+        'HOST': 'ec2-54-163-34-107.compute-1.amazonaws.com',   # Or an IP Address that your DB is hosted on
         'PORT': '5432',
     }
 }
