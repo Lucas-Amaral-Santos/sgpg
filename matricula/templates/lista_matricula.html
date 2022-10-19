@@ -35,7 +35,7 @@
       </thead>  
       {% for m in matriculas %}
       <a href="">
-        <tr onclick="location.href='{% url 'matricula:detalhe_matricula' m.slug %}'" style="cursor: pointer">
+        <tr onclick="location.href='{% if pagina == 'Pesquisar Matrícula' %}{% url 'matricula:detalhe_matricula' m.slug %}{% endif %}'" style="cursor: pointer">
           {% if pagina == 'Pesquisar Matrícula' %}
             <td>{{m.numero}}</td>
           {% endif %}
