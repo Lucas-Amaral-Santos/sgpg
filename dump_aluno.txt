@@ -1,0 +1,47 @@
+
+BEGIN;
+--
+-- Create model Endereco
+--
+CREATE TABLE "aluno_endereco" ("id" serial NOT NULL PRIMARY KEY, "cep" varchar(8) NULL, "endereco" varchar(200) NULL, "municipio" varchar(200) NULL, "uf" varchar(2) NULL, "telefone1" varchar(15) NULL, "telefone2" varchar(15) NULL);
+--
+-- Create model Residencia
+--
+CREATE TABLE "aluno_residencia" ("id" serial NOT NULL PRIMARY KEY, "instituicao_residencia" varchar(200) NULL, "residencia_ano_inicio" integer NULL, "residencia_ano_fim" integer NULL, "especialidade" varchar(200) NULL, "uf" varchar(2) NULL);
+--
+-- Create model Titulacao
+--
+CREATE TABLE "aluno_titulacao" ("id" serial NOT NULL PRIMARY KEY, "titulacao" varchar(200) NULL, "titulacao_area" varchar(200) NULL, "titulacao_ano" integer NULL, "data_qualificacao" date NULL, "uf" varchar(2) NULL, "instituicao_titulacao" varchar(200) NULL, "obs_geral" text NULL);
+--
+-- Create model Trabalho
+--
+CREATE TABLE "aluno_trabalho" ("id" serial NOT NULL PRIMARY KEY, "trabalho" varchar(200) NULL, "tipo_vinculo" varchar(200) NULL, "email" varchar(254) NULL, "data_termino" date NULL, "endereco_id" integer NULL UNIQUE);
+--
+-- Create model Graduacao
+--
+CREATE TABLE "aluno_graduacao" ("id" serial NOT NULL PRIMARY KEY, "graduacao_area" varchar(200) NOT NULL, "instituicao" varchar(200) NOT NULL, "local" varchar(200) NULL, "graduacao_ano_inicio" integer NULL, "graduacao_ano_fim" integer NULL, "residencia_id" integer NOT NULL UNIQUE);
+--
+-- Create model Aluno
+--
+CREATE TABLE "aluno_aluno" ("id" serial NOT NULL PRIMARY KEY, "nome" varchar(200) NOT NULL, "cpf" varchar(14) NOT NULL, "nome_pai" varchar(200) NULL, "nome_mae" varchar(200) NULL, "naturalidade" varchar(2) NULL, "nacionalidade" varchar(100) NULL, "dt_nascimento" date NOT NULL, "estado_civil" varchar(100) NULL, "identidade" varchar(12) NOT NULL, "identidade_uf" varchar(2) NOT NULL, "identidade_orgao" varchar(100) NOT NULL, "sexo" varchar(50) NULL, "email" varchar(254) NULL, "etnia" varchar(50) NULL, "situacao" varchar(50) NULL, "slug" varchar(250) NOT NULL, "updated" timestamp with time zone NOT NULL, "dt_cadastro" timestamp with time zone NOT NULL, "cadastrado_por_id" integer NOT NULL, "endereco_id" integer NOT NULL UNIQUE, "graduacao_id" integer NOT NULL UNIQUE, "titulacao_id" integer NOT NULL UNIQUE, "trabalho_id" integer NOT NULL UNIQUE);
+--
+-- Create model Afastamento
+--
+CREATE TABLE "aluno_afastamento" ("id" serial NOT NULL PRIMARY KEY, "afastamento" varchar(200) NOT NULL, "data_ini" date NOT NULL, "data_fim" date NOT NULL);
+CREATE TABLE "aluno_afastamento_aluno" ("id" serial NOT NULL PRIMARY KEY, "afastamento_id" integer NOT NULL, "aluno_id" integer NOT NULL);
+ALTER TABLE "aluno_trabalho" ADD CONSTRAINT "aluno_trabalho_endereco_id_f1cb0203_fk_aluno_endereco_id" FOREIGN KEY ("endereco_id") REFERENCES "aluno_endereco" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "aluno_graduacao" ADD CONSTRAINT "aluno_graduacao_residencia_id_baf772d3_fk_aluno_residencia_id" FOREIGN KEY ("residencia_id") REFERENCES "aluno_residencia" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "aluno_aluno" ADD CONSTRAINT "aluno_aluno_cadastrado_por_id_94655676_fk_auth_user_id" FOREIGN KEY ("cadastrado_por_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "aluno_aluno" ADD CONSTRAINT "aluno_aluno_endereco_id_cb039e15_fk_aluno_endereco_id" FOREIGN KEY ("endereco_id") REFERENCES "aluno_endereco" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "aluno_aluno" ADD CONSTRAINT "aluno_aluno_graduacao_id_8d35cd81_fk_aluno_graduacao_id" FOREIGN KEY ("graduacao_id") REFERENCES "aluno_graduacao" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "aluno_aluno" ADD CONSTRAINT "aluno_aluno_titulacao_id_3b98a977_fk_aluno_titulacao_id" FOREIGN KEY ("titulacao_id") REFERENCES "aluno_titulacao" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "aluno_aluno" ADD CONSTRAINT "aluno_aluno_trabalho_id_1e773a45_fk_aluno_trabalho_id" FOREIGN KEY ("trabalho_id") REFERENCES "aluno_trabalho" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "aluno_aluno_slug_397acffe" ON "aluno_aluno" ("slug");
+CREATE INDEX "aluno_aluno_slug_397acffe_like" ON "aluno_aluno" ("slug" varchar_pattern_ops);
+CREATE INDEX "aluno_aluno_cadastrado_por_id_94655676" ON "aluno_aluno" ("cadastrado_por_id");
+ALTER TABLE "aluno_afastamento_aluno" ADD CONSTRAINT "aluno_afastamento_aluno_afastamento_id_aluno_id_8fe43fa8_uniq" UNIQUE ("afastamento_id", "aluno_id");
+ALTER TABLE "aluno_afastamento_aluno" ADD CONSTRAINT "aluno_afastamento_al_afastamento_id_c13bf8ef_fk_aluno_afa" FOREIGN KEY ("afastamento_id") REFERENCES "aluno_afastamento" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "aluno_afastamento_aluno" ADD CONSTRAINT "aluno_afastamento_aluno_aluno_id_41812fcd_fk_aluno_aluno_id" FOREIGN KEY ("aluno_id") REFERENCES "aluno_aluno" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "aluno_afastamento_aluno_afastamento_id_c13bf8ef" ON "aluno_afastamento_aluno" ("afastamento_id");
+CREATE INDEX "aluno_afastamento_aluno_aluno_id_41812fcd" ON "aluno_afastamento_aluno" ("aluno_id");
+COMMIT;

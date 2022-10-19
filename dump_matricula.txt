@@ -1,0 +1,55 @@
+
+BEGIN;
+--
+-- Create model Curso
+--
+CREATE TABLE "matricula_curso" ("id" serial NOT NULL PRIMARY KEY, "curso" varchar(200) NOT NULL, "orientador" varchar(200) NOT NULL, "coorientador" varchar(200) NOT NULL);
+--
+-- Create model Probatorio
+--
+CREATE TABLE "matricula_probatorio" ("id" serial NOT NULL PRIMARY KEY, "data_inscricao" date NOT NULL, "nota" double precision NOT NULL, "slug" varchar(250) NOT NULL, "updated" timestamp with time zone NOT NULL, "dt_cadastro" timestamp with time zone NOT NULL, "aluno_id" integer NOT NULL, "cadastrado_por_id" integer NOT NULL);
+--
+-- Create model Matricula
+--
+CREATE TABLE "matricula_matricula" ("id" serial NOT NULL PRIMARY KEY, "numero" varchar(10) NOT NULL, "status" varchar(50) NOT NULL, "requisita_bolsa" boolean NOT NULL, "slug" varchar(250) NOT NULL, "updated" timestamp with time zone NOT NULL, "dt_cadastro" timestamp with time zone NOT NULL, "cadastrado_por_id" integer NOT NULL, "curso_id" integer NULL, "probatorio_id" integer NOT NULL);
+--
+-- Create model Inscricao
+--
+CREATE TABLE "matricula_inscricao" ("id" serial NOT NULL PRIMARY KEY, "slug" varchar(250) NOT NULL, "updated" timestamp with time zone NOT NULL, "cadastrado_por_id" integer NOT NULL, "disciplina_ofertada_id" integer NOT NULL, "matricula_id" integer NOT NULL, "probatorio_id" integer NOT NULL);
+--
+-- Create model Bolsa
+--
+CREATE TABLE "matricula_bolsa" ("id" serial NOT NULL PRIMARY KEY, "nome" varchar(200) NOT NULL, "agencia" varchar(200) NOT NULL, "dt_inicio" date NOT NULL, "iniciacao_cientifica" boolean NOT NULL, "dt_cadastro" timestamp with time zone NOT NULL, "matricula_id" integer NOT NULL);
+--
+-- Create model Afastamento
+--
+CREATE TABLE "matricula_afastamento" ("id" serial NOT NULL PRIMARY KEY, "motivo" varchar(200) NOT NULL, "saida" date NOT NULL, "retorno" date NOT NULL, "dt_cadastro" timestamp with time zone NOT NULL, "matricula_id" integer NOT NULL);
+ALTER TABLE "matricula_probatorio" ADD CONSTRAINT "matricula_probatorio_aluno_id_795b0f29_fk_aluno_aluno_id" FOREIGN KEY ("aluno_id") REFERENCES "aluno_aluno" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "matricula_probatorio" ADD CONSTRAINT "matricula_probatorio_cadastrado_por_id_827ecc7a_fk_auth_user_id" FOREIGN KEY ("cadastrado_por_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "matricula_probatorio_slug_0fbb5a76" ON "matricula_probatorio" ("slug");
+CREATE INDEX "matricula_probatorio_slug_0fbb5a76_like" ON "matricula_probatorio" ("slug" varchar_pattern_ops);
+CREATE INDEX "matricula_probatorio_aluno_id_795b0f29" ON "matricula_probatorio" ("aluno_id");
+CREATE INDEX "matricula_probatorio_cadastrado_por_id_827ecc7a" ON "matricula_probatorio" ("cadastrado_por_id");
+ALTER TABLE "matricula_matricula" ADD CONSTRAINT "matricula_matricula_cadastrado_por_id_41e46bbc_fk_auth_user_id" FOREIGN KEY ("cadastrado_por_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "matricula_matricula" ADD CONSTRAINT "matricula_matricula_curso_id_71c09c19_fk_matricula_curso_id" FOREIGN KEY ("curso_id") REFERENCES "matricula_curso" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "matricula_matricula" ADD CONSTRAINT "matricula_matricula_probatorio_id_00e2411c_fk_matricula" FOREIGN KEY ("probatorio_id") REFERENCES "matricula_probatorio" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "matricula_matricula_slug_002f7b94" ON "matricula_matricula" ("slug");
+CREATE INDEX "matricula_matricula_slug_002f7b94_like" ON "matricula_matricula" ("slug" varchar_pattern_ops);
+CREATE INDEX "matricula_matricula_cadastrado_por_id_41e46bbc" ON "matricula_matricula" ("cadastrado_por_id");
+CREATE INDEX "matricula_matricula_curso_id_71c09c19" ON "matricula_matricula" ("curso_id");
+CREATE INDEX "matricula_matricula_probatorio_id_00e2411c" ON "matricula_matricula" ("probatorio_id");
+ALTER TABLE "matricula_inscricao" ADD CONSTRAINT "matricula_inscricao_cadastrado_por_id_d5b7c555_fk_auth_user_id" FOREIGN KEY ("cadastrado_por_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "matricula_inscricao" ADD CONSTRAINT "matricula_inscricao_disciplina_ofertada__d1cf8de9_fk_disciplin" FOREIGN KEY ("disciplina_ofertada_id") REFERENCES "disciplina_disciplinaofertada" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "matricula_inscricao" ADD CONSTRAINT "matricula_inscricao_matricula_id_04d262ab_fk_matricula" FOREIGN KEY ("matricula_id") REFERENCES "matricula_matricula" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "matricula_inscricao" ADD CONSTRAINT "matricula_inscricao_probatorio_id_4295672b_fk_matricula" FOREIGN KEY ("probatorio_id") REFERENCES "matricula_probatorio" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "matricula_inscricao_slug_4e01ccf7" ON "matricula_inscricao" ("slug");
+CREATE INDEX "matricula_inscricao_slug_4e01ccf7_like" ON "matricula_inscricao" ("slug" varchar_pattern_ops);
+CREATE INDEX "matricula_inscricao_cadastrado_por_id_d5b7c555" ON "matricula_inscricao" ("cadastrado_por_id");
+CREATE INDEX "matricula_inscricao_disciplina_ofertada_id_d1cf8de9" ON "matricula_inscricao" ("disciplina_ofertada_id");
+CREATE INDEX "matricula_inscricao_matricula_id_04d262ab" ON "matricula_inscricao" ("matricula_id");
+CREATE INDEX "matricula_inscricao_probatorio_id_4295672b" ON "matricula_inscricao" ("probatorio_id");
+ALTER TABLE "matricula_bolsa" ADD CONSTRAINT "matricula_bolsa_matricula_id_2a2e5231_fk_matricula_matricula_id" FOREIGN KEY ("matricula_id") REFERENCES "matricula_matricula" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "matricula_bolsa_matricula_id_2a2e5231" ON "matricula_bolsa" ("matricula_id");
+ALTER TABLE "matricula_afastamento" ADD CONSTRAINT "matricula_afastament_matricula_id_236f81f3_fk_matricula" FOREIGN KEY ("matricula_id") REFERENCES "matricula_matricula" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "matricula_afastamento_matricula_id_236f81f3" ON "matricula_afastamento" ("matricula_id");
+COMMIT;
