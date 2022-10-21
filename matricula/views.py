@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import AfastamentoForm, BolsaForm, MatriculaForm, ProbatorioForm
-from .models import Afastamento, Bolsa, Matricula, Probatorio
+from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm
+from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -44,8 +44,8 @@ def detalhe_matricula(request, matricula):
     matricula = Matricula.objects.get(id=matricula)
     bolsas = Bolsa.objects.filter(matricula=matricula)
     afastamentos = Afastamento.objects.filter(matricula=matricula)
-
-    return render(request, 'detalhe_matricula.html', {'matricula':matricula, 'bolsas': bolsas, 'afastamentos': afastamentos}) 
+    inscricoes = Inscricao.objects.filter(matricula=matricula)
+    return render(request, 'detalhe_matricula.html', {'matricula':matricula, 'bolsas': bolsas, 'afastamentos': afastamentos, 'inscricoes':inscricoes}) 
 
 
 def cadastra_probatorio(request):
@@ -120,3 +120,23 @@ def cadastra_afastamento(request, matricula):
             return redirect('/')
     
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Afastamento'})
+
+def cadastra_inscricao(request, matricula):
+    matricula = Matricula.objects.get(slug=matricula)
+    form = InscricaoForm()
+
+    if(request.method == 'POST'):
+        form = InscricaoForm(request.POST)
+        if(form.is_valid()):
+            nova_inscricao = Inscricao.objects.create(
+                disciplina_ofertada = form.cleaned_data['disciplina_ofertada'],
+                nota = form.cleaned_data['nota'],
+                matricula = matricula,
+                cadastrado_por = User.objects.get(pk=request.user.id),
+
+            )
+
+            nova_inscricao.save()
+            return redirect('/')
+
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição'})

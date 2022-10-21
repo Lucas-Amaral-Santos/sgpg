@@ -7,11 +7,11 @@ class PosDoutorado(models.Model):
       concluido = models.BooleanField()
       ano_inicio = models.IntegerField(null=True, blank=True)
       ano_fim = models.IntegerField(null=True, blank=True)
-      instituicao = models.CharField(max_length=200, null=True, blank=True)
+      instituicao_posdoc = models.CharField(max_length=200, null=True, blank=True)
       pais = models.CharField(max_length=200, null=True, blank=True)
 
 class Trabalho(models.Model):
-      instituicao = models.CharField(max_length=200)
+      instituicao_trabalho = models.CharField(max_length=200)
       setor = models.CharField(max_length=200, null=True, blank=True)
       admissao = models .DateField(null=True, blank=True)
       cargo = models.CharField(max_length=200)

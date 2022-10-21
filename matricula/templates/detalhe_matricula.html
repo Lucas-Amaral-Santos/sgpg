@@ -65,30 +65,34 @@
       </div>
 
       <div class="row my-3 gap-2">
-        <a class="btn btn-success col" href="{% url 'disciplina:cadastra_disciplina' %}">Adicionar Disciplinas</a>
+        <a class="btn btn-success col" href="{% url 'matricula:cadastra_inscricao' matricula.slug %}">Adicionar Disciplina</a>
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_bolsa' matricula.slug %}">Adicionar Bolsa</a>
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">Adicionar Afastamento</a>  
     </div>
 
     <div class="secao-disciplina">
-        <h1>Disciplina</h1>
+        <h1>Disciplina Cursadas</h1>
         <hr>
-
+        {% for i in inscricoes %}
         <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
             <div class="card-body">
 
                 <div class="row">
                     <div class="col">
-                        <p>Código:</p>
+                        <p><b>Código:</b> {{i.disciplina_ofertada.disciplina.codigo}}</p>
                     </div>
                     <div class="col">
-                        <p>Nome:</p>
+                        <p><b>Nome:</b>{{i.disciplina_ofertada.disciplina.nome}}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Período:</b> {{i.disciplina_ofertada.semestre}}/{{i.disciplina_ofertada.ano}}</p>
                     </div>
 
                 </div>
 
             </div>
         </div>
+        {% endfor %}
 
     </div>
     <div class="secao-bolsa">

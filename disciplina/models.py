@@ -14,7 +14,7 @@ class Disciplina(models.Model):
     tipo = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.nome
+        return self.codigo+ ' - ' + self.nome
 
 class DisciplinaOfertada(models.Model):
     disciplina = models.ForeignKey(Disciplina, on_delete=models.DO_NOTHING, related_name='disciplina_ofertada_disciplina')
@@ -23,5 +23,5 @@ class DisciplinaOfertada(models.Model):
     semestre = models.IntegerField()
 
     def __str__(self):
-        return self.disciplina.codigo + ' - ' + self.disciplina + ' - ' + self.professor
+        return str(self.disciplina)
 

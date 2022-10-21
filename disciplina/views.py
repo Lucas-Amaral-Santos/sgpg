@@ -22,7 +22,7 @@ def cadastra_disciplina(request):
 
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina': 'Cadastra Disciplina'})
 
-def cadastra_inscricao(request):
+def cadastra_disciplina_ofertada(request):
     form = DisciplinaOfertadaForm()
 
     if(request.method == 'POST'):
@@ -30,7 +30,6 @@ def cadastra_inscricao(request):
         if(form.is_valid()):
             nova_inscricao = DisciplinaOfertada.objects.create(
                 disciplina = form.cleaned_data['disciplina'],
-                matricula = form.cleaned_data['matricula'],
                 professor = form.cleaned_data['professor'],
                 ano = form.cleaned_data['ano'],
                 semestre = form.cleaned_data['semestre'],

@@ -10,9 +10,6 @@ from django.db.models import Q
 
 
 # Create your views here.
-
- 
-
 def cadastra_professor(request):
     form_professor = ProfessorForm()
     form_trabalho = TrabalhoForm()
@@ -36,7 +33,7 @@ def cadastra_professor(request):
                 titulacao_area = form_titulacao.cleaned_data['titulacao_area'],
                 titulacao_ano = form_titulacao.cleaned_data['titulacao_ano'],
                 uf = form_titulacao.cleaned_data['uf'],
-                instituicao = form_titulacao.cleaned_data['instituicao'],
+                instituicao_titulacao = form_titulacao.cleaned_data['instituicao_titulacao'],
                 obs_geral = form_titulacao.cleaned_data['obs_geral'],
             )
             
@@ -53,11 +50,11 @@ def cadastra_professor(request):
                 concluido =  form_pos_doutorado.cleaned_data['concluido'],
                 ano_inicio = form_pos_doutorado.cleaned_data['ano_inicio'],
                 ano_fim = form_pos_doutorado.cleaned_data['ano_fim'],
-                instituicao = form_pos_doutorado.cleaned_data['instituicao'],
+                instituicao_posdoc = form_pos_doutorado.cleaned_data['instituicao_posdoc'],
                 pais = form_pos_doutorado.cleaned_data['pais'],
             )
             novo_trabalho = Trabalho.objects.create(
-                instituicao = form_trabalho.cleaned_data['instituicao'],
+                instituicao_trabalho = form_trabalho.cleaned_data['instituicao_trabalho'],
                 setor = form_trabalho.cleaned_data['setor'],
                 admissao = form_trabalho.cleaned_data['admissao'],
                 cargo = form_trabalho.cleaned_data['cargo'],
@@ -74,7 +71,7 @@ def cadastra_professor(request):
                 cpf = form_professor.cleaned_data['cpf'],
                 identidade = form_professor.cleaned_data['identidade'], 
                 identidade_orgao = form_professor.cleaned_data['identidade_orgao'],    
-                tipo_trab = form_professor.cleaned_data['tipo_trab'],   
+                tipo_docente = form_professor.cleaned_data['tipo_docente'],   
                 trabalho = novo_trabalho,
                 pos_doutorado = novo_pos_doutorado,
                 titulacao = novo_titulacao,
@@ -100,6 +97,6 @@ def lista_professor(request):
         professor_lists = Professor.objects.filter(Q(nome__icontains = busca)| Q(cpf__icontains = busca))
         paginator = Paginator(professor_lists, 15)
         page = request.GET.get('page')
-        professores = paginator.get_page(page)    
+        professores = paginator.get_page(page)  
 
     return render(request, 'lista_professor.html' , {'professores': professores, 'busca': busca, 'total':total})
