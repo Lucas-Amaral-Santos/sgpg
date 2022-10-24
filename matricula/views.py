@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm
-from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao
+from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm
+from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -45,7 +45,12 @@ def detalhe_matricula(request, matricula):
     bolsas = Bolsa.objects.filter(matricula=matricula)
     afastamentos = Afastamento.objects.filter(matricula=matricula)
     inscricoes = Inscricao.objects.filter(matricula=matricula)
-    return render(request, 'detalhe_matricula.html', {'matricula':matricula, 'bolsas': bolsas, 'afastamentos': afastamentos, 'inscricoes':inscricoes}) 
+    try:
+        trabalho_final = TrabalhoFinal.objects.get(matricula=matricula)
+    except TrabalhoFinal.DoesNotExist:
+        trabalho_final = None
+
+    return render(request, 'detalhe_matricula.html', {'matricula':matricula, 'bolsas': bolsas, 'afastamentos': afastamentos, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final}) 
 
 
 def cadastra_probatorio(request):
@@ -133,10 +138,35 @@ def cadastra_inscricao(request, matricula):
                 nota = form.cleaned_data['nota'],
                 matricula = matricula,
                 cadastrado_por = User.objects.get(pk=request.user.id),
-
             )
 
             nova_inscricao.save()
             return redirect('/')
 
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição'})
+
+def cadastra_trabalho_final(request, matricula):
+    matricula = Matricula.objects.get(slug=matricula)
+    form = TrabalhoFinalForm()
+
+    if(request.method == 'POST'):
+        form = TrabalhoFinalForm(request.POST)
+        if(form.is_valid()):
+            novo_trabalho_final = TrabalhoFinal.objects.create(
+                titulo = form.cleaned_data['titulo'],
+                data = form.cleaned_data['data'],
+                resumo = form.cleaned_data['resumo'],
+                resultado = form.cleaned_data['resultado'],
+                diploma = form.cleaned_data['diploma'],
+                dt_diploma = form.cleaned_data['dt_diploma'],
+                versao_final = form.cleaned_data['versao_final'],
+                dt_versao = form.cleaned_data['dt_versao'],
+                matricula = matricula,
+                cadastrado_por = User.objects.get(pk=request.user.id),
+            )
+
+            novo_trabalho_final.save()
+
+            return redirect('/')
+    
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Trabalho Final'})

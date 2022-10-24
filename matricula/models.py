@@ -99,3 +99,29 @@ class Inscricao(models.Model):
 
     def __str__(self):
         return str(self.disciplina_ofertada)
+
+
+
+class TrabalhoFinal(models.Model):
+    titulo = models.CharField(max_length=300)
+    data = models.DateField()
+    resumo = models.TextField()
+    resultado = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    diploma = models.BooleanField()
+    dt_diploma = models.DateField()
+    versao_final = models.BooleanField()
+    dt_versao = models.DateField()
+
+    matricula = models.OneToOneField(Matricula, on_delete=models.DO_NOTHING, related_name="matricula_trabalho_final")
+
+    slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
+    updated = models.DateTimeField(auto_now=True)
+    cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='trabalho_final_cadastrado_por')
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.id)
+        super(TrabalhoFinal, self).save(*args, **kwargs)
+
+
+    def __str__(self):
+        return str(self.titulo)

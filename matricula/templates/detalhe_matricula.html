@@ -49,7 +49,7 @@
                     UF: {{matricula.probatorio.aluno.endereco.uf}}
                 </div>
                 <div class="col-6">
-                    Título do Projeto: <a href="" style="color:dodgerblue;">Adicionar Projeto  <i class='fas fa-exclamation-circle' style='font-size:24px;color:red'></i></a>
+                    Título do Projeto: {% if trabalho_final == None %}<a href="{% url 'matricula:cadastra_trabalho_final' matricula.slug %}" style="color:dodgerblue;">Adicionar Projeto  <i class='fas fa-exclamation-circle' style='font-size:24px;color:red'></i></a>{% else %}<b>{{ trabalho_final }}</b>{% endif %}
                 </div>
             </div>
             <div class="row">
@@ -73,6 +73,9 @@
     <div class="secao-disciplina">
         <h1>Disciplina Cursadas</h1>
         <hr>
+        {% if not inscricoes %}
+            <p class="text-center">Não há nenhuma disciplina cursada</p>
+        {% endif %}
         {% for i in inscricoes %}
         <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
             <div class="card-body">
@@ -99,6 +102,9 @@
         <h1>Bolsa</h1>
         <hr>
 
+        {% if not bolsas %}
+            <p class="text-center">Não há nenhuma bolsa adquirida</p>
+        {% endif %}
         {% for bolsa in bolsas %}
         <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
         <div class="card-body">
@@ -122,6 +128,9 @@
     <div class="secao-afastamento">
         <h1>Afastamento</h1>
         <hr>
+        {% if not afastamentos %}
+            <p class="text-center">Não há nenhum afastamento exercido</p>
+        {% endif %}
         {% for afastamento in afastamentos %}
         <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
         <div class="card-body">
