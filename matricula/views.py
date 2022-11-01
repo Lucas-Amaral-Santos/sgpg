@@ -18,9 +18,7 @@ def cadastra_matricula(request):
                 requisita_bolsa = form.cleaned_data['requisita_bolsa'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
-
             nova_matricula.save()
-
             return redirect('/')
     
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Matricula'})
@@ -51,7 +49,6 @@ def detalhe_matricula(request, matricula):
         trabalho_final = None
 
     return render(request, 'detalhe_matricula.html', {'matricula':matricula, 'bolsas': bolsas, 'afastamentos': afastamentos, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final}) 
-
 
 def cadastra_probatorio(request):
     form = ProbatorioForm()

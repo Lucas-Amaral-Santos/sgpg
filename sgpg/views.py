@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from django.shortcuts import redirect, render
 from registrar.views import logar
 

@@ -51,6 +51,9 @@ def cadastra_aluno(request):
                 local = form_graduacao.cleaned_data['local'],
                 graduacao_ano_inicio = form_graduacao.cleaned_data['graduacao_ano_inicio'],
                 graduacao_ano_fim = form_graduacao.cleaned_data['graduacao_ano_fim'],
+                bolsa_graduacao = form_graduacao.cleaned_data['bolsa_graduacao'],
+                agencia = form_graduacao.cleaned_data['agencia'],
+                iniciacao_cientifica = form_graduacao.cleaned_data['iniciacao_cientifica'],
                 residencia = novo_residencia
             )
             

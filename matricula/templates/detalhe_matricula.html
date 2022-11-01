@@ -73,9 +73,11 @@
     <div class="secao-disciplina">
         <h1>Disciplina Cursadas</h1>
         <hr>
+
         {% if not inscricoes %}
-            <p class="text-center">Não há nenhuma disciplina cursada</p>
+            <p class="text-center"><i>Não há nenhuma disciplina cursada</i></p>
         {% endif %}
+
         {% for i in inscricoes %}
         <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
             <div class="card-body">
@@ -103,8 +105,9 @@
         <hr>
 
         {% if not bolsas %}
-            <p class="text-center">Não há nenhuma bolsa adquirida</p>
+            <p class="text-center"><i>Não há nenhuma bolsa adquirida</i></p>
         {% endif %}
+
         {% for bolsa in bolsas %}
         <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
         <div class="card-body">
@@ -129,7 +132,7 @@
         <h1>Afastamento</h1>
         <hr>
         {% if not afastamentos %}
-            <p class="text-center">Não há nenhum afastamento exercido</p>
+            <p class="text-center"><i>Não há nenhum afastamento exercido</i></p>
         {% endif %}
         {% for afastamento in afastamentos %}
         <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">

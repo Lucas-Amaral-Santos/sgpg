@@ -1,4 +1,3 @@
-from email.policy import default
 from django.db import models
 from aluno.models import Aluno
 from disciplina.models import DisciplinaOfertada
@@ -25,6 +24,7 @@ class Probatorio(models.Model):
     data_inscricao = models.DateField()
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
     aluno = models.ForeignKey(Aluno, on_delete=models.DO_NOTHING, related_name='probatorio_aluno')
+    probatorio = models.BooleanField(default=True)
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)
@@ -39,14 +39,19 @@ class Probatorio(models.Model):
         return self.aluno.nome
 
 class Matricula(models.Model):
+
+    STATUS_CHOICES = (
+        ('Ativo', 'Ativo'),
+        ('Titulado', 'Titulado'),
+        ('Jubilado', 'Jubilado'),
+        ('Abandono', 'Abandono')
+    )
+
     numero = models.CharField(max_length=10)
-
     probatorio = models.ForeignKey(Probatorio, on_delete=models.DO_NOTHING, related_name='matricula_probatorio')
-
     curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, related_name="matricula_curso", null=True, blank=True)
-    status = models.CharField(max_length=50, default='Matriculado')
     requisita_bolsa = models.BooleanField()
-    # trabalho_final
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)
@@ -68,6 +73,7 @@ class Bolsa(models.Model):
     iniciacao_cientifica = models.BooleanField()
     matricula = models.ForeignKey(Matricula, on_delete=models.DO_NOTHING, related_name='bolsa_matricula')
     dt_cadastro = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.nome
 
@@ -83,7 +89,6 @@ class Afastamento(models.Model):
 
 
 class Inscricao(models.Model):
-
     disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_disciplina_ofertada')
     matricula = models.ForeignKey(Matricula, on_delete=models.DO_NOTHING, related_name="inscricao_matricula")
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
@@ -96,14 +101,11 @@ class Inscricao(models.Model):
         self.slug = slugify(self.id)
         super(Inscricao, self).save(*args, **kwargs)
 
-
     def __str__(self):
         return str(self.disciplina_ofertada)
 
-
-
 class TrabalhoFinal(models.Model):
-    titulo = models.CharField(max_length=300)
+    titulo = models.CharField(max_length=200)
     data = models.DateField()
     resumo = models.TextField()
     resultado = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
@@ -121,7 +123,6 @@ class TrabalhoFinal(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.id)
         super(TrabalhoFinal, self).save(*args, **kwargs)
-
 
     def __str__(self):
         return str(self.titulo)

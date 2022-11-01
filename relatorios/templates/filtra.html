@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div class="col-4">
+    {% comment %} <div class="col-4">
     <table class="table"> 
         <thead>
           <tr>
@@ -69,8 +69,35 @@
   
         {% endfor %}
       </table>
-    </div>
+    </div> {% endcomment %}
     
+    <div class="col">
+        <table class="table"> 
+            <thead>
+              <tr>
+                <th scope="col">Matrícula</th>
+                <th scope="col">Nome</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Nota do Probatório</th>
+                <th scope="col">Curso</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>  
+            {% for m in alunos %}
+            <a href="">
+            <tr>
+                <td>{{m.numero}}</td>
+                <td>{{m.probatorio.aluno.nome}}</td>
+                <td>{{m.probatorio.aluno.cpf}}</td>
+                <td>{{m.probatorio.nota}}</td>
+                <td>{{m.curso}}</td>
+                <td>{{m.status}}</td>
+            </tr>
+            </a>
+      
+            {% endfor %}
+          </table>
+        </div>
 
 </div>
 

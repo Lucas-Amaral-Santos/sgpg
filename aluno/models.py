@@ -14,8 +14,7 @@ class Titulacao(models.Model):
     obs_geral = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.titulacao
-
+        return str(self.titulacao)
 
 
 class Residencia(models.Model):
@@ -26,19 +25,21 @@ class Residencia(models.Model):
     uf = models.CharField(max_length=2, null=True, blank=True)
 
     def __str__(self):
-        return self.instituicao_residencia
+        return str(self.instituicao_residencia)
+
 
 
 class Endereco(models.Model):
     cep = models.CharField(max_length=8, null=True, blank=True)
-    endereco = models.CharField(max_length=200, null=True, blank=True)
+    endereco = models.CharField(max_length=200, null=True, blank=True, )
     municipio = models.CharField(max_length=200, null=True, blank=True)
     uf = models.CharField(max_length=2, null=True, blank=True)
     telefone1 = models.CharField(max_length=15, null=True, blank=True)
     telefone2 = models.CharField(max_length=15, null=True, blank=True)
 
     def __str__(self):
-	    return self.municipio
+        return str(self.id)
+
 
 
 class Trabalho(models.Model):
@@ -56,7 +57,8 @@ class Trabalho(models.Model):
     data_termino = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return self.trabalho
+        return str(self.trabalho)
+
 
 
 class Graduacao(models.Model):
@@ -66,12 +68,20 @@ class Graduacao(models.Model):
     graduacao_ano_inicio = models.IntegerField(null=True, blank=True)
     graduacao_ano_fim = models.IntegerField(null=True, blank=True)
     residencia = models.OneToOneField(Residencia, on_delete=models.DO_NOTHING)
-
+    bolsa_graduacao = models.BooleanField(default=False)
+    agencia = models.CharField(max_length=200, null=True, blank=True)
+    iniciacao_cientifica = models.BooleanField(default=False)
 
     def __str__(self):
-	    return self.instituicao
+        return self.instituicao
+
 
 class Aluno(models.Model):
+    SEXO_CHOICES = (
+        ('Masculino','Masculino'),
+        ('Feminino','Feminino'),
+    )
+
     nome = models.CharField(max_length=200)
     cpf = models.CharField(max_length=14, verbose_name='CPF:')
     nome_pai = models.CharField(max_length=200, null=True, blank=True, verbose_name='Nome do pai:')
@@ -83,15 +93,15 @@ class Aluno(models.Model):
     identidade = models.CharField(max_length=12)
     identidade_uf = models.CharField(max_length=2)
     identidade_orgao = models.CharField(max_length=100)
-    sexo = models.CharField(max_length=50, null=True, blank=True)
+    sexo = models.CharField(max_length=50, choices=SEXO_CHOICES, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     etnia = models.CharField(max_length=50, blank=True, null=True)
     situacao = models.CharField(max_length=50, null=True, blank=True)
     
-    endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
-    graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING)
-    titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING)
-    trabalho = models.OneToOneField(Trabalho, on_delete=models.DO_NOTHING)
+    endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING, related_name='aluno_endereco', null=True)
+    graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, related_name='aluno_graduacao', null=True)
+    titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING, related_name='aluno_titulacao', null=True)
+    trabalho = models.OneToOneField(Trabalho, on_delete=models.DO_NOTHING, related_name='aluno_trabalho', null=True)
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)
@@ -102,10 +112,8 @@ class Aluno(models.Model):
             self.slug = slugify(self.id)
             super(Aluno, self).save(*args, **kwargs)
 
-
     def __str__(self):
-	    return self.nome
-
+            return str(self.nome)
 
 class Afastamento(models.Model):
     afastamento = models.CharField(max_length=200)
@@ -114,4 +122,7 @@ class Afastamento(models.Model):
     aluno = models.ManyToManyField(Aluno, related_name="afastamento_aluno")
 
     def __str__(self):
-        return self.afastamento
+        if self is not None:
+            return self.afastamento
+        else:
+            return 'Não informado'

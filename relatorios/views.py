@@ -1,14 +1,17 @@
 from django.shortcuts import render
-from .filter import AlunoFilter
+
+from matricula.models import Matricula
+from .filter import AlunoFilter, MatriculaFilter
 from aluno.models import Aluno
 from django.core.paginator import Paginator
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
-def filtra_aluno(request):
-
-    f = AlunoFilter(request.GET, queryset=Aluno.objects.all())
+def filtra_aluno(request):    
+    # f = AlunoFilter(request.GET, queryset=Aluno.objects.all())
+    f = MatriculaFilter(request.GET, queryset=Matricula.objects.all())
+    print(f.qs)
     paginator = Paginator(f.qs, 5)
 
     page = request.GET.get('page')
