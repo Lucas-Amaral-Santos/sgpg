@@ -18,6 +18,9 @@ def cadastra_matricula(request):
                 requisita_bolsa = form.cleaned_data['requisita_bolsa'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
+            edita_probatorio = nova_matricula.probatorio
+            edita_probatorio.probatorio = False
+            edita_probatorio.save()
             nova_matricula.save()
             return redirect('/')
     

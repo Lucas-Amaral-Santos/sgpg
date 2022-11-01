@@ -1,3 +1,4 @@
+from email.policy import default
 from django import forms
 import django_filters
 from django import forms
@@ -30,12 +31,13 @@ class MatriculaFilter(django_filters.FilterSet):
         ('Feminino','Feminino'),
     )
 
-    BOOLEAN_CHOICES = ((False, 'Falso'), (True, 'Verdadeiro'),)
+    PROBATORIO_CHOICES = ((True,'Sim'),(False,'Não'))
+
 
     
     status = django_filters.ChoiceFilter(choices=STATUS_CHOICES)
     probatorio__aluno__sexo = django_filters.ChoiceFilter(choices=SEXO_CHOICES)
-    probatorio__probatorio = django_filters.BooleanFilter(field_name='probatorio__probatorio', label="Probatório:", widget=forms.widgets.CheckboxInput())
+    probatorio__probatorio = django_filters.ChoiceFilter(label="Probatório:", choices=PROBATORIO_CHOICES)
 
 
     class Meta:
