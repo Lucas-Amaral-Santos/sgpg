@@ -1,4 +1,6 @@
+from django import forms
 import django_filters
+from django import forms
 from aluno.models import Aluno
 from matricula.models import Matricula
 
@@ -28,9 +30,14 @@ class MatriculaFilter(django_filters.FilterSet):
         ('Feminino','Feminino'),
     )
 
+    BOOLEAN_CHOICES = ((False, 'Falso'), (True, 'Verdadeiro'),)
+
     
     status = django_filters.ChoiceFilter(choices=STATUS_CHOICES)
     probatorio__aluno__sexo = django_filters.ChoiceFilter(choices=SEXO_CHOICES)
+    probatorio__probatorio = django_filters.BooleanFilter(field_name='probatorio__probatorio', label="Probatório:", widget=forms.widgets.CheckboxInput())
+
+
     class Meta:
         models = Matricula
-        fields = ['status', 'probatorio__aluno__sexo']
+        fields = ['status', 'probatorio__aluno__sexo', 'probatorio__probatorio']
