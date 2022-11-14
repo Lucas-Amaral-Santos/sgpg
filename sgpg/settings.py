@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import django_heroku
+import dj_database_url
+# import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,13 +22,25 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '(!uml6i(5ya978ql@x*mki4%w&dn0$roe9yn!!1&bn$2dehw^1'
+# SECRET_KEY = '(!uml6i(5ya978ql@x*mki4%w&dn0$roe9yn!!1&bn$2dehw^1'
+SECRET_KEY = os.environ.get('SECRET_KEY', default='(!uml6i(5ya978ql@x*mki4%w&dn0$roe9yn!!1&bn$2dehw^1')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+
+DATABASES = {
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        default='postgresql://postgres:postgres@localhost:5432/sgpg',
+        conn_max_age=600    )}
 
 # Application definition
 
@@ -92,16 +105,16 @@ WSGI_APPLICATION = 'sgpg.wsgi.application'
 # }
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd891raqa2skgvp',
-        'USER': 'dpvpleqvfbpdgd',
-        'PASSWORD': 'eb8d0d989ef3b4fcfe691781ec1d2fcdef9315748495d1690012311ab2e9f207',
-        'HOST': 'ec2-54-163-34-107.compute-1.amazonaws.com',   # Or an IP Address that your DB is hosted on
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'd891raqa2skgvp',
+#         'USER': 'dpvpleqvfbpdgd',
+#         'PASSWORD': 'eb8d0d989ef3b4fcfe691781ec1d2fcdef9315748495d1690012311ab2e9f207',
+#         'HOST': 'ec2-54-163-34-107.compute-1.amazonaws.com',   # Or an IP Address that your DB is hosted on
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -141,6 +154,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# Following settings only make sense on production and may break development environments.
+if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
+    # in your application directory on Render.
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Turn on WhiteNoise storage backend that takes care of compressing static files
+    # and creating unique names for each version so they can safely be cached forever.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -152,4 +172,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
