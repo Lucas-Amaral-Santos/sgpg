@@ -36,6 +36,7 @@ class Professor(models.Model):
       nome = models.CharField(max_length=200)
       sexo = models.CharField(max_length=50, null=True, blank=True)
       dt_nascimento = models.DateField(null=True, blank=True)
+      estrangeiro = models.BooleanField(default=False)
       nacionalidade = models.CharField(max_length=100, null=True, blank=True)
       naturalidade = models.CharField(max_length=2, null=True, blank=True)
       cpf = models.CharField(max_length=14, null=True, blank=True)
