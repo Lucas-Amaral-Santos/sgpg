@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm
-from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal
+from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm
+from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -18,6 +18,15 @@ def cadastra_matricula(request):
                 requisita_bolsa = form.cleaned_data['requisita_bolsa'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
+            try:
+                trab_final_prob = TrabalhoFinal.objects.get(probatorio=nova_matricula.probatorio)
+            except:
+                trab_final_prob = None
+            
+            if trab_final_prob is not None:
+                trab_final_prob.matricula = nova_matricula
+                trab_final_prob.save()
+            
             edita_probatorio = nova_matricula.probatorio
             edita_probatorio.probatorio = False
             edita_probatorio.save()
@@ -61,7 +70,6 @@ def cadastra_probatorio(request):
         if(form.is_valid()):
             novo_probatorio = Probatorio.objects.create(
                 data_inscricao = form.cleaned_data['data_inscricao'],
-                nota = form.cleaned_data['nota'],
                 aluno = form.cleaned_data['aluno'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
@@ -84,6 +92,21 @@ def lista_probatorio(request):
         probatorios = paginator.get_page(page)    
 
     return render(request, 'lista_matricula.html' , {'matriculas': probatorios, 'busca': busca, 'total':total, 'pagina':'Pesquisar Probatório'})
+
+def detalhe_probatorio(request, probatorio):
+    
+    probatorio = Probatorio.objects.get(id=probatorio)
+    inscricoes = InscricaoProbatorio.objects.filter(probatorio=probatorio.slug)
+    
+    try:
+        trabalho_final = TrabalhoFinal.objects.get(probatorio=probatorio)
+    except TrabalhoFinal.DoesNotExist:
+        trabalho_final = None
+
+    return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final}) 
+
+
+
 
 def cadastra_bolsa(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
@@ -145,6 +168,27 @@ def cadastra_inscricao(request, matricula):
 
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição'})
 
+
+def cadastra_inscricao_probatorio(request, probatorio):
+    probatorio = Probatorio.objects.get(slug=probatorio)
+    form = InscricaoForm()
+
+    if(request.method == 'POST'):
+        form = InscricaoForm(request.POST)
+        if(form.is_valid()):
+            nova_inscricao = InscricaoProbatorio.objects.create(
+                disciplina_ofertada = form.cleaned_data['disciplina_ofertada'],
+                nota = form.cleaned_data['nota'],
+                probatorio = probatorio,
+                cadastrado_por = User.objects.get(pk=request.user.id),
+            )
+
+            nova_inscricao.save()
+            return redirect('/')
+
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição'})
+
+
 def cadastra_trabalho_final(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
     form = TrabalhoFinalForm()
@@ -162,6 +206,33 @@ def cadastra_trabalho_final(request, matricula):
                 versao_final = form.cleaned_data['versao_final'],
                 dt_versao = form.cleaned_data['dt_versao'],
                 matricula = matricula,
+                cadastrado_por = User.objects.get(pk=request.user.id),
+            )
+
+            novo_trabalho_final.save()
+
+            return redirect('/')
+    
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Trabalho Final'})
+
+
+def cadastra_trabalho_probatorio(request, probatorio):
+    probatorio = Probatorio.objects.get(slug=probatorio)
+    form = TrabalhoFinalForm()
+
+    if(request.method == 'POST'):
+        form = TrabalhoFinalForm(request.POST)
+        if(form.is_valid()):
+            novo_trabalho_final = TrabalhoFinal.objects.create(
+                titulo = form.cleaned_data['titulo'],
+                data = form.cleaned_data['data'],
+                resumo = form.cleaned_data['resumo'],
+                resultado = form.cleaned_data['resultado'],
+                diploma = form.cleaned_data['diploma'],
+                dt_diploma = form.cleaned_data['dt_diploma'],
+                versao_final = form.cleaned_data['versao_final'],
+                dt_versao = form.cleaned_data['dt_versao'],
+                probatorio = probatorio,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
 

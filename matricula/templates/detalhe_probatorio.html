@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    {% include 'navbar.html' %}
+    <div class="body container">
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>Aluno: {{probatorio.aluno}}</p>
+            </div>
+
+          </div>
+    
+    
+    <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    CPF: {{probatorio.aluno.cpf}}
+                </div>
+                <div class="col-6">
+                    Curso:
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    Data de Nascimento: {{probatorio.aluno.dt_nascimento}}
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    Município: {{probatorio.aluno.endereco.municipio}}
+                </div>
+                <div class="col-6">
+                    Semestre/Ano de início:
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    UF: {{probatorio.aluno.endereco.uf}}
+                </div>
+                <div class="col-6">
+                    Título do Projeto: {% if trabalho_final == None %}<a href="{% url 'matricula:cadastra_trabalho_probatorio' probatorio.slug %}" style="color:dodgerblue;">Adicionar Projeto  <i class='fas fa-exclamation-circle' style='font-size:24px;color:red'></i></a>{% else %}<b>{{ trabalho_final }}</b>{% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    Titulação: {{probatorio.aluno.titulacao.titulacao}}
+                </div>
+                <div class="col-6">
+                    Orientador:
+                </div>
+            </div>
+
+        </div>
+      </div>
+
+      <div class="row my-3 gap-2">
+        <a class="btn btn-success col" href="{% url 'matricula:cadastra_inscricao_probatorio' probatorio.slug %}">Adicionar Disciplina</a>
+    </div>
+
+    <div class="secao-disciplina">
+        <h1>Disciplina Cursadas</h1>
+        <hr>
+
+        {% if not inscricoes %}
+            <p class="text-center"><i>Não há nenhuma disciplina cursada</i></p>
+        {% endif %}
+
+        {% for i in inscricoes %}
+        <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <p><b>Código:</b> {{i.disciplina_ofertada.disciplina.codigo}}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Nome:</b> {{i.disciplina_ofertada.disciplina.nome}}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Período:</b> {{i.disciplina_ofertada.semestre}}/{{i.disciplina_ofertada.ano}}</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    
+
+    
+
+    </div>
+
+{% include 'footer.html' %}
+{% endblock %}

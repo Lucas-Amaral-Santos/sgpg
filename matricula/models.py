@@ -4,6 +4,7 @@ from disciplina.models import DisciplinaOfertada
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime import datetime
 
 class Curso(models.Model):
 
@@ -21,8 +22,8 @@ class Curso(models.Model):
 
 # Create your models here.
 class Probatorio(models.Model):
-    data_inscricao = models.DateField()
-    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    data_inscricao = models.DateField(default=datetime.today())
+    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True)
     aluno = models.ForeignKey(Aluno, on_delete=models.DO_NOTHING, related_name='probatorio_aluno')
     probatorio = models.BooleanField(default=True)
 
@@ -87,6 +88,22 @@ class Afastamento(models.Model):
     def __str__(self):
         return self.motivo
 
+class InscricaoProbatorio(models.Model):
+    disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_probatorio_disciplina_ofertada')
+    probatorio = models.ForeignKey(Probatorio, on_delete=models.DO_NOTHING, related_name="inscricao_probatorio_probatorio")
+    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+
+    slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
+    updated = models.DateTimeField(auto_now=True)
+    cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='inscricao_probatorio_cadastrado_por')
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.id)
+        super(InscricaoProbatorio, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return str(self.disciplina_ofertada)
+
 
 class Inscricao(models.Model):
     disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_disciplina_ofertada')
@@ -114,7 +131,8 @@ class TrabalhoFinal(models.Model):
     versao_final = models.BooleanField()
     dt_versao = models.DateField()
 
-    matricula = models.OneToOneField(Matricula, on_delete=models.DO_NOTHING, related_name="matricula_trabalho_final")
+    matricula = models.OneToOneField(Matricula, on_delete=models.DO_NOTHING, null=True, related_name="matricula_trabalho_final")
+    probatorio = models.OneToOneField(Probatorio, on_delete=models.DO_NOTHING, null=True, related_name="probatorio_trabalho_final")
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)
