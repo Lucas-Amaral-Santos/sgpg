@@ -30,6 +30,7 @@ class Professor(models.Model):
             ("Colaborador", "Colaborador"),
             ("Coorientador", "Coorientador"),
             ("Visitante", "Visitante"),
+            ("Pos Doutor", "Pós Doutor"),
       )
 
       nome = models.CharField(max_length=200)
