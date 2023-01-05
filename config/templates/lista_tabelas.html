@@ -3,11 +3,15 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block title %}
+Tabelas Auxiliares
+{% endblock %}
+
 {% block content %}
 
     {% include 'navbar.html' %}
     <div class="body container">
-        <h1>Lista Tabelas</h1>
+        <h1>Tabelas Auxiliares</h1>
         <a class="btn btn-primary" href="{% url 'disciplina:cadastra_disciplina' %}">Cadastra Disciplina</a>
 
         <a class="btn btn-primary" href="{% url 'disciplina:cadastra_disciplina_ofertada' %}">Cadastra Disciplina Ofertada</a>
