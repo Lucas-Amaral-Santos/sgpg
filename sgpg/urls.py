@@ -27,6 +27,7 @@ urlpatterns = [
     path('matricula/',include('matricula.urls', namespace='matricula')),
     path('disciplina/',include('disciplina.urls', namespace='disciplina')),
     path('relatorios/',include('relatorios.urls', namespace='relatorios')),
+    path('config/',include('config.urls', namespace='config')),
     path('logar/', logar, name='logar'),
     path('sair', logout_view, name='logout_view')
     ]

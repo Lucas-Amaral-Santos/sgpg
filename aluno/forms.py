@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Aluno, Graduacao, Endereco, Trabalho, Residencia, Titulacao, Afastamento
+from .models import Aluno, Graduacao, Endereco, Trabalho, Residencia, Titulacao, Afastamento, EnsinoMedio
 
 class AlunoForm(ModelForm):
     class Meta:
@@ -17,6 +17,11 @@ class GraduacaoForm(ModelForm):
         model = Graduacao
         fields = '__all__'
         exclude = ['residencia']
+
+class EnsinoMedioForm(ModelForm):
+    class Meta:
+        model = EnsinoMedio
+        fields = '__all__'
 
 class TrabalhoForm(ModelForm):
     class Meta:

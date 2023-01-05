@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 from matricula.models import Matricula
-from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm
-from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao
+from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm, EnsinoMedioForm
+from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao, EnsinoMedio
 from django.core.paginator import Paginator
 from django.db.models import Q
 # Create your views here.
@@ -11,6 +11,7 @@ def cadastra_aluno(request):
     form_aluno = AlunoForm()
     form_endereco = EnderecoForm()
     form_graduacao = GraduacaoForm()
+    form_ensino_medio = EnsinoMedioForm()
     form_trabalho = TrabalhoForm()
     form_endereco_trabalho = EnderecoForm()
     form_residencia = ResidenciaForm()
@@ -20,12 +21,28 @@ def cadastra_aluno(request):
         form_aluno = AlunoForm(request.POST)
         form_endereco = EnderecoForm(request.POST)
         form_graduacao = GraduacaoForm(request.POST)
+        form_ensino_medio = EnsinoMedioForm(request.POST)
         form_trabalho = TrabalhoForm(request.POST)
         form_endereco_trabalho = EnderecoForm(request.POST)
         form_residencia = ResidenciaForm(request.POST)
         form_titulacao = TitulacaoForm(request.POST)
 
-        if form_aluno.is_valid() and form_endereco.is_valid() and form_graduacao.is_valid() and form_trabalho.is_valid()  and form_endereco_trabalho.is_valid() and form_residencia.is_valid() and form_titulacao.is_valid():
+        if form_aluno.is_valid() and \
+            form_endereco.is_valid() and \
+            form_graduacao.is_valid() and \
+            form_trabalho.is_valid() and \
+            form_endereco_trabalho.is_valid() and \
+            form_residencia.is_valid() and \
+            form_titulacao.is_valid() and \
+            form_ensino_medio.is_valid():
+
+            novo_ensino_medio = EnsinoMedio.objects.create(
+                ensino_medio_instituicao = form_ensino_medio.cleaned_data['ensino_medio_instituicao'],
+                ensino_medio_ano_inicio = form_ensino_medio.cleaned_data['ensino_medio_ano_inicio'],
+                ensino_medio_ano_conclusao = form_ensino_medio.cleaned_data['ensino_medio_ano_conclusao'],
+                ensino_medio_municipio = form_ensino_medio.cleaned_data['ensino_medio_municipio'],
+                ensino_medio_tipo = form_ensino_medio.cleaned_data['ensino_medio_tipo'],
+            )
 
             novo_titulacao = Titulacao.objects.create(
                 titulacao = form_titulacao.cleaned_data['titulacao'],
@@ -101,6 +118,7 @@ def cadastra_aluno(request):
                 trabalho = novo_trabalho,
             )
 
+            novo_ensino_medio.save()
             novo_titulacao.save()
             novo_residencia.save()
             novo_graduacao.save()
@@ -109,7 +127,7 @@ def cadastra_aluno(request):
             novo_trabalho.save()
             novo_aluno.save()
 
-    return render(request, "cadastra_aluno.html", {'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_trabalho':form_trabalho, 'form_endereco_trabalho':form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao})
+    return render(request, "cadastra_aluno.html", {'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho':form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao})
 
 def lista_aluno(request):
     alunos = Aluno.objects.all().order_by('nome')

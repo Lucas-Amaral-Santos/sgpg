@@ -4,6 +4,22 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class EnsinoMedio(models.Model):
+
+    ENSINO_MEDIO_TIPO_CHOICES = (
+        ('Pública', 'Pública'),
+        ('Particular', 'Particular'),
+    )
+
+    ensino_medio_instituicao = models.CharField(max_length=200, null=True, blank=True)
+    ensino_medio_ano_inicio = models.IntegerField(null=True, blank=True)
+    ensino_medio_ano_conclusao = models.IntegerField(null=True, blank=True)
+    ensino_medio_municipio = models.CharField(max_length=200, null=True, blank=True)
+    ensino_medio_tipo = models.CharField(max_length=200, choices=ENSINO_MEDIO_TIPO_CHOICES, verbose_name='Tipo de instituição:', null=True, blank=True)
+
+    def __str__(self):
+        return str(self.instituicao_ensino_medio)
+
 class Titulacao(models.Model):
     titulacao = models.CharField(max_length=200, null=True, blank=True)
     titulacao_area = models.CharField(max_length=200, null=True, blank=True)
@@ -100,6 +116,7 @@ class Aluno(models.Model):
     
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING, related_name='aluno_endereco', null=True)
     graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, related_name='aluno_graduacao', null=True)
+    ensino_medio = models.OneToOneField(EnsinoMedio, on_delete=models.DO_NOTHING, related_name='aluno_ensino_medio', null=True)
     titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING, related_name='aluno_titulacao', null=True)
     trabalho = models.OneToOneField(Trabalho, on_delete=models.DO_NOTHING, related_name='aluno_trabalho', null=True)
 

@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'disciplina',
     'relatorios',
     'django_filters',
+    'config',
 ]
 
 MIDDLEWARE = [
