@@ -3,12 +3,23 @@ from aluno.models import Endereco, Titulacao, Graduacao
 from django.contrib.auth.models import User
 # Create your models here.
 
+class Colegiado(models.Model):
+      colegiado_membro = models.BooleanField(default=False)
+      colegiado_data_entrada = models.DateField(null=True, blank=True)
+      colegiado_data_saida = models.DateField(null=True, blank=True)
+
+      def __str__(self):
+            return self.colegiado_membro
+
 class PosDoutorado(models.Model):
       concluido = models.BooleanField()
       ano_inicio = models.IntegerField(null=True, blank=True)
       ano_fim = models.IntegerField(null=True, blank=True)
       instituicao_posdoc = models.CharField(max_length=200, null=True, blank=True)
       pais = models.CharField(max_length=200, null=True, blank=True)
+
+      def __str__(self):
+            return self.instituicao_posdoc
 
 class Trabalho(models.Model):
       instituicao_trabalho = models.CharField(max_length=200)
@@ -44,11 +55,13 @@ class Professor(models.Model):
       identidade_uf= models.CharField(max_length=2, null=True, blank=True)
       identidade_orgao = models.CharField(max_length=100, null=True, blank=True)
       tipo_docente = models.CharField(max_length=100, choices=TIPO_DOCENTE_CHOICES, null=True, blank=True)
+      
       endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
       titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING)
       graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, null=True)
       trabalho = models.ForeignKey(Trabalho, on_delete=models.DO_NOTHING, related_name="professor_trabalho")
       pos_doutorado = models.ForeignKey(PosDoutorado, on_delete=models.DO_NOTHING, related_name="professor_pos_doutorado")
+      membro_colegiado = models.ForeignKey(Colegiado, on_delete=models.DO_NOTHING, related_name="professor_membro_colegiado")
 
       slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
       updated = models.DateTimeField(auto_now=True)

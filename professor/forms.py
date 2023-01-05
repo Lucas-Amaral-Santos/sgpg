@@ -1,7 +1,12 @@
 from pyexpat import model
 from django.forms import ModelForm, ValidationError
-from .models import Professor, Trabalho, PosDoutorado
+from .models import Professor, Trabalho, PosDoutorado, Colegiado
 
+class ColegiadoForm(ModelForm):
+
+    class Meta:
+        model = Colegiado
+        fields = '__all__'
 
 class PosDoutoradoForm(ModelForm):
     class Meta:

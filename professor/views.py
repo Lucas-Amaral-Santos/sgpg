@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .forms import ProfessorForm, TrabalhoForm, PosDoutoradoForm
-from  .models import Professor, Trabalho, PosDoutorado
+from .forms import ProfessorForm, TrabalhoForm, PosDoutoradoForm, ColegiadoForm
+from  .models import Professor, Trabalho, PosDoutorado, Colegiado
 from django.contrib.auth.models import User
 
 from aluno.models import Endereco, Titulacao
@@ -12,6 +12,7 @@ from django.db.models import Q
 # Create your views here.
 def cadastra_professor(request):
     form_professor = ProfessorForm()
+    form_colegiado = ColegiadoForm()
     form_trabalho = TrabalhoForm()
     form_pos_doutorado = PosDoutoradoForm()
     form_endereco = EnderecoForm()
@@ -21,13 +22,20 @@ def cadastra_professor(request):
 
     if request.method == "POST":
         form_professor = ProfessorForm(request.POST)
+        form_colegiado = ColegiadoForm(request.POST)
         form_trabalho = TrabalhoForm(request.POST)
         form_pos_doutorado = PosDoutoradoForm(request.POST)
         form_endereco = EnderecoForm(request.POST)
         form_titulacao = TitulacaoForm(request.POST)
 
-        if form_professor.is_valid() and form_trabalho.is_valid() and form_pos_doutorado.is_valid() and form_titulacao.is_valid() and form_endereco.is_valid():
+        if form_professor.is_valid()and form_colegiado.is_valid() and form_trabalho.is_valid() and form_pos_doutorado.is_valid() and form_titulacao.is_valid() and form_endereco.is_valid():
             
+            novo_colegiado = Colegiado.objects.create(
+                colegiado_membro = form_colegiado.cleaned_data['colegiado_membro'],
+                colegiado_data_entrada = form_colegiado.cleaned_data['colegiado_data_entrada'],
+                colegiado_data_saida = form_colegiado.cleaned_data['colegiado_data_saida'],
+            )
+
             novo_titulacao = Titulacao.objects.create(
                 titulacao = form_titulacao.cleaned_data['titulacao'],
                 titulacao_area = form_titulacao.cleaned_data['titulacao_area'],
@@ -78,6 +86,7 @@ def cadastra_professor(request):
                 endereco = novo_endereco,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
+            novo_colegiado.save()
             novo_titulacao.save()
             novo_endereco.save()
             novo_pos_doutorado.save()
@@ -86,7 +95,7 @@ def cadastra_professor(request):
             novo_professor.save()
 
 
-    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao})
+    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao})
 
 def lista_professor(request):
     professores = Professor.objects.all().order_by('nome')
