@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from matricula.models import Matricula
+from matricula.models import Matricula, Probatorio
 from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm, EnsinoMedioForm
 from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao, EnsinoMedio
 from django.core.paginator import Paginator
@@ -142,4 +142,20 @@ def lista_aluno(request):
 
     return render(request, 'lista_aluno.html' , {'alunos': alunos, 'busca': busca, 'total':total})
 
+def detalhes_aluno(request, aluno):
+    aluno = Aluno.objects.get(slug=aluno)
+    probatorio = None
+    matricula = None
+    try:
+        probatorio = Probatorio.objects.get(aluno=aluno)
+    except:
+        probatorio = None
+    
+    print(probatorio)
+    if probatorio is not None:
+        try:
+            matricula = Matricula.objects.get(probatorio = probatorio)
+        except:
+            matricula = None
 
+    return render(request, 'detalhes_aluno.html', {'aluno': aluno, 'probatorio': probatorio, 'matricula': matricula})

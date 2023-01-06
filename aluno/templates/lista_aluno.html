@@ -37,16 +37,14 @@ Pesquisar Aluno
         </tr>
       </thead>  
       {% for aluno in alunos %}
-      <a href="">
-      <tr>
-          <td>{{aluno.nome}}</td>
-          <td>{{aluno.cpf}}</td>
-          <td>{{aluno.email}}</td>
-          <td>{{aluno.endereco.telefone1}}</td>
-      </tr>
-      </a>
-
+        <tr onclick="location.href='{% url 'aluno:detalhes_aluno' aluno.slug %}'" style="cursor: pointer">
+            <td>{{aluno.nome}}</td>
+            <td>{{aluno.cpf}}</td>
+            <td>{{aluno.email}}</td>
+            <td>{{aluno.endereco.telefone1}}</td>
+        </tr>
       {% endfor %}
+
     </table>
     <hr class="my-5">
     {% endif %}
@@ -74,6 +72,8 @@ Pesquisar Aluno
 
 
   {% include 'footer.html' %}
+
+
 <script>
   const ctx = document.getElementById('myChart').getContext('2d');
   const myChart = new Chart(ctx, {

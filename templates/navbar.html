@@ -11,15 +11,15 @@
       <div class="collapse navbar-collapse justify-content-center px-5" id="navbarNavAltMarkup">
       <div class="d-flex-inline px-5">
         <ul class="navbar-nav gap-3">
-        <li class="dropdown">
-          <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false">Aluno</a>
+        <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar aluno">
+          <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-graduate fa-lg"></i></a>
           <ul class="dropdown-menu">
             <li><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
             <li><a href="{% url 'aluno:cadastra_aluno' %}" class="dropdown-item">Cadastrar Aluno</a></li>
           </ul>
         </li>
-        <li class="dropdown">
-          <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false">Matriculas</a>
+        <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar matrículas">
+          <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-graduation-cap fa-lg"></i></a>
           <ul class="dropdown-menu">
             <li><a href="{% url 'matricula:lista_probatorio' %}" class="dropdown-item">Pesquisar Probatório</a></li>
             <li><a href="{% url 'matricula:cadastra_probatorio' %}" class="dropdown-item">Cadastrar Probatório</a></li>
@@ -27,22 +27,20 @@
             <li><a href="{% url 'matricula:cadastra_matricula' %}" class="dropdown-item">Cadastrar Matrícula</a></li>
           </ul>
         </li>
-        <li class="dropdown">
-          <a class="nav-item nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Professor</a>
+        <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar professores">
+          <a class="nav-item nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-chalkboard-user fa-lg"></i></a>
           <ul class="dropdown-menu">
             <li><a href="{% url 'professor:lista_professor' %}" class="dropdown-item">Pesquisar Professor</a></li>
             <li><a href="{% url 'professor:cadastra_professor' %}" class="dropdown-item">Cadastrar Professor</a></li>
           </ul>
         </li>
-        <li><a class="nav-item nav-link" href="{% url 'relatorios:filtra_aluno' %}">Relatórios</a></li>
+        <li data-toggle="tooltip" data-placement="right" title="Ver e gerar relatórios e dashboards"><a class="nav-item nav-link" href="{% url 'relatorios:filtra_aluno' %}"><i class="fa-solid fa-table-list fa-lg"></i></a></li>
 
-
-
-        <li>
-          <a class="nav-item nav-link" href="{% url 'config:lista_tabelas' %}">Configurações</a>
+        <li data-toggle="tooltip" data-placement="right" title="Configurações do sistema e tabelas Auxiliares">
+          <a class="nav-item nav-link" href="{% url 'config:lista_tabelas' %}"><i class="fa-solid fa-gear fa-lg"></i></a>
         </li>
-        <li>
-          <a class="nav-item nav-link" href="{% url 'logout_view' %}">Sair</a>
+        <li data-toggle="tooltip" data-placement="right" title="Encerrar Sessão">
+          <a class="nav-item nav-link" href="{% url 'logout_view' %}"><i class="fa-solid fa-right-from-bracket fa-lg"></i></a>
         </li>
       </ul>
       </div>

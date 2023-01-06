@@ -66,7 +66,14 @@ a:hover {
 
 }
 
-
+#tooltip {
+    background: #333;
+    color: white;
+    font-weight: bold;
+    padding: 4px 8px;
+    font-size: 13px;
+    border-radius: 4px;
+}
 
 .dropdown:hover>.dropdown-menu {
     display: block;
@@ -90,4 +97,13 @@ a:hover {
 
 .nav-link.active {
     font-weight: 700;
+}
+
+.nav-aluno {
+    font-size: 12pt;
+}
+
+.btn-primary {
+    background-color: #224EAC !important;
+    border-style: none !important;
 }

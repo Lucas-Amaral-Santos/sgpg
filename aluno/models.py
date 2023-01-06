@@ -18,7 +18,7 @@ class EnsinoMedio(models.Model):
     ensino_medio_tipo = models.CharField(max_length=200, choices=ENSINO_MEDIO_TIPO_CHOICES, verbose_name='Tipo de instituição:', null=True, blank=True)
 
     def __str__(self):
-        return str(self.instituicao_ensino_medio)
+        return str(self.ensino_medio_instituicao)
 
 class Titulacao(models.Model):
     titulacao = models.CharField(max_length=200, null=True, blank=True)
