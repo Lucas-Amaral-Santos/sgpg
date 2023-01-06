@@ -38,4 +38,4 @@ class ProfessorForm(ModelForm):
     class Meta:
         model = Professor
         fields = "__all__"
-        exclude = ['endereco', 'titulacao', 'graduacao', 'trabalho', 'pos_doutorado', 'slug', 'updated', 'cadastrado_por']
+        exclude = ['endereco', 'titulacao', 'graduacao', 'trabalho', 'pos_doutorado', 'slug', 'updated', 'cadastrado_por', 'membro_colegiado']

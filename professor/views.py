@@ -4,7 +4,7 @@ from  .models import Professor, Trabalho, PosDoutorado, Colegiado
 from django.contrib.auth.models import User
 
 from aluno.models import Endereco, Titulacao
-from aluno.forms import EnderecoForm, TitulacaoForm
+from aluno.forms import EnderecoForm, TitulacaoProfessorForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 
@@ -16,7 +16,7 @@ def cadastra_professor(request):
     form_trabalho = TrabalhoForm()
     form_pos_doutorado = PosDoutoradoForm()
     form_endereco = EnderecoForm()
-    form_titulacao = TitulacaoForm()
+    form_titulacao = TitulacaoProfessorForm()
 
     print(request.user)
 
@@ -26,7 +26,7 @@ def cadastra_professor(request):
         form_trabalho = TrabalhoForm(request.POST)
         form_pos_doutorado = PosDoutoradoForm(request.POST)
         form_endereco = EnderecoForm(request.POST)
-        form_titulacao = TitulacaoForm(request.POST)
+        form_titulacao = TitulacaoProfessorForm(request.POST)
 
         if form_professor.is_valid()and form_colegiado.is_valid() and form_trabalho.is_valid() and form_pos_doutorado.is_valid() and form_titulacao.is_valid() and form_endereco.is_valid():
             
@@ -84,6 +84,7 @@ def cadastra_professor(request):
                 pos_doutorado = novo_pos_doutorado,
                 titulacao = novo_titulacao,
                 endereco = novo_endereco,
+                membro_colegiado = novo_colegiado,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
             novo_colegiado.save()
@@ -93,7 +94,6 @@ def cadastra_professor(request):
             novo_trabalho.save()
             novo_professor.save()
             novo_professor.save()
-
 
     return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao})
 

@@ -39,6 +39,13 @@ class TitulacaoForm(ModelForm):
         model = Titulacao
         fields = '__all__'
 
+
+class TitulacaoProfessorForm(ModelForm):
+    class Meta:
+        model = Titulacao
+        fields = '__all__'
+        exclude = ['data_qualificacao']
+
 class AfastamentoForm(ModelForm):
     class Meta:
         model = Afastamento
