@@ -11,6 +11,7 @@ Cadastra Aluno
 <div class="">
     {% include 'navbar.html' %}
     <div class="body container">
+        <h1 class="text-center">Cadastra Aluno</h1>
         <div class="flex w-75 container">
 
             <ul class="nav nav-tabs">
@@ -38,15 +39,15 @@ Cadastra Aluno
                 {% csrf_token %}
                 <div class="tab-content">
                     <div id="id_info" class="tab-pane container active">
-                        <h1>Informações Pessoais</h1>
+                        <h5>Informações Pessoais</h5>
                         {{form_aluno|crispy}}
                     </div>
                     <div id="id_endereco" class="tab-pane container">
-                        <h1>Endereço</h1>
+                        <h5>Endereço</h5>
                         {{form_endereco|crispy}}
                     </div>
                     <div id="id_graduacao" class="tab-pane container">
-                        <h1>Graduação</h1>
+                        <h5>Graduação</h5>
                         <h3>Ensino Superior</h3>
                         {{form_graduacao|crispy}}
 
@@ -54,18 +55,18 @@ Cadastra Aluno
                         {{form_ensino_medio|crispy}}
                     </div>
                     <div id="id_trabalho" class="tab-pane container">
-                        <h1>Trabalho</h1>
+                        <h5>Trabalho</h5>
                         {{form_trabalho|crispy}}
 
                         <h3>Endereço Trabalho</h3>
                         {{form_endereco_trabalho|crispy}}
                     </div>
                     <div id="id_residencia" class="tab-pane container">
-                        <h1>Residência</h1>
+                        <h5>Residência</h5>
                         {{form_residencia|crispy}}
                     </div>
                     <div id="id_titulacao" class="tab-pane container">
-                        <h1>Titulação</h1>
+                        <h5>Titulação</h5>
                         {{form_titulacao|crispy}}
                     </div>
                 </div>

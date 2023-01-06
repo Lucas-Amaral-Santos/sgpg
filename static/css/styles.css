@@ -107,3 +107,7 @@ a:hover {
     background-color: #224EAC !important;
     border-style: none !important;
 }
+
+h5 {
+    text-align: center;
+}
