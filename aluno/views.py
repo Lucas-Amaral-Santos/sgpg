@@ -116,7 +116,8 @@ def cadastra_aluno(request):
                 graduacao = novo_graduacao,
                 titulacao = novo_titulacao,
                 trabalho = novo_trabalho,
-                residencia_ = novo_residencia,
+                residencia = novo_residencia,
+                ensino_medio = novo_ensino_medio,
             )
 
             novo_ensino_medio.save()

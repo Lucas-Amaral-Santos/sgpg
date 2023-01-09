@@ -48,17 +48,20 @@ Cadastra Aluno
                     </div>
                     <div id="id_graduacao" class="tab-pane container">
                         <h5>Graduação</h5>
-                        <h3>Ensino Superior</h3>
+                        <h3 class="m-3">Ensino Superior</h3>
+                        <hr>
                         {{form_graduacao|crispy}}
 
-                        <h3>Ensino Ensino Médio</h3>
+                        <h3 class="m-3">Ensino Médio</h3>
+                        <hr>
                         {{form_ensino_medio|crispy}}
                     </div>
                     <div id="id_trabalho" class="tab-pane container">
                         <h5>Trabalho</h5>
                         {{form_trabalho|crispy}}
 
-                        <h3>Endereço Trabalho</h3>
+                        <h3>Endereço do Trabalho</h3>
+                        <hr>
                         {{form_endereco_trabalho|crispy}}
                     </div>
                     <div id="id_residencia" class="tab-pane container">
