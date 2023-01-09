@@ -3,7 +3,6 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 # Create your models here.
-
 class EnsinoMedio(models.Model):
 
     ENSINO_MEDIO_TIPO_CHOICES = (
@@ -43,8 +42,6 @@ class Residencia(models.Model):
     def __str__(self):
         return str(self.instituicao_residencia)
 
-
-
 class Endereco(models.Model):
     cep = models.CharField(max_length=8, null=True, blank=True)
     endereco = models.CharField(max_length=200, null=True, blank=True, )
@@ -55,8 +52,6 @@ class Endereco(models.Model):
 
     def __str__(self):
         return str(self.id)
-
-
 
 class Trabalho(models.Model):
     VINCULO_CHOICES = (
@@ -75,8 +70,6 @@ class Trabalho(models.Model):
     def __str__(self):
         return str(self.trabalho)
 
-
-
 class Graduacao(models.Model):
     graduacao_area = models.CharField(max_length=200) 
     instituicao = models.CharField(max_length=200)
@@ -90,7 +83,6 @@ class Graduacao(models.Model):
 
     def __str__(self):
         return self.instituicao
-
 
 class Aluno(models.Model):
     SEXO_CHOICES = (
@@ -119,6 +111,7 @@ class Aluno(models.Model):
     ensino_medio = models.OneToOneField(EnsinoMedio, on_delete=models.DO_NOTHING, related_name='aluno_ensino_medio', null=True)
     titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING, related_name='aluno_titulacao', null=True)
     trabalho = models.OneToOneField(Trabalho, on_delete=models.DO_NOTHING, related_name='aluno_trabalho', null=True)
+    residencia = models.OneToOneField(Residencia, on_delete=models.DO_NOTHING, related_name='aluno_residencia', null=True)
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)

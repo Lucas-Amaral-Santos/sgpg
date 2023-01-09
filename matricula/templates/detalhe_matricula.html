@@ -10,14 +10,14 @@ Detalhes Matrícula
 {% block content %}
 
     {% include 'navbar.html' %}
-    <div class="body container">
-
-        <div class="row">
+    <div class="body container px-5">
+        <h1 class='text-center'>Matrícula</h1>
+        <div class="row mt-5">
             <div class="col-md-6">
-                <p>Aluno: {{matricula.probatorio.aluno}}</p>
+                <h4>{{matricula.probatorio.aluno}}</h4>
             </div>
-            <div class="col-md-6 col-md-offset-2">
-                <p>Matrícula: {{matricula.numero}}</p>
+            <div class="col-md-6 align-content-md-end">
+                <h4>Nº Matrícula: {{matricula.numero}}</h4>
             </div>
           </div>
     

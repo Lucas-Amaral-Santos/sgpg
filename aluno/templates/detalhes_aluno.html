@@ -11,7 +11,7 @@ Detalhes Aluno
 
     <div class="container-sm body p-5 text-center">
         <div class="mt-5 mb-4">
-            <h1>Detalhes do Cliente</h1>
+            <h1>Detalhes do Aluno</h1>
         </div>
         <div class="container">
             <div class="row gutters-sm">
@@ -22,17 +22,11 @@ Detalhes Aluno
                                 {% include 'svg/graduation-cap-solid.html' %}
     
                                 <div class="mt-3">
-                                    <h4>{{cliente}}</h4>
-                                    <p class="text-secondary mb-1">{{cliente.ocupacao}}</p>
-                                    {% if cliente.estado_civil == "S" %}
-                                    <p class="text-muted font-size-sm">Solteiro</p>
-                                    {% elif cliente.estado_civil == "C" %}
-                                    <p class="text-muted font-size-sm">Casado</p>
-                                    {% elif cliente.estado_civil == "D" %}
-                                    <p class="text-muted font-size-sm">Divorciado</p>
-                                    {% elif cliente.estado_civil == "V" %}
-                                    <p class="text-muted font-size-sm">Viúvo</p>
-                                    {% endif %}
+                                    <h4>{{aluno}}</h4>
+                                    <p class="text-secondary mb-0">{{aluno.cpf}}</p>
+                                    <p class="text-secondary mb-0">{{aluno.dt_nascimento|date:'d/M/Y'}}</p>
+                                    <p class="text-secondary mb-0">{{aluno.graduacao.graduacao_area }}</p>
+                                    <p class="text-secondary mb-0">{{aluno.graduacao.instituicao}}</p>
                                 </div>
                             </div>
                         </div>
@@ -60,122 +54,166 @@ Detalhes Aluno
                         </li>
                     </ul>
                     <div class="py-3 mb-3 tab-content">
+                        <!-- Aba de Informações pessoais -->
                         <div id="id_info" class="tab-pane container active">
+                            <!-- Nome -->
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Nome</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente}}
+                                    {{aluno}}
                                 </div>
                             </div>
                             <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{cliente.email}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Sexo</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{cliente.sexo}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Telefone</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{cliente.telefone}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Estado Civil</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{cliente.estado_civil}}
-                                </div>
-                            </div>
-                            <hr>
+                            <!-- CPF -->
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">CPF</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.cpf}}
+                                    {{aluno.cpf}}
                                 </div>
                             </div>
                             <hr>
+                            <!-- Nome do Pai -->
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Data de Nascimento</h6>
+                                    <h6 class="mb-0">Nome do Pai</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.dt_nascimento}}
+                                    {{aluno.nome_pai}}
                                 </div>
                             </div>
                             <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Etnia</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{cliente.etnia}}
-                                </div>
-                            </div>
-                            <hr>
+                            <!-- Nome da Mãe -->
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Nome da Mãe</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.nome_mae}}
+                                    {{aluno.nome_mae}}
                                 </div>
                             </div>
                             <hr>
+                            <!-- Naturalidade -->
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Nome do pai</h6>
+                                    <h6 class="mb-0">Naturalidade</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.nome_pai}}
+                                    {{aluno.naturalidade}}
                                 </div>
                             </div>
                             <hr>
+                            <!-- Nacionalidade -->
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Profissão</h6>
+                                    <h6 class="mb-0">Nacionalidade</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.profissao}}
+                                    {{aluno.nacionalidade}}
                                 </div>
                             </div>
                             <hr>
+                            <!-- Data de Nascimento -->
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Ocupação</h6>
+                                    <h6 class="mb-0">Data de Nascimento</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.ocupacao}}
+                                    {{aluno.dt_nascimento}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Estado Civil -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Estado Civil</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.estado_civil}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Identidade -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Identidade</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.identidade}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Identidade UF -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Identidade UF</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.identidade_uf}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Identidade Orgão -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Identidade Orgão</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.identidade_orgao}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Sexo -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Sexo</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.sexo}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Email -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.email}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Etnia -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Etnia</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.etnia}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Situação -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Situação</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.situacao}}
                                 </div>
                             </div>
                         </div>
+                        <!-- Aba de Endereço -->
                         <div id="id_endereco" class="tab-pane container">
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">CEP</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.cep}}
+                                    {{aluno.endereco.cep}}
                                 </div>
                             </div>
                             <hr>
@@ -184,25 +222,7 @@ Detalhes Aluno
                                     <h6 class="mb-0">Rua</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.endereco}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Número</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{cliente.numero}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Bairro</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{cliente.bairro}}
+                                    {{aluno.endereco.endereco}}
                                 </div>
                             </div>
                             <hr>
@@ -211,7 +231,7 @@ Detalhes Aluno
                                     <h6 class="mb-0">Município</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.municipio}}
+                                    {{aluno.endereco.municipio}}
                                 </div>
                             </div>
                             <hr>
@@ -220,29 +240,348 @@ Detalhes Aluno
                                     <h6 class="mb-0">UF</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{cliente.uf}}
+                                    {{aluno.endereco.uf}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Telefone 1</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.endereco.telefone1}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">UF</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.endereco.telefone2}}
                                 </div>
                             </div>
                         </div>
-                        <div id="id_graduacao" class="tab-pane container">
-                            
+                        <!-- Aba de Graduação -->
+                        <div id="id_graduacao" class="tab-pane container"> 
+                            <!-- Graduação Área -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Graduação Área</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.graduacao.graduacao_area}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Instituição -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Instituição</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.graduacao.instituicao}}
+                                </div>
+                            </div>
+                            <hr>      
+                            <!-- Local -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Local</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.graduacao.local}}
+                                </div>
+                            </div>
+                            <hr>    
+                            <!-- Ano de Início -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Ano de Início</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.graduacao.graduacao_ano_inicio}}
+                                </div>
+                            </div>
+                            <hr>  
+                            <!-- Ano Fim -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Ano Fim</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.graduacao.graduacao_ano_fim}}
+                                </div>
+                            </div>
+                            <hr>     
+                            <!-- Residência -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Residência</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.graduacao.residencia}}
+                                </div>
+                            </div>
+                            <hr>  
+                            <!-- Bolsa -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Bolsa</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.graduacao.bolsa_graduacao}}
+                                </div>
+                            </div>
+                            <hr>   
+                            <!-- Agência -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Agência</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.graduacao.agencia}}
+                                </div>
+                            </div>
+                            <hr>                             
+                            <!-- Iniciação Científica -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Iniciação Científica</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.graduacao.iniciacao_cientifica}}
+                                </div>
+                            </div>
+                            <div class="my-4">
+                                <p>Ensino Médio</p>
+                            </div>
+                            <!-- Insituição de Ensino Médio -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Instituição</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.ensino_medio.ensino_medio_instituicao}}
+                                </div>
+                            </div>
+                            <hr> 
+                            <!-- Ano de Início do Ensino Médio -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Ano de Início</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.ensino_medio.ensino_medio_ano_inicio}}
+                                </div>
+                            </div>
+                            <hr> 
+                            <!-- Ano de Conclusão do Ensino Médio -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Ano de Conclusão</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.ensino_medio.ensino_medio_conclusao}}
+                                </div>
+                            </div>
+                            <hr> 
+                            <!-- Município do Ensino Médio -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Município</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.ensino_medio.ensino_medio_municipio}}
+                                </div>
+                            </div>
+                            <hr> 
+                            <!-- Tipo de Instituição de Ensino do Ensino Médio -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Tipo de Instituição de Ensino</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.ensino_medio.ensino_medio_tipo}}
+                                </div>
+                            </div>
                         </div>
+                        <!-- Aba de Trabalho -->
                         <div id="id_trabalho" class="tab-pane container">
-
+                            <!-- Trabalho -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Trabalho</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.trabalho}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Tipo de Vínculo -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Tipo de Vínculo</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.trabalho.tipo_vinculo}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Email de Trabalho -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email de Trabalho</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.trabalho.email}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Data de Término -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Data de Término</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.trabalho.data_termino}}
+                                </div>
+                            </div>
                         </div>
+                        <!-- Aba de Residência -->
                         <div id="id_residencia" class="tab-pane container">
-
+                            <!-- Residência -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Residência</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.residencia.instituicao_residencia}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Ano de Início -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Ano de Início</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.residencia.residencia_ano_inicio}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Ano de Fim -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Ano de Fim</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.residencia.residencia_ano_fim}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Especialidade -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Especialidade</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.residencia.especialidade}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- UF -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">UF</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.residencia.uf}}
+                                </div>
+                            </div>
                         </div>
+                        <!-- Aba de Titulação -->
                         <div id="id_titulacao" class="tab-pane container">
-                            
-                        </div>
+                            <!-- Titulação -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Titulação</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.titulacao}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Área -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Área</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.titulacao.titulacao_area}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Ano -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Ano</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.titulacao.titulacao_ano}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Data da Qualificação -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Data da Qualificação</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.titulacao.data_qualificacao}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- UF -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">UF</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.titulacao.uf}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Instituição -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Instituição</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.titulacao.instituicao_titulacao}}
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Observações Geral -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Observações Geral</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{aluno.titulacao.obs_geral}}
+                                </div>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
             </div>
             <div class= 'd-flex justify-content-end'>
-            <div class="w-50 m-3 row">
+            <div class="w-50 my-2 row">
                 <div class="col-3">
                     <button class="btn btn-primary btn-lg" type="submit" onclick="location.href='' "><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-primary btn-lg" type="submit" onclick="location.href='' "><i class="fa-solid fa-pencil"></i></button>
                 </div>
                 
                 {% if probatorio is not None %}

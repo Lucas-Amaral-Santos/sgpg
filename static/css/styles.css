@@ -3,22 +3,27 @@
     src: url('/static/fonts/Miguelito.otf') format('opentype');
 }
 
+
 .body {
     padding-top: 80pt;
     color: #224EAC;
     min-height: 500px;
 }
+.login {
+    color: #224EAC;
+}
 
+nav svg {
+    width:25%;
+    height: 25%;
+}
 .card-home {
-    /* background-color: rgba(41, 55, 84, 1); */
-    /* background-color: #224EAC; */
     background-color:#efefefe7;
     width: 200px;
     height: 200px;
     padding: 5%;
     align-items: center;
     color: #224EAC;
-
 }
 
 .navbar {
@@ -30,7 +35,7 @@
     font-size:larger;
     text-transform: capitalize;
 
-  }
+}
 
 ul {
     text-transform: capitalize;
@@ -53,7 +58,6 @@ svg {
     color: black;
 }
 
-
 a {
     color: white;
     text-decoration: none;
@@ -63,7 +67,6 @@ a {
 a:hover {
     text-decoration: none;
     color: white;
-
 }
 
 #tooltip {
@@ -100,7 +103,7 @@ a:hover {
 }
 
 .nav-aluno {
-    font-size: 12pt;
+    font-size: 11pt;
 }
 
 .btn-primary {
