@@ -12,10 +12,14 @@ Tabelas Auxiliares
     {% include 'navbar.html' %}
     <div class="body container">
         <h1>Tabelas Auxiliares</h1>
-        <a class="btn btn-primary" href="{% url 'disciplina:cadastra_disciplina' %}">Cadastra Disciplina</a>
-
-        <a class="btn btn-primary" href="{% url 'disciplina:cadastra_disciplina_ofertada' %}">Cadastra Disciplina Ofertada</a>
-
+        <div class="row">
+            <div class="col-12 m-1">
+                <a class="btn btn-primary w-100 btn-lg btn-block" href="{% url 'disciplina:cadastra_disciplina' %}">Cadastra Disciplina</a>
+            </div>
+            <div class="col-12 m-1">
+                <a class="btn btn-primary w-100 btn-lg btn-block" href="{% url 'disciplina:cadastra_disciplina_ofertada' %}">Cadastra Disciplina Ofertada</a>
+            </div>
+        </div>
     </div>
 
     {% include 'footer.html' %}

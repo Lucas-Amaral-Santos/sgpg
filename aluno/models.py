@@ -89,7 +89,6 @@ class Aluno(models.Model):
         ('Masculino','Masculino'),
         ('Feminino','Feminino'),
     )
-
     nome = models.CharField(max_length=200)
     cpf = models.CharField(max_length=14, verbose_name='CPF:')
     nome_pai = models.CharField(max_length=200, null=True, blank=True, verbose_name='Nome do pai:')

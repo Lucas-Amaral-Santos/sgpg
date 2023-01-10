@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'relatorios',
     'django_filters',
     'config',
+    'evento',
 ]
 
 MIDDLEWARE = [

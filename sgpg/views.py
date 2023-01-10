@@ -6,6 +6,6 @@ def home(request):
     if (not request.user.is_authenticated):
         return redirect(logar)
 
-    ano = datetime.today().year
+    data = datetime.today
 
-    return render(request, 'home.html', {'ano': ano})
+    return render(request, 'home.html', {'data': data})

@@ -34,7 +34,6 @@ nav svg {
 .nav-item {
     font-size:larger;
     text-transform: capitalize;
-
 }
 
 ul {
@@ -52,6 +51,10 @@ svg {
     fill:#224EAC;
     height: 200px;
     width: 200px;
+}
+
+a i.fa-sharp {
+    color:#224EAC;
 }
 
 .login_form{

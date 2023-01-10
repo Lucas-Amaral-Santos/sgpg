@@ -26,6 +26,7 @@ urlpatterns = [
     path('professor/',include('professor.urls', namespace='professor')),
     path('matricula/',include('matricula.urls', namespace='matricula')),
     path('disciplina/',include('disciplina.urls', namespace='disciplina')),
+    path('evento/',include('evento.urls', namespace='evento')),
     path('relatorios/',include('relatorios.urls', namespace='relatorios')),
     path('config/',include('config.urls', namespace='config')),
     path('logar/', logar, name='logar'),
