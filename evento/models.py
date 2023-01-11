@@ -2,8 +2,7 @@ from django.db import models
 from professor.models import Professor
 from matricula.models import TrabalhoFinal
 from django.contrib.auth.models import User
-
-
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Evento(models.Model):
@@ -16,6 +15,10 @@ class Evento(models.Model):
     updated = models.DateTimeField(auto_now=True)
     dt_cadastro = models.DateTimeField(auto_now=True)
     cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='evento_cadastrado_por')
+
+    def save(self, *args, **kwargs):
+            self.slug = slugify(self.id)
+            super(Evento, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.evento)
@@ -33,4 +36,4 @@ class Participante(models.Model):
 
 
     def __str__(self):
-        return str(self.participante_nome)
+        return str(self.participante_professor)

@@ -12,4 +12,4 @@ class ParticipanteForm(ModelForm):
     
     class Meta:
         model = Participante
-        fields = '__all__'
+        fields = ['participante_professor', 'participante_tipo']

@@ -12,6 +12,13 @@ Calendario de Eventos
         <div class="container">
             <h1 class='text-center mt-1 mb-4'>Calendário de Eventos</h1>
             <div class="container row justify-content-between">
+              <div class="m-2">
+                <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#todos-eventos">
+                
+                <i class="fa-solid fa-bars"></i>
+                
+                </a>
+              </div>
               <div class="col-4 text-start">
                 <a href='{% url "evento:mostra_eventos" p_month.month  p_month.year %}'>
                   <i class="fa-sharp fa-solid fa-angle-left fa-2x"></i>
@@ -29,32 +36,46 @@ Calendario de Eventos
               </div>
             </div>
             {{calendario|safe}}
-
-              
         </div>
     </div>
 
     <!-- 
 =================================
-        Tela Modal
+        Tela Modal - Evento do Dia
 =================================
     -->
 
-    <div id="eventos-dia" class="modal" tabindex="-1" role="dialog">
+    <div id="todos-eventos" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
                 <div class="container">
-                    <h5 class="modal-title">Eventos</h5>
-                    <span><i>{{data| date:"d/m/Y"}}</i></span>
+                    <h5 class="modal-title">Eventos Cadastrados</h5>
+                    <span><i>{{data| date:"d/m/Y"}} {{dia_selecionado}}</i></span>
                 </div>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            {% if not eventos %}
             <div class="modal-body">
               <p class='text-center'><i>Nenhum evento disponível.</i></p>
             </div>
+
+            {% elif eventos %}
+              {% for e in eventos %}
+                  <table>
+                    <tr>
+                      <td>{{e.evento_hora}}</td>
+                      <td>{{e}}</td>
+                      <td>{{e.evento_trabalho_final}}</td>
+                      <td>{{e.evento_trabalho_final.matricula.probatorio}}</td>
+                    </tr>
+                    <hr>
+                  </table>
+              {% endfor %}
+            {% endif %}
+
             <div class="modal-footer">
               <a type="button" href="{% url 'evento:cadastra_evento' %}" class="btn btn-primary">Adicionar Evento</a>
             </div>
@@ -69,53 +90,86 @@ Calendario de Eventos
     -->
 
 
+        <!-- 
+=================================
+        Tela Modal - Todos os Eventos
+=================================
+    -->
+
+    <div id="eventos-dia" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <div class="container">
+                  <h5 class="modal-title">Eventos</h5>
+                  <span><i>{{data| date:"d/m/Y"}} {{dia_selecionado}}</i></span>
+              </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class='text-center'><i>Nenhum evento disponível.</i></p>
+          </div>
+          <div class="modal-footer">
+            <a type="button" href="{% url 'evento:cadastra_evento' %}" class="btn btn-primary">Adicionar Evento</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- 
+=================================
+      FIM Tela Modal
+=================================
+  -->
+
+
     {% include 'footer.html' %}
 
     <style>
-        th.month {
-            text-align: center;
-        }
-        th {
-            background-color: #224EACFF;
-            text-align: center;
-            border-style: solid;
-            border-width: 2px;
-            border-color: white;
-            color: white;
-        }
-        td {
-            width: 150px;
-            height: 50px;
-            border-style: solid;
-            border-width: 2px;
-            border-color: white;
-            text-align: center;
-        }
+      th.month {
+        text-align: center;
+      }
+      th {
+        background-color: #224EACFF;
+        text-align: center;
+        border-style: solid;
+        border-width: 2px;
+        border-color: white;
+        color: white;
+      }
+      td {
+        width: 150px;
+        height: 50px;
+        border-style: solid;
+        border-width: 2px;
+        border-color: white;
+        text-align: center;
+      }
 
-        .dias {
-            background-color: #224EAC22;
-        }
+      .dias {
+        background-color: #224EAC22;
+      }
 
       .dia-hoje {
-        background-color: #224EAC;
-        color: white;
+      background-color: #224EAC;
+      color: white;
       }
 
       .dia-hoje:hover {
-        background-color: #224EAC77;
-        color: white;
-        cursor: pointer;
+      background-color: #224EAC77;
+      color: white;
+      cursor: pointer;
       }
 
-        .dias:hover {
-            background-color: #224EAC77;
-            cursor: pointer;
-        }
+      .dias:hover {
+      background-color: #224EAC77;
+      cursor: pointer;
+      }
 
-        .dias:hover {
-            color: white;
-        }
-
-
-    </style>
+      .dias:hover {
+      color: white;
+      }
+      </style>
 {% endblock %}

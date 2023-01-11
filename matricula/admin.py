@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Matricula, Inscricao, Probatorio
+from .models import Matricula, Inscricao, Probatorio, TrabalhoFinal
 
 # Register your models here.
 @admin.register(Matricula)
@@ -15,4 +15,8 @@ class InscricaoAdmin(admin.ModelAdmin):
 
 @admin.register(Probatorio)
 class ProbatorioAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(TrabalhoFinal)
+class TrabalhoFinalAdmin(admin.ModelAdmin):
     pass

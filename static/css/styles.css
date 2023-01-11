@@ -44,8 +44,16 @@ ul {
 footer{
     /* background-color: rgba(41, 55, 84, 1); */
     background-color: #224EAC;
-    color: white !important;
 }
+
+footer .color-text-footer{
+    color: white;
+}
+
+footer .footer-copyright{
+    color: white;
+}
+
 
 svg {
     fill:#224EAC;
@@ -62,9 +70,7 @@ a i.fa-sharp {
 }
 
 a {
-    color: white;
     text-decoration: none;
-
 }
 
 a:hover {
@@ -116,4 +122,15 @@ a:hover {
 
 h5 {
     text-align: center;
+}
+
+.adicionar-participante-btn {
+    color: #224EAC;
+}
+
+.adicionar-participante-btn:hover {
+    color: white;
+    background-color: #224EAC77;
+    cursor: pointer;
+    border-color: white;
 }
