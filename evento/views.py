@@ -8,8 +8,33 @@ from dateutil.relativedelta import relativedelta
 
 class EventCalendar(HTMLCalendar):
 
-    
+    def formatmonth(self, theyear, themonth, withyear=True):
+        """
+        Return a formatted month as a table.
+        """
+        v = []
+        a = v.append
+        a('<table border="0" cellpadding="0" cellspacing="0" class="%s">' % (
+            self.cssclass_month))
+        a('\n')
+        a(self.formatmonthname(theyear, themonth, withyear=withyear))
+        a('\n')
+        a(self.formatweekheader())
+        a('\n')
+        for week in self.monthdays2calendar(theyear, themonth):
+            a(self.formatweek(week, m=themonth, y=theyear))
+            a('\n')
+        a('</table>')
+        a('\n')
+        return ''.join(v)
 
+    def formatweek(self, theweek, m=None, y=None):
+        """
+        Return a complete week as a table row.
+        """
+        s = ''.join(self.formatday(d, m, y, wd) for (d, wd) in theweek)
+        return '<tr>%s</tr>' % s
+    
     def formatday(self, day, month, year, weekday,):
         eventos_dia = ''
         data = None
@@ -22,9 +47,9 @@ class EventCalendar(HTMLCalendar):
         if day == 0:
             return '<td class="noday">&nbsp;</td>' # day outside month
         if day == datetime.today().day and month == datetime.today().month and year == datetime.today().year:
-                return '<td class="dia-hoje" data-toggle="modal" data-target="#eventos-dia">%d<br>%s</td>' % (day, eventos_dia)
+                return '<td class="dia-hoje dias %s" data-toggle="modal" data-target="#eventos-dia"><span id="dia-invisivel">%d/%d/%d</span><span class="dia">%d</span><br>%s</td>' % (weekday, day, month, year, day, eventos_dia)
         else:
-            return '<td class="dias" data-toggle="modal" data-target="#eventos-dia">%d<br>%s</td>' % (day, eventos_dia)
+            return '<td class="dias %s" data-toggle="modal" data-target="#eventos-dia"><span id="dia-invisivel">%d/%d/%d</span><span class="dia">%d</span><br>%s</td>' % (weekday, day, month, year, day, eventos_dia)
 
     def get_events(self, data):
         if Evento.objects.filter(evento_data=data):

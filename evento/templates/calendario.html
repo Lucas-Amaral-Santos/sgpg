@@ -13,7 +13,7 @@ Calendario de Eventos
             <h1 class='text-center mt-1 mb-4'>Calendário de Eventos</h1>
             <div class="container row justify-content-between">
               <div class="m-2">
-                <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#todos-eventos">
+                <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#todos-eventos">
                 
                 <i class="fa-solid fa-bars"></i>
                 
@@ -46,12 +46,11 @@ Calendario de Eventos
     -->
 
     <div id="todos-eventos" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
                 <div class="container">
                     <h5 class="modal-title">Eventos Cadastrados</h5>
-                    <span><i>{{data| date:"d/m/Y"}} {{dia_selecionado}}</i></span>
                 </div>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -62,18 +61,28 @@ Calendario de Eventos
               <p class='text-center'><i>Nenhum evento disponível.</i></p>
             </div>
 
-            {% elif eventos %}
-              {% for e in eventos %}
-                  <table>
-                    <tr>
-                      <td>{{e.evento_hora}}</td>
-                      <td>{{e}}</td>
-                      <td>{{e.evento_trabalho_final}}</td>
-                      <td>{{e.evento_trabalho_final.matricula.probatorio}}</td>
-                    </tr>
-                    <hr>
-                  </table>
-              {% endfor %}
+            {% elif eventos %}          
+              <div class="card">
+                <table>              
+                  <thead>
+                      <th>Data</th>
+                      <th>Hora</th>
+                      <th>Evento</th>
+                      <th>Trabalho Final</th>
+                      <th>Aluno</th>
+                  </thead>
+                  {% for e in eventos %}
+                  <tr onclick="location.href='{% url 'evento:detalhes_evento' e.slug %}'" class="item-evento" style="cursor: pointer">
+                      <td class="atributo-evento-item">{{e.evento_data|date:"d/m/Y"}}</td>
+                      <td class="atributo-evento-item">{{e.evento_hora}}</td>
+                      <td class="atributo-evento-item">{{e}}</td>
+                      <td class="atributo-evento-item">{{e.evento_trabalho_final}}</td>
+                      <td class="atributo-evento-item">{{e.evento_trabalho_final.matricula.probatorio}}</td>
+                  </tr>
+                  {% endfor %}
+                </table>
+              </div>
+              
             {% endif %}
 
             <div class="modal-footer">
@@ -97,18 +106,18 @@ Calendario de Eventos
     -->
 
     <div id="eventos-dia" class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
               <div class="container">
                   <h5 class="modal-title">Eventos</h5>
-                  <span><i>{{data| date:"d/m/Y"}} {{dia_selecionado}}</i></span>
+                  <span id="data-modal"><i></i></span>
               </div>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body modal-evento-dia">
             <p class='text-center'><i>Nenhum evento disponível.</i></p>
           </div>
           <div class="modal-footer">
@@ -171,5 +180,58 @@ Calendario de Eventos
       .dias:hover {
       color: white;
       }
+
+      
+
       </style>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+      <script>
+        $(document).ready(function(){
+          $('.dias').on('click',function(){
+              evento_card = '';
+              count = false;
+              dia_selecionado = $(this).find('#dia-invisivel').html()
+              dia = dia_selecionado.substring(0, dia_selecionado.indexOf("/"));
+              mes = dia_selecionado.substring(dia_selecionado.indexOf("/") + 1, dia_selecionado.lastIndexOf("/"));
+              if (parseInt(dia) <= 9) {
+                dia = '0'+ dia.toString();
+              }
+              
+              if (parseInt(mes) <= 9) {
+                mes = '0'+ mes.toString();
+              }
+              dia_selecionado = dia + '/' + mes + dia_selecionado.substr(dia_selecionado.length -5, dia_selecionado.length);
+              console.log(dia_selecionado)
+              $("#data-modal i").html(dia_selecionado);
+              {% for e in eventos %}
+              console.log("{{e.evento_data| date:"d/m/Y"}}")
+              if (dia_selecionado === "{{e.evento_data| date:"d/m/Y"}}") {
+                count = true;
+
+                evento_card += `
+                    <tr onclick="location.href='{% url 'evento:detalhes_evento' e.slug %}'" class="item-evento border" style="cursor: pointer">
+                      <td class="atributo-evento-item">{{e.evento_hora}}</td>
+                      <td class="atributo-evento-item">{{e}}</td>
+                      <td class="atributo-evento-item">{{e.evento_trabalho_final}}</td>
+                      <td class="atributo-evento-item">{{e.evento_trabalho_final.matricula.probatorio}}</td>
+                    </tr>`;
+                evento_card_table = `<div class="card border-0"><table>` + evento_card + `</table></div>`;  
+
+                $('.modal-evento-dia').html(evento_card_table);
+              } 
+
+              {% endfor %}
+
+              if (count === false) {
+                evento_card = `
+                <p class='text-center'><i>Nenhum evento disponível.</i></p>
+                `;
+                $('.modal-evento-dia').html(evento_card);
+              }
+          });
+      });
+
+      </script>
+
 {% endblock %}

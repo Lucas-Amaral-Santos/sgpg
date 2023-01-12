@@ -37,7 +37,7 @@ Pesquisar Aluno
         </tr>
       </thead>  
       {% for aluno in alunos %}
-        <tr onclick="location.href='{% url 'aluno:detalhes_aluno' aluno.slug %}'" style="cursor: pointer">
+        <tr onclick="location.href='{% url 'aluno:detalhes_aluno' aluno.slug %}'" style="cursor: pointer;">
             <td>{{aluno.nome}}</td>
             <td>{{aluno.cpf}}</td>
             <td>{{aluno.email}}</td>

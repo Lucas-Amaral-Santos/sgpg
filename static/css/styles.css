@@ -134,3 +134,19 @@ h5 {
     cursor: pointer;
     border-color: white;
 }
+
+#dia-invisivel {
+    display: none;
+  }
+
+
+.item-evento:hover {
+    background-color: #224EAC77;
+    color: white;
+    border-color: #224EAC;
+    border-width: 1px;
+}
+
+.atributo-evento-item {
+    border-style: none;
+}

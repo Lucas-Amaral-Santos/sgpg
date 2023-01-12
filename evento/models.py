@@ -32,7 +32,7 @@ class Participante(models.Model):
 
     participante_professor = models.ForeignKey(Professor, on_delete=models.DO_NOTHING, related_name='participante_professor')
     participante_tipo = models.CharField(max_length=20, choices=TIPO_PARTICIPANTE_CHOICES)
-    evento = models.ForeignKey(Evento, on_delete=models.DO_NOTHING, related_name='participantes_evento')
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='participantes_evento')
 
 
     def __str__(self):
