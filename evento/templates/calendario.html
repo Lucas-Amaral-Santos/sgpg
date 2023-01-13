@@ -34,8 +34,9 @@ Calendario de Eventos
                  <i class="fa-sharp fa-solid fa-angle-right fa-2x"></i>
                 </a>
               </div>
+              {{calendario|safe}}
             </div>
-            {{calendario|safe}}
+            
         </div>
     </div>
 
@@ -191,7 +192,7 @@ Calendario de Eventos
           $('.dias').on('click',function(){
               evento_card = '';
               count = false;
-              dia_selecionado = $(this).find('#dia-invisivel').html()
+              dia_selecionado = $(this).find('#dia-invisivel').html()  //    1/1/2023   01/01/2023
               dia = dia_selecionado.substring(0, dia_selecionado.indexOf("/"));
               mes = dia_selecionado.substring(dia_selecionado.indexOf("/") + 1, dia_selecionado.lastIndexOf("/"));
               if (parseInt(dia) <= 9) {
