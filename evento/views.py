@@ -40,8 +40,9 @@ class EventCalendar(HTMLCalendar):
         data = None
         if day != 0:
             data = datetime(year, month, day)
-        if self.get_events(data):
-            eventos_dia = '<i class="fa-solid fa-circle"></i>'
+        n_events=self.get_events(data)
+        if n_events:
+            eventos_dia = '<i class="fa-solid fa-circle"></i><span class="n-event" style="margin-top: -10px;margin-left: -12px;font-size:10pt;">%d</span>' % (n_events)
 
 
         if day == 0:
@@ -52,10 +53,10 @@ class EventCalendar(HTMLCalendar):
             return '<td class="dias %s" data-toggle="modal" data-target="#eventos-dia"><span id="dia-invisivel">%d/%d/%d</span><span class="dia">%d</span><br>%s</td>' % (weekday, day, month, year, day, eventos_dia)
 
     def get_events(self, data):
-        if Evento.objects.filter(evento_data=data):
-            return True
-        else:
-            return False
+        evento = Evento.objects.filter(evento_data=data)
+        if evento:
+            return evento.count()
+
 
 
 def mostra_eventos(request, mes=datetime.today().month, ano=datetime.today().year):
@@ -67,8 +68,9 @@ def mostra_eventos(request, mes=datetime.today().month, ano=datetime.today().yea
     eventos = Evento.objects.all()
     return render(request, 'calendario.html', {'mes': mes, 'ano': ano, 'calendario': calendario, 'data':data, 'n_month': n_month, 'p_month': p_month, 'eventos': eventos})
 
-def cadastra_evento(request):
-    form_evento = EventoForm()
+def cadastra_evento(request, data=datetime.today(), hora= datetime.now().time):
+
+    form_evento = EventoForm(initial={'evento_data': data, 'evento_hora':hora})
     
     if request.method == 'POST':
         form_evento = EventoForm(request.POST)
@@ -103,7 +105,7 @@ def cadastra_participante(request, evento):
             novo_participante.save()
         return redirect('evento:detalhes_evento', evento=evento.slug)
     
-    return render(request, 'cadastra_participante.html', {'form_participante': form_participante})
+    return render(request, 'cadastra_participante.html', {'form_participante': form_participante, 'evento':evento, 'pagina': 'Cadastra Participante'})
 
 def detalhes_evento(request, evento):
     evento = Evento.objects.get(slug=evento)

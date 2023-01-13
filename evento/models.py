@@ -9,7 +9,7 @@ class Evento(models.Model):
     evento = models.CharField(max_length=200)
     evento_data = models.DateField()
     evento_hora = models.TimeField()
-    evento_trabalho_final = models.OneToOneField(TrabalhoFinal, on_delete=models.CASCADE, related_name='evento_trabalho_final')
+    evento_trabalho_final = models.ForeignKey(TrabalhoFinal, on_delete=models.CASCADE, related_name='evento_trabalho_final')
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)

@@ -19,8 +19,9 @@ Novo Evento
         {{form_participante|crispy}}
 
 
-        <div class="d-flex justify-content-center m-3">
-          <input class="btn btn-primary" type="submit">
+        <div class="d-flex justify-content-center gap-2 m-3">
+          <a class="btn btn-danger btn-group-sm" href="{% url 'evento:detalhes_evento' evento.slug %}">Cancelar</a>
+          <input class="btn btn-primary btn-group-sm" type="submit" value="Adicionar">
         </div>
       </form>
     </div>
