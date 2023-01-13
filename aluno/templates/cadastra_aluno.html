@@ -11,6 +11,19 @@ Cadastra Aluno
 <div class="">
     {% include 'navbar.html' %}
     <div class="body container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'aluno:lista_aluno' %}">Pesquisar alunos</a></li>
+              
+              {% if pagina == 'Atualizar Aluno' %}
+              <li class="breadcrumb-item"><a href="{% url 'aluno:detalhes_aluno' aluno.slug %}">{{aluno}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:edita_aluno' aluno.slug %}">Atualizar Aluno</a></li>
+              {% else %}
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:cadastra_aluno' %}">Cadastra Aluno</a></li>
+              {% endif %}
+            </ol>
+          </nav>
         <h1 class="text-center">{{pagina}}</h1>
         <div class="flex w-75 container">
 

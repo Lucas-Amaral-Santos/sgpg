@@ -8,6 +8,13 @@ Home
     <div class="body">
         {% include 'navbar.html' %}
         <div class="container mx-xxl-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
+            <div class="mx-lg-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'home'%}">Home</a></li>
+                </ol>
+              </nav>
+            </div>
         
             <div class="d-flex justify-content-center align-self-center">
                     {% include 'svg/sun-weather-sunny.html'%}

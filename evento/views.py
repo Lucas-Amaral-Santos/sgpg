@@ -42,7 +42,7 @@ class EventCalendar(HTMLCalendar):
             data = datetime(year, month, day)
         n_events=self.get_events(data)
         if n_events:
-            eventos_dia = '<i class="fa-solid fa-circle"></i><span class="n-event" style="margin-top: -10px;margin-left: -12px;font-size:10pt;">%d</span>' % (n_events)
+            eventos_dia = '<i class="fa-solid fa-circle"></i><span class="n-event" style="margin-left: -12px;font-size:10pt;"><b>%d</b></span>' % (n_events)
 
 
         if day == 0:
@@ -68,9 +68,9 @@ def mostra_eventos(request, mes=datetime.today().month, ano=datetime.today().yea
     eventos = Evento.objects.all()
     return render(request, 'calendario.html', {'mes': mes, 'ano': ano, 'calendario': calendario, 'data':data, 'n_month': n_month, 'p_month': p_month, 'eventos': eventos})
 
-def cadastra_evento(request, data=datetime.today(), hora= datetime.now().time):
+def cadastra_evento(request, data=datetime.today().date().strftime('%d/%m/%Y'), hora= datetime.now().time):
 
-    form_evento = EventoForm(initial={'evento_data': data, 'evento_hora':hora})
+    form_evento = EventoForm(initial={'evento_data': data.replace('-','/'), 'evento_hora':hora})
     
     if request.method == 'POST':
         form_evento = EventoForm(request.POST)

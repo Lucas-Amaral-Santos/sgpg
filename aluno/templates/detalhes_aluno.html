@@ -10,7 +10,15 @@ Detalhes Aluno
   {% include 'navbar.html' %}    
 
     <div class="container-sm body p-5 text-center">
+        
         <div class="mt-5 mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'aluno:lista_aluno' %}">Pesquisar alunos</a></li>
+                  <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:detalhes_aluno' aluno.slug %}">{{aluno}}</a></li>
+                </ol>
+              </nav>
             <h1>Detalhes do Aluno</h1>
         </div>
         <div class="container">

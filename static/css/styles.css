@@ -89,6 +89,16 @@ a:hover {
 
 .dropdown:hover>.dropdown-menu {
     display: block;
+    border-radius: 0%;
+    width: 400px;
+    margin: 0px;
+    padding: 0%;
+}
+
+.dropdown-item {
+    height: 50px;
+    align-items: center;
+    text-align: center;
 }
 
 .nav-item:hover{
@@ -124,6 +134,12 @@ h5 {
     text-align: center;
 }
 
+button.close {
+    border-color: #00000010;
+    border-radius: 100%;
+    align-items: center;
+}
+
 .adicionar-participante-btn {
     color: #224EAC;
 }
@@ -139,11 +155,15 @@ h5 {
     display: none;
   }
 
+.item-evento {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #00000010;
+}
 
 .item-evento:hover {
     background-color: #224EAC77;
     color: white;
-    border-color: #224EAC;
     border-width: 1px;
 }
 
@@ -151,3 +171,22 @@ h5 {
     border-style: none;
 }
 
+.breadcrumb {
+    margin-top: -10px;
+    border-radius: 5px;
+    background-color: #224EAC10;
+    height: 25px;
+    padding: 0px 30px;
+}
+
+.breadcrumb a{
+    color: #224EAC;
+}
+
+.breadcrumb a:hover{
+    font-weight: 1000;
+}
+
+.breadcrumb-item.active{
+    font-weight: 500;
+}

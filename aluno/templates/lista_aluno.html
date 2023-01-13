@@ -9,6 +9,14 @@ Pesquisar Aluno
 {% block content %}
   {% include 'navbar.html' %}
   <div class="body container d-flex-inline justify-content-center mb-5">
+    <div class="mx-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:lista_aluno'%}">Pesquisar alunos</a></li>
+      </ol>
+    </nav>
+  </div>
     <h1 class="text-center">Alunos cadastrados</h1>
 
     <form method='GET' class="m-4">

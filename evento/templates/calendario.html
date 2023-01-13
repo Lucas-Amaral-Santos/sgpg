@@ -12,8 +12,8 @@ Calendario de Eventos
         <div class="container">
             <h1 class='text-center mt-1 mb-4'>Calendário de Eventos</h1>
             <div class="container row justify-content-between">
-              <div class="m-2">
-                <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#todos-eventos">
+              <div class="m-2 mt-0">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#todos-eventos">
                 
                 <i class="fa-solid fa-bars"></i>
                 
@@ -122,7 +122,7 @@ Calendario de Eventos
             <p class='text-center'><i>Nenhum evento disponível.</i></p>
           </div>
           <div class="modal-footer">
-            <a type="button" href="{% url 'evento:cadastra_evento' %}" class="btn btn-primary">Adicionar Evento</a>
+            <a type="button" id="adicionar_evento" class="btn btn-primary">Adicionar Evento</a>
           </div>
         </div>
       </div>
@@ -191,7 +191,7 @@ Calendario de Eventos
         color:white;
     }
     .dias:hover .n-event {
-        color: #224EAC;
+        color: #224EAC77;
     }
 
       
@@ -200,6 +200,7 @@ Calendario de Eventos
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
       <script>
+        dia_selecionado = ""
         $(document).ready(function(){
           $('.dias').on('click',function(){
               evento_card = '';
@@ -223,7 +224,7 @@ Calendario de Eventos
                 count = true;
 
                 evento_card += `
-                    <tr onclick="location.href='{% url 'evento:detalhes_evento' e.slug %}'" class="item-evento border" style="cursor: pointer">
+                    <tr onclick="location.href='{% url 'evento:detalhes_evento' e.slug %}'" class="item-evento" style="cursor: pointer">
                       <td class="atributo-evento-item">{{e.evento_hora}}</td>
                       <td class="atributo-evento-item">{{e}}</td>
                       <td class="atributo-evento-item">{{e.evento_trabalho_final}}</td>
@@ -243,8 +244,12 @@ Calendario de Eventos
                 $('.modal-evento-dia').html(evento_card);
               }
           });
-      });
 
+
+          $('#adicionar_evento').on('click', function(){
+            window.location.href = "/evento/cadastra/" + dia_selecionado.toString().replace("/", "-").replace("/", "-");
+          });
+      });
       </script>
 
 {% endblock %}
