@@ -17,20 +17,20 @@
           <li data-toggle="tooltip" data-placement="right" title="Início">
             <a class="nav-item nav-link" href="{% url 'home' %}"><i class="fa-solid fa-house fa-lg"></i></a>
           </li>
-        <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar aluno">
+        <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar alunos e matrículas">
           <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-graduate fa-lg"></i></a>
           <ul class="dropdown-menu">
-            <li><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
+            <li class="dropdown-menu"><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
             <li><a href="{% url 'aluno:cadastra_aluno' %}" class="dropdown-item">Cadastrar Aluno</a></li>
-          </ul>
-        </li>
-        <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar matrículas">
-          <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-graduation-cap fa-lg"></i></a>
-          <ul class="dropdown-menu">
             <li><a href="{% url 'matricula:lista_probatorio' %}" class="dropdown-item">Pesquisar Probatório</a></li>
             <li><a href="{% url 'matricula:cadastra_probatorio' %}" class="dropdown-item">Cadastrar Probatório</a></li>
             <li><a href="{% url 'matricula:lista_matricula' %}" class="dropdown-item">Pesquisar Matrículas</a></li>
             <li><a href="{% url 'matricula:cadastra_matricula' %}" class="dropdown-item">Cadastrar Matrícula</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar eventos">
+          <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-calendar-week fa-lg"></i></a>
+          <ul class="dropdown-menu">
             <li><a href="{% url 'evento:mostra_eventos_sem_slug' %}" class="dropdown-item">Calendário</a></li>
             <li><a href="{% url 'evento:cadastra_evento' %}" class="dropdown-item">Cadastra Evento</a></li>
           </ul>
@@ -42,7 +42,7 @@
             <li><a href="{% url 'professor:cadastra_professor' %}" class="dropdown-item">Cadastrar Professor</a></li>
           </ul>
         </li>
-        <li data-toggle="tooltip" data-placement="right" title="Ver e gerar relatórios e dashboards"><a class="nav-item nav-link" href="{% url 'relatorios:filtra_aluno' %}"><i class="fa-solid fa-table-list fa-lg"></i></a></li>
+        <li data-toggle="tooltip" data-placement="right" title="Ver e gerar relatórios e dashboards"><a class="nav-item nav-link" href="{% url 'relatorios:filtra_aluno' %}"><i class="fa-solid fa-chart-line fa-lg"></i></a></li>
 
         <li data-toggle="tooltip" data-placement="right" title="Configurações do sistema e tabelas Auxiliares">
           <a class="nav-item nav-link" href="{% url 'config:lista_tabelas' %}"><i class="fa-solid fa-gear fa-lg"></i></a>
