@@ -1,7 +1,8 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, CharField, TextInput, DateField, NumberInput, ChoiceField
 from .models import Aluno, Graduacao, Endereco, Trabalho, Residencia, Titulacao, Afastamento, EnsinoMedio
 
 class AlunoForm(ModelForm):
+    dt_nascimento = DateField(widget=NumberInput(attrs={'type':'date'}))
     class Meta:
         model = Aluno
         fields = ['nome', 'cpf', 'nome_pai', 'nome_mae', 'naturalidade', 'nacionalidade', 'dt_nascimento', 'estado_civil', 'identidade',

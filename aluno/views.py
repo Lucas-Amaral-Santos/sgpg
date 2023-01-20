@@ -9,6 +9,9 @@ from django.db.models import Q
 
 def cadastra_aluno(request, aluno=None):
     pagina = "Cadastrar Aluno"
+
+    SEXO_CHOICES = ['Masculino', 'Feminino']
+
     form_aluno = AlunoForm()
     form_endereco = EnderecoForm()
     form_graduacao = GraduacaoForm()
@@ -144,7 +147,7 @@ def cadastra_aluno(request, aluno=None):
             novo_trabalho.save()
             novo_aluno.save()
 
-    return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho':form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno})
+    return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho':form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno, 'sexo_choices': SEXO_CHOICES})
 
 def lista_aluno(request):
     alunos = Aluno.objects.all().order_by('nome')
