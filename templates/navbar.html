@@ -20,7 +20,7 @@
         <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar alunos e matrículas">
           <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-graduate fa-lg"></i></a>
           <ul class="dropdown-menu">
-            <li class="dropdown-menu"><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
+            <li><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
             <li><a href="{% url 'aluno:cadastra_aluno' %}" class="dropdown-item">Cadastrar Aluno</a></li>
             <li><a href="{% url 'matricula:lista_probatorio' %}" class="dropdown-item">Pesquisar Probatório</a></li>
             <li><a href="{% url 'matricula:cadastra_probatorio' %}" class="dropdown-item">Cadastrar Probatório</a></li>
@@ -32,7 +32,7 @@
           <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-calendar-week fa-lg"></i></a>
           <ul class="dropdown-menu">
             <li><a href="{% url 'evento:mostra_eventos_sem_slug' %}" class="dropdown-item">Calendário</a></li>
-            <li><a href="{% url 'evento:cadastra_evento' %}" class="dropdown-item">Cadastra Evento</a></li>
+            <li><a href="{% url 'evento:cadastra_evento' %}" class="dropdown-item">Cadastrar Evento</a></li>
           </ul>
         </li>
         <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar professores">

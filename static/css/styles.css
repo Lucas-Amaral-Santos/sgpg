@@ -101,6 +101,11 @@ a:hover {
     text-align: center;
 }
 
+.dropdown-item:hover {
+    background-color: #224EAC;
+    color: white; 
+}
+
 .nav-item:hover{
     /* background-color: rgb(42, 42, 101); */
     background-image: linear-gradient(30deg, #224EAC, rgb(4, 4, 44)) ;
