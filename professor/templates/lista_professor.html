@@ -3,13 +3,20 @@
 {% load static %}
 
 {% block title %}
-Pesquisar Professor
+{{pagina}}
 {% endblock %}
 
 {% block content %}
   {% include 'navbar.html' %}
   <div class="body container d-flex-inline justify-content-center mb-5">
-    <h1 class="text-center">Professores cadastrados</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+
+        <li class="breadcrumb-item active" aria-current="page"><a href="{% if pagina == 'Pesquisar Professor' %}{% url 'professor:lista_professor' %}{% elif pagina == 'Colegiado' %}{% url 'professor:detalhes_colegiado' %}{% endif %}">{{pagina}}</a></li>
+      </ol>
+    </nav>
+    <h1 class="text-center">{{pagina}}</h1>
 
     <form method='GET' class="m-4">
       <div class="input-group rounded">
@@ -25,7 +32,7 @@ Pesquisar Professor
     </form>
 
 
-    {% if busca %}
+    {% if busca or pagina == 'Colegiado' %}
 
     <table class="table"> 
       <thead>
@@ -38,7 +45,7 @@ Pesquisar Professor
       </thead>  
       {% for professor in professores %}
       <a href="">
-      <tr>
+      <tr onclick="location.href='{% url 'professor:detalhes_professor' professor.slug %}'" style="cursor: pointer;">
           <td>{{professor.nome}}</td>
           <td>{{professor.cpf}}</td>
           <td>{{professor.email}}</td>
@@ -48,7 +55,6 @@ Pesquisar Professor
 
       {% endfor %}
     </table>
-    <hr class="my-5">
     {% endif %}
 
     <div class="row d-flex-inline justify-content-center gap-5 align-items-center my-5">

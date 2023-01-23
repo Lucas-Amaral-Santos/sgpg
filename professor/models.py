@@ -1,6 +1,7 @@
 from django.db import models
 from aluno.models import Endereco, Titulacao, Graduacao
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 # Create your models here.
 
 class Colegiado(models.Model):
@@ -9,7 +10,10 @@ class Colegiado(models.Model):
       colegiado_data_saida = models.DateField(null=True, blank=True)
 
       def __str__(self):
-            return self.colegiado_membro
+            if self.colegiado_membro:
+                  return 'Membro'
+            else:
+                  return 'Não Membro'
 
 class PosDoutorado(models.Model):
       concluido = models.BooleanField()
@@ -19,7 +23,7 @@ class PosDoutorado(models.Model):
       pais = models.CharField(max_length=200, null=True, blank=True)
 
       def __str__(self):
-            return self.instituicao_posdoc
+            return str(self.id)
 
 class Trabalho(models.Model):
       instituicao_trabalho = models.CharField(max_length=200)
@@ -31,7 +35,7 @@ class Trabalho(models.Model):
       email = models.EmailField(null=True, blank=True)
 
       def __str__(self):
-            return self.instituicao
+            return str(self.id)
 
 
 class Professor(models.Model):
@@ -66,6 +70,10 @@ class Professor(models.Model):
       slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
       updated = models.DateTimeField(auto_now=True)
       cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='professor_cadastrado_por')
+
+      def save(self, *args, **kwargs):
+            self.slug = slugify(self.id)
+            super(Professor, self).save(*args, **kwargs)
 
       def __str__(self):
             return  self.nome

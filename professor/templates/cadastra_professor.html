@@ -11,6 +11,13 @@ Cadastra Professor
 <div class="corcadastro body">
     {% include 'navbar.html' %}
     <div class="container p-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+      
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'professor:cadastra_professor' %}">{{pagina}}</a></li>
+            </ol>
+          </nav>
         
 
         <ul class="nav nav-tabs">

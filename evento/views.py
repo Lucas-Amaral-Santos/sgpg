@@ -66,7 +66,7 @@ def mostra_eventos(request, mes=datetime.today().month, ano=datetime.today().yea
     n_month =  data_aux + relativedelta(months=1)
     p_month =  data_aux + relativedelta(months=-1)
     eventos = Evento.objects.all()
-    return render(request, 'calendario.html', {'mes': mes, 'ano': ano, 'calendario': calendario, 'data':data, 'n_month': n_month, 'p_month': p_month, 'eventos': eventos})
+    return render(request, 'calendario.html', {'mes': mes, 'ano': ano, 'calendario': calendario, 'data':data, 'n_month': n_month, 'p_month': p_month, 'eventos': eventos, 'pagina': 'Calendário de Eventos'})
 
 def cadastra_evento(request, data=datetime.today().date().strftime('%d/%m/%Y'), hora= datetime.now().time):
 

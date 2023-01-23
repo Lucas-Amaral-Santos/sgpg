@@ -95,7 +95,7 @@ def cadastra_professor(request):
             novo_professor.save()
             novo_professor.save()
 
-    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao})
+    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao, 'pagina':'Cadastrar Professor'})
 
 def lista_professor(request):
     professores = Professor.objects.all().order_by('nome')
@@ -108,4 +108,27 @@ def lista_professor(request):
         page = request.GET.get('page')
         professores = paginator.get_page(page)  
 
-    return render(request, 'lista_professor.html' , {'professores': professores, 'busca': busca, 'total':total})
+    return render(request, 'lista_professor.html' , {'professores': professores, 'pagina': 'Pesquisar Professor', 'busca': busca, 'total':total})
+
+def detalhes_professor(request, professor):
+    try:
+        professor = Professor.objects.get(slug=professor)
+    except:
+        pass
+
+    return render(request, 'detalhes_professor.html', {'professor':professor, 'pagina': 'Detalhes Professor'})
+
+
+
+def detalhes_colegiado(request):
+    colegiado = Professor.objects.filter(membro_colegiado__colegiado_membro=True)
+    total = colegiado.count()
+
+    busca = request.GET.get('search')
+    if busca:
+        professor_lists = colegiado.filter(Q(nome__icontains = busca)| Q(cpf__icontains = busca))
+        paginator = Paginator(professor_lists, 15)
+        page = request.GET.get('page')
+        colegiado = paginator.get_page(page)  
+
+    return render(request, 'lista_professor.html', {'professores':colegiado, 'pagina': 'Colegiado', 'total':total, 'busca': busca})

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+{{pagina}}
+{% endblock %}
+
+{% block content %}
+  {% include 'navbar.html' %}
+  <div class="body container d-flex-inline justify-content-center mb-5">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+
+        <li class="breadcrumb-item active" aria-current="page"><a href="{% if pagina == 'Pesquisar Professor' %}{% url 'professor:lista_professor' %}{% elif pagina == 'Colegiado' %}{% url 'professor:detalhes_colegiado' %}{% endif %}">{{pagina}}</a></li>
+      </ol>
+    </nav>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
+
+
