@@ -12,10 +12,405 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
-
-        <li class="breadcrumb-item active" aria-current="page"><a href="{% if pagina == 'Pesquisar Professor' %}{% url 'professor:lista_professor' %}{% elif pagina == 'Colegiado' %}{% url 'professor:detalhes_colegiado' %}{% endif %}">{{pagina}}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'professor:lista_professor'%}">Pesquisar Professor</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'professor:detalhes_professor' professor.slug %}">{{professor}}</a></li>        
       </ol>
     </nav>
+    <h1 class="text-center">Detalhes do Professor</h1>
+
+
+    <div class="container">
+      <div class="row gutters-sm">
+          <div class="col-md-4 mb-3">
+              <div class="card">
+                  <div class="card-body">
+                      <div class="d-flex flex-column align-items-center text-center">
+                          {% include 'svg/graduation-cap-solid.html' %}
+
+                          <div class="mt-3">
+                              <h4>{{professor}}</h4>
+                              <p class="text-secondary mb-0">{{professor.cpf}}</p>
+                              <p class="text-secondary mb-0">{{professor.dt_nascimento|date:'d/M/Y'}}</p>
+                              <p class="text-secondary mb-0">{{professor.graduacao.graduacao_area }}</p>
+                              <p class="text-secondary mb-0">{{professor.graduacao.instituicao}}</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-8 card py-2">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a class="nav-link nav-professor active" data-toggle="tab" href="#id_info">Informações Pessoais</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link nav-professor" data-toggle="tab" href="#id_endereco">Endereço</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link nav-professor" data-toggle="tab" href="#id_trabalho">Trabalho</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link nav-professor" data-toggle="tab" href="#id_titulacao">Titulação</a>
+                  </li>
+              </ul>
+              <div class="py-3 mb-3 tab-content">
+                  <!-- Aba de Informações pessoais -->
+                  <div id="id_info" class="tab-pane container active">
+                      <!-- Nome -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Nome</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- CPF -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">CPF</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.cpf}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Naturalidade -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Naturalidade</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.naturalidade}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Nacionalidade -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Nacionalidade</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.nacionalidade}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Data de Nascimento -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Data de Nascimento</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.dt_nascimento}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Estado Civil -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Estado Civil</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.estado_civil}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Identidade -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Identidade</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.identidade}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Identidade UF -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Identidade UF</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.identidade_uf}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Identidade Orgão -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Identidade Orgão</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.identidade_orgao}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Sexo -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Sexo</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.sexo}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Email -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Email</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.email}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Etnia -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Etnia</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.etnia}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Situação -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Situação</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.situacao}}
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Aba de Endereço -->
+                  <div id="id_endereco" class="tab-pane container">
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">CEP</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.endereco.cep}}
+                          </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Rua</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.endereco.endereco}}
+                          </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Município</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.endereco.municipio}}
+                          </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">UF</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.endereco.uf}}
+                          </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Telefone 1</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.endereco.telefone1}}
+                          </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">UF</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.endereco.telefone2}}
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Aba de Trabalho -->
+                  <div id="id_trabalho" class="tab-pane container">
+                      <!-- Trabalho -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Trabalho</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.trabalho}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Tipo de Vínculo -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Tipo de Vínculo</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.trabalho.tipo_vinculo}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Email de Trabalho -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Email de Trabalho</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.trabalho.email}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Data de Término -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Data de Término</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.trabalho.data_termino}}
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Aba de Titulação -->
+                  <div id="id_titulacao" class="tab-pane container">
+                      <!-- Titulação -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Titulação</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.titulacao}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Área -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Área</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.titulacao.titulacao_area}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Ano -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Ano</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.titulacao.titulacao_ano}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Data da Qualificação -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Data da Qualificação</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.titulacao.data_qualificacao}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- UF -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">UF</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.titulacao.uf}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Instituição -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Instituição</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.titulacao.instituicao_titulacao}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Observações Geral -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Observações Geral</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.titulacao.obs_geral}}
+                          </div>
+                      </div>
+                  </div>                        
+              </div>
+          </div>
+      </div>
+      <div class= 'd-flex justify-content-end'>
+      <div class="w-50 my-2 row">
+          <div class="col-3 d-flex justify-content-end">
+              <a class="btn btn-danger btn-lg" data-toggle="modal" data-target="#confirma-deletar">
+                  <i class="fa-solid fa-trash-can"></i>
+              </a>
+          </div>
+          <div class="col-3 d-flex justify-content-end">
+              <a class="btn btn-primary btn-lg" href="#"><i class="fa-solid fa-pencil"></i></a>
+          </div>          
+      </div>
+  </div>
+  </div>
+</div>
+
+<!-- 
+  ==================================================================
+          Tela Modal - Todos os Eventos
+  ==================================================================
+-->
+  
+<div id="confirma-deletar" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+              <div class="modal-header">
+                      <div class="container">
+                          <h5 class="modal-title"><i class="fa-solid fa-circle-exclamation fa-3x text-danger"></i></h5>
+                          <span id="data-modal"><i></i></span>
+                      </div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+          <div class="modal-body">
+              <h5>Tem certeza que deseja deletar o professor?</h5>
+              <p class='text-center'>Caso esta ação seja confirmada, também serão excluidos 
+                  os registros do probatório, matrícula, eventos e quaisquer outras informações ligadas ao professor.</p>
+          </div>
+          <div class="modal-footer row">
+              <div class="col-3">
+                  <a class="btn btn-danger btn-md"  data-dismiss="modal">Cancelar</a>
+              </div>
+              <div class="col-3">
+                  <a class="btn btn-success btn-md"  href="#">Confirmar</a>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+
 </div>
 {% include 'footer.html' %}
 {% endblock %}

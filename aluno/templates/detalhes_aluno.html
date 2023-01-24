@@ -9,9 +9,8 @@ Detalhes Aluno
 {% block content %}
   {% include 'navbar.html' %}    
 
-    <div class="container-sm body p-5 text-center">
+    <div class="body container d-flex-inline justify-content-center mb-5">
         
-        <div class="mt-5 mb-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
@@ -19,8 +18,7 @@ Detalhes Aluno
                   <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:detalhes_aluno' aluno.slug %}">{{aluno}}</a></li>
                 </ol>
               </nav>
-            <h1>Detalhes do Aluno</h1>
-        </div>
+            <h1 class="text-center">Detalhes do Aluno</h1>
         <div class="container">
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">

@@ -8,9 +8,14 @@ Novo Evento
 {% endblock %}
 
 {% block content %}
-<div class="corcadastro body">
     {% include 'navbar.html' %}
-    <div class="container py-2 px-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
+    <div class="body container d-flex-inline justify-content-center mb-5">      
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'evento:cadastra_evento' %}">{{pagina}}</a></li>        
+        </ol>
+      </nav>
       <h1 class="text-center">{{pagina}}</h1>
 
       <form action="" method="POST" class="cadastro_form">
@@ -35,7 +40,6 @@ Novo Evento
         </div>
       </form>
     </div>
-</div>
 
 {% include 'footer.html' %}
 {% endblock %}

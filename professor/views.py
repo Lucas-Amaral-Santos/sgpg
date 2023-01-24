@@ -111,10 +111,9 @@ def lista_professor(request):
     return render(request, 'lista_professor.html' , {'professores': professores, 'pagina': 'Pesquisar Professor', 'busca': busca, 'total':total})
 
 def detalhes_professor(request, professor):
-    try:
-        professor = Professor.objects.get(slug=professor)
-    except:
-        pass
+
+    professor = Professor.objects.get(slug=professor)
+
 
     return render(request, 'detalhes_professor.html', {'professor':professor, 'pagina': 'Detalhes Professor'})
 
