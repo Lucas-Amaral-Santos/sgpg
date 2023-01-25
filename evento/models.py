@@ -4,7 +4,6 @@ from matricula.models import TrabalhoFinal
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
-# Create your models here.
 class Evento(models.Model):
     evento = models.CharField(max_length=200)
     evento_data = models.DateField()

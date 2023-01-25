@@ -42,7 +42,6 @@ class TitulacaoForm(ModelForm):
         model = Titulacao
         fields = '__all__'
 
-
 class TitulacaoProfessorForm(ModelForm):
     class Meta:
         model = Titulacao

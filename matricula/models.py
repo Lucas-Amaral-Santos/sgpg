@@ -20,7 +20,6 @@ class Curso(models.Model):
         self.slug = slugify(self.id)
         super(Curso, self).save(*args, **kwargs)
 
-# Create your models here.
 class Probatorio(models.Model):
     data_inscricao = models.DateField(default=datetime.today())
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True)
@@ -66,7 +65,6 @@ class Matricula(models.Model):
     def __str__(self):
         return str(self.probatorio.aluno)
 
-
 class Bolsa(models.Model):
     nome = models.CharField(max_length=200)
     agencia = models.CharField(max_length=200)
@@ -103,7 +101,6 @@ class InscricaoProbatorio(models.Model):
 
     def __str__(self):
         return str(self.disciplina_ofertada)
-
 
 class Inscricao(models.Model):
     disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_disciplina_ofertada')

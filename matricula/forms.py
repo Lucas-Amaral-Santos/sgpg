@@ -7,7 +7,6 @@ class MatriculaForm(forms.ModelForm):
         model = Matricula
         fields = ['numero', 'probatorio', 'requisita_bolsa']
 
-
 class ProbatorioForm(forms.ModelForm):
 
     class Meta:
@@ -26,20 +25,17 @@ class AfastamentoForm(forms.ModelForm):
         model = Afastamento
         fields = ['motivo', 'saida', 'retorno']
 
-
 class InscricaoForm(forms.ModelForm):
 
     class Meta:
         model = Inscricao
         fields = ['disciplina_ofertada', 'nota']
 
-
 class InscricaoProbatorioForm(forms.ModelForm):
 
     class Meta:
         model = InscricaoProbatorio
         fields = ['disciplina_ofertada', 'nota']
-
 
 class TrabalhoFinalForm(forms.ModelForm):
 

@@ -1,9 +1,6 @@
 from django.db import models
-
 from professor.models import Professor
 
-
-# Create your models here.
 class Disciplina(models.Model):
     codigo = models.CharField(max_length=20)
     nome = models.CharField(max_length=200)

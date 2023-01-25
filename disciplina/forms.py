@@ -7,7 +7,6 @@ class DisciplinaForm(forms.ModelForm):
         model = Disciplina
         fields = '__all__'
 
-
 class DisciplinaOfertadaForm(forms.ModelForm):
     
     class Meta:

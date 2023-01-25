@@ -2,7 +2,6 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
-# Create your models here.
 class EnsinoMedio(models.Model):
 
     ENSINO_MEDIO_TIPO_CHOICES = (
@@ -30,7 +29,6 @@ class Titulacao(models.Model):
 
     def __str__(self):
         return str(self.titulacao)
-
 
 class Residencia(models.Model):
     instituicao_residencia = models.CharField(max_length=200, null=True, blank=True)
