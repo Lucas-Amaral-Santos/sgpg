@@ -25,6 +25,7 @@ class EnsinoMedioForm(ModelForm):
         fields = '__all__'
 
 class TrabalhoForm(ModelForm):
+    data_termino = DateField(widget=NumberInput(attrs={'type':'date'}))
     class Meta:
         model = Trabalho
         fields = '__all__'
@@ -36,6 +37,7 @@ class ResidenciaForm(ModelForm):
         fields = '__all__'
 
 class TitulacaoForm(ModelForm):
+    data_qualificacao = DateField(widget=NumberInput(attrs={'type':'date'}))
     class Meta:
         model = Titulacao
         fields = '__all__'

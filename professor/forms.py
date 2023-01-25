@@ -1,9 +1,9 @@
-from pyexpat import model
-from django.forms import ModelForm, ValidationError
+from django.forms import ModelForm, ValidationError, DateField, NumberInput, TextInput
 from .models import Professor, Trabalho, PosDoutorado, Colegiado
 
 class ColegiadoForm(ModelForm):
-
+    colegiado_data_entrada = DateField(widget=TextInput(attrs={'type':'date'}))
+    colegiado_data_saida = DateField(widget=TextInput(attrs={'type':'date'}))
     class Meta:
         model = Colegiado
         fields = '__all__'
@@ -14,11 +14,13 @@ class PosDoutoradoForm(ModelForm):
         fields = '__all__'
 
 class TrabalhoForm(ModelForm):
+    admissao = DateField(widget=TextInput(attrs={'type':'date'}))
     class Meta:
         model = Trabalho
         fields = "__all__"
 
 class ProfessorForm(ModelForm):
+    dt_nascimento = DateField(widget=TextInput(attrs={'type':'date'}))
 
     def __init__(self, *args, **kwargs):
         super(ProfessorForm, self).__init__(*args, **kwargs)

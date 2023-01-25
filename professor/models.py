@@ -37,7 +37,6 @@ class Trabalho(models.Model):
       def __str__(self):
             return str(self.instituicao_trabalho)
 
-
 class Professor(models.Model):
 
       TIPO_DOCENTE_CHOICES = (

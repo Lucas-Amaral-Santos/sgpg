@@ -69,8 +69,8 @@ def mostra_eventos(request, mes=datetime.today().month, ano=datetime.today().yea
     return render(request, 'calendario.html', {'mes': mes, 'ano': ano, 'calendario': calendario, 'data':data, 'n_month': n_month, 'p_month': p_month, 'eventos': eventos, 'pagina': 'Calendário de Eventos'})
 
 def cadastra_evento(request, data=datetime.today().date().strftime('%d/%m/%Y'), hora= datetime.now().time):
-
-    form_evento = EventoForm(initial={'evento_data': data.replace('-','/'), 'evento_hora':hora})
+    data = datetime.strptime(data.replace('-','/'), '%d/%m/%Y').date()
+    form_evento = EventoForm(initial={'evento_data': data, 'evento_hora':hora})
     
     if request.method == 'POST':
         form_evento = EventoForm(request.POST)

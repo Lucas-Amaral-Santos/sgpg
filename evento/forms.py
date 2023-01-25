@@ -1,8 +1,8 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, DateField, NumberInput, TextInput
 from .models import Evento, Participante
 
 class EventoForm(ModelForm):
-    
+    evento_data = DateField(widget=TextInput(attrs={'type':'date'}))
     class Meta:
         model = Evento
         fields = '__all__'
