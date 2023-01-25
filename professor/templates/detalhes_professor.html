@@ -106,16 +106,6 @@
                           </div>
                       </div>
                       <hr>
-                      <!-- Estado Civil -->
-                      <div class="row">
-                          <div class="col-sm-3">
-                              <h6 class="mb-0">Estado Civil</h6>
-                          </div>
-                          <div class="col-sm-9 text-secondary">
-                              {{professor.estado_civil}}
-                          </div>
-                      </div>
-                      <hr>
                       <!-- Identidade -->
                       <div class="row">
                           <div class="col-sm-3">
@@ -156,33 +146,23 @@
                           </div>
                       </div>
                       <hr>
-                      <!-- Email -->
+                      <!-- Estrangeiro -->
                       <div class="row">
                           <div class="col-sm-3">
-                              <h6 class="mb-0">Email</h6>
+                              <h6 class="mb-0">Estrangeiro</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                              {{professor.email}}
+                              {{professor.estrangeiro}}
                           </div>
                       </div>
                       <hr>
-                      <!-- Etnia -->
+                      <!-- Tipo de Docência -->
                       <div class="row">
                           <div class="col-sm-3">
-                              <h6 class="mb-0">Etnia</h6>
+                              <h6 class="mb-0">Tipo de Docência</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                              {{professor.etnia}}
-                          </div>
-                      </div>
-                      <hr>
-                      <!-- Situação -->
-                      <div class="row">
-                          <div class="col-sm-3">
-                              <h6 class="mb-0">Situação</h6>
-                          </div>
-                          <div class="col-sm-9 text-secondary">
-                              {{professor.situacao}}
+                              {{professor.tipo_docente}}
                           </div>
                       </div>
                   </div>
@@ -244,43 +224,73 @@
                   </div>
                   <!-- Aba de Trabalho -->
                   <div id="id_trabalho" class="tab-pane container">
-                      <!-- Trabalho -->
+                      <!-- Instituição -->
                       <div class="row">
                           <div class="col-sm-3">
-                              <h6 class="mb-0">Trabalho</h6>
+                              <h6 class="mb-0">Instituição</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
                               {{professor.trabalho}}
                           </div>
                       </div>
                       <hr>
-                      <!-- Tipo de Vínculo -->
+                      <!-- Setor -->
                       <div class="row">
                           <div class="col-sm-3">
-                              <h6 class="mb-0">Tipo de Vínculo</h6>
+                              <h6 class="mb-0">Setor</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                              {{professor.trabalho.tipo_vinculo}}
+                              {{professor.trabalho.setor}}
                           </div>
                       </div>
                       <hr>
-                      <!-- Email de Trabalho -->
+                      <!-- Admissão -->
                       <div class="row">
                           <div class="col-sm-3">
-                              <h6 class="mb-0">Email de Trabalho</h6>
+                              <h6 class="mb-0">Admissão</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.trabalho.admissao}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Cargo -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Cargo</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.trabalho.cargo}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Telefone -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Telefone</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.trabalho.telefone}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Categoria -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Categoria</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                              {{professor.trabalho.categoria}}
+                          </div>
+                      </div>
+                      <hr>
+                      <!-- Email -->
+                      <div class="row">
+                          <div class="col-sm-3">
+                              <h6 class="mb-0">Email</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
                               {{professor.trabalho.email}}
-                          </div>
-                      </div>
-                      <hr>
-                      <!-- Data de Término -->
-                      <div class="row">
-                          <div class="col-sm-3">
-                              <h6 class="mb-0">Data de Término</h6>
-                          </div>
-                          <div class="col-sm-9 text-secondary">
-                              {{professor.trabalho.data_termino}}
                           </div>
                       </div>
                   </div>

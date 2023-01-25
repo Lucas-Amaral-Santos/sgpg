@@ -35,7 +35,7 @@ class Trabalho(models.Model):
       email = models.EmailField(null=True, blank=True)
 
       def __str__(self):
-            return str(self.id)
+            return str(self.instituicao_trabalho)
 
 
 class Professor(models.Model):
