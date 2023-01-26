@@ -16,18 +16,33 @@
         <ul class="navbar-nav gap-3">
           <li data-toggle="tooltip" data-placement="right" title="Início">
             <a class="nav-item nav-link" href="{% url 'home' %}"><i class="fa-solid fa-house fa-lg"></i></a>
+          </li>        
+          <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar alunos e matrículas">
+            <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-graduate fa-lg"></i></a>
+            <ul class="dropdown-menu">            
+              <div class="dropdown dropright">
+                <a class="dropdown-toggle dropdown-item" data-toggle="dropdown">Aluno</a>
+                <div class="dropdown-menu">
+                  <li><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
+                  <li><a href="{% url 'aluno:cadastra_aluno' %}" class="dropdown-item">Cadastrar Aluno</a></li>
+                </div>
+              </div>
+              <div class="dropdown dropright">
+                <a class="dropdown-toggle dropdown-item" data-toggle="dropdown">Probatório</a>
+                <div class="dropdown-menu">
+                  <li><a href="{% url 'matricula:lista_probatorio' %}" class="dropdown-item">Pesquisar Probatório</a></li>
+                  <li><a href="{% url 'matricula:cadastra_probatorio' %}" class="dropdown-item">Cadastrar Probatório</a></li>
+                </div>
+              </div>
+              <div class="dropdown dropright">
+                <a class="dropdown-toggle dropdown-item" data-toggle="dropdown">Matrícula</a>
+                <div class="dropdown-menu">
+                  <li><a href="{% url 'matricula:lista_matricula' %}" class="dropdown-item">Pesquisar Matrículas</a></li>
+                  <li><a href="{% url 'matricula:cadastra_matricula' %}" class="dropdown-item">Cadastrar Matrícula</a></li>
+                </div>
+              </div>              
+            </ul>
           </li>
-        <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar alunos e matrículas">
-          <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-graduate fa-lg"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
-            <li><a href="{% url 'aluno:cadastra_aluno' %}" class="dropdown-item">Cadastrar Aluno</a></li>
-            <li><a href="{% url 'matricula:lista_probatorio' %}" class="dropdown-item">Pesquisar Probatório</a></li>
-            <li><a href="{% url 'matricula:cadastra_probatorio' %}" class="dropdown-item">Cadastrar Probatório</a></li>
-            <li><a href="{% url 'matricula:lista_matricula' %}" class="dropdown-item">Pesquisar Matrículas</a></li>
-            <li><a href="{% url 'matricula:cadastra_matricula' %}" class="dropdown-item">Cadastrar Matrícula</a></li>
-          </ul>
-        </li>
         <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar eventos">
           <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-calendar-week fa-lg"></i></a>
           <ul class="dropdown-menu">
@@ -60,3 +75,46 @@
       </a>
     <!--  -->
   </nav>
+
+  <style>
+
+    .dropright {
+      position: relative;
+    }
+    
+    .dropright .dropdown-menu {
+      top: 0;
+      left: 100%;
+    }
+
+  </style>
+
+  <script>
+ 
+    $(document).ready(function() {
+
+      $('.dropright a').on("hover", function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+      
+          if (!$(this).next('div').hasClass('show')) {
+            $(this).next('div').addClass('show');
+          } else {
+            $(this).next('div').removeClass('show');
+          }      
+        });
+
+      $('.dropright a').on("click", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    
+        if (!$(this).next('div').hasClass('show')) {
+          $(this).next('div').addClass('show');
+        } else {
+          $(this).next('div').removeClass('show');
+        }    
+      });
+
+    });
+
+  </script>

@@ -4,12 +4,24 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Cadastra Matrícula
+{{pagina}}
 {% endblock %}
 
 {% block content %}
-<div class="corcadastro body">
+
     {% include 'navbar.html' %}
+    <div class="body container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+          
+          {% if pagina == 'Cadastra Probatório' %}
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_probatorio'%}">{{pagina}}</a></li>
+          {% elif pagina == 'Cadastrar Matricula' %}
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_matricula' %}">{{pagina}}</a></li>
+          {% endif %}
+        </ol>
+      </nav>
     <div class="container py-2 px-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
         
         <h1 class="text-center">{{pagina}}</h1>
@@ -18,7 +30,9 @@ Cadastra Matrícula
             {% csrf_token %}
             {{form|crispy}}
           
-            <input class="btn btn-primary" type="submit">
+            <div class="d-flex justify-content-center m-2">
+                <input class="btn btn-primary" type="submit">
+            </div>
         </form>
     </div>
 </div>

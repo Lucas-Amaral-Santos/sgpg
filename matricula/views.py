@@ -33,8 +33,7 @@ def cadastra_matricula(request):
             nova_matricula.save()
             return redirect('/')
     
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Matricula'})
-
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastrar Matricula'})
 
 def lista_matricula(request):
     matriculas = Matricula.objects.all().order_by('probatorio')

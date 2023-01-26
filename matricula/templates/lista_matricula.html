@@ -3,12 +3,23 @@
 {% load static %}
 
 {% block title %}
-Pesquisa Matrícula
+{{pagina}}
 {% endblock %}
 
 {% block content %}
   {% include 'navbar.html' %}
-  <div class="body container d-flex-inline justify-content-center mb-5">
+  <div class="body container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+        
+        {% if pagina == 'Pesquisar Probatório' %}
+        <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:lista_probatorio'%}">{{pagina}}</a></li>
+        {% elif pagina == 'Pesquisar Matrícula' %}
+        <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:lista_matricula' %}">{{pagina}}</a></li>
+        {% endif %}
+      </ol>
+    </nav>
     <h1 class="text-center">{{ pagina }}</h1>
 
     <form method='GET' class="m-4" id="form-pesquisa">
