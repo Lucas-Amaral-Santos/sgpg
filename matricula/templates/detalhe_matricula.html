@@ -11,6 +11,13 @@ Detalhes Matrícula
 
     {% include 'navbar.html' %}
     <div class="body container px-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'matricula:lista_matricula' %}">Pesquisar Matricula</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
+            </ol>
+          </nav>
         <h1 class='text-center'>Matrícula</h1>
         <div class="row mt-5">
             <div class="col-md-6">

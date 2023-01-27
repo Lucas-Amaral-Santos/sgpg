@@ -104,9 +104,6 @@ def detalhe_probatorio(request, probatorio):
 
     return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final}) 
 
-
-
-
 def cadastra_bolsa(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
     form = BolsaForm()
@@ -126,7 +123,7 @@ def cadastra_bolsa(request, matricula):
 
             return redirect('/')
     
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Bolsa'})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Bolsa', 'matricula': matricula})
 
 def cadastra_afastamento(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
@@ -146,7 +143,7 @@ def cadastra_afastamento(request, matricula):
 
             return redirect('/')
     
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Afastamento'})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Afastamento', 'matricula': matricula})
 
 def cadastra_inscricao(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
@@ -165,7 +162,7 @@ def cadastra_inscricao(request, matricula):
             nova_inscricao.save()
             return redirect('/')
 
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição'})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição', 'matricula': matricula})
 
 
 def cadastra_inscricao_probatorio(request, probatorio):
@@ -185,7 +182,7 @@ def cadastra_inscricao_probatorio(request, probatorio):
             nova_inscricao.save()
             return redirect('/')
 
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição'})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição em Probatório', 'probatorio':probatorio})
 
 
 def cadastra_trabalho_final(request, matricula):

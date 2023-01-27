@@ -21,21 +21,21 @@
             <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-graduate fa-lg"></i></a>
             <ul class="dropdown-menu">            
               <div class="dropdown dropright">
-                <a class="dropdown-toggle dropdown-item">Aluno</a>
+                <a class="dropdown-item">Aluno {% include 'svg/dropright.html' %} </a>
                 <div class="dropdown-menu">
                   <li><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
                   <li><a href="{% url 'aluno:cadastra_aluno' %}" class="dropdown-item">Cadastrar Aluno</a></li>
                 </div>
               </div>
               <div class="dropdown dropright">
-                <a class="dropdown-toggle dropdown-item">Probatório</a>
+                <a class="dropdown-item">Probatório {% include 'svg/dropright.html' %}</a>
                 <div class="dropdown-menu">
                   <li><a href="{% url 'matricula:lista_probatorio' %}" class="dropdown-item">Pesquisar Probatório</a></li>
                   <li><a href="{% url 'matricula:cadastra_probatorio' %}" class="dropdown-item">Cadastrar Probatório</a></li>
                 </div>
               </div>
               <div class="dropdown dropright">
-                <a class="dropdown-toggle dropdown-item">Matrícula</a>
+                <a class="dropdown-item">Matrícula {% include 'svg/dropright.html' %}</a>
                 <div class="dropdown-menu">
                   <li><a href="{% url 'matricula:lista_matricula' %}" class="dropdown-item">Pesquisar Matrículas</a></li>
                   <li><a href="{% url 'matricula:cadastra_matricula' %}" class="dropdown-item">Cadastrar Matrícula</a></li>

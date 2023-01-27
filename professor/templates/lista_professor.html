@@ -21,7 +21,7 @@
     <form method='GET' class="m-4">
 
       {% if pagina == 'Colegiado' %} 
-        <div class='row'>
+        <div class='row my-5 flex-row justify-content-center'>
           <div class='col-4'>   
             <div class="form-group mb-2">
               <label for="id_data_entrada">Data de Entrada</label>
@@ -77,10 +77,26 @@
       <tr onclick="location.href='{% url 'professor:detalhes_professor' professor.slug %}'" style="cursor: pointer;">
           <td>{{professor.nome}}</td>
           <td>{{professor.cpf}}</td>
-          <td>{{professor.email}}</td>
+
+          {% if professor.trabalho.email is None %}          
+          <td>Não informado</td>
+          {% else %}
+          <td>{{professor.trabalho.email}}</td>
+          {% endif %}
+
+          {% if professor.endereco.telefone1 is None %}
+            <td>Não informado</td>
+          {% else %}
           <td>{{professor.endereco.telefone1}}</td>
+          {% endif %}
+
           {% if pagina == 'Colegiado' %}
-          <td>{{professor.colegiado.colegiado_data_entrada}}</td>
+            {% if professor.membro_colegiado.colegiado_data_entrada is None %}
+            <td>Não informado</td>
+            {% else %}
+            <td>{{professor.membro_colegiado.colegiado_data_entrada}}</td>
+            {% endif %}
+            
           {% endif %}
       </tr>
       </a>

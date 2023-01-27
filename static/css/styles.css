@@ -3,10 +3,15 @@
     src: url('/static/fonts/Miguelito.otf') format('opentype');
 }
 
+html {height:100%} 
+body {
+    height: 100%;
+}
 .body {
+    position:relative;
     padding-top: 80pt;
     color: #224EAC;
-    min-height: 500px;
+    min-height: 80%;
 }
 
 .login {
