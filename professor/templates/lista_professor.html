@@ -24,18 +24,21 @@
         <div class='row'>
           <div class='col-4'>   
             <div class="form-group mb-2">
-              <label for="data_entrada">Data de Entrada</label>
-              <input type="date" class="form-control" id="data_entrada" value="">
-              <input class="form-check-input" type="checkbox" id="membros_passados" checked>
-              <label class="form-check-label" for="membros_passados">Membros ativos</label>
+              <label for="id_data_entrada">Data de Entrada</label>
+              <input type="date" class="form-control" id="id_data_entrada_inicio" name='id_data_entrada_inicio'>
+              <input type="date" class="form-control" id="id_data_entrada_fim" name='data_entrada_fim'>
+              <input class="form-check-input" type="checkbox" id="id_membros_ativos_view" name="membros_ativos_view" checked>
+              <input class="form-check-input" type="checkbox" id="id_membros_ativos" name="membros_ativos" hidden>
+              <label class="form-check-label" for="id_membros_ativos">Membros ativos</label>
             </div>
           </div>
           <div class='col-4'> 
             <div class="form-group mb-2">
               <label for="data_saida">Data de Saída</label>
-              <input type="date" class="form-control" id="data_saida" value="" readonly>
-              <input class="form-check-input" type="checkbox" id="membros_passados">
-              <label class="form-check-label" for="membros_passados">Membros anteriores</label>
+              <input type="date" class="form-control" id="id_data_saida_inicio" name='data_saida_inicio' readonly>
+              <input type="date" class="form-control" id="id_data_saida_fim" name='data_saida_fim' readonly>
+              <input class="form-check-input" type="checkbox" id="id_membros_passados" name="membros_passados">
+              <label class="form-check-label" for="id_membros_passados">Membros anteriores</label>
             </div>
           </div>
         </div>
@@ -183,5 +186,39 @@
           }
       }
   });
+  
+</script>
+  {% if pagina == 'Colegiado' %}
+  
+  <script type="text/javascript">
+    const date = new Date().toJSON().slice(0, 10);
+
+    $(document).ready(function () {
+      $("#id_membros_passados").change(function () {
+        if ($(this).is(":checked")) {
+          $('#id_data_saida_inicio').removeAttr("readonly").attr('value', date);
+          $('#id_data_saida_fim').removeAttr("readonly").attr('value', date);
+        }
+        else {
+          $('#id_data_saida_inicio').attr('readonly', true).attr('value', '');
+          $('#id_data_saida_fim').attr('readonly', true).attr('value', '');
+        }
+      });
+
+      $("#id_membros_ativos_view").change(function () {
+        if ($(this).is(":checked")) {
+          $('#id_membros_ativos').removeAttr("checked");
+        }
+        else {
+          $('#id_membros_ativos').addAttr("checked");
+        }
+      });
+
+
+    });
   </script>
+
+
+  {% endif %}
+
 {% endblock %}

@@ -119,11 +119,38 @@ def detalhes_professor(request, professor):
 
 
 
-def detalhes_colegiado(request):
+def detalhes_colegiado(request, membros_ativos=True):
     colegiado = Professor.objects.filter(membro_colegiado__colegiado_membro=True)
     total = colegiado.count()
 
+    data_entrada_inicio = request.GET.get('data_entrada_inicio')
+    data_entrada_fim = request.GET.get('data_entrada_fim')
+    data_saida_inicio = request.GET.get('data_saida_inicio')
+    data_saida_fim = request.GET.get('data_saida_fim')
+    membros_ativos = request.GET.get('membros_ativos')
+    membros_anteriores = request.GET.get('membros_passados')    
     busca = request.GET.get('search')
+
+    if membros_ativos:
+        colegiado = Professor.objects.filter(membro_colegiado__colegiado_membro=False)
+
+    # Utiliza o método GET para fazer os filtros no intervalo das datas de entrada do professor como membro do colegiado
+    if data_entrada_inicio and not data_entrada_fim:
+        colegiado = colegiado.filter(membro_colegiado__colegiado_data_entrada__lte=data_entrada_inicio)
+    elif not data_entrada_inicio and data_entrada_fim:
+        colegiado = colegiado.filter(membro_colegiado__colegiado_data_entrada__lte=data_entrada_fim)
+    elif data_entrada_inicio and data_entrada_fim:
+        colegiado = colegiado.filter(membro_colegiado__colegiado_data_entrada__range=[data_entrada_inicio, data_entrada_fim])
+    
+    # Utiliza o método GET para fazer os filtros no intervalo das datas de saída do professor como membro do colegiado
+    if membros_anteriores:
+        if data_saida_inicio and not data_saida_fim:
+            colegiado = colegiado.filter(membro_colegiado__colegiado_data_saida__lte=data_saida_inicio)
+        elif not data_saida_inicio and data_saida_fim:
+            colegiado = colegiado.filter(membro_colegiado__colegiado_data_saida__lte=data_saida_fim)
+        elif data_saida_inicio and data_saida_fim:
+            colegiado = colegiado.filter(membro_colegiado__colegiado_data_saida__range=[data_saida_inicio, data_saida_fim])
+
     if busca:
         professor_lists = colegiado.filter(Q(nome__icontains = busca)| Q(cpf__icontains = busca))
         paginator = Paginator(professor_lists, 15)

@@ -2,6 +2,7 @@ from django.db import models
 from aluno.models import Endereco, Titulacao, Graduacao
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from datetime import datetime
 
 class Colegiado(models.Model):
       colegiado_membro = models.BooleanField(default=False)

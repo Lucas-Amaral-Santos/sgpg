@@ -1,9 +1,10 @@
 from django.forms import ModelForm, ValidationError, DateField, NumberInput, TextInput
 from .models import Professor, Trabalho, PosDoutorado, Colegiado
+from datetime import datetime
 
 class ColegiadoForm(ModelForm):
     colegiado_data_entrada = DateField(widget=TextInput(attrs={'type':'date'}))
-    colegiado_data_saida = DateField(widget=TextInput(attrs={'type':'date'}))
+    colegiado_data_saida = DateField(widget=TextInput(attrs={'type':'date'}), initial=datetime.today().strftime('%d/%m/%Y'))
     class Meta:
         model = Colegiado
         fields = '__all__'
