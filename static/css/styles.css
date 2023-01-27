@@ -3,12 +3,12 @@
     src: url('/static/fonts/Miguelito.otf') format('opentype');
 }
 
-
 .body {
     padding-top: 80pt;
     color: #224EAC;
     min-height: 500px;
 }
+
 .login {
     color: #224EAC;
 }
