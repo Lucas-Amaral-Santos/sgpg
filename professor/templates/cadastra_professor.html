@@ -51,7 +51,8 @@ Cadastra Professor
             </div>
             <div id="id_endereco" class="tab-pane container">
                 <h1>Endereço</h1>
-                {{form_endereco|crispy}}
+                {% include 'forms_template/form_endereco.html' with form_endereco=form_endereco %}
+                {% comment %} {{form_endereco|crispy}} {% endcomment %}
             </div>
             <div id="id_trabalho" class="tab-pane container">
                 <h1>Trabalho</h1>

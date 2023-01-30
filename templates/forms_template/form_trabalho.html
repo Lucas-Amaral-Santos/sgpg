@@ -1,0 +1,20 @@
+{% load crispy_forms_tags %}
+
+<div class="row">
+    <div class="col-8">
+        {{form_trabalho.trabalho|as_crispy_field}}
+    </div>
+    <div class="col">
+        {{form_trabalho.tipo_vinculo|as_crispy_field}}
+    </div>
+</div>
+<div class="row">
+    
+    <div class="col-8">  
+        {{form_trabalho.email|as_crispy_field}}
+    </div>
+    <div class="col-3">  
+        {{form_trabalho.data_termino|as_crispy_field}}
+    </div>
+</div>
+

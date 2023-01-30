@@ -1,0 +1,23 @@
+{% load crispy_forms_tags %}
+
+<div class="row">
+    <div class="col-6">
+        {{form_residencia.instituicao_residencia|as_crispy_field}}
+    </div>
+    <div class="col-3">
+        {{form_residencia.residencia_ano_inicio|as_crispy_field}}
+    </div>
+    <div class="col-3">        
+        {{form_residencia.residencia_ano_fim|as_crispy_field}}
+    </div>
+</div>
+<div class="row">
+    
+    <div class="col-3">  
+        {{form_residencia.especialidade|as_crispy_field}}
+    </div>
+    <div class="col-3">  
+        {{form_residencia.uf|as_crispy_field}}
+    </div>
+</div>
+

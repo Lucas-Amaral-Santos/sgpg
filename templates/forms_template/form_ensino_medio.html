@@ -1,0 +1,23 @@
+{% load crispy_forms_tags %}
+
+<div class="row">
+    <div class="col-6">
+        {{form_ensino_medio.ensino_medio_instituicao|as_crispy_field}}
+    </div>
+    <div class="col-3">
+        {{form_ensino_medio.ensino_medio_ano_inicio|as_crispy_field}}
+    </div>
+    <div class="col-3">        
+        {{form_ensino_medio.ensino_medio_ano_conclusao|as_crispy_field}}
+    </div>
+</div>
+<div class="row">
+    
+    <div class="col-6">  
+        {{form_ensino_medio.ensino_medio_municipio|as_crispy_field}}
+    </div>
+    <div class="col-6">  
+        {{form_ensino_medio.ensino_medio_tipo|as_crispy_field}}
+    </div>
+</div>
+
