@@ -5,6 +5,7 @@ from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, Residen
 from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao, EnsinoMedio
 from django.core.paginator import Paginator
 from django.db.models import Q
+from datetime import datetime
 # Create your views here.
 
 def cadastra_aluno(request, aluno=None):
@@ -18,7 +19,7 @@ def cadastra_aluno(request, aluno=None):
     form_ensino_medio = EnsinoMedioForm()
     form_trabalho = TrabalhoForm()
     form_endereco_trabalho = EnderecoForm()
-    form_residencia = ResidenciaForm()
+    form_residencia = ResidenciaForm(initial={'residencia_ano_inicio': datetime.today().year, 'residencia_ano_fim': datetime.today().year})
     form_titulacao = TitulacaoForm()
 
     if(aluno is not None):

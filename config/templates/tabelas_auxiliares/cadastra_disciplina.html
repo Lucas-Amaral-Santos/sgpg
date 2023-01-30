@@ -1,0 +1,72 @@
+{% load crispy_forms_tags %}
+
+<div  id="{{tabela}}" class="tab-pane container pt-4 {{active}}">
+    <h5>Cadastrar {{titulo}}</h5>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#id_cadastro_{{tabela}}">Cadastro</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#id_registros_{{tabela}}">Registros</a>
+        </li>
+    </ul>            
+    <div class="tab-content">                        
+        <div id="id_cadastro_{{tabela}}" class="tab-pane container pt-4">
+            <form method="POST">
+                {% csrf_token %}
+                {{form|crispy}}
+
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary m-4" type="submit">Salvar</button>
+                </div>
+            </form>
+        </div>
+        <div id="id_registros_{{tabela}}" class="tab-pane container pt-4 active">
+            {% if tabela == 'disciplina' %}
+            <table class="table">
+                <thead>
+                    <th scope='col'>Código</th>
+                    <th scope='col'>Nome</th>
+                    <th scope='col'>Carater</th>
+                    <th scope='col'>Carga</th>
+                    <th scope='col'>Créditos</th>
+                    <th scope='col'>Nível</th>
+                    <th scope='col'>Tipo</th>
+                </thead>
+                <tbody>
+                    {% for r in registros %}
+                    <tr>
+                        <td>{{r.codigo}}</td>
+                        <td>{{r.nome}}</td>
+                        <td>{{r.carater}}</td>
+                        <td>{{r.carga}}</td>
+                        <td>{{r.creditos}}</td>
+                        <td>{{r.nivel}}</td>
+                        <td>{{r.tipo}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% elif tabela == 'disciplina_ofertada' %}
+            <table class="table">
+                <thead>
+                    <th scope='col'>Disciplina</th>
+                    <th scope='col'>Professor</th>
+                    <th scope='col'>Ano</th>
+                    <th scope='col'>Semestre</th>
+                </thead>
+                <tbody>
+                    {% for r in registros %}
+                    <tr>
+                        <td>{{r.disciplina}}</td>
+                        <td>{{r.professor}}</td>
+                        <td>{{r.ano}}</td>
+                        <td>{{r.semestre}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>

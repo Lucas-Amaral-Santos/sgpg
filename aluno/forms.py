@@ -3,7 +3,7 @@ from .models import Aluno, Graduacao, Endereco, Trabalho, Residencia, Titulacao,
 
 class AlunoForm(ModelForm):
     dt_nascimento = DateField(label="Data de Nascimento:", widget=NumberInput(attrs={'type':'date'}))
-    cpf = CharField(help_text="*Obrigatório para professores brasileiros", max_length="14", label="CPF:", required=False, widget=TextInput(attrs={"data-mask": "000.000.000-00"}))
+    cpf = CharField(max_length="14", label="CPF:", required=False, widget=TextInput(attrs={"data-mask": "000.000.000-00"}))
     class Meta:
         model = Aluno
         fields = ['nome', 'cpf', 'nome_pai', 'nome_mae', 'naturalidade', 

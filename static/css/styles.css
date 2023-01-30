@@ -22,13 +22,21 @@ nav svg {
     width:25%;
     height: 25%;
 }
-.card-home {
+.card-home, .card-total {
     background-color:#efefefe7;
     width: 200px;
     height: 200px;
     padding: 5%;
     align-items: center;
     color: #224EAC;
+}
+.card-home:hover {
+    color: #efefefe7;
+    background-color: #224EAC;
+}
+
+.card-home:hover>svg {
+    fill: #efefefe7;
 }
 
 .navbar {

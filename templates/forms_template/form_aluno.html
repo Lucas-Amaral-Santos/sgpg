@@ -1,10 +1,11 @@
 {% load crispy_forms_tags %}
 
 {{form_aluno.nome|as_crispy_field}}
-{{form_aluno.cpf|as_crispy_field}}
-{{form_aluno.nome_pai|as_crispy_field}}
-{{form_aluno.nome_mae|as_crispy_field}}
+
 <div class="row">
+    <div class="col">
+        {{form_aluno.cpf|as_crispy_field}}
+    </div>
     <div class="col">
         {{form_aluno.dt_nascimento|as_crispy_field}}
     </div>
@@ -15,7 +16,22 @@
         {{form_aluno.nacionalidade|as_crispy_field}}
     </div>
 </div>
-{{form_aluno.estado_civil|as_crispy_field}}
+
+{{form_aluno.nome_pai|as_crispy_field}}
+{{form_aluno.nome_mae|as_crispy_field}}
+
+<div class="row">
+    <div class="col">
+        {{form_aluno.sexo|as_crispy_field}}
+    </div>        
+    <div class="col">
+        {{form_aluno.etnia|as_crispy_field}}
+    </div>
+    <div class="col">
+        {{form_aluno.estado_civil|as_crispy_field}}
+    </div>
+</div>
+
     <div class="row">
         <div class="col">
             {{form_aluno.identidade|as_crispy_field}}
@@ -27,6 +43,6 @@
             {{form_aluno.identidade_orgao|as_crispy_field}}
         </div>
     </div>
-{{form_aluno.sexo|as_crispy_field}}
-{{form_aluno.etnia|as_crispy_field}}
+
+
 {{form_aluno.email|as_crispy_field}}

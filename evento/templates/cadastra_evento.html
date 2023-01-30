@@ -20,32 +20,13 @@ Novo Evento
 
       <form action="" method="POST" class="cadastro_form">
         {% csrf_token %}
-        {{form_evento.evento|as_crispy_field}}
-        <div class="row">
-          <div class="col">
-        {{form_evento.evento_data|as_crispy_field}}
-          </div>
-          <div class="col">
-        {{form_evento.evento_hora|as_crispy_field}}
-          </div>
-        </div>
-        {{form_evento.evento_trabalho_final|as_crispy_field}}
-
-
-{% comment %} 
-        <a href="">
-          <div class="card my-3 adicionar-participante-btn text-center">
-            <div class="card-body">
-              <i class="fa-solid fa-plus fa-2x"></i>
-              <p class="card-text">Adicionar Participante</p>
-            </div>
-          </div>
-        </a>
- {% endcomment %}
+        
+        {% include 'forms_template/form_evento.html' with form_evento=form_evento %}
+      
 
 
         <div class="d-flex justify-content-center m-3">
-          <input class="btn btn-primary" type="submit">
+          <button class="btn btn-primary m-4" type="submit">Salvar</button>
         </div>
       </form>
     </div>
