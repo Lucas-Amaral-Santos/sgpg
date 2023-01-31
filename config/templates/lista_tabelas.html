@@ -19,6 +19,10 @@ Tabelas Auxiliares
                     <li><a href="#disciplina" class="btn btn-primary" style="width:300px;" data-toggle="pill">Cadastra Disciplina</a></li>    
                     <li><a  href="#disciplina_ofertada" class="btn btn-primary" style="width:300px;" data-toggle="pill">Cadastra Disciplina Ofertada</a></li>
                     <li><a  href="#unidade_federativa" class="btn btn-primary" style="width:300px;" data-toggle="pill">Unidade Federativa</a></li>
+                    <li><a  href="#sexo" class="btn btn-primary" style="width:300px;" data-toggle="pill">Sexo</a></li>
+                    <li><a  href="#estado_civil" class="btn btn-primary" style="width:300px;" data-toggle="pill">Estado Civil</a></li>
+                    <li><a  href="#etnia" class="btn btn-primary" style="width:300px;" data-toggle="pill">Etnia</a></li>
+                    <li><a  href="#vinculo" class="btn btn-primary" style="width:300px;" data-toggle="pill">Vinculo</a></li>
                 </ul>
             </div>
 
@@ -29,6 +33,15 @@ Tabelas Auxiliares
                     {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_disciplina_ofertada titulo='Disciplina Ofertada' tabela='disciplina_ofertada' objeto=context.disciplina_ofertada %}
 
                     {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_unidade_federativa titulo='Unidade Federativa' tabela='unidade_federativa' objeto=context.unidade_federativa %}
+
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_sexo titulo='Unidade Federativa' tabela='sexo' objeto=context.sexo %}
+
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_estado_civil titulo='Unidade Federativa' tabela='estado_civil' objeto=context.estado_civil %}
+
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_etnia titulo='Unidade Federativa' tabela='etnia' objeto=context.etnia %}
+
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_vinculo titulo='Unidade Federativa' tabela='vinculo' objeto=context.vinculo %}
+
                 </div>
             </div>
         </div>

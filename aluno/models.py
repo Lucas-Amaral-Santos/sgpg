@@ -1,7 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from config.models import UnidadeFederativa
+from config.models import UnidadeFederativa, Sexo, EstadoCivil, Etnia, Vinculo
 
 class EnsinoMedio(models.Model):
 
@@ -65,7 +65,7 @@ class Trabalho(models.Model):
     )
 
     trabalho = models.CharField(max_length=200, null=True, blank=True, verbose_name='Trabalho:')
-    tipo_vinculo = models.CharField(max_length=200, choices=VINCULO_CHOICES, verbose_name='Tipo de Vínculo:', null=True, blank=True)
+    tipo_vinculo = models.ForeignKey(Vinculo, on_delete=models.DO_NOTHING, verbose_name='Tipo de Vínculo:', null=True, blank=True)
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING, null=True, blank=True) 
     email = models.EmailField(null=True, blank=True, verbose_name="Email de trabalho:")
     data_termino = models.DateField(null=True, blank=True)
@@ -88,10 +88,6 @@ class Graduacao(models.Model):
         return self.instituicao
 
 class Aluno(models.Model):
-    SEXO_CHOICES = (
-        ('Masculino','Masculino'),
-        ('Feminino','Feminino'),
-    )
     nome = models.CharField(max_length=200, verbose_name="Nome:")
     cpf = models.CharField(max_length=14, verbose_name='CPF:', blank=True)
     nome_pai = models.CharField(max_length=200, null=True, blank=True, verbose_name='Nome do pai:')
@@ -99,13 +95,13 @@ class Aluno(models.Model):
     naturalidade = models.ForeignKey(UnidadeFederativa, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Naturalidade:")
     nacionalidade = models.CharField(max_length=100, null=True, blank=True, verbose_name="Nacionalidade:")
     dt_nascimento = models.DateField()
-    estado_civil = models.CharField(max_length=100, null=True, blank=True, verbose_name="Estado civil:")
+    estado_civil = models.ForeignKey(EstadoCivil, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Estado civil:")
     identidade = models.CharField(max_length=12, verbose_name="Identidade:")
     identidade_uf = models.CharField(max_length=2, verbose_name="UF:")
     identidade_orgao = models.CharField(max_length=100, verbose_name="Orgão expedidor:")
-    sexo = models.CharField(max_length=50, choices=SEXO_CHOICES, null=True, blank=True, verbose_name="Sexo:")
+    sexo = models.ForeignKey(Sexo, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Sexo:")
     email = models.EmailField(null=True, blank=True, verbose_name="Email:")
-    etnia = models.CharField(max_length=50, blank=True, null=True, verbose_name="Etnia:")
+    etnia = models.ForeignKey(Etnia, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Etnia:")
     situacao = models.CharField(max_length=50, null=True, blank=True, verbose_name="Situação:")
     
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING, related_name='aluno_endereco', null=True)

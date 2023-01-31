@@ -1,14 +1,19 @@
 from django.shortcuts import render, redirect
 from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
-from .models import UnidadeFederativa
-from .forms import UnidadeFederativaForm
+from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo
+from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm
 
 
 def lista_tabelas(request):
     form_disciplina = DisciplinaForm()
     form_disciplina_ofertada = DisciplinaOfertadaForm()
     form_unidade_federativa = UnidadeFederativaForm()
+    form_sexo = SexoForm()
+    form_estado_civil = EstadoCivilForm()
+    form_etnia = EtniaForm()
+    form_vinculo = VinculoForm()
+
     context = {}
 
     try:
@@ -53,6 +58,62 @@ def lista_tabelas(request):
             'form': form_unidade_federativa,
         }
 
+    try:
+        sexo = Sexo.objects.all()
+        context['sexo'] = {
+            'values': sexo.values(),
+            'colunas': sexo.values()[0].keys(),
+            'form': form_sexo,
+        }
+    except:
+        context['sexo'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_sexo,
+        }
+
+    try:
+        etnia = Etnia.objects.all()
+        context['etnia'] = {
+            'values': etnia.values(),
+            'colunas': etnia.values()[0].keys(),
+            'form': form_etnia,
+        }
+    except:
+        context['etnia'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_etnia,
+        }
+
+    try:
+        estado_civil = EstadoCivil.objects.all()
+        context['estado_civil'] = {
+            'values': estado_civil.values(),
+            'colunas': estado_civil.values()[0].keys(),
+            'form': form_estado_civil,
+        }
+    except:
+        context['estado_civil'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_estado_civil,
+        }
+
+
+    try:
+        vinculo = Vinculo.objects.all()
+        context['vinculo'] = {
+            'values': vinculo.values(),
+            'colunas': vinculo.values()[0].keys(),
+            'form': form_vinculo,
+        }
+    except:
+        context['vinculo'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_vinculo,
+        }
 
 
     if(request.method == 'POST'):
@@ -71,25 +132,61 @@ def lista_tabelas(request):
             return redirect('/')
 
     if(request.method == 'POST'):
-            form_disciplina_ofertada = DisciplinaOfertadaForm(request.POST)
-            if(form_disciplina_ofertada.is_valid()):
-                nova_inscricao = DisciplinaOfertada.objects.create(
-                    disciplina = form_disciplina_ofertada.cleaned_data['disciplina'],
-                    professor = form_disciplina_ofertada.cleaned_data['professor'],
-                    ano = form_disciplina_ofertada.cleaned_data['ano'],
-                    semestre = form_disciplina_ofertada.cleaned_data['semestre'],
-                )    
-                nova_inscricao.save()
-                return redirect('/')
+        form_disciplina_ofertada = DisciplinaOfertadaForm(request.POST)
+        if(form_disciplina_ofertada.is_valid()):
+            nova_inscricao = DisciplinaOfertada.objects.create(
+                disciplina = form_disciplina_ofertada.cleaned_data['disciplina'],
+                professor = form_disciplina_ofertada.cleaned_data['professor'],
+                ano = form_disciplina_ofertada.cleaned_data['ano'],
+                semestre = form_disciplina_ofertada.cleaned_data['semestre'],
+            )    
+            nova_inscricao.save()
+            return redirect('/')
 
     if(request.method == 'POST'):
-            form_unidades_federativa = UnidadeFederativaForm(request.POST)
-            if(form_unidades_federativa.is_valid()):
-                nova_uf = UnidadeFederativa.objects.create(
-                    estado = form_unidades_federativa.cleaned_data['estado'],
-                    sigla = form_unidades_federativa.cleaned_data['sigla'],
-                )    
-                nova_uf.save()
-                return redirect('/')
+        form_unidades_federativa = UnidadeFederativaForm(request.POST)
+        if(form_unidades_federativa.is_valid()):
+            nova_uf = UnidadeFederativa.objects.create(
+                estado = form_unidades_federativa.cleaned_data['estado'],
+                sigla = form_unidades_federativa.cleaned_data['sigla'],
+            )    
+            nova_uf.save()
+            return redirect('/')
+
+    if(request.method == 'POST'):
+        form_sexo = SexoForm(request.POST)
+        if(form_sexo.is_valid()):
+            nova_sexo = Sexo.objects.create(
+                sexo = form_sexo.cleaned_data['sexo'],
+            )    
+            nova_sexo.save()
+            return redirect('/')
+
+    if(request.method == 'POST'):
+        form_estado_civil = EstadoCivilForm(request.POST)
+        if(form_estado_civil.is_valid()):
+            nova_estado_civil = EstadoCivil.objects.create(
+                estado_civil = form_estado_civil.cleaned_data['estado_civil'],
+            )    
+            nova_estado_civil.save()
+            return redirect('/')
+
+    if(request.method == 'POST'):
+        form_etnia = EtniaForm(request.POST)
+        if(form_etnia.is_valid()):
+            nova_etnia = Etnia.objects.create(
+                etnia = form_etnia.cleaned_data['etnia'],
+            )    
+            nova_etnia.save()
+            return redirect('/')
+
+    if(request.method == 'POST'):
+        form_vinculo = VinculoForm(request.POST)
+        if(form_vinculo.is_valid()):
+            nova_vinculo = Vinculo.objects.create(
+                vinculo = form_vinculo.cleaned_data['vinculo'],
+            )    
+            nova_vinculo.save()
+            return redirect('/')
 
     return render(request, "lista_tabelas.html", {'context': context})
