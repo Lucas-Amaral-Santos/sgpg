@@ -61,7 +61,7 @@ class EventCalendar(HTMLCalendar):
 
 def mostra_eventos(request, mes=datetime.today().month, ano=datetime.today().year):
     data = datetime.today
-    data_aux = datetime(ano, mes, datetime.today().day)
+    data_aux = datetime(year=ano, month=mes, day=datetime(ano, mes, 1).day)
     calendario = EventCalendar().formatmonth(ano, mes)
     n_month =  data_aux + relativedelta(months=1)
     p_month =  data_aux + relativedelta(months=-1)
