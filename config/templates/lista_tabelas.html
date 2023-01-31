@@ -24,9 +24,9 @@ Tabelas Auxiliares
             <div class="float-right w-100 border p-2">
                 <div class="tab-content">
                     
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_disciplina titulo='Disciplina' tabela='disciplina' registros=disciplina active='active' %}
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo='Disciplina' tabela='disciplina' objeto=context.disciplina registros=disciplina active='active' %}
 
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_disciplina_ofertada titulo='Disciplina Ofertada' tabela='disciplina_ofertada' registros=disciplina_ofertada %}
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_disciplina_ofertada titulo='Disciplina Ofertada' tabela='disciplina_ofertada' objeto=context.disciplina_ofertada registros=disciplina_ofertada %}
 
                 </div>
             </div>

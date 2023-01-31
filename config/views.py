@@ -1,14 +1,30 @@
 from django.shortcuts import render, redirect
 from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
+from django.forms.models import model_to_dict
+
 
 
 def lista_tabelas(request):
     disciplina = Disciplina.objects.all()
-    disciplina_ofertada = DisciplinaOfertada.objects.all()
-
     form_disciplina = DisciplinaForm()
+    print(disciplina.values())
+
+    disciplina_ofertada = DisciplinaOfertada.objects.all()
     form_disciplina_ofertada = DisciplinaOfertadaForm()
+
+    context = {
+        'disciplina': {
+            'values': disciplina.values(),
+            'colunas': disciplina.values()[0].keys(),
+            'form': form_disciplina,
+        },
+        'disciplina_ofertada': {
+            'values':disciplina_ofertada.values(),
+            'colunas':disciplina_ofertada.values()[0].keys(),
+            'form':form_disciplina_ofertada,
+        }
+    }
 
     if(request.method == 'POST'):
         form_disciplina = DisciplinaForm(request.POST)
@@ -37,5 +53,5 @@ def lista_tabelas(request):
                 nova_inscricao.save()
                 return redirect('/')
 
-    return render(request, "lista_tabelas.html", {'form_disciplina': form_disciplina, 'form_disciplina_ofertada': form_disciplina_ofertada, 'disciplina':disciplina, 'disciplina_ofertada':disciplina_ofertada})
+    return render(request, "lista_tabelas.html", {'context': context})
 

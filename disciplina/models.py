@@ -14,8 +14,8 @@ class Disciplina(models.Model):
         return self.codigo+ ' - ' + self.nome
 
 class DisciplinaOfertada(models.Model):
-    disciplina = models.ForeignKey(Disciplina, on_delete=models.DO_NOTHING, related_name='disciplina_ofertada_disciplina')
-    professor = models.ForeignKey(Professor, on_delete=models.DO_NOTHING)
+    disciplina = models.ForeignKey(Disciplina, on_delete=models.DO_NOTHING, related_name='disciplina_ofertada_disciplina', verbose_name="Disciplina")
+    professor = models.ForeignKey(Professor, on_delete=models.DO_NOTHING, verbose_name="Professor")
     ano = models.IntegerField()
     semestre = models.IntegerField()
 
