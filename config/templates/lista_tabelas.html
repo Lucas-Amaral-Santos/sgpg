@@ -14,20 +14,21 @@ Tabelas Auxiliares
         <h3 class="text-center">Tabelas Auxiliares</h3>
 
         <div class="d-flex gap-1">
-            <div class="border p-2">
-                <ul class="nav nav-pills nav-stacked flex-row gap-1 justify-content-center">                    
+            <div class="border p-2 w-25">
+                <ul class="nav nav-pills nav-stacked flex-row gap-1 justify-content-center"> 
                     <li><a href="#disciplina" class="btn btn-primary" style="width:300px;" data-toggle="pill">Cadastra Disciplina</a></li>    
                     <li><a  href="#disciplina_ofertada" class="btn btn-primary" style="width:300px;" data-toggle="pill">Cadastra Disciplina Ofertada</a></li>
+                    <li><a  href="#unidade_federativa" class="btn btn-primary" style="width:300px;" data-toggle="pill">Unidade Federativa</a></li>
                 </ul>
             </div>
 
             <div class="float-right w-100 border p-2">
                 <div class="tab-content">
-                    
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo='Disciplina' tabela='disciplina' objeto=context.disciplina registros=disciplina active='active' %}
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo='Disciplina' tabela='disciplina' objeto=context.disciplina active='active' %}
 
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_disciplina_ofertada titulo='Disciplina Ofertada' tabela='disciplina_ofertada' objeto=context.disciplina_ofertada registros=disciplina_ofertada %}
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_disciplina_ofertada titulo='Disciplina Ofertada' tabela='disciplina_ofertada' objeto=context.disciplina_ofertada %}
 
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_unidade_federativa titulo='Unidade Federativa' tabela='unidade_federativa' objeto=context.unidade_federativa %}
                 </div>
             </div>
         </div>

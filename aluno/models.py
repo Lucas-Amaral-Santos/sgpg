@@ -1,6 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from config.models import UnidadeFederativa
 
 class EnsinoMedio(models.Model):
 
@@ -95,7 +96,7 @@ class Aluno(models.Model):
     cpf = models.CharField(max_length=14, verbose_name='CPF:', blank=True)
     nome_pai = models.CharField(max_length=200, null=True, blank=True, verbose_name='Nome do pai:')
     nome_mae = models.CharField(max_length=200, null=True, blank=True, verbose_name="Nome da mãe:")
-    naturalidade = models.CharField(max_length=2, null=True, blank=True, verbose_name="Naturalidade:")
+    naturalidade = models.ForeignKey(UnidadeFederativa, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Naturalidade:")
     nacionalidade = models.CharField(max_length=100, null=True, blank=True, verbose_name="Nacionalidade:")
     dt_nascimento = models.DateField()
     estado_civil = models.CharField(max_length=100, null=True, blank=True, verbose_name="Estado civil:")

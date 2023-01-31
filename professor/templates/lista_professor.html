@@ -58,7 +58,7 @@
     </form>
 
 
-    {% if busca or pagina == 'Colegiado' %}
+    {% if pagina == 'Colegiado' %}
 
     <table class="table"> 
       <thead>
@@ -222,11 +222,11 @@
       });
 
       $("#id_membros_ativos_view").change(function () {
-        if ($(this).is(":checked")) {
-          $('#id_membros_ativos').removeAttr("checked");
+        if (not $(this).is(":checked")) {
+          $('#id_membros_ativos').addAttr("checked");
         }
         else {
-          $('#id_membros_ativos').addAttr("checked");
+          $('#id_membros_ativos').removeAttr("checked");
         }
       });
 

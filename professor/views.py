@@ -117,8 +117,6 @@ def detalhes_professor(request, professor):
 
     return render(request, 'detalhes_professor.html', {'professor':professor, 'pagina': 'Detalhes Professor'})
 
-
-
 def detalhes_colegiado(request, membros_ativos=True):
     colegiado = Professor.objects.filter(membro_colegiado__colegiado_membro=True)
     total = colegiado.count()

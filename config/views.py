@@ -1,30 +1,59 @@
 from django.shortcuts import render, redirect
 from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
-from django.forms.models import model_to_dict
-
+from .models import UnidadeFederativa
+from .forms import UnidadeFederativaForm
 
 
 def lista_tabelas(request):
-    disciplina = Disciplina.objects.all()
     form_disciplina = DisciplinaForm()
-    print(disciplina.values())
-
-    disciplina_ofertada = DisciplinaOfertada.objects.all()
     form_disciplina_ofertada = DisciplinaOfertadaForm()
+    form_unidade_federativa = UnidadeFederativaForm()
+    context = {}
 
-    context = {
-        'disciplina': {
+    try:
+        disciplina = Disciplina.objects.all()        
+        context['disciplina'] = {
             'values': disciplina.values(),
             'colunas': disciplina.values()[0].keys(),
             'form': form_disciplina,
-        },
-        'disciplina_ofertada': {
-            'values':disciplina_ofertada.values(),
-            'colunas':disciplina_ofertada.values()[0].keys(),
-            'form':form_disciplina_ofertada,
         }
-    }
+    except:
+        context['disciplina'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_disciplina,
+        }
+
+    try:
+        disciplina_ofertada = DisciplinaOfertada.objects.all()
+        context['disciplina_ofertada'] = {
+            'values': disciplina_ofertada.values(),
+            'colunas': disciplina_ofertada.values()[0].keys(),
+            'form': form_disciplina_ofertada,
+        }
+    except:
+        context['disciplina_ofertada'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_disciplina_ofertada,
+        }
+
+    try:
+        unidade_federativa = UnidadeFederativa.objects.all()
+        context['unidade_federativa'] = {
+            'values': unidade_federativa.values(),
+            'colunas': unidade_federativa.values()[0].keys(),
+            'form': form_unidade_federativa,
+        }
+    except:
+        context['unidade_federativa'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_unidade_federativa,
+        }
+
+
 
     if(request.method == 'POST'):
         form_disciplina = DisciplinaForm(request.POST)
@@ -53,5 +82,14 @@ def lista_tabelas(request):
                 nova_inscricao.save()
                 return redirect('/')
 
-    return render(request, "lista_tabelas.html", {'context': context})
+    if(request.method == 'POST'):
+            form_unidades_federativa = UnidadeFederativaForm(request.POST)
+            if(form_unidades_federativa.is_valid()):
+                nova_uf = UnidadeFederativa.objects.create(
+                    estado = form_unidades_federativa.cleaned_data['estado'],
+                    sigla = form_unidades_federativa.cleaned_data['sigla'],
+                )    
+                nova_uf.save()
+                return redirect('/')
 
+    return render(request, "lista_tabelas.html", {'context': context})

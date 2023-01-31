@@ -4,14 +4,16 @@
     <h5>Cadastrar {{titulo}}</h5>
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#id_cadastro_{{tabela}}">Cadastro</a>
+            <a class="nav-link {% if objeto.values is None %}active{% endif %}" data-toggle="tab" href="#id_cadastro_{{tabela}}">Cadastro</a>
         </li>
+        {% if objeto.values is not None %}
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#id_registros_{{tabela}}">Registros</a>
         </li>
+        {% endif %}
     </ul>            
     <div class="tab-content">                        
-        <div id="id_cadastro_{{tabela}}" class="tab-pane container pt-4">
+        <div id="id_cadastro_{{tabela}}" class="tab-pane container pt-4 {% if objeto.values is None %}active{% endif %}">
             <form method="POST">
                 {% csrf_token %}
                 {{objeto.form|crispy}}
@@ -21,23 +23,25 @@
                 </div>
             </form>
         </div>
-        <div id="id_registros_{{tabela}}" class="tab-pane container pt-4 active">
-            <table class="table">
-                <thead>
-                    {% for value in objeto.colunas %}
-                    <th scope='col'>{{value}}</th>
-                    {% endfor %}
-                </thead>
-                <tbody>
-                    {% for r in objeto.values %}
-                        <tr> 
-                        {% for k, v in r.items %}                                          
-                            <td>{{v}}</td>                        
+        {% if objeto.values is not None %}
+            <div id="id_registros_{{tabela}}" class="tab-pane container pt-4 active">
+                <table class="table">
+                    <thead>
+                        {% for value in objeto.colunas %}
+                        <th scope='col'>{{value}}</th>
                         {% endfor %}
-                        <tr> 
-                    {% endfor %}
-                </tbody>
-            </table>            
-        </div>
+                    </thead>
+                    <tbody>
+                        {% for r in objeto.values %}
+                            <tr> 
+                            {% for k, v in r.items %}                                          
+                                <td>{{v}}</td>                        
+                            {% endfor %}
+                            <tr> 
+                        {% endfor %}
+                    </tbody>
+                </table>            
+            </div>
+        {% endif %}
     </div>
 </div>
