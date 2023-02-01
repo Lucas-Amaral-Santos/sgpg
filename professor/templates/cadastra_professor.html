@@ -18,8 +18,6 @@ Cadastra Professor
               <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'professor:cadastra_professor' %}">{{pagina}}</a></li>
             </ol>
           </nav>
-        
-
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#id_info">Informações Pessoais</a>
@@ -37,9 +35,6 @@ Cadastra Professor
                 <a class="nav-link" data-toggle="tab" href="#id_titulacao">Titulação</a>
             </li>
         </ul>
-
-
-
         <form action="" method="POST" class="cadastro_form">
             {% csrf_token %}
             <div class="tab-content">
