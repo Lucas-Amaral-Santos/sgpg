@@ -1,28 +1,28 @@
 {% load crispy_forms_tags %}
 
 <div class="row">
-    <div class="col-3">
+    <div class="col-3 {{pagina}}">
         {{form_endereco.cep|as_crispy_field}}
     </div>
-    <div class="col-6">
+    <div class="col-6 {{pagina}}">
         {{form_endereco.endereco|as_crispy_field}}
     </div>
-    <div class="col-2">        
+    <div class="col-2 {{pagina}}">        
         {{form_endereco.numero|as_crispy_field}}
     </div>
-    <div class="col-6">        
+    <div class="col-6 {{pagina}}">        
         {{form_endereco.complemento|as_crispy_field}}
     </div>
-    <div class="col-6">        
+    <div class="col-6 {{pagina}}">        
         {{form_endereco.bairro|as_crispy_field}}
     </div>
-    <div class="col-6">        
+    <div class="col-6 {{pagina}}">        
         {{form_endereco.municipio|as_crispy_field}}
     </div>
-    <div class="col-2">
+    <div class="col-2 {{pagina}}">
         {{form_endereco.uf|as_crispy_field}}
     </div>
-    <div class="col-4">
+    <div class="col-4 {{pagina}}">
         {{form_endereco.pais|as_crispy_field}}
     </div>
 </div>

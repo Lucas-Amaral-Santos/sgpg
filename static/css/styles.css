@@ -24,11 +24,14 @@ nav svg {
 }
 .card-home, .card-total {
     background-color:#efefefe7;
-    width: 200px;
-    height: 200px;
     padding: 5%;
     align-items: center;
     color: #224EAC;
+}
+
+.card-total {
+    max-width: 200px;
+    max-width: 200px;
 }
 .card-home:hover {
     color: #efefefe7;
