@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from matricula.models import Matricula, Probatorio
 from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm, EnsinoMedioForm
@@ -6,6 +8,7 @@ from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao,
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import datetime
+from django.contrib import messages
 # Create your views here.
 
 def cadastra_aluno(request, aluno=None):
@@ -147,6 +150,8 @@ def cadastra_aluno(request, aluno=None):
             novo_endereco.save()
             novo_trabalho.save()
             novo_aluno.save()
+            messages.success(request, 'Aluno cadastrado com sucesso!')
+            return redirect('aluno:detalhes_aluno', aluno=novo_aluno.slug)
 
     return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho':form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno, 'sexo_choices': SEXO_CHOICES})
 

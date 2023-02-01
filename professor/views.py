@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import ProfessorForm, TrabalhoForm, PosDoutoradoForm, ColegiadoForm
 from  .models import Professor, Trabalho, PosDoutorado, Colegiado
 from django.contrib.auth.models import User
@@ -7,6 +7,7 @@ from aluno.models import Endereco, Titulacao
 from aluno.forms import EnderecoForm, TitulacaoProfessorForm
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib import messages
 
 
 # Create your views here.
@@ -94,6 +95,9 @@ def cadastra_professor(request):
             novo_trabalho.save()
             novo_professor.save()
             novo_professor.save()
+            messages.success(request, 'Professor cadastrado com sucesso!')
+            return redirect('professor:detalhes_professor', professor=novo_professor.slug)
+
 
     return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao, 'pagina':'Cadastrar Professor'})
 

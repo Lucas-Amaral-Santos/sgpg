@@ -2,7 +2,7 @@ from django.forms import ModelForm, CharField, TextInput, DateField, NumberInput
 from .models import Aluno, Graduacao, Endereco, Trabalho, Residencia, Titulacao, Afastamento, EnsinoMedio
 
 class AlunoForm(ModelForm):
-    dt_nascimento = DateField(label="Data de Nascimento:", widget=NumberInput(attrs={'type':'date'}))
+    dt_nascimento = DateField(required=False, label="Data de Nascimento:", widget=NumberInput(attrs={'type':'date'}))
     cpf = CharField(max_length="14", label="CPF:", required=False, widget=TextInput(attrs={"data-mask": "000.000.000-00"}))
     class Meta:
         model = Aluno
@@ -44,7 +44,7 @@ class ResidenciaForm(ModelForm):
         fields = '__all__'
 
 class TitulacaoForm(ModelForm):
-    data_qualificacao = DateField(label="Data da Qualificação:", widget=NumberInput(attrs={'type':'date'}))
+    data_qualificacao = DateField(required=False, label="Data da Qualificação:", widget=NumberInput(attrs={'type':'date'}))
     class Meta:
         model = Titulacao
         fields = '__all__'

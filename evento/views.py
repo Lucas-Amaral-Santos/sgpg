@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
 from .models import Evento, Participante
 from .forms import EventoForm, ParticipanteForm
 from dateutil.relativedelta import relativedelta
+from django.contrib import messages
 
 class EventCalendar(HTMLCalendar):
 
@@ -86,6 +86,7 @@ def cadastra_evento(request, data=datetime.today().date().strftime('%d/%m/%Y'), 
             )
 
             novo_evento.save()
+            messages.success(request, 'Evento cadastrado com sucesso!')
             return redirect('evento:detalhes_evento', evento=novo_evento.slug)
 
     return render(request, 'cadastra_evento.html', {'form_evento': form_evento, 'pagina': 'Adicionar Novo Evento'})
@@ -103,6 +104,7 @@ def cadastra_participante(request, evento):
                 evento = evento,
             )
             novo_participante.save()
+            messages.success(request, 'Participante cadastrado com sucesso!')
         return redirect('evento:detalhes_evento', evento=evento.slug)
     
     return render(request, 'cadastra_participante.html', {'form_participante': form_participante, 'evento':evento, 'pagina': 'Cadastra Participante'})
