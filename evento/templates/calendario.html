@@ -19,25 +19,26 @@ Calendario de Eventos
           </nav>
             <h1 class='text-center mt-1 mb-4'>Calendário de Eventos</h1>
             <div class="container row justify-content-between">
-              <div class="m-2 mt-0">
-                <a class="btn btn-primary" data-toggle="modal" data-target="#todos-eventos">
+              <div class="m-2 mt-0">                
+                  <a class="btn btn-primary" data-toggle="modal" data-target="#todos-eventos" style="padding:0rem;">   
+                    <div class="container btn btn-primary" data-toggle="tooltip" data-placement="top" title="Visualizar todos os eventos">               
+                    <i class="fa-solid fa-bars"></i>                
+                  </div>
+                  </a>
                 
-                <i class="fa-solid fa-bars"></i>
-                
-                </a>
               </div>
               <div class="col-4 text-start">
-                <a href='{% url "evento:mostra_eventos" p_month.month  p_month.year %}'>
+                <a href='{% url "evento:mostra_eventos" p_month.month  p_month.year %}' data-toggle="tooltip" data-placement="top" title="Visualizar mês anterior">
                   <i class="fa-sharp fa-solid fa-angle-left fa-2x"></i>
                 </a>
               </div>
                 <div class="col text-center">
-                  <a href='{% url "evento:mostra_eventos" data.month  data.year %}' style="color:#224EAC;">
+                  <a href='{% url "evento:mostra_eventos" data.month  data.year %}' style="color:#224EAC;" data-toggle="tooltip" data-placement="top" title="Ir para o mês atual">
                     <i class="fa-sharp fa-solid fa-calendar-week"></i> Hoje 
                   </a>
                 </div>
               <div class="col-4 text-end">
-                <a href='{% url "evento:mostra_eventos" n_month.month n_month.year %}'>
+                <a href='{% url "evento:mostra_eventos" n_month.month n_month.year %}' data-toggle="tooltip" data-placement="top" title="Visualizar mês posterior">
                  <i class="fa-sharp fa-solid fa-angle-right fa-2x"></i>
                 </a>
               </div>
@@ -201,14 +202,11 @@ Calendario de Eventos
         color: #224EAC77;
     }
 
-      
-
+    
       </style>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
       <script>
         dia_selecionado = ""
-        $(document).ready(function(){
           $('.dias').on('click',function(){
               evento_card = '';
               count = false;
@@ -256,7 +254,6 @@ Calendario de Eventos
           $('#adicionar_evento').on('click', function(){
             window.location.href = "/evento/cadastra/" + dia_selecionado.toString().replace("/", "-").replace("/", "-");
           });
-      });
       </script>
 
 {% endblock %}

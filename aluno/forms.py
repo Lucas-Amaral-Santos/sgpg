@@ -11,6 +11,7 @@ class AlunoForm(ModelForm):
                  'identidade_uf', 'identidade_orgao', 'sexo', 'email', 'etnia']
 
 class EnderecoForm(ModelForm):
+    cep = CharField(label="CEP:", required=False, widget=TextInput(attrs={"data-mask": "00000-000"}))
     endereco = CharField(label="Rua:", required=False, widget=TextInput(attrs={"id": "id_rua"}))
     telefone1 = CharField(label="Telefone:", required=False, widget=TextInput(attrs={"data-mask": "(00) 00000-0000"}))
     telefone2 = CharField(label="Telefone 2:", required=False, widget=TextInput(attrs={"data-mask": "(00) 00000-0000"}))

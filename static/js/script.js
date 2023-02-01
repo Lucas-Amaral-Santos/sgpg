@@ -7,7 +7,7 @@ $(".aluno #id_cep").focusout(function(){
   $.ajax({
     //O campo URL diz o caminho de onde virá os dados
     //É importante concatenar o valor digitado no CEP
-    url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/',
+    url: 'https://viacep.com.br/ws/'+$(this).val().replace('-','')+'/json/',
     
     //Aqui você deve preencher o tipo de dados que será lido,
     //no caso, estamos lendo JSON.
@@ -36,7 +36,7 @@ $(".endereco_trabalho #id_cep").focusout(function(){
   $.ajax({
     //O campo URL diz o caminho de onde virá os dados
     //É importante concatenar o valor digitado no CEP
-    url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/',
+    url: 'https://viacep.com.br/ws/'+$(this).val().replace('-','')+'/json/',
     
     //Aqui você deve preencher o tipo de dados que será lido,
     //no caso, estamos lendo JSON.
@@ -65,7 +65,7 @@ $(".professor #id_cep").focusout(function(){
   $.ajax({
     //O campo URL diz o caminho de onde virá os dados
     //É importante concatenar o valor digitado no CEP
-    url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/',
+    url: 'https://viacep.com.br/ws/'+$(this).val().replace('-','')+'/json/',
     
     //Aqui você deve preencher o tipo de dados que será lido,
     //no caso, estamos lendo JSON.
@@ -88,3 +88,29 @@ $(".professor #id_cep").focusout(function(){
     }
   });
 });
+
+
+const date = new Date().toJSON().slice(0, 10);
+
+$("#id_membros_passados").change(function () {
+  if ($(this).is(":checked")) {
+    $('#id_data_saida_inicio').removeAttr("readonly").attr('value', date);
+    $('#id_data_saida_fim').removeAttr("readonly").attr('value', date);
+  }
+  else {
+    $('#id_data_saida_inicio').attr('readonly', true).attr('value', '');
+    $('#id_data_saida_fim').attr('readonly', true).attr('value', '');
+  }
+});
+
+$("#id_membros_ativos_view").change(function () {
+  if (!$(this).is(":checked")) {
+    $('#id_membros_ativos').addAttr("checked");
+  }
+  else {
+    $('#id_membros_ativos').removeAttr("checked");
+  }
+});
+
+
+

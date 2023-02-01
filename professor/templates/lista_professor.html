@@ -204,37 +204,14 @@
   });
   
 </script>
-  {% if pagina == 'Colegiado' %}
+
+
+{% if pagina == 'Colegiado' %}
   
-  <script type="text/javascript">
-    const date = new Date().toJSON().slice(0, 10);
+<script type="text/javascript">
 
-    $(document).ready(function () {
-      $("#id_membros_passados").change(function () {
-        if ($(this).is(":checked")) {
-          $('#id_data_saida_inicio').removeAttr("readonly").attr('value', date);
-          $('#id_data_saida_fim').removeAttr("readonly").attr('value', date);
-        }
-        else {
-          $('#id_data_saida_inicio').attr('readonly', true).attr('value', '');
-          $('#id_data_saida_fim').attr('readonly', true).attr('value', '');
-        }
-      });
+</script>
 
-      $("#id_membros_ativos_view").change(function () {
-        if (not $(this).is(":checked")) {
-          $('#id_membros_ativos').addAttr("checked");
-        }
-        else {
-          $('#id_membros_ativos').removeAttr("checked");
-        }
-      });
-
-
-    });
-  </script>
-
-
-  {% endif %}
+{% endif %}
 
 {% endblock %}
