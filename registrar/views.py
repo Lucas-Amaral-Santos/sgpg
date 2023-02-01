@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm
-
+from django.contrib import messages
 # Create your views here.
 def logar(request):
 
@@ -16,6 +16,8 @@ def logar(request):
             if user is not None:
                 login(request, user)
                 return redirect('/')
+            messages.warning(request, 'Usuário ou senha incorreta!')
+            return redirect('logar')            
 
     return render(request, 'logar.html', {'user_form':user_form})
 
