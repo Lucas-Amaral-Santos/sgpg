@@ -23,7 +23,7 @@ class Curso(models.Model):
 class Probatorio(models.Model):
     data_inscricao = models.DateField(default=datetime.today())
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True)
-    aluno = models.ForeignKey(Aluno, on_delete=models.DO_NOTHING, related_name='probatorio_aluno')
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno')
     probatorio = models.BooleanField(default=True)
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
@@ -48,7 +48,7 @@ class Matricula(models.Model):
     )
 
     numero = models.CharField(max_length=10)
-    probatorio = models.ForeignKey(Probatorio, on_delete=models.DO_NOTHING, related_name='matricula_probatorio')
+    probatorio = models.ForeignKey(Probatorio, on_delete=models.CASCADE, related_name='matricula_probatorio')
     curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, related_name="matricula_curso", null=True, blank=True)
     requisita_bolsa = models.BooleanField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
@@ -104,7 +104,7 @@ class InscricaoProbatorio(models.Model):
 
 class Inscricao(models.Model):
     disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_disciplina_ofertada')
-    matricula = models.ForeignKey(Matricula, on_delete=models.DO_NOTHING, related_name="inscricao_matricula")
+    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name="inscricao_matricula")
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
@@ -128,8 +128,8 @@ class TrabalhoFinal(models.Model):
     versao_final = models.BooleanField()
     dt_versao = models.DateField()
 
-    matricula = models.OneToOneField(Matricula, on_delete=models.DO_NOTHING, null=True, related_name="matricula_trabalho_final")
-    probatorio = models.OneToOneField(Probatorio, on_delete=models.DO_NOTHING, null=True, related_name="probatorio_trabalho_final")
+    matricula = models.OneToOneField(Matricula, on_delete=models.CASCADE, null=True, related_name="matricula_trabalho_final")
+    probatorio = models.OneToOneField(Probatorio, on_delete=models.CASCADE, null=True, related_name="probatorio_trabalho_final")
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)

@@ -190,5 +190,5 @@ def detalhes_aluno(request, aluno):
 def delete_aluno(request, aluno):
     aluno = Aluno.objects.get(slug=aluno)
     aluno.delete()
-
-    return redirect('home')
+    messages.success(request, 'Aluno apagado do sistema!')
+    return redirect('aluno:lista_aluno')

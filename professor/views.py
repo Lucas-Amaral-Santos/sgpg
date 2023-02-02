@@ -11,7 +11,7 @@ from django.contrib import messages
 
 
 # Create your views here.
-def cadastra_professor(request):
+def cadastra_professor(request, professor=None):
     form_professor = ProfessorForm()
     form_colegiado = ColegiadoForm()
     form_trabalho = TrabalhoForm()
@@ -19,8 +19,16 @@ def cadastra_professor(request):
     form_endereco = EnderecoForm()
     form_titulacao = TitulacaoProfessorForm()
 
-    print(request.user)
-
+    if (professor is not None):
+        pagina = "Atualizar Professor"
+        professor = Professor.objects.get(slug=professor)
+        form_professor = ProfessorForm(instance=professor)
+        form_colegiado = ColegiadoForm(instance=professor.membro_colegiado)
+        form_trabalho = TrabalhoForm(instance=professor.trabalho)
+        form_pos_doutorado = PosDoutoradoForm(instance=professor.pos_doutorado)
+        form_endereco = EnderecoForm(instance=professor.endereco)
+        form_titulacao = TitulacaoProfessorForm(instance=professor.titulacao)
+        
     if request.method == "POST":
         form_professor = ProfessorForm(request.POST)
         form_colegiado = ColegiadoForm(request.POST)
@@ -160,3 +168,10 @@ def detalhes_colegiado(request, membros_ativos=True):
         colegiado = paginator.get_page(page)  
 
     return render(request, 'lista_professor.html', {'professores':colegiado, 'pagina': 'Colegiado', 'total':total, 'busca': busca})
+
+
+def delete_professor(request, professor):
+    professor = Professor.objects.get(slug=professor)
+    professor.delete()
+    messages.success(request, 'Professor apagado do sistema!')
+    return redirect('professor:lista_professor')
