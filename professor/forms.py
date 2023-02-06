@@ -3,8 +3,8 @@ from .models import Professor, Trabalho, PosDoutorado, Colegiado
 from datetime import datetime
 
 class ColegiadoForm(ModelForm):
-    colegiado_data_entrada = DateField(required=False, widget=TextInput(attrs={'type':'date'}))
-    colegiado_data_saida = DateField(required=False, widget=TextInput(attrs={'type':'date'}), initial=datetime.today().strftime('%d/%m/%Y'))
+    colegiado_data_entrada = DateField(label='Data de entrada:', required=False, widget=TextInput(attrs={'type':'date'}))
+    colegiado_data_saida = DateField(label='Data de término:', required=False, widget=TextInput(attrs={'type':'date'}), initial=datetime.today().strftime('%d/%m/%Y'))
     class Meta:
         model = Colegiado
         fields = '__all__'
@@ -15,13 +15,13 @@ class PosDoutoradoForm(ModelForm):
         fields = '__all__'
 
 class TrabalhoForm(ModelForm):
-    admissao = DateField(required=False, widget=TextInput(attrs={'type':'date'}))
+    admissao = DateField(label='Admissão:', required=False, widget=TextInput(attrs={'type':'date'}))
     class Meta:
         model = Trabalho
         fields = "__all__"
 
 class ProfessorForm(ModelForm):
-    dt_nascimento = DateField(required=False, widget=TextInput(attrs={'type':'date'}))
+    dt_nascimento = DateField(label='Data de Nascimento:', required=False, widget=TextInput(attrs={'type':'date'}))
 
     def __init__(self, *args, **kwargs):
         super(ProfessorForm, self).__init__(*args, **kwargs)
