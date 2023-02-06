@@ -1,1 +1,1 @@
-web: gunicorn 'sgpg.wsgi.application'
+web: gunicorn 'sgpg.wsgi'
