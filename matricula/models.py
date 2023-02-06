@@ -70,7 +70,7 @@ class Bolsa(models.Model):
     agencia = models.CharField(max_length=200)
     dt_inicio = models.DateField()
     iniciacao_cientifica = models.BooleanField()
-    matricula = models.ForeignKey(Matricula, on_delete=models.DO_NOTHING, related_name='bolsa_matricula')
+    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name='bolsa_matricula')
     dt_cadastro = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -80,15 +80,15 @@ class Afastamento(models.Model):
     motivo = models.CharField(max_length=200)
     saida = models.DateField()
     retorno = models.DateField()
-    matricula = models.ForeignKey(Matricula, on_delete=models.DO_NOTHING, related_name='afastamento_matricula')
+    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name='afastamento_matricula')
 
     dt_cadastro = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.motivo
 
 class InscricaoProbatorio(models.Model):
-    disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_probatorio_disciplina_ofertada')
-    probatorio = models.ForeignKey(Probatorio, on_delete=models.DO_NOTHING, related_name="inscricao_probatorio_probatorio")
+    disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.CASCADE, related_name='inscricao_probatorio_disciplina_ofertada')
+    probatorio = models.ForeignKey(Probatorio, on_delete=models.CASCADE, related_name="inscricao_probatorio_probatorio")
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
@@ -103,7 +103,7 @@ class InscricaoProbatorio(models.Model):
         return str(self.disciplina_ofertada)
 
 class Inscricao(models.Model):
-    disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.DO_NOTHING, related_name='inscricao_disciplina_ofertada')
+    disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.CASCADE, related_name='inscricao_disciplina_ofertada')
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name="inscricao_matricula")
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
 
