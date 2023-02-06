@@ -1,2 +1,1 @@
-web: gunicorn sgpg.wsgi
-release: python manage.py migrate
+web: gunicorn 'sgpg.wsgi'
