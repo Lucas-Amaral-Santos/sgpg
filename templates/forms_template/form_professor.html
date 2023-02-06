@@ -1,0 +1,35 @@
+{% load crispy_forms_tags %}
+
+{{form_professor.nome|as_crispy_field}}
+<div class="row">
+    <div class="col-6">
+        {{form_professor.cpf|as_crispy_field}}
+    </div>
+    <div class="col-6">
+        {{form_professor.sexo|as_crispy_field}}
+    </div>
+    <div class="col-3">
+        {{form_professor.dt_nascimento|as_crispy_field}}
+    </div>
+</div>
+<div class="row">    
+    <div class="col-3">  
+        {{form_professor.naturalidade|as_crispy_field}}
+    </div>
+    <div class="col-3">  
+        {{form_professor.nacionalidade|as_crispy_field}}
+    </div>
+</div>
+{{form_professor.estrangeiro|as_crispy_field}}
+<div class="row">    
+    <div class="col-3">  
+        {{form_professor.identidade|as_crispy_field}}
+    </div>
+    <div class="col-3">  
+        {{form_professor.identidade_uf|as_crispy_field}}
+    </div>
+    <div class="col-3">  
+        {{form_professor.identidade_orgao|as_crispy_field}}
+    </div>
+</div>
+{{form_professor.tipo_docente|as_crispy_field}}

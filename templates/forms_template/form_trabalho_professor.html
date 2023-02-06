@@ -1,0 +1,25 @@
+{% load crispy_forms_tags %}
+
+{{form_trabalho_professor.instituicao_trabalho|as_crispy_field}}
+<div class="row">
+    <div class="col-6">
+        {{form_trabalho_professor.setor|as_crispy_field}}
+    </div>
+    <div class="col-6">
+        {{form_trabalho_professor.admissao|as_crispy_field}}
+    </div>
+    <div class="col-6">
+        {{form_trabalho_professor.cargo|as_crispy_field}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        {{form_trabalho_professor.telefone|as_crispy_field}}
+    </div>
+    <div class="col-6">
+        {{form_trabalho_professor.categoria|as_crispy_field}}
+    </div>
+    <div class="col-6">
+        {{form_trabalho_professor.email|as_crispy_field}}
+    </div>
+</div>

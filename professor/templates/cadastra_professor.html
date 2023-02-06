@@ -39,9 +39,9 @@ Cadastra Professor
             <div class="tab-content">
             <div id="id_info" class="tab-pane container active">
                 <h1>Informações Pessoais</h1>
-                {{form_professor|crispy}}
+                {% include 'forms_template/form_professor.html' with form_professor=form_professor %}
                 <h1>Colegiado</h1>
-                {{form_colegiado|crispy}}
+                {% include 'forms_template/form_colegiado.html' with form_colegiado=form_colegiado %}
             </div>
             <div id="id_endereco" class="tab-pane container">
                 <h1>Endereço</h1>
@@ -50,15 +50,15 @@ Cadastra Professor
             </div>
             <div id="id_trabalho" class="tab-pane container">
                 <h1>Trabalho</h1>
-                {{form_trabalho|crispy}}
+                {% include 'forms_template/form_trabalho_professor.html' with form_trabalho_professor=form_trabalho pagina='trabalho_professor' %}
             </div>
             <div id="id_posdoc" class="tab-pane container">
                 <h1>Pos-Doutorado</h1>
-                {{form_pos_doutorado|crispy}}
+                {% include 'forms_template/form_pos_doutorado.html' with form_pos_doutorado=form_pos_doutorado %}
             </div>
             <div id="id_titulacao" class="tab-pane container">
                 <h1>Titulação</h1>
-                {{form_titulacao|crispy}}
+                {% include 'forms_template/form_titulacao_professor.html' with form_titulacao=form_titulacao %}
             </div>
         </div>
         <div class="d-flex justify-content-center">

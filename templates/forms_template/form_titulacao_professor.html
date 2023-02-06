@@ -1,0 +1,25 @@
+{% load crispy_forms_tags %}
+
+<div class="row">
+    <div class="col-6">
+        {{form_titulacao.titulacao|as_crispy_field}}
+    </div>
+    <div class="col-3">
+        {{form_titulacao.titulacao_area|as_crispy_field}}
+    </div>
+</div>
+<div class="row">
+    
+    <div class="col-3">  
+        {{form_titulacao.titulacao_ano|as_crispy_field}}
+    </div>
+    <div class="col-3">  
+        {{form_titulacao.uf|as_crispy_field}}
+    </div>
+    <div class="col-6">  
+        {{form_titulacao.instituicao_titulacao|as_crispy_field}}
+    </div>
+</div>
+
+{{form_titulacao.obs_geral|as_crispy_field}}
+

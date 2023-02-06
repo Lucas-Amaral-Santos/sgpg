@@ -16,23 +16,23 @@ class Colegiado(models.Model):
                   return 'Não Membro'
 
 class PosDoutorado(models.Model):
-      concluido = models.BooleanField()
-      ano_inicio = models.IntegerField(null=True, blank=True)
-      ano_fim = models.IntegerField(null=True, blank=True)
-      instituicao_posdoc = models.CharField(max_length=200, null=True, blank=True)
-      pais = models.CharField(max_length=200, null=True, blank=True)
+      concluido = models.BooleanField(verbose_name='Concluído:')
+      ano_inicio = models.IntegerField(null=True, blank=True, verbose_name='Ano de início:')
+      ano_fim = models.IntegerField(null=True, blank=True, verbose_name='Ano de término:')
+      instituicao_posdoc = models.CharField(max_length=200, null=True, blank=True, verbose_name='Instituição de Pós-doutorado:')
+      pais = models.CharField(max_length=200, null=True, blank=True, verbose_name='País:')
 
       def __str__(self):
             return str(self.id)
 
 class Trabalho(models.Model):
-      instituicao_trabalho = models.CharField(max_length=200)
-      setor = models.CharField(max_length=200, null=True, blank=True)
-      admissao = models .DateField(null=True, blank=True)
-      cargo = models.CharField(max_length=200)
-      telefone  = models.CharField(max_length=15, null=True, blank=True)
-      categoria = models.CharField(max_length=200, null=True, blank=True) 
-      email = models.EmailField(null=True, blank=True)
+      instituicao_trabalho = models.CharField(max_length=200, verbose_name='Instituição:')
+      setor = models.CharField(max_length=200, null=True, blank=True, verbose_name='Setor:')
+      admissao = models.DateField(null=True, blank=True, verbose_name='Admissão:')
+      cargo = models.CharField(max_length=200, verbose_name='Cargo:')
+      telefone  = models.CharField(max_length=15, null=True, blank=True, verbose_name='Telefone:')
+      categoria = models.CharField(max_length=200, null=True, blank=True, verbose_name='Categoria:') 
+      email = models.EmailField(null=True, blank=True, verbose_name='Email:')
 
       def __str__(self):
             return str(self.instituicao_trabalho)
@@ -47,17 +47,17 @@ class Professor(models.Model):
             ("Pos Doutor", "Pós Doutor"),
       )
 
-      nome = models.CharField(max_length=200)
-      sexo = models.CharField(max_length=50, null=True, blank=True)
-      dt_nascimento = models.DateField(null=True, blank=True)
-      estrangeiro = models.BooleanField(default=False)
-      nacionalidade = models.CharField(max_length=100, null=True, blank=True)
-      naturalidade = models.CharField(max_length=2, null=True, blank=True)
-      cpf = models.CharField(max_length=14, null=True, blank=True)
-      identidade = models.CharField(max_length=12, null=True, blank=True)
-      identidade_uf= models.CharField(max_length=2, null=True, blank=True)
-      identidade_orgao = models.CharField(max_length=100, null=True, blank=True)
-      tipo_docente = models.CharField(max_length=100, choices=TIPO_DOCENTE_CHOICES, null=True, blank=True)
+      nome = models.CharField(max_length=200, verbose_name='Nome:')
+      sexo = models.CharField(max_length=50, null=True, blank=True, verbose_name='Sexo:')
+      dt_nascimento = models.DateField(null=True, blank=True, verbose_name='Data de nascimento:')
+      estrangeiro = models.BooleanField(default=False, verbose_name='Estrangeiro:')
+      nacionalidade = models.CharField(max_length=100, null=True, blank=True, verbose_name='Nacionalidade:')
+      naturalidade = models.CharField(max_length=2, null=True, blank=True, verbose_name='Naturalidade:')
+      cpf = models.CharField(max_length=14, null=True, blank=True, verbose_name='CPF:')
+      identidade = models.CharField(max_length=12, null=True, blank=True, verbose_name='Identidade:')
+      identidade_uf= models.CharField(max_length=2, null=True, blank=True, verbose_name='UF:')
+      identidade_orgao = models.CharField(max_length=100, null=True, blank=True, verbose_name='Orgão Expeditor:')
+      tipo_docente = models.CharField(max_length=100, choices=TIPO_DOCENTE_CHOICES, null=True, blank=True, verbose_name='Tipo de docente:')
       
       endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
       titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING)
