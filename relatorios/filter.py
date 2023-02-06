@@ -1,5 +1,3 @@
-from email.policy import default
-from django import forms
 import django_filters
 from django import forms
 from aluno.models import Aluno

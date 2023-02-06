@@ -214,3 +214,8 @@ button.close {
 .item-professor:hover {
     background-color: #efefefe7;
 }
+
+label.required::after {
+    content: '*';
+    color: red !important;
+}
