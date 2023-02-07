@@ -12,18 +12,18 @@ class Curso(models.Model):
         ("Mestrado", "Mestrado"),
         ("Doutorado", "Doutorado"),
     )
-    curso = models.CharField(max_length=200, choices=CURSO_CHOICES)
-    orientador = models.CharField(max_length=200)
-    coorientador = models.CharField(max_length=200)
+    curso = models.CharField(max_length=200, choices=CURSO_CHOICES, verbose_name='Curso:')
+    orientador = models.CharField(max_length=200, verbose_name='Orientador:')
+    coorientador = models.CharField(max_length=200, verbose_name='Coorientador:')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.id)
         super(Curso, self).save(*args, **kwargs)
 
 class Probatorio(models.Model):
-    data_inscricao = models.DateField(default=datetime.today())
-    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True)
-    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno')
+    data_inscricao = models.DateField(default=datetime.today(), verbose_name='Data da inscrição:')
+    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True, verbose_name='Nota:')
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno', verbose_name='Aluno:')
     probatorio = models.BooleanField(default=True)
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
@@ -47,11 +47,11 @@ class Matricula(models.Model):
         ('Abandono', 'Abandono')
     )
 
-    numero = models.CharField(max_length=10)
-    probatorio = models.ForeignKey(Probatorio, on_delete=models.CASCADE, related_name='matricula_probatorio')
-    curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, related_name="matricula_curso", null=True, blank=True)
-    requisita_bolsa = models.BooleanField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
+    numero = models.CharField(max_length=10, verbose_name='Número:')
+    probatorio = models.ForeignKey(Probatorio, on_delete=models.CASCADE, related_name='matricula_probatorio', verbose_name='Probatório:')
+    curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, related_name="matricula_curso", null=True, blank=True, verbose_name='Curso:')
+    requisita_bolsa = models.BooleanField(verbose_name='Requisita bolsa:')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0], verbose_name='Status:')
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)
@@ -66,21 +66,21 @@ class Matricula(models.Model):
         return str(self.probatorio.aluno)
 
 class Bolsa(models.Model):
-    nome = models.CharField(max_length=200)
-    agencia = models.CharField(max_length=200)
-    dt_inicio = models.DateField()
-    iniciacao_cientifica = models.BooleanField()
-    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name='bolsa_matricula')
+    nome = models.CharField(max_length=200, verbose_name='Bolsa:')
+    agencia = models.CharField(max_length=200, verbose_name='Agência:')
+    dt_inicio = models.DateField(verbose_name='Data de início:')
+    iniciacao_cientifica = models.BooleanField(verbose_name='Iniciação científica:')
+    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name='bolsa_matricula', verbose_name='Matrícula:')
     dt_cadastro = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.nome
 
 class Afastamento(models.Model):
-    motivo = models.CharField(max_length=200)
-    saida = models.DateField()
-    retorno = models.DateField()
-    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name='afastamento_matricula')
+    motivo = models.CharField(max_length=200, verbose_name='Motivo:')
+    saida = models.DateField(verbose_name='Saída:')
+    retorno = models.DateField(verbose_name='Retorno:')
+    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name='afastamento_matricula', verbose_name='Matrícula:')
 
     dt_cadastro = models.DateTimeField(auto_now=True)
     def __str__(self):

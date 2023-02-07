@@ -4,6 +4,7 @@ from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, Trabal
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def cadastra_matricula(request):
@@ -31,7 +32,8 @@ def cadastra_matricula(request):
             edita_probatorio.probatorio = False
             edita_probatorio.save()
             nova_matricula.save()
-            return redirect('/')
+            messages.success(request, 'Nova matrícula cadastrado com sucesso!')
+            return redirect('matricula:detalhe_matricula', nova_matricula.slug)
     
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastrar Matricula'})
 
@@ -74,8 +76,8 @@ def cadastra_probatorio(request):
             )
 
             novo_probatorio.save()
-
-            return redirect('/')
+            messages.success(request, 'Novo probatório cadastrado com sucesso!')
+            return redirect('matricula:detalhe_probatorio', novo_probatorio.slug)
     
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Probatório'})
 
