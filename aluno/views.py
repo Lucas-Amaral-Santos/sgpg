@@ -152,7 +152,7 @@ def cadastra_aluno(request, aluno=None):
             messages.success(request, 'Aluno cadastrado com sucesso!')
             return redirect('aluno:detalhes_aluno', aluno=novo_aluno.slug)
 
-    return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho':form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno, 'sexo_choices': SEXO_CHOICES})
+    return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho':form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno})
 
 def lista_aluno(request):
     alunos = Aluno.objects.all().order_by('nome')
