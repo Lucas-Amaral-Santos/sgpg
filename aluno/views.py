@@ -14,8 +14,6 @@ from django.contrib import messages
 def cadastra_aluno(request, aluno=None):
     pagina = "Cadastrar Aluno"
 
-    SEXO_CHOICES = ['Masculino', 'Feminino']
-
     form_aluno = AlunoForm()
     form_endereco = EnderecoForm()
     form_graduacao = GraduacaoForm()
@@ -178,13 +176,12 @@ def detalhes_aluno(request, aluno):
     except:
         probatorio = None
     
-    print(probatorio)
+
     if probatorio is not None:
         try:
             matricula = Matricula.objects.get(probatorio = probatorio)
         except:
             matricula = None
-
     return render(request, 'detalhes_aluno.html', {'aluno': aluno, 'probatorio': probatorio, 'matricula': matricula})
 
 
