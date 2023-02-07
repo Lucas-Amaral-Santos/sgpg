@@ -8,7 +8,7 @@ class AlunoForm(ModelForm):
         model = Aluno
         fields = ['nome', 'cpf', 'nome_pai', 'nome_mae', 'naturalidade', 
                   'nacionalidade', 'dt_nascimento', 'estado_civil', 'identidade',
-                 'identidade_uf', 'identidade_orgao', 'sexo', 'email', 'etnia']
+                 'identidade_uf', 'identidade_orgao', 'sexo', 'email', 'etnia','foto']
 
 class EnderecoForm(ModelForm):
     cep = CharField(label="CEP:", required=False, widget=TextInput(attrs={"data-mask": "00000-000"}))

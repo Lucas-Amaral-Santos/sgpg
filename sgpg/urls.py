@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import home
 from registrar.views import logar, logout_view
+from django.conf.urls.static import static
+from .settings import MEDIA_ROOT, MEDIA_URL
 
 
 urlpatterns = [
@@ -31,4 +33,4 @@ urlpatterns = [
     path('config/',include('config.urls', namespace='config')),
     path('logar/', logar, name='logar'),
     path('sair', logout_view, name='logout_view')
-    ]
+    ] + static(MEDIA_URL, document_root=MEDIA_ROOT)

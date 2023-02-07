@@ -133,6 +133,7 @@ def cadastra_aluno(request, aluno=None):
                 sexo = form_aluno.cleaned_data['sexo'],
                 email = form_aluno.cleaned_data['email'],
                 etnia = form_aluno.cleaned_data['etnia'],
+                foto = form_aluno.cleaned_data['foto'],
                 cadastrado_por = request.user,
                 endereco = novo_endereco,
                 graduacao = novo_graduacao,

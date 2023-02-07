@@ -103,6 +103,7 @@ class Aluno(models.Model):
     email = models.EmailField(null=True, blank=True, verbose_name="Email:")
     etnia = models.ForeignKey(Etnia, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Etnia:")
     situacao = models.CharField(max_length=50, null=True, blank=True, verbose_name="Situação:")
+    foto = models.ImageField(null=True, blank=True, upload_to='img')
     
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING, related_name='aluno_endereco', null=True)
     graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, related_name='aluno_graduacao', null=True)
