@@ -1,5 +1,6 @@
 from django.db import models
 from aluno.models import Aluno
+from professor.models import Professor
 from disciplina.models import DisciplinaOfertada
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
@@ -118,20 +119,49 @@ class Inscricao(models.Model):
     def __str__(self):
         return str(self.disciplina_ofertada)
 
+    class Meta:
+        verbose_name_plural = "Inscrições"
+
+
+class VersaoFinal(models.Model):
+    versao_final = models.BooleanField()
+    dt_versao = models.DateField(auto_now=True)
+
+    def __str__(self):
+        if self.versao_final:
+            return 'Sim'
+        else:
+            return 'Não'
+    
+    class Meta:
+        verbose_name_plural = "Versões Finais"
+
+
+class Nota(models.Model):
+    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    dt_nota = models.DateField(auto_now=True)
+
+    def __str__(self):
+        if self.nota:
+            return 'Sim'
+        else:
+            return 'Não'
+
 class TrabalhoFinal(models.Model):
     titulo = models.CharField(max_length=200)
     data = models.DateField()
     resumo = models.TextField()
-    resultado = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
-    diploma = models.BooleanField()
-    dt_diploma = models.DateField()
-    versao_final = models.BooleanField()
-    dt_versao = models.DateField()
+    diploma = models.BooleanField(null=True, blank=True)
+    dt_diploma = models.DateField(null=True, blank=True)
+    orientador = models.ForeignKey(Professor, on_delete=models.CASCADE, related_name="orientador_trabalho_final")
 
     matricula = models.OneToOneField(Matricula, on_delete=models.CASCADE, null=True, related_name="matricula_trabalho_final")
     probatorio = models.OneToOneField(Probatorio, on_delete=models.CASCADE, null=True, related_name="probatorio_trabalho_final")
+    versao_final = models.OneToOneField(VersaoFinal, on_delete=models.CASCADE, null=True, related_name="versao_final_trabalho_final")
+    nota = models.OneToOneField(Nota, on_delete=models.CASCADE, null=True, related_name="nota_trabalho_final")
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
+    dt_cadastro = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now=True)
     cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='trabalho_final_cadastrado_por')
 
@@ -141,3 +171,6 @@ class TrabalhoFinal(models.Model):
 
     def __str__(self):
         return str(self.titulo)
+
+    class Meta:
+        verbose_name_plural = "Trabalhos Finais"

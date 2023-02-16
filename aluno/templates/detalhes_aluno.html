@@ -589,23 +589,25 @@ Detalhes Aluno
             <div class= 'd-flex justify-content-end'>
             <div class="w-50 my-2 row">
                 <div class="col-3 d-flex justify-content-end">
+                    <div data-toggle="tooltip" data-placement="right" title="Deletar aluno">
                     <a class="btn btn-danger btn-lg" data-toggle="modal" data-target="#confirma-deletar">
                         <i class="fa-solid fa-trash-can"></i>
                     </a>
+                    </div>
                 </div>
                 <div class="col-3 d-flex justify-content-end">
-                    <a class="btn btn-primary btn-lg" href="{% url 'aluno:edita_aluno' aluno.slug %}"><i class="fa-solid fa-pencil"></i></a>
+                    <a class="btn btn-primary btn-lg" href="{% url 'aluno:edita_aluno' aluno.slug %}" data-toggle="tooltip" data-placement="right" title="Editar cadastro de aluno"><i class="fa-solid fa-pencil"></i></a>
                 </div>
                 
                 {% if probatorio is not None %}
                 <div class="col-3 d-flex justify-content-end">
-                    <a class="btn btn-primary btn-lg" onclick="location.href='{% url 'matricula:detalhe_probatorio' probatorio.slug %}'"><i class="fa-solid fa-arrow-up-right-dots"></i></a>
+                    <a class="btn btn-primary btn-lg" onclick="location.href='{% url 'matricula:detalhe_probatorio' probatorio.slug %}'" data-toggle="tooltip" data-placement="right" title="Acessar a tela de probatório do aluno"><i class="fa-solid fa-arrow-up-right-dots"></i></a>
                 </div>
                 {% endif %}
 
                 {% if matricula is not None %}
                 <div class="col-3 d-flex justify-content-end">
-                    <a class="btn btn-primary btn-lg" type="submit" onclick="location.href='{% url 'matricula:detalhe_matricula' matricula.slug %}'"><i class="fa-solid fa-graduation-cap"></i></a>
+                    <a class="btn btn-primary btn-lg" type="submit" onclick="location.href='{% url 'matricula:detalhe_matricula' matricula.slug %}'" data-toggle="tooltip" data-placement="right" title="Acessar tela de matrícula do aluno"><i class="fa-solid fa-graduation-cap"></i></a>
                 </div>
                 {% endif %}
             </div>

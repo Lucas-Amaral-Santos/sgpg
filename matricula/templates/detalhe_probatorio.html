@@ -11,6 +11,13 @@ Detalhes Probatório
 
     {% include 'navbar.html' %}
     <div class="body container px-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'matricula:lista_probatorio' %}">Pesquisar Probatório</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_probatorio' probatorio.slug %}">Probatório: {{matricula.probatorio}}</a></li>
+            </ol>
+          </nav>
         <h1 class='text-center'>Probatório</h1>
         <div class="row">
             <div class="col-md-6">
@@ -48,7 +55,7 @@ Detalhes Probatório
                 <div class="col-6">
                     UF: {{probatorio.aluno.endereco.uf}}
                 </div>
-                <div class="col-6">
+                <div class="col-6 truncate">
                     Título do Projeto: {% if trabalho_final == None %}<a href="{% url 'matricula:cadastra_trabalho_probatorio' probatorio.slug %}" style="color:dodgerblue;">Adicionar Projeto  <i class='fas fa-exclamation-circle' style='font-size:24px;color:red'></i></a>{% else %}<b>{{ trabalho_final }}</b>{% endif %}
                 </div>
             </div>
@@ -57,7 +64,7 @@ Detalhes Probatório
                     Titulação: {{probatorio.aluno.titulacao.titulacao}}
                 </div>
                 <div class="col-6">
-                    Orientador:
+                    Orientador: {% if trabalho_final == None %}<span class="text-danger">Não informado</span>{% else %}<b>{{ trabalho_final.orientador }}</b>{% endif %}
                 </div>
             </div>
 

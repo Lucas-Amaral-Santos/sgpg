@@ -24,7 +24,11 @@
             </form>
         </div>
         {% if objeto.values is not None %}
-            <div id="id_registros_{{tabela}}" class="tab-pane container pt-4 active">
+            <div class="container my-2">
+                <span>Quantidade: <b>{{objeto.values|length}}</b></span>
+            </div>
+            <div id="id_registros_{{tabela}}" class="tab-pane container active">
+                
                 <table class="table">
                     <thead>
                         {% for value in objeto.colunas %}

@@ -11,6 +11,7 @@ Detalhes Matrícula
 
     {% include 'navbar.html' %}
     <div class="body container px-5">
+        {% include 'msg/message.html' %}
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
@@ -18,8 +19,9 @@ Detalhes Matrícula
               <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
             </ol>
           </nav>
+          
         <h1 class='text-center'>Matrícula</h1>
-        <div class="row mt-5">
+        <div class="row mt-5 px-5">
             <div class="col-md-6">
                 <h4>{{matricula.probatorio.aluno}}</h4>
             </div>
@@ -29,7 +31,7 @@ Detalhes Matrícula
           </div>
     
     
-    <div class="card mb-3 border-0 rounded-0" style="background-color: #efefefe7 ;">
+    <div class="card mb-3 border-0 rounded-1 px-5" style="background-color: #efefefe7 ;">
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
@@ -59,8 +61,8 @@ Detalhes Matrícula
                 <div class="col-6">
                     UF: {{matricula.probatorio.aluno.endereco.uf}}
                 </div>
-                <div class="col-6">
-                    Título do Projeto: {% if trabalho_final == None %}<a href="{% url 'matricula:cadastra_trabalho_final' matricula.slug %}" style="color:dodgerblue;">Adicionar Projeto  <i class='fas fa-exclamation-circle' style='font-size:24px;color:red'></i></a>{% else %}<b>{{ trabalho_final }}</b>{% endif %}
+                <div class="col-6 truncate">
+                    Título do Projeto: {% if trabalho_final == None %}<a href="{% url 'matricula:cadastra_trabalho_final' matricula.slug %}" style="color:dodgerblue;">Adicionar Projeto  <i class='fas fa-exclamation-circle' style='font-size:24px;color:red'></i></a>{% else %}<a class='link-projeto' href="{% url 'matricula:detalhe_trabalho_final' matricula.slug %}"><b>{{ trabalho_final }}</b><a>{% endif %}
                 </div>
             </div>
             <div class="row">
@@ -68,7 +70,7 @@ Detalhes Matrícula
                     Titulação: {{matricula.probatorio.aluno.titulacao.titulacao}}
                 </div>
                 <div class="col-6">
-                    Orientador:
+                    Orientador: {% if trabalho_final == None %}<span class="text-danger">Não informado</span>{% else %}<b>{{ trabalho_final.orientador }}</b>{% endif %}
                 </div>
             </div>
 

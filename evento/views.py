@@ -42,8 +42,7 @@ class EventCalendar(HTMLCalendar):
             data = datetime(year, month, day)
         n_events=self.get_events(data)
         if n_events:
-            eventos_dia = '<i class="fa-solid fa-circle"></i><span class="n-event" style="margin-left: -12px;font-size:10pt;"><b>%d</b></span>' % (n_events)
-
+            eventos_dia = '<i class="fa-solid fa-circle fa-lg"></i><span class="n-event" style="margin-left: -14px;font-size:10pt;"><b>%d</b></span>' % (n_events)
 
         if day == 0:
             return '<td class="noday">&nbsp;</td>' # day outside month

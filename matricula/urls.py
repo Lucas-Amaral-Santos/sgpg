@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import cadastra_afastamento, cadastra_bolsa, cadastra_inscricao, cadastra_matricula, cadastra_trabalho_final, lista_matricula, detalhe_matricula, cadastra_probatorio, lista_probatorio, detalhe_probatorio, cadastra_trabalho_probatorio, cadastra_inscricao_probatorio
+from .views import cadastra_afastamento, cadastra_bolsa, cadastra_inscricao, cadastra_matricula, cadastra_trabalho_final, lista_matricula, detalhe_matricula, cadastra_probatorio, lista_probatorio, detalhe_probatorio, cadastra_trabalho_probatorio, cadastra_inscricao_probatorio, detalhe_trabalho_final
 
 app_name = 'matricula'
 
@@ -10,6 +10,7 @@ urlpatterns = [
     path('lista_probatorio/', lista_probatorio, name='lista_probatorio'),
     path('lista_matricula/', lista_matricula, name='lista_matricula'),
     path('probatorio/<int:probatorio>/', detalhe_probatorio, name='detalhe_probatorio'),
+    path('trabalho_final/<int:matricula>/', detalhe_trabalho_final, name='detalhe_trabalho_final'),
     path('<int:matricula>/', detalhe_matricula, name='detalhe_matricula'),
     path('<int:matricula>/cadastra_bolsa', cadastra_bolsa, name='cadastra_bolsa'),
     path('<int:matricula>/cadastra_afastamento', cadastra_afastamento, name='cadastra_afastamento'),

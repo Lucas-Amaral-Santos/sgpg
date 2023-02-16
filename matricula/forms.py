@@ -1,5 +1,5 @@
 from django import forms
-from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio
+from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio, VersaoFinal, Nota
 
 class MatriculaForm(forms.ModelForm):
 
@@ -41,4 +41,14 @@ class TrabalhoFinalForm(forms.ModelForm):
 
     class Meta:
         model = TrabalhoFinal
-        fields = ['titulo', 'data', 'resumo', 'resultado', 'diploma', 'dt_diploma', 'versao_final', 'dt_versao']
+        fields = ['titulo', 'data', 'resumo', 'orientador']
+
+class VersaoFinalForm(forms.ModelForm):
+    class Meta:
+        model = VersaoFinal
+        fields =['versao_final']
+
+class NotaForm(forms.ModelForm):
+    class Meta:
+        model = Nota
+        fields =['nota']

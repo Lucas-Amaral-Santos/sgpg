@@ -225,3 +225,19 @@ label.required::after {
     height: 200px;
     border-radius: 100%;
 }
+
+.link-projeto {
+    text-decoration: none;
+    color: #224EAC;
+}
+
+.link-projeto:hover {
+    font-weight: bolder;
+    color: #224EAC;
+}
+
+.truncate {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}

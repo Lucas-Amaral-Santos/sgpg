@@ -3,6 +3,7 @@ from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
 from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo
 from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm
+from django.contrib import messages
 
 
 def lista_tabelas(request):
@@ -129,7 +130,8 @@ def lista_tabelas(request):
                 tipo = form_disciplina.cleaned_data['tipo'],
             )    
             nova_disciplina.save()
-            return redirect('/')
+            messages.success(request, 'Nova disciplina cadastrada com sucesso!')
+            return redirect('config:lista_tabelas')
 
     if(request.method == 'POST'):
         form_disciplina_ofertada = DisciplinaOfertadaForm(request.POST)
@@ -141,7 +143,8 @@ def lista_tabelas(request):
                 semestre = form_disciplina_ofertada.cleaned_data['semestre'],
             )    
             nova_inscricao.save()
-            return redirect('/')
+            messages.success(request, 'Nova disciplina ofertada cadastrada com sucesso!')
+            return redirect('config:lista_tabelas')
 
     if(request.method == 'POST'):
         form_unidades_federativa = UnidadeFederativaForm(request.POST)
@@ -151,7 +154,8 @@ def lista_tabelas(request):
                 sigla = form_unidades_federativa.cleaned_data['sigla'],
             )    
             nova_uf.save()
-            return redirect('/')
+            messages.success(request, 'Novo UF cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
 
     if(request.method == 'POST'):
         form_sexo = SexoForm(request.POST)
@@ -160,7 +164,8 @@ def lista_tabelas(request):
                 sexo = form_sexo.cleaned_data['sexo'],
             )    
             nova_sexo.save()
-            return redirect('/')
+            messages.success(request, 'Novo sexo cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
 
     if(request.method == 'POST'):
         form_estado_civil = EstadoCivilForm(request.POST)
@@ -169,7 +174,8 @@ def lista_tabelas(request):
                 estado_civil = form_estado_civil.cleaned_data['estado_civil'],
             )    
             nova_estado_civil.save()
-            return redirect('/')
+            messages.success(request, 'Novo estado civil cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
 
     if(request.method == 'POST'):
         form_etnia = EtniaForm(request.POST)
@@ -178,7 +184,8 @@ def lista_tabelas(request):
                 etnia = form_etnia.cleaned_data['etnia'],
             )    
             nova_etnia.save()
-            return redirect('/')
+            messages.success(request, 'Nova etnia cadastrada com sucesso!')
+            return redirect('config:lista_tabelas')
 
     if(request.method == 'POST'):
         form_vinculo = VinculoForm(request.POST)
@@ -187,6 +194,7 @@ def lista_tabelas(request):
                 vinculo = form_vinculo.cleaned_data['vinculo'],
             )    
             nova_vinculo.save()
-            return redirect('/')
+            messages.success(request, 'Novo vínculo cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
 
     return render(request, "lista_tabelas.html", {'context': context})

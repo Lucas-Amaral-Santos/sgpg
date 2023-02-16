@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Detalhes Probatório
+{% endblock %}
+
+{% block content %}
+
+    {% include 'navbar.html' %}
+    <div class="body container px-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'matricula:lista_matricula' %}">Pesquisar Matricula</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_trabalho_final' matricula.slug %}">{{trabalho_final}}</a></li>
+            </ol>
+          </nav>
+        {% comment %} <h1 class='text-center'>{{pagina}}</h1> {% endcomment %}
+    
+        <div class='text-center my-3' style="padding:0% 20%;">
+        <div class="">
+            <div class="">
+                <h5>Titulo</h5>
+            </div>
+            <div>
+                <p style="font-size:20pt;">
+                {{trabalho_final}}
+                </p>
+
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <h5>Data</h5>
+            </div>
+            <div>
+                <p>
+                {{trabalho_final.data}}
+                </p>
+
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <h5>Resumo</h5>
+            </div>
+            <div class="">
+                <p class="text-center" style="text-align: justify;">
+                {{trabalho_final.resumo}}
+                </p>
+            </div>
+        </div>
+
+        
+        <div>
+            <div>
+                <h5>Orientador</h5>
+            </div>
+            <div>
+                <p>
+                {{trabalho_final.orientador}}
+                </p>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <h5>Coorientador</h5>
+            </div>
+            <div>
+                {% if coorientador is None %}
+                    <span><i>Não há coorientadores cadastrados</i></span>
+                {% elif coorientador is not None %}
+                    <p>
+                    {{coorientador}}
+                    </p>
+                {% endif %}                    
+            </div>
+        </div>
+        {% if trabalho_final.nota is not None %}
+
+        <div>
+            <div>
+                <h5>Nota</h5>
+            </div>
+            <div>
+                <p>
+                {{trabalho_final.nota.nota}}
+                </p>
+            </div>
+        </div>
+
+        {% endif %}
+
+        {% if trabalho_final.versao_final is not None %}
+
+        <div>
+            <div>
+                <h5>Versão Final</h5>
+            </div>
+            <div>
+                <p>
+                {{trabalho_final.versao_final}}
+                </p>
+            </div>
+        </div>
+
+        {% endif %}
+    </div>
+
+    
+    <div class="row m-lg-5 gap-3 container">        
+
+        {% if trabalho_final.nota is None %}
+            <div class="col-5 border p-3">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col d-flex justify-content-center">
+                            {{form_nota.nota|as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center my-2">
+                        <button class="btn btn-outline-primary" type="submit" name="nota_sub">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        
+        {% endif %}
+        {% if trabalho_final.versao_final is None %}
+            <div class="col-5 border p-3 align-content-center">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col d-flex justify-content-center">
+                            {{form_versao.versao_final|as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center my-2">
+                        <button class="btn btn-outline-primary" type="submit" name="versao_sub">Enviar</button>
+                    </div>
+                </form>
+            </div>        
+        {% endif %}
+    </div>
+    
+</div>
+
+{% include 'footer.html' %}
+{% endblock %}

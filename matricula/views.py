@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm
+from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm
 from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -108,6 +108,7 @@ def detalhe_probatorio(request, probatorio):
 
 def cadastra_bolsa(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
+    
     form = BolsaForm()
 
     if(request.method == 'POST'):
@@ -122,8 +123,8 @@ def cadastra_bolsa(request, matricula):
             )
 
             nova_bolsa.save()
-
-            return redirect('/')
+            messages.success(request, 'Nova bolsa cadastrada com sucesso!')
+            return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
     
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Bolsa', 'matricula': matricula})
 
@@ -142,8 +143,8 @@ def cadastra_afastamento(request, matricula):
             )
 
             novo_afastamento.save()
-
-            return redirect('/')
+            messages.success(request, 'Novo afastamento cadastrado com sucesso!')
+            return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
     
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Afastamento', 'matricula': matricula})
 
@@ -160,9 +161,9 @@ def cadastra_inscricao(request, matricula):
                 matricula = matricula,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
-
+            messages.success(request, 'Inscrição efetuado com sucesso!')
             nova_inscricao.save()
-            return redirect('/')
+            return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
 
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição', 'matricula': matricula})
 
@@ -182,7 +183,7 @@ def cadastra_inscricao_probatorio(request, probatorio):
             )
 
             nova_inscricao.save()
-            return redirect('/')
+            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio}) 
 
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição em Probatório', 'probatorio':probatorio})
 
@@ -198,20 +199,52 @@ def cadastra_trabalho_final(request, matricula):
                 titulo = form.cleaned_data['titulo'],
                 data = form.cleaned_data['data'],
                 resumo = form.cleaned_data['resumo'],
-                resultado = form.cleaned_data['resultado'],
-                diploma = form.cleaned_data['diploma'],
-                dt_diploma = form.cleaned_data['dt_diploma'],
-                versao_final = form.cleaned_data['versao_final'],
-                dt_versao = form.cleaned_data['dt_versao'],
+                orientador = form.cleaned_data['orientador'],
                 matricula = matricula,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
 
             novo_trabalho_final.save()
 
-            return redirect('/')
+            return redirect('matricula:detalhe_trabalho_final', matricula.slug)
     
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Trabalho Final'})
+
+def detalhe_trabalho_final(request, matricula):
+    matricula = Matricula.objects.get(slug=matricula)
+    trabalho_final = TrabalhoFinal.objects.get(matricula=matricula)
+    coorientador = None # Implementar coorientador
+
+    versao_final_form = VersaoFinalForm()
+    nota_form = NotaForm()
+
+    if trabalho_final.versao_final is None:
+        
+        if request.method == 'POST' and 'versao_sub' in request.POST:
+            versao_final_form = VersaoFinalForm(request.POST)
+            if versao_final_form.is_valid():
+                nova_versao = versao_final_form.save(commit=False)
+                trabalho_final.versao_final = nova_versao
+                nova_versao.save()
+                trabalho_final.save()
+                return redirect("matricula:detalhe_trabalho_final", matricula=matricula.slug)
+    else:
+        versao_final_form = None
+
+    if trabalho_final.nota is None:
+        
+        if request.method == 'POST' and 'nota_sub' in request.POST:
+            nota_form = NotaForm(request.POST)
+            if nota_form.is_valid():
+                nova_nota = nota_form.save(commit=False)
+                trabalho_final.nota = nova_nota
+                nova_nota.save()
+                trabalho_final.save()
+                return redirect("matricula:detalhe_trabalho_final", matricula=matricula.slug)
+    else:
+        nota_form = None
+
+    return render(request, 'detalhe_trabalho_final.html', {'matricula':matricula, 'pagina':'Trabalho Final', 'trabalho_final':trabalho_final, 'coorientador': coorientador, 'form_versao': versao_final_form, 'form_nota':nota_form})
 
 
 def cadastra_trabalho_probatorio(request, probatorio):
@@ -225,11 +258,7 @@ def cadastra_trabalho_probatorio(request, probatorio):
                 titulo = form.cleaned_data['titulo'],
                 data = form.cleaned_data['data'],
                 resumo = form.cleaned_data['resumo'],
-                resultado = form.cleaned_data['resultado'],
-                diploma = form.cleaned_data['diploma'],
-                dt_diploma = form.cleaned_data['dt_diploma'],
-                versao_final = form.cleaned_data['versao_final'],
-                dt_versao = form.cleaned_data['dt_versao'],
+                orientador = form.cleaned_data['orientador'],
                 probatorio = probatorio,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
