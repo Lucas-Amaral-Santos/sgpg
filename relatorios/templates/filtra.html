@@ -13,17 +13,17 @@ Relatórios
 
     <div class="row gap-2 my-5">
         <div class="col-3">
-    <button class="btn btn-primary" style="width: 70%;" data-toggle="modal" data-target="#modal-filtro"><i class='fas fa-filter' style='font-size:20px'></i> Filtro</button>
+            <button class="btn btn-primary" style="width: 70%;" data-toggle="modal" data-target="#modal-filtro"><i class='fas fa-filter' style='font-size:20px'></i> Filtro</button>
         </div>
         <div class="col-3">
-    <button class="btn btn-success" style="width: 70%;" data-toggle="modal" data-target="#modal-filtro"><i class='fa-solid fa-file-csv' style='font-size:20px'></i> Exportar CSV</button>
-</div>
-<hr>
-</div>
+            <button class="btn btn-success" style="width: 70%;" data-toggle="modal" data-target="#modal-filtro"><i class='fa-solid fa-file-csv' style='font-size:20px'></i> Exportar CSV</button>
+        </div>
+        <hr>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="modal-filtro" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Filtro</h5>
@@ -49,61 +49,317 @@ Relatórios
         </div>
     </div>
 
-    {% comment %} <div class="col-4">
-    <table class="table"> 
-        <thead>
-          <tr>
-            <th scope="col">Nome</th>
-            <th scope="col">CPF</th>
-            <th scope="col">Email</th>
-            <th scope="col">Telefone</th>
-          </tr>
-        </thead>  
-        {% for aluno in alunos %}
-        <a href="">
-        <tr>
-            <td>{{aluno.nome}}</td>
-            <td>{{aluno.cpf}}</td>
-            <td>{{aluno.email}}</td>
-            <td>{{aluno.endereco.telefone1}}</td>
-        </tr>
-        </a>
-  
-        {% endfor %}
-      </table>
-    </div> {% endcomment %}
-    
-    <div class="col">
-        <table class="table"> 
-            <thead>
-              <tr>
-                <th scope="col">Matrícula</th>
-                <th scope="col">Nome</th>
-                <th scope="col">CPF</th>
-                <th scope="col">Nota do Probatório</th>
-                <th scope="col">Curso</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>  
-            {% for m in alunos %}
-            <a href="">
-            <tr>
-                <td>{{m.numero}}</td>
-                <td>{{m.probatorio.aluno.nome}}</td>
-                <td>{{m.probatorio.aluno.cpf}}</td>
-                <td>{{m.probatorio.nota}}</td>
-                <td>{{m.curso}}</td>
-                <td>{{m.status}}</td>
-            </tr>
-            </a>
-      
-            {% endfor %}
-          </table>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link nav-aluno active" data-toggle="tab" href="#id_dashboard"><i>Dashboard</i></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-aluno" data-toggle="tab" href="#id_registro">Registros</a>
+        </li>
+    </ul>
+
+    <div class="py-3 mb-3 tab-content">
+        <!-- Aba de Informações pessoais -->
+        <div id="id_dashboard" class="tab-pane container active">
+
+            <div class="row">
+                <div class="col-6">
+
+                    <div>
+                        <canvas id="barra_genero"></canvas>
+                        
+                    </div>
+
+                </div>
+
+                <div class="col-6">
+                    <div>
+                        <canvas id="linha"></canvas>                        
+                    </div>
+                </div>
+
+                <div class="col-4">
+
+                    <div>
+                        <canvas id="polarArea"></canvas>
+                        
+                    </div>
+
+                </div>
+                <div class="col-8">
+
+                    <div>
+                        <canvas id="barra_2"></canvas>
+                        
+                    </div>
+
+                </div>
+            </div>   
+            
+
+            <div class="row">
+                
+
+            </div> 
+
+            <div class="row">
+                <div class="col">
+
+                    <div>
+                        <canvas id="barra_3" height="100%"></canvas>
+                        
+                    </div>
+
+                </div>
+            </div>
+            
+
+
+
+
         </div>
+        <div id="id_registro" class="tab-pane container">
+
+
+            <div class="col">
+                <table class="table"> 
+                    <thead>
+                      <tr>
+                        <th scope="col">Matrícula</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Nota do Probatório</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>  
+                    {% for m in alunos %}
+                    <a href="">
+                    <tr>
+                        <td>{{m.numero}}</td>
+                        <td>{{m.probatorio.aluno.nome}}</td>
+                        <td>{{m.probatorio.aluno.cpf}}</td>
+                        <td>{{m.probatorio.nota}}</td>
+                        <td>{{m.curso}}</td>
+                        <td>{{m.status}}</td>
+                    </tr>
+                    </a>
+              
+                    {% endfor %}
+                  </table>
+                </div>
+
+
+        </div>
+
+    </div>
 
 </div>
 
 {% include 'footer.html' %}
+
+<script>
+
+    const data_barra_genero = {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+
+    config_barra_genero = {
+        type: 'bar',
+        data: data_barra_genero,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    }
+    const ctx_barra_genero = document.getElementById('barra_genero').getContext('2d');
+    const barra_genero = new Chart(ctx_barra_genero, config_barra_genero);
+
+
+    
+    const labels_linha = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+    const data_linha = {
+    labels: labels_linha,
+        datasets: [{
+            label: 'My First Dataset',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            fill: false,
+            borderColor: [
+            'rgba(255, 99, 132, 1)',
+                ],
+            tension: 0.1
+            },
+            {
+                label: 'My Second Dataset',
+                data: [65, 99, 30, 51, 76, 25, 80],
+                fill: false,
+                borderColor: [
+                'rgba(54, 162, 235)',
+                    ],
+                tension: 0.4
+                },
+        
+        ]
+    };
+
+    const config_linha = {
+        type: 'line',
+        data: data_linha,
+    };
+
+    const ctx_linha = document.getElementById('linha').getContext('2d');
+    const linha = new Chart(ctx_linha, config_linha)
+
+
+
+    const labels_polar_area = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+    const data_polar_area = {
+    labels: labels_polar_area,
+        datasets: [{
+            label: 'My First Dataset',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            fill: false,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            tension: 0.1
+        }]
+    };
+
+    const config_polar_area = {
+        type: 'polarArea',
+        data: data_polar_area,
+    };
+
+    const ctx_polar_area = document.getElementById('polarArea').getContext('2d');
+    const polarArea = new Chart(ctx_polar_area, config_polar_area)
+
+
+
+
+    const data_barra_2 = {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+
+    config_barra_2 = {
+        type: 'bar',
+        data: data_barra_2,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    }
+    const ctx_barra_2 = document.getElementById('barra_2').getContext('2d');
+    const barra_2 = new Chart(ctx_barra_2, config_barra_2);
+
+
+
+
+
+    const data_barra_3 = {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+
+    config_barra_3 = {
+        type: 'bar',
+        data: data_barra_3,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    }
+    const ctx_barra_3 = document.getElementById('barra_3').getContext('2d');
+    const barra_3 = new Chart(ctx_barra_3, config_barra_3);
+
+
+
+
+    </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
