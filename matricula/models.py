@@ -65,6 +65,9 @@ class Matricula(models.Model):
 
     def __str__(self):
         return str(self.probatorio.aluno)
+    
+    class Meta:
+        verbose_name = "matricula"
 
 class Bolsa(models.Model):
     nome = models.CharField(max_length=200, verbose_name='Bolsa:')

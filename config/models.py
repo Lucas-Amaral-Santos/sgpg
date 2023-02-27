@@ -1,4 +1,6 @@
 from django.db import models
+from colorful.fields import RGBColorField
+
 
 # Create your models here.
 class UnidadeFederativa(models.Model):
@@ -10,18 +12,21 @@ class UnidadeFederativa(models.Model):
 
 class Sexo(models.Model):
     sexo = models.CharField(max_length=50)
+    cor = RGBColorField(default='black')
 
     def __str__(self):
             return str(self.sexo)
 
 class Etnia(models.Model):
     etnia = models.CharField(max_length=50)
+    cor = RGBColorField(default='black')
 
     def __str__(self):
             return str(self.etnia)
 
 class EstadoCivil(models.Model):
     estado_civil = models.CharField(max_length=50)
+    cor = RGBColorField(default='black')
 
     def __str__(self):
             return str(self.estado_civil)

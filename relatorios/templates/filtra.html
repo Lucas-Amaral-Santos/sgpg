@@ -62,6 +62,9 @@ Relatórios
         <!-- Aba de Informações pessoais -->
         <div id="id_dashboard" class="tab-pane container active">
 
+            <p>Alunos matriculados</p>
+            <hr>
+
             <div class="row">
                 <div class="col-6">
 
@@ -81,7 +84,7 @@ Relatórios
                 <div class="col-4">
 
                     <div>
-                        <canvas id="polarArea"></canvas>
+                        <canvas id="pie_estado_civil"></canvas>
                         
                     </div>
 
@@ -89,7 +92,7 @@ Relatórios
                 <div class="col-8">
 
                     <div>
-                        <canvas id="barra_2"></canvas>
+                        <canvas id="barra_etnia"></canvas>
                         
                     </div>
 
@@ -161,28 +164,22 @@ Relatórios
 <script>
 
     const data_barra_genero = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+        labels: ['Gênero'],
+        datasets: [
+        {% for sexo in grafico_sexo  %}
+        {
+            label: '{{sexo.probatorio__aluno__sexo__sexo}}',
+            data: [{{sexo.nviews}},],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                '{{sexo.cor}}'+33,
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                '{{sexo.cor}}',
             ],
             borderWidth: 1
-        }]
+        },
+        {% endfor %}
+        ]
     },
 
     config_barra_genero = {
@@ -191,7 +188,17 @@ Relatórios
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Quantidade'
+                    }
+                }                
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Sexo de alunos matrículados'
                 }
             }
         }
@@ -236,72 +243,67 @@ Relatórios
 
 
 
-    const labels_polar_area = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
-    const data_polar_area = {
-    labels: labels_polar_area,
-        datasets: [{
-            label: 'My First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
+    const data_estado_civil = {
+        labels: [
+            {% for ec in grafico_estado_civil  %}
+            '{{ec.probatorio__aluno__estado_civil__estado_civil}}',
+            {% endfor %}
+        ],
+        datasets: [
+        {
+            data: [{% for ec in grafico_estado_civil  %}
+            '{{ec.nviews}}',
+            {% endfor %}
+            ],
             fill: false,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+            {% for ec in grafico_estado_civil  %}
+                '{{ec.cor}}'+33,
+            {% endfor %}
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+            {% for ec in grafico_estado_civil %}
+                '{{ec.cor}}',
+            {% endfor  %}
             ],
             tension: 0.1
-        }]
+        },
+        ]
     };
 
-    const config_polar_area = {
-        type: 'polarArea',
-        data: data_polar_area,
+    const config_estado_civil = {
+        type: 'pie',
+        data: data_estado_civil,
     };
 
-    const ctx_polar_area = document.getElementById('polarArea').getContext('2d');
-    const polarArea = new Chart(ctx_polar_area, config_polar_area)
+    const ctx_estado_civil = document.getElementById('pie_estado_civil').getContext('2d');
+    const pie_estado_civil = new Chart(ctx_estado_civil, config_estado_civil)
 
 
 
 
-    const data_barra_2 = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+    const data_barra_etnia = {
+        labels: ['Etnia'],
+        datasets: [
+        {% for etnia in grafico_etnia  %}
+        {
+            label: ['{{etnia.probatorio__aluno__etnia__etnia}}',],
+            data: ["{{etnia.nviews}}",],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                '{{etnia.cor}}'+33,
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                '{{etnia.cor}}',
             ],
             borderWidth: 1
-        }]
+        },
+        {% endfor %}
+        ]
     },
 
-    config_barra_2 = {
+    config_barra_etnia = {
         type: 'bar',
-        data: data_barra_2,
+        data: data_barra_etnia,
         options: {
             scales: {
                 y: {
@@ -310,8 +312,8 @@ Relatórios
             }
         }
     }
-    const ctx_barra_2 = document.getElementById('barra_2').getContext('2d');
-    const barra_2 = new Chart(ctx_barra_2, config_barra_2);
+    const ctx_barra_etnia = document.getElementById('barra_etnia').getContext('2d');
+    const barra_etnia = new Chart(ctx_barra_etnia, config_barra_etnia);
 
 
 
