@@ -99,7 +99,7 @@ class Aluno(models.Model):
     identidade = models.CharField(max_length=12, verbose_name="Identidade:")
     identidade_uf = models.CharField(max_length=2, verbose_name="UF:")
     identidade_orgao = models.CharField(max_length=100, verbose_name="Orgão expedidor:")
-    sexo = models.ForeignKey(Sexo, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Sexo:")
+    sexo = models.ForeignKey(Sexo, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Sexo:", related_name="aluno_sexo")
     email = models.EmailField(null=True, blank=True, verbose_name="Email:")
     etnia = models.ForeignKey(Etnia, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Etnia:")
     situacao = models.CharField(max_length=50, null=True, blank=True, verbose_name="Situação:")
