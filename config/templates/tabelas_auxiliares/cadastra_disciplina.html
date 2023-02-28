@@ -32,14 +32,30 @@
                 <table class="table">
                     <thead>
                         {% for value in objeto.colunas %}
-                        <th scope='col'>{{value}}</th>
+                        <th scope='col'>
+                            <div class="d-flex justify-content-center gap-1">
+                            {{value}}
+                            </div>
+                        
+                        </th>
                         {% endfor %}
                     </thead>
                     <tbody>
                         {% for r in objeto.values %}
                             <tr> 
-                            {% for k, v in r.items %}                                          
-                                <td>{{v}}</td>                        
+                            {% for k, v in r.items %}
+                                <td>
+                                {% if v.0 == '#'  %}
+                                    <div class="d-flex justify-content-center gap-1" height="100" width="100" style="color: {{v}}">
+                                        <div style="height: 20px;width: 20px;background-color: {{v}}"></div>
+                                        <p>{{v}}</p>
+                                    </div>
+                                {% else %}      
+                                <div class="d-flex justify-content-center gap-1">                                  
+                                    {{v}}
+                                </div>
+                                {% endif %}                        
+                                </td>
                             {% endfor %}
                             <tr> 
                         {% endfor %}
