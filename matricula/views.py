@@ -17,7 +17,7 @@ def cadastra_matricula(request):
         form = MatriculaForm(request.POST)
         if(form.is_valid()):
             
-            status_opcao = StatusOptions.objects.get_or_create(status_options='Titulado', defaults={'cor': Factory.create().hex_color()})
+            status_opcao = StatusOptions.objects.get_or_create(status_options='Ativo', defaults={'cor': Factory.create().hex_color()})
 
             nova_matricula = Matricula.objects.create(
                 numero = form.cleaned_data['numero'],
@@ -81,7 +81,7 @@ def cadastra_probatorio(request):
         form = ProbatorioForm(request.POST)
         if(form.is_valid()):
             
-            status_opcao = StatusOptions.objects.get_or_create(status_options='Titulado', defaults={'cor': Factory.create().hex_color()})
+            status_opcao = StatusOptions.objects.get_or_create(status_options='Probatório', defaults={'cor': Factory.create().hex_color()})
 
             novo_probatorio = Probatorio.objects.create(
                 data_inscricao = form.cleaned_data['data_inscricao'],
@@ -91,7 +91,6 @@ def cadastra_probatorio(request):
             aluno_probatorio = novo_probatorio.aluno
             status_aluno = aluno_probatorio.status
             status_aluno.status = status_opcao[0]
-            status_aluno.status.cor = Factory.create().hex_color()
             status_aluno.save()
             aluno_probatorio.save()
             novo_probatorio.save()
