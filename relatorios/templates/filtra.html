@@ -104,7 +104,6 @@ Relatórios
                 
 
             </div> 
-
             <div class="row">
                 <div class="col">
 
@@ -116,9 +115,6 @@ Relatórios
                 </div>
             </div>
             
-
-
-
 
         </div>
         <div id="id_registro" class="tab-pane container">
@@ -228,14 +224,23 @@ Relatórios
                 'rgba(54, 162, 235)',
                     ],
                 tension: 0.4
-                },
-        
+            },        
         ]
     };
 
     const config_linha = {
         type: 'line',
         data: data_linha,
+        options: {
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Quantidade'
+                    }
+                }
+            },
+        }
     };
 
     const ctx_linha = document.getElementById('linha').getContext('2d');
@@ -274,6 +279,14 @@ Relatórios
     const config_estado_civil = {
         type: 'pie',
         data: data_estado_civil,
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Estado civil de alunos matrículados'
+                }
+            }
+        }
     };
 
     const ctx_estado_civil = document.getElementById('pie_estado_civil').getContext('2d');
@@ -307,7 +320,17 @@ Relatórios
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Quantidade'
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Etnia de alunos matrículados'
                 }
             }
         }
@@ -320,28 +343,22 @@ Relatórios
 
 
     const data_barra_3 = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+        labels: ['Status'],
+        datasets: [
+        {% for s in grafico_status %}
+        {
+            label: ['{{s.probatorio__aluno__status__status__status_options}}'],
+            data: [{{s.nviews}},],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                '{{s.cor}}'+33,
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                '{{s.cor}}',
             ],
             borderWidth: 1
-        }]
+        },
+        {% endfor %}
+        ]
     },
 
     config_barra_3 = {
@@ -350,7 +367,17 @@ Relatórios
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Quantidade'
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Status de alunos matrículados'
                 }
             }
         }

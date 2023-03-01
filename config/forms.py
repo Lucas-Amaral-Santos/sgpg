@@ -1,4 +1,4 @@
-from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo
+from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions
 from django.forms import ModelForm
 
 class UnidadeFederativaForm(ModelForm):
@@ -24,4 +24,9 @@ class EstadoCivilForm(ModelForm):
 class VinculoForm(ModelForm):
     class Meta:
         model = Vinculo
+        fields = '__all__'
+
+class StatusOptionsForm(ModelForm):
+    class Meta:
+        model = StatusOptions
         fields = '__all__'

@@ -24,6 +24,7 @@ Tabelas Auxiliares
                     <li><a  href="#estado_civil" class="btn btn-primary" style="width:300px;" data-toggle="pill">Estado Civil</a></li>
                     <li><a  href="#etnia" class="btn btn-primary" style="width:300px;" data-toggle="pill">Etnia</a></li>
                     <li><a  href="#vinculo" class="btn btn-primary" style="width:300px;" data-toggle="pill">Vínculo</a></li>
+                    <li><a  href="#status" class="btn btn-primary" style="width:300px;" data-toggle="pill">Status</a></li>
                 </ul>
             </div>
 
@@ -43,6 +44,7 @@ Tabelas Auxiliares
 
                     {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_vinculo titulo='Unidade Federativa' tabela='vinculo' objeto=context.vinculo %}
 
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_vinculo titulo='Status' tabela='status' objeto=context.status %}
                 </div>
             </div>
         </div>

@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm
 from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio
+from aluno.models import Status
+from config.models import StatusOptions
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import messages
+from faker import Factory
 
 # Create your views here.
 def cadastra_matricula(request):
@@ -13,6 +16,9 @@ def cadastra_matricula(request):
     if(request.method == 'POST'):
         form = MatriculaForm(request.POST)
         if(form.is_valid()):
+            
+            status_opcao = StatusOptions.objects.get_or_create(status_options='Titulado', defaults={'cor': Factory.create().hex_color()})
+
             nova_matricula = Matricula.objects.create(
                 numero = form.cleaned_data['numero'],
                 probatorio = form.cleaned_data['probatorio'],
@@ -28,6 +34,11 @@ def cadastra_matricula(request):
                 trab_final_prob.matricula = nova_matricula
                 trab_final_prob.save()
             
+            edita_aluno = nova_matricula.probatorio.aluno
+            status_aluno = edita_aluno.status
+            status_aluno.status = status_opcao[0]
+            status_aluno.save()
+            edita_aluno.save()
             edita_probatorio = nova_matricula.probatorio
             edita_probatorio.probatorio = False
             edita_probatorio.save()
@@ -69,13 +80,22 @@ def cadastra_probatorio(request):
     if(request.method == 'POST'):
         form = ProbatorioForm(request.POST)
         if(form.is_valid()):
+            
+            status_opcao = StatusOptions.objects.get_or_create(status_options='Titulado', defaults={'cor': Factory.create().hex_color()})
+
             novo_probatorio = Probatorio.objects.create(
                 data_inscricao = form.cleaned_data['data_inscricao'],
                 aluno = form.cleaned_data['aluno'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
-
+            aluno_probatorio = novo_probatorio.aluno
+            status_aluno = aluno_probatorio.status
+            status_aluno.status = status_opcao[0]
+            status_aluno.status.cor = Factory.create().hex_color()
+            status_aluno.save()
+            aluno_probatorio.save()
             novo_probatorio.save()
+
             messages.success(request, 'Novo probatório cadastrado com sucesso!')
             return redirect('matricula:detalhe_probatorio', novo_probatorio.slug)
     
@@ -183,7 +203,7 @@ def cadastra_inscricao_probatorio(request, probatorio):
             )
 
             nova_inscricao.save()
-            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio}) 
+            return redirect('matricula:detalhe_probatorio', probatorio=probatorio.slug) 
 
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição em Probatório', 'probatorio':probatorio})
 
@@ -223,10 +243,17 @@ def detalhe_trabalho_final(request, matricula):
         if request.method == 'POST' and 'versao_sub' in request.POST:
             versao_final_form = VersaoFinalForm(request.POST)
             if versao_final_form.is_valid():
+
+                status_opcao = StatusOptions.objects.get_or_create(status_options='Titulado', defaults={'cor': Factory.create().hex_color()})
+
                 nova_versao = versao_final_form.save(commit=False)
                 trabalho_final.versao_final = nova_versao
                 nova_versao.save()
                 trabalho_final.save()
+                aluno_status = matricula.probatorio.aluno.status
+                aluno_status.status = status_opcao[0]
+                aluno_status.save()
+                messages.success(request, 'Versão final cadastrada e status do aluno alterado para Titulado')
                 return redirect("matricula:detalhe_trabalho_final", matricula=matricula.slug)
     else:
         versao_final_form = None
@@ -240,6 +267,7 @@ def detalhe_trabalho_final(request, matricula):
                 trabalho_final.nota = nova_nota
                 nova_nota.save()
                 trabalho_final.save()
+                messages.success(request, 'Nota final cadastrada!')
                 return redirect("matricula:detalhe_trabalho_final", matricula=matricula.slug)
     else:
         nota_form = None

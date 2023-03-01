@@ -22,7 +22,7 @@ class Curso(models.Model):
         super(Curso, self).save(*args, **kwargs)
 
 class Probatorio(models.Model):
-    data_inscricao = models.DateField(default=datetime.today(), verbose_name='Data da inscrição:')
+    data_inscricao = models.DateField(verbose_name='Data da inscrição:')
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True, verbose_name='Nota:')
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno', verbose_name='Aluno:')
     probatorio = models.BooleanField(default=True)
@@ -160,7 +160,7 @@ class TrabalhoFinal(models.Model):
 
     matricula = models.OneToOneField(Matricula, on_delete=models.CASCADE, null=True, related_name="matricula_trabalho_final")
     probatorio = models.OneToOneField(Probatorio, on_delete=models.CASCADE, null=True, related_name="probatorio_trabalho_final")
-    versao_final = models.OneToOneField(VersaoFinal, on_delete=models.CASCADE, null=True, related_name="versao_final_trabalho_final")
+    versao_final = models.OneToOneField(VersaoFinal, on_delete=models.DO_NOTHING, null=True, related_name="versao_final_trabalho_final")
     nota = models.OneToOneField(Nota, on_delete=models.CASCADE, null=True, related_name="nota_trabalho_final")
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')

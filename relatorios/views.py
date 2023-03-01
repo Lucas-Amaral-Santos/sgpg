@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from matricula.models import Matricula
 from .filter import MatriculaFilter
-from config.models import Sexo, EstadoCivil, Etnia
+from config.models import Sexo, EstadoCivil, Etnia, StatusOptions
 from django.core.paginator import Paginator
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
@@ -26,6 +26,12 @@ def filtra_aluno(request):
     for i in grafico_etnia:
         i['cor'] = Etnia.objects.get(etnia=i['probatorio__aluno__etnia__etnia']).cor
 
+    grafico_status = f.qs.values("probatorio__aluno__status__status__status_options").annotate(nviews=Count('probatorio__aluno__status'))
+    for i in grafico_status:
+        i['cor'] = StatusOptions.objects.get(status_options=i['probatorio__aluno__status__status__status_options']).cor
+
+    print(grafico_status)
+
     paginator = Paginator(f.qs, 5)
 
     page = request.GET.get('page')
@@ -36,11 +42,4 @@ def filtra_aluno(request):
     except EmptyPage:
         response = paginator.get_page(paginator.num_pages)
 
-
-    
-
-
-
-
-
-    return render(request, 'filtra.html', {'filter': f, 'alunos': response, 'grafico_sexo': grafico_sexo, 'grafico_estado_civil': grafico_estado_civil, 'grafico_etnia': grafico_etnia})
+    return render(request, 'filtra.html', {'filter': f, 'alunos': response, 'grafico_sexo': grafico_sexo, 'grafico_estado_civil': grafico_estado_civil, 'grafico_etnia': grafico_etnia, 'grafico_status': grafico_status})

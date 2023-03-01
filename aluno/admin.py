@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Aluno, Endereco, Graduacao
+from .models import Aluno, Endereco, Graduacao, Status
 
 # Register your models here.
 @admin.register(Aluno)
@@ -14,4 +14,8 @@ class EnderecoAdmin(admin.ModelAdmin):
 
 @admin.register(Graduacao)
 class GraduacaoAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Status)
+class StatusAdmin(admin.ModelAdmin):
     pass

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'aluno.apps.AlunoConfig',
     'professor',
+    'colorful',
     'crispy_forms',
     'registrar',
     'matricula',

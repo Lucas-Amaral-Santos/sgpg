@@ -1,7 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from config.models import UnidadeFederativa, Sexo, EstadoCivil, Etnia, Vinculo
+from config.models import UnidadeFederativa, Sexo, EstadoCivil, Etnia, Vinculo, StatusOptions
 
 class EnsinoMedio(models.Model):
 
@@ -87,6 +87,12 @@ class Graduacao(models.Model):
     def __str__(self):
         return self.instituicao
 
+class Status(models.Model):
+    status = models.ForeignKey(StatusOptions, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.status.status_options
+
 class Aluno(models.Model):
     nome = models.CharField(max_length=200, verbose_name="Nome:")
     cpf = models.CharField(max_length=14, verbose_name='CPF:', blank=True)
@@ -104,13 +110,14 @@ class Aluno(models.Model):
     etnia = models.ForeignKey(Etnia, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Etnia:")
     situacao = models.CharField(max_length=50, null=True, blank=True, verbose_name="Situação:")
     foto = models.ImageField(null=True, blank=True, upload_to='img')
-    
-    endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING, related_name='aluno_endereco', null=True)
-    graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, related_name='aluno_graduacao', null=True)
-    ensino_medio = models.OneToOneField(EnsinoMedio, on_delete=models.DO_NOTHING, related_name='aluno_ensino_medio', null=True)
-    titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING, related_name='aluno_titulacao', null=True)
-    trabalho = models.OneToOneField(Trabalho, on_delete=models.DO_NOTHING, related_name='aluno_trabalho', null=True)
-    residencia = models.OneToOneField(Residencia, on_delete=models.DO_NOTHING, related_name='aluno_residencia', null=True)
+
+    status = models.OneToOneField(Status, on_delete=models.CASCADE, related_name='aluno_status')
+    endereco = models.OneToOneField(Endereco, on_delete=models.CASCADE, related_name='aluno_endereco', null=True)
+    graduacao = models.OneToOneField(Graduacao, on_delete=models.CASCADE, related_name='aluno_graduacao', null=True)
+    ensino_medio = models.OneToOneField(EnsinoMedio, on_delete=models.CASCADE, related_name='aluno_ensino_medio', null=True)
+    titulacao = models.OneToOneField(Titulacao, on_delete=models.CASCADE, related_name='aluno_titulacao', null=True)
+    trabalho = models.OneToOneField(Trabalho, on_delete=models.CASCADE, related_name='aluno_trabalho', null=True)
+    residencia = models.OneToOneField(Residencia, on_delete=models.CASCADE, related_name='aluno_residencia', null=True)
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)

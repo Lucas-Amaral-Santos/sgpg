@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-
 from matricula.models import Matricula, Probatorio
 from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm, EnsinoMedioForm
-from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao, EnsinoMedio
+from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao, EnsinoMedio, Status
+from config.models import StatusOptions
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import datetime
 from django.contrib import messages
+from faker import Factory
+
 # Create your views here.
 
 def cadastra_aluno(request, aluno=None):
@@ -56,6 +56,17 @@ def cadastra_aluno(request, aluno=None):
             form_titulacao.is_valid() and \
             form_ensino_medio.is_valid():
 
+            status_opcao = None
+            novo_status = None
+            try:
+                status_opcao = StatusOptions.objects.get(status_options='Não ativo')
+            except:
+                StatusOptions.objects.create(status_options='Não ativo', cor=Factory.create().hex_color()).save()
+                status_opcao = StatusOptions.objects.get(status_options='Não ativo')
+
+            novo_status = Status.objects.create(
+                status = status_opcao
+            )
             novo_ensino_medio = EnsinoMedio.objects.create(
                 ensino_medio_instituicao = form_ensino_medio.cleaned_data['ensino_medio_instituicao'],
                 ensino_medio_ano_inicio = form_ensino_medio.cleaned_data['ensino_medio_ano_inicio'],
@@ -132,6 +143,7 @@ def cadastra_aluno(request, aluno=None):
                 email = form_aluno.cleaned_data['email'],
                 etnia = form_aluno.cleaned_data['etnia'],
                 foto = form_aluno.cleaned_data['foto'],
+                status = novo_status,
                 cadastrado_por = request.user,
                 endereco = novo_endereco,
                 graduacao = novo_graduacao,

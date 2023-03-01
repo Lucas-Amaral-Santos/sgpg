@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
-from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo
-from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm
+from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions
+from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm
 from django.contrib import messages
 
 
@@ -14,6 +14,7 @@ def lista_tabelas(request):
     form_estado_civil = EstadoCivilForm()
     form_etnia = EtniaForm()
     form_vinculo = VinculoForm()
+    form_status = StatusOptionsForm()
 
     context = {}
 
@@ -116,6 +117,20 @@ def lista_tabelas(request):
             'form': form_vinculo,
         }
 
+    try:
+        status = StatusOptions.objects.all()
+        context['status'] = {
+            'values': status.values(),
+            'colunas': status.values()[0].keys(),
+            'form': form_status,
+        }
+    except:
+        context['status'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_status,
+        }
+
 
     if(request.method == 'POST'):
         form_disciplina = DisciplinaForm(request.POST)
@@ -162,6 +177,7 @@ def lista_tabelas(request):
         if(form_sexo.is_valid()):
             nova_sexo = Sexo.objects.create(
                 sexo = form_sexo.cleaned_data['sexo'],
+                cor = form_sexo.cleaned_data['cor'],
             )    
             nova_sexo.save()
             messages.success(request, 'Novo sexo cadastrado com sucesso!')
@@ -172,6 +188,7 @@ def lista_tabelas(request):
         if(form_estado_civil.is_valid()):
             nova_estado_civil = EstadoCivil.objects.create(
                 estado_civil = form_estado_civil.cleaned_data['estado_civil'],
+                cor = form_estado_civil.cleaned_data['cor'],
             )    
             nova_estado_civil.save()
             messages.success(request, 'Novo estado civil cadastrado com sucesso!')
@@ -182,6 +199,7 @@ def lista_tabelas(request):
         if(form_etnia.is_valid()):
             nova_etnia = Etnia.objects.create(
                 etnia = form_etnia.cleaned_data['etnia'],
+                cor = form_etnia.cleaned_data['cor'],
             )    
             nova_etnia.save()
             messages.success(request, 'Nova etnia cadastrada com sucesso!')
@@ -195,6 +213,16 @@ def lista_tabelas(request):
             )    
             nova_vinculo.save()
             messages.success(request, 'Novo vínculo cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
+        
+    if(request.method == 'POST'):
+        form_status = StatusOptionsForm(request.POST)
+        if(form_status.is_valid()):
+            nova_status = StatusOptions.objects.create(
+                status_options = form_status.cleaned_data['status_options'],
+            )    
+            nova_status.save()
+            messages.success(request, 'Novo status cadastrado com sucesso!')
             return redirect('config:lista_tabelas')
 
     return render(request, "lista_tabelas.html", {'context': context})
