@@ -5,30 +5,25 @@ from matricula.models import Matricula
 from config.models import Sexo, EstadoCivil, Etnia, StatusOptions
 
 class AlunoFilter(django_filters.FilterSet):
-    nome = django_filters.CharFilter(lookup_expr='icontains')
-    cpf = django_filters.CharFilter(lookup_expr='icontains')
-    nome_pai = django_filters.CharFilter(lookup_expr='icontains')
+    # nome = django_filters.CharFilter(lookup_expr='icontains')
+    # cpf = django_filters.CharFilter(lookup_expr='icontains')
+    # nome_pai = django_filters.CharFilter(lookup_expr='icontains')
+    status__status = django_filters.ChoiceFilter(choices=[], label="Status:")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filters['status__status'].extra['choices'] = [(status.id, status) for status in StatusOptions.objects.all()]
 
     class Meta:
         models = Aluno
-        fields = ['nome', 'cpf', 'nome_pai', 'nome_mae', 'naturalidade', 'nacionalidade', 'dt_nascimento', 'estado_civil', 'identidade', 'identidade_uf', 'identidade_orgao', 'sexo', 'email', 'raca', 'etnia', 'status']
+        fields = ['status__status']
 
 
 class MatriculaFilter(django_filters.FilterSet):
-    STATUS_CHOICES = (
-        ('Ativo', 'Ativo'),
-        ('Titulado', 'Titulado'),
-        ('Jubilado', 'Jubilado'),
-        ('Abandono', 'Abandono')
-    )
 
-    PROBATORIO_CHOICES = ((True,'Sim'),(False,'Não'))
-
-    status = django_filters.ChoiceFilter(choices=STATUS_CHOICES)
     probatorio__aluno__sexo = django_filters.ChoiceFilter(choices=[], label="Sexo:")
     probatorio__aluno__estado_civil = django_filters.ChoiceFilter(choices=[], label="Estado Civil:")
     probatorio__aluno__etnia = django_filters.ChoiceFilter(choices=[], label="Etnia:")
-    probatorio__probatorio = django_filters.ChoiceFilter(label="Cursando probatório:", choices=PROBATORIO_CHOICES)
     probatorio__aluno__status__status = django_filters.ChoiceFilter(label="Status:", choices=[])
 
     def __init__(self, *args, **kwargs):
@@ -40,4 +35,4 @@ class MatriculaFilter(django_filters.FilterSet):
 
     class Meta:
         models = Matricula
-        fields = ['status', 'probatorio__aluno__sexo', 'probatorio__aluno__estado_civil', 'probatorio__aluno__etnia', 'probatorio__probatorio', 'probatorio__aluno__status__status']
+        fields = ['probatorio__aluno__sexo', 'probatorio__aluno__estado_civil', 'probatorio__aluno__etnia', 'probatorio__probatorio', 'probatorio__aluno__status__status']

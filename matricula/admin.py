@@ -7,11 +7,9 @@ from .models import Matricula, Inscricao, Probatorio, TrabalhoFinal, VersaoFinal
 class MatriculaAdmin(admin.ModelAdmin):
     pass
 
-
 @admin.register(Inscricao)
 class InscricaoAdmin(admin.ModelAdmin):
     pass
-
 
 @admin.register(Probatorio)
 class ProbatorioAdmin(admin.ModelAdmin):
