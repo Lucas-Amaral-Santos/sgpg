@@ -19,6 +19,12 @@ Detalhes Matrícula
               <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
             </ol>
           </nav>
+
+          <div class="row gap-2 my-5">
+            <div class="col-3">
+                <a class="btn btn-danger" href="{% url 'matricula:gera_historico' matricula.slug %}" ><i class="fa-solid fa-file-pdf"></i> Gerar Histórico</a>
+            </div>
+        </div>
           
         <h1 class='text-center'>Matrícula</h1>
         <div class="row mt-5 px-5">
