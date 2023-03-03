@@ -35,6 +35,37 @@ def cadastra_aluno(request, aluno=None):
         form_residencia = ResidenciaForm(instance=aluno.residencia)
         form_titulacao = TitulacaoForm(instance=aluno.titulacao)
 
+        if request.method == "POST" and pagina == 'Atualizar Aluno':
+            form_aluno = AlunoForm(request.POST, instance=aluno)
+            form_endereco = EnderecoForm(request.POST, instance=aluno.endereco)
+            form_graduacao = GraduacaoForm(request.POST, instance=aluno.graduacao)
+            form_ensino_medio = EnsinoMedioForm(request.POST, instance=aluno.ensino_medio)
+            form_trabalho = TrabalhoForm(request.POST, instance=aluno.trabalho)
+            form_endereco_trabalho = EnderecoForm(request.POST, instance=aluno.trabalho.endereco)
+            form_residencia = ResidenciaForm(request.POST, instance=aluno.residencia)
+            form_titulacao = TitulacaoForm(request.POST, instance=aluno.titulacao)        
+
+            if form_aluno.is_valid() and \
+                form_endereco.is_valid() and \
+                form_graduacao.is_valid() and \
+                form_trabalho.is_valid() and \
+                form_endereco_trabalho.is_valid() and \
+                form_residencia.is_valid() and \
+                form_titulacao.is_valid() and \
+                form_ensino_medio.is_valid():
+
+
+                form_aluno.save()
+                form_endereco.save()
+                form_graduacao.save()
+                form_ensino_medio.save()
+                form_trabalho.save()
+                form_endereco_trabalho.save()
+                form_residencia.save()
+                form_titulacao.save()
+                messages.success(request, 'Aluno atualizado com sucesso!')
+                return redirect('aluno:detalhes_aluno', aluno=aluno.slug)
+
 
 
     if request.method == "POST":
