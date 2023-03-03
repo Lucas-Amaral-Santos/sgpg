@@ -79,15 +79,33 @@ def gera_historico(request, matricula):
 
     # Informações da Matrícula
     p.line(margin, 0.745*height, width-margin, 0.745*height)
-    p.line(width-margin, 0.745*height, width-margin, 0.65*height)
+    p.line(width-margin, 0.745*height, width-margin, 0.625*height)
     p.drawString(1.2*margin, 0.73*height, "CURSO   " + matricula.probatorio.aluno.nome)
     p.drawString(1.2*margin, 0.71*height, "ÁREA DE CONCENTRAÇÃO/")
     p.drawString(1.2*margin, 0.70*height, "CAMPO DE CONCENTRAÇÃO")
     p.drawString(6*margin, 0.705*height, "[valor]")
+    p.drawString(1.2*margin, 0.68*height, "CONCEITO CAPES")
+    p.drawString(6*margin, 0.68*height, "[valor]")
+    
+    p.line(margin, 0.675*height, width-margin, 0.675*height)
+    p.drawString(1.2*margin, 0.660*height, "RESULTADO DO EXAME DE SELEÇÃO")
+    p.drawString(7*margin, 0.660*height, "[valor]")
+    p.line(margin, 0.656*height, width-margin, 0.656*height)
 
-    p.line(margin, 0.745*height, margin, 0.65*height)
-    p.line(margin, 0.65*height, width-margin, 0.65*height)
 
+    p.drawString(1.2*margin, 0.645*height, "EXAME(S) DE LÍNGUA")
+    p.drawString(7*margin, 0.645*height, "[valor]")
+    p.line(margin, 0.640*height, width-margin, 0.640*height)
+
+    p.drawString(1.2*margin, 0.629*height, "MESIANO DE INGRESSO NO CURSO")
+    p.drawString(7*margin, 0.629*height, "[valor]")
+    p.line(margin, 0.625*height, width-margin, 0.625*height)
+
+    p.line(margin, 0.745*height, margin, 0.625*height)
+
+    p.line(margin, 0.615*height, width-margin, 0.615*height)
+    p.line(margin, 0.615*height, margin, margin)
+    p.line(width-margin, 0.615*height, width-margin, margin)
 
     p.line(margin,margin, width-margin, margin)
 
