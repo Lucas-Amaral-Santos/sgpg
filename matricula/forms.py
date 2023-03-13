@@ -52,3 +52,9 @@ class NotaForm(forms.ModelForm):
     class Meta:
         model = Nota
         fields =['nota']
+
+class LinhaPesquisaForm(forms.ModelForm):
+
+    class Meta:
+        model = Matricula
+        fields = ['linha_pesquisa']

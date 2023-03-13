@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{pagina}}
+{% endblock %}
+
+{% block content %}
+
+    {% include 'navbar.html' %}
+    <div class="body container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+          
+          {% if pagina == 'Cadastra Probatório' %}
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_probatorio'%}">{{pagina}}</a></li>
+          {% elif pagina == 'Cadastrar Matricula' %}
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_matricula' %}">{{pagina}}</a></li>
+          {% elif pagina == 'Cadastra Inscrição' %}
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_inscricao' matricula.slug %}">{{pagina}}</a></li>
+          {% elif pagina == 'Cadastra Afastamento' %}
+          <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">{{pagina}}</a></li>
+          {% elif pagina == 'Cadastra Bolsa' %}
+          <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">{{pagina}}</a></li>
+          {% elif pagina == 'Cadastra Inscrição em Probatório' %}
+          <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_probatorio' probatorio.slug %}">Probatório: {{probatorio}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_inscricao_probatorio' probatorio.slug %}">{{pagina}}</a></li>
+          {% elif pagina == 'Cadastra Disciplina' %}
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'disciplina:cadastra_disciplina' %}">{{pagina}}</a></li>
+          {% elif pagina == 'Cadastra Disciplina Ofertada' %}
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'disciplina:cadastra_disciplina_ofertada' %}">{{pagina}}</a></li>
+          {% endif %}
+        </ol>
+      </nav>
+    <div class="container py-2 px-5" style="align-items: center; justify-content: center; justify-items: center; text-justify: center;">
+        
+        <h1 class="text-center">{{pagina}}</h1>
+
+        <form action="" method="POST" class="cadastro_form">
+            {% csrf_token %}
+            
+            {{linha_pesquisa_form|crispy}}
+            {{trabalho_final_form|crispy}}
+            
+          
+            <div class="d-flex justify-content-center m-2">
+                <input class="btn btn-primary" type="submit">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+{% endblock %}

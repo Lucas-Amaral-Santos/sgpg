@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm
+from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm, LinhaPesquisaForm
 from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio
-from config.models import StatusOptions
+from config.models import StatusOptions, LinhaPesquisa
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -115,8 +115,6 @@ def gera_historico(request, matricula):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='historico'+str(matricula.numero)+'.pdf')
 
-
-# Create your views here.
 def cadastra_matricula(request):
     form = MatriculaForm()
 
@@ -135,12 +133,15 @@ def cadastra_matricula(request):
             try:
                 trab_final_prob = TrabalhoFinal.objects.get(probatorio=nova_matricula.probatorio)
             except:
-                trab_final_prob = None
+                trab_final_prob = None            
             
             if trab_final_prob is not None:
                 trab_final_prob.matricula = nova_matricula
                 trab_final_prob.save()
             
+            if nova_matricula.probatorio.linha_pesquisa is not None:
+                nova_matricula.linha_pesquisa = nova_matricula.probatorio.linha_pesquisa
+
             edita_aluno = nova_matricula.probatorio.aluno
             status_aluno = edita_aluno.status
             status_aluno.status = status_opcao[0]
@@ -293,7 +294,6 @@ def cadastra_inscricao(request, matricula):
 
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição', 'matricula': matricula})
 
-
 def cadastra_inscricao_probatorio(request, probatorio):
     probatorio = Probatorio.objects.get(slug=probatorio)
     form = InscricaoForm()
@@ -313,28 +313,31 @@ def cadastra_inscricao_probatorio(request, probatorio):
 
     return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição em Probatório', 'probatorio':probatorio})
 
-
 def cadastra_trabalho_final(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
-    form = TrabalhoFinalForm()
+    trabalho_final_form = TrabalhoFinalForm()
+    linha_pesquisa_form = LinhaPesquisaForm()
 
     if(request.method == 'POST'):
-        form = TrabalhoFinalForm(request.POST)
-        if(form.is_valid()):
+        trabalho_final_form = TrabalhoFinalForm(request.POST)
+        linha_pesquisa_form = LinhaPesquisaForm(request.POST)
+        if(trabalho_final_form.is_valid() and linha_pesquisa_form.is_valid()):
             novo_trabalho_final = TrabalhoFinal.objects.create(
-                titulo = form.cleaned_data['titulo'],
-                data = form.cleaned_data['data'],
-                resumo = form.cleaned_data['resumo'],
-                orientador = form.cleaned_data['orientador'],
+                titulo = trabalho_final_form.cleaned_data['titulo'],
+                data = trabalho_final_form.cleaned_data['data'],
+                resumo = trabalho_final_form.cleaned_data['resumo'],
+                orientador = trabalho_final_form.cleaned_data['orientador'],
                 matricula = matricula,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
 
+            matricula.linha_pesquisa = linha_pesquisa_form.cleaned_data['linha_pesquisa']
+            matricula.save()
             novo_trabalho_final.save()
 
             return redirect('matricula:detalhe_trabalho_final', matricula.slug)
     
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Trabalho Final'})
+    return render(request, 'cadastra_trabalho_final.html', {'trabalho_final_form':trabalho_final_form, 'linha_pesquisa_form':linha_pesquisa_form, 'pagina':'Cadastra Trabalho Final'})
 
 def detalhe_trabalho_final(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
@@ -380,25 +383,29 @@ def detalhe_trabalho_final(request, matricula):
 
     return render(request, 'detalhe_trabalho_final.html', {'matricula':matricula, 'pagina':'Trabalho Final', 'trabalho_final':trabalho_final, 'coorientador': coorientador, 'form_versao': versao_final_form, 'form_nota':nota_form})
 
-
 def cadastra_trabalho_probatorio(request, probatorio):
     probatorio = Probatorio.objects.get(slug=probatorio)
-    form = TrabalhoFinalForm()
+    trabalho_final_form = TrabalhoFinalForm()
+    linha_pesquisa_form = LinhaPesquisaForm()
+
 
     if(request.method == 'POST'):
-        form = TrabalhoFinalForm(request.POST)
-        if(form.is_valid()):
+        trabalho_final_form = TrabalhoFinalForm(request.POST)
+        linha_pesquisa_form = LinhaPesquisaForm(request.POST)
+
+        if(trabalho_final_form.is_valid() and linha_pesquisa_form.is_valid()):
             novo_trabalho_final = TrabalhoFinal.objects.create(
-                titulo = form.cleaned_data['titulo'],
-                data = form.cleaned_data['data'],
-                resumo = form.cleaned_data['resumo'],
-                orientador = form.cleaned_data['orientador'],
+                titulo = trabalho_final_form.cleaned_data['titulo'],
+                data = trabalho_final_form.cleaned_data['data'],
+                resumo = trabalho_final_form.cleaned_data['resumo'],
+                orientador = trabalho_final_form.cleaned_data['orientador'],
                 probatorio = probatorio,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
-
+            probatorio.linha_pesquisa = linha_pesquisa_form.cleaned_data['linha_pesquisa']
+            probatorio.save()
             novo_trabalho_final.save()
 
             return redirect('/')
     
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Trabalho Final'})
+    return render(request, 'cadastra_trabalho_final.html', {'trabalho_final_form':trabalho_final_form, 'linha_pesquisa_form': linha_pesquisa_form,  'pagina':'Cadastra Trabalho Final'})

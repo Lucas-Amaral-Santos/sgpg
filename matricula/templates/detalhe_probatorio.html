@@ -20,6 +20,10 @@ Detalhes Probatório
             </ol>
           </nav>
         <h1 class='text-center'>Probatório</h1>
+
+        <div class='text-center my-4'>
+            <span class='border border-2 rounded-2 text-primary border-primary p-2'>{{probatorio.aluno.status}}</span>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <h2>{{probatorio.aluno}}</h2>
@@ -42,8 +46,8 @@ Detalhes Probatório
                 <div class="col-6">
                     Data de Nascimento: {{probatorio.aluno.dt_nascimento}}
                 </div>
-                <div class="col-6">
-                    Status: <b>{{probatorio.aluno.status}}</b>
+                <div class="col-6 truncate" data-toggle="tooltip" data-placement="right" title="{{probatorio.linha_pesquisa}}">
+                    Linha de Pesquisa: <b>{{probatorio.linha_pesquisa}}</b>
                 </div>
 
             </div>
@@ -59,7 +63,7 @@ Detalhes Probatório
                 <div class="col-6">
                     UF: {{probatorio.aluno.endereco.uf}}
                 </div>
-                <div class="col-6 truncate">
+                <div class="col-6 truncate" {% if trabalho_final is not None %} data-toggle="tooltip" data-placement="right" title="{{trabalho_final}}" {% endif %}>
                     Título do Projeto: {% if trabalho_final == None %}<a href="{% url 'matricula:cadastra_trabalho_probatorio' probatorio.slug %}" style="color:dodgerblue;">Adicionar Projeto  <i class='fas fa-exclamation-circle' style='font-size:24px;color:red'></i></a>{% else %}<b>{{ trabalho_final }}</b>{% endif %}
                 </div>
             </div>

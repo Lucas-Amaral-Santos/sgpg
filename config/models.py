@@ -44,3 +44,10 @@ class StatusOptions(models.Model):
 
     def __str__(self):
             return str(self.status_options)
+    
+class LinhaPesquisa(models.Model):
+    linha_pesquisa = models.CharField(max_length=200)
+    cor = RGBColorField(default='#000000')
+
+    def __str__(self):
+            return str(self.linha_pesquisa)

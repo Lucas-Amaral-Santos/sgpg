@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
-from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions
-from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm
+from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions, LinhaPesquisa
+from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm, LinhaPesquisaForm
 from django.contrib import messages
 
 
@@ -15,6 +15,7 @@ def lista_tabelas(request):
     form_etnia = EtniaForm()
     form_vinculo = VinculoForm()
     form_status = StatusOptionsForm()
+    form_linha_pesquisa = LinhaPesquisaForm()
 
     context = {}
 
@@ -131,6 +132,19 @@ def lista_tabelas(request):
             'form': form_status,
         }
 
+    try:
+        linha_pesquisa = LinhaPesquisa.objects.all()
+        context['linha_pesquisa'] = {
+            'values': linha_pesquisa.values(),
+            'colunas': linha_pesquisa.values()[0].keys(),
+            'form': form_linha_pesquisa,
+        }
+    except:
+        context['linha_pesquisa'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_linha_pesquisa,
+        }
 
     if(request.method == 'POST'):
         form_disciplina = DisciplinaForm(request.POST)
@@ -210,6 +224,7 @@ def lista_tabelas(request):
         if(form_vinculo.is_valid()):
             nova_vinculo = Vinculo.objects.create(
                 vinculo = form_vinculo.cleaned_data['vinculo'],
+                cor = form_etnia.cleaned_data['cor'],
             )    
             nova_vinculo.save()
             messages.success(request, 'Novo vínculo cadastrado com sucesso!')
@@ -220,9 +235,21 @@ def lista_tabelas(request):
         if(form_status.is_valid()):
             nova_status = StatusOptions.objects.create(
                 status_options = form_status.cleaned_data['status_options'],
+                cor = form_etnia.cleaned_data['cor'],
             )    
             nova_status.save()
             messages.success(request, 'Novo status cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
+        
+    if(request.method == 'POST'):
+        form_linha_pesquisa = LinhaPesquisaForm(request.POST)
+        if(form_linha_pesquisa.is_valid()):
+            nova_linha_pesquisa = LinhaPesquisa.objects.create(
+                linha_pesquisa = form_linha_pesquisa.cleaned_data['linha_pesquisa'],
+                cor = form_etnia.cleaned_data['cor'],
+            )    
+            nova_linha_pesquisa.save()
+            messages.success(request, 'Novo linha de pesquisa cadastrado com sucesso!')
             return redirect('config:lista_tabelas')
 
     return render(request, "lista_tabelas.html", {'context': context})
