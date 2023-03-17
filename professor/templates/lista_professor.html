@@ -30,7 +30,7 @@
               <input type="date" class="form-control" id="id_data_entrada_fim" name='data_entrada_fim'>
               <input class="form-check-input" type="checkbox" id="id_membros_ativos_view" name="membros_ativos_view" checked>
               <input class="form-check-input" type="checkbox" id="id_membros_ativos" name="membros_ativos" hidden>
-              <label class="form-check-label" for="id_membros_ativos">Membros ativos</label>
+              <label class="form-check-label" for="id_membros_ativos_view">Membros ativos</label>
             </div>
           </div>
           <div class='col-2'> 
@@ -52,9 +52,9 @@
             <input type='text' class='form-control' placeholder="Pesquise por CPF ou Nome" value='{{busca}}' name='search' id='search'>          
         {% endif %}
 
-        <span class="input-group-text border-0" id="search-addon">
+        <button class="input-group-text border-0" type="submit" id="search-addon">
           <i class="fas fa-search"></i>
-        </span>
+        </button>
         </div>
     </form>
 

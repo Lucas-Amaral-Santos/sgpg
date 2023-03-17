@@ -42,7 +42,7 @@ class Residencia(models.Model):
         return str(self.instituicao_residencia)
 
 class Endereco(models.Model):
-    cep = models.CharField(max_length=8, null=True, blank=True, verbose_name="CEP:")
+    cep = models.CharField(max_length=9, null=True, blank=True, verbose_name="CEP:")
     endereco = models.CharField(max_length=200, null=True, blank=True, verbose_name="Endereço:")
     numero = models.CharField(max_length=200, null=True, blank=True, verbose_name="Número:")
     complemento = models.CharField(max_length=200, null=True, blank=True, verbose_name="Complemento:")
