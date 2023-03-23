@@ -52,8 +52,141 @@ Cadastra Aluno
                 </li>
             </ul>
 
+            {% if form_aluno.errors or form_endereco.errors or form_graduacao.errors or form_ensino_medio.errors or form_trabalho.errors or form_endereco_trabalho.errors or form_residencia.errors or form_titulacao.errors %}
+                <div class="alert alert-danger mt-3 text-sm">
+                    <div class="row">
+                        {% if form_aluno.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;"><u>Aluno</u></p>
+                            {% for field in form_aluno %}
+                            <tr>
+                                {% if field.errors %}
+                                <span>{{ field.label_tag }}</span>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}                        
+                        {% if form_endereco.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;"><u>Endereço</u></p>
+                            {% for field in form_endereco  %}
+                            <tr>
+                                {% if field.errors %}
+                                <td>{{ field.label_tag }}</td>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if form_graduacao.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;"><u>Graduação</u></p>
+                            {% for field in form_graduacao %}
+                            <tr>
+                                {% if field.errors %}
+                                <td>{{ field.label_tag }}</td>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if form_ensino_medio.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;"><u>Ensino Médio</u></p>
+                            {% for field in form_ensino_medio %}
+                            <tr>
+                                {% if field.errors %}
+                                <td>{{ field.label_tag }}</td>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if form_trabalho.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;"><u>Trabalho</u></p>
+                            {% for field in form_trabalho %}
+                            <tr>
+                                {% if field.errors %}
+                                <td>{{ field.label_tag }}</td>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if form_endereco_trabalho.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;"><u>Endereço do Trabalho</u></p>
+                            {% for field in form_endereco_trabalho %}
+                            <tr>
+                                {% if field.errors %}
+                                <td>{{ field.label_tag }}</td>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if form_residencia.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;"><u>Residência</u></p>
+                            {% for field in form_residencia %}
+                            <tr>
+                                {% if field.errors %}
+                                <td>{{ field.label_tag }}</td>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if form_titulacao.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;"><u>Titulação</u></p>
+                            {% for field in form_titulacao %}
+                            <tr>
+                                {% if field.errors %}
+                                <td>{{ field.label_tag }}</td>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
+            
+
             <form action="" method="POST" class="">
                 {% csrf_token %}
+
+                
+
+
                 <div class="tab-content">
                     <div id="id_info" class="tab-pane container pt-4 active">
                         {% include 'forms_template/form_aluno.html' with form_aluno=form_aluno %}
@@ -96,7 +229,7 @@ Cadastra Aluno
                     {% if pagina == 'Atualizar Aluno' %}
                     <a class="btn btn-danger m-4" href="{% url 'aluno:detalhes_aluno' aluno.slug %}">Cancelar</a>
                     {% endif %}
-                    <button class="btn btn-primary m-4" type="submit">Salvar</button>
+                    <button class="btn btn-primary m-4" type="submit" formnovalidate="formnovalidate">Salvar</button>
                 </div>
             </form>
         </div>

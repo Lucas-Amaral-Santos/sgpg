@@ -105,8 +105,7 @@ def cadastra_professor(request, professor=None):
             novo_professor.save()
             messages.success(request, 'Professor cadastrado com sucesso!')
             return redirect('professor:detalhes_professor', professor=novo_professor.slug)
-
-
+        return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao, 'pagina':'Cadastrar Professor'})
     return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao, 'pagina':'Cadastrar Professor'})
 
 def lista_professor(request):
@@ -168,7 +167,6 @@ def detalhes_colegiado(request, membros_ativos=True):
         colegiado = paginator.get_page(page)  
 
     return render(request, 'lista_professor.html', {'professores':colegiado, 'pagina': 'Colegiado', 'total':total, 'busca': busca})
-
 
 def delete_professor(request, professor):
     professor = Professor.objects.get(slug=professor)

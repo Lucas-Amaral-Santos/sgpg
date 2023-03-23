@@ -78,6 +78,8 @@ def cadastra_aluno(request, aluno=None):
         form_residencia = ResidenciaForm(request.POST)
         form_titulacao = TitulacaoForm(request.POST)
 
+        print(form_aluno.is_valid())
+
         if form_aluno.is_valid() and \
             form_endereco.is_valid() and \
             form_graduacao.is_valid() and \
@@ -137,12 +139,12 @@ def cadastra_aluno(request, aluno=None):
             )
             
             novo_endereco_trabalho = Endereco.objects.create(
-                cep = form_endereco_trabalho.cleaned_data['trabalho_cep'],
-                endereco = form_endereco_trabalho.cleaned_data['trabalho-endereco'],
-                municipio = form_endereco_trabalho.cleaned_data['trabalho-municipio'],
-                uf = form_endereco_trabalho.cleaned_data['trabalho-uf'],
-                telefone1 = form_endereco_trabalho.cleaned_data['trabalho-telefone1'],
-                telefone2 = form_endereco_trabalho.cleaned_data['trabalho-telefone2'],
+                cep = form_endereco_trabalho.cleaned_data['cep'],
+                endereco = form_endereco_trabalho.cleaned_data['endereco'],
+                municipio = form_endereco_trabalho.cleaned_data['municipio'],
+                uf = form_endereco_trabalho.cleaned_data['uf'],
+                telefone1 = form_endereco_trabalho.cleaned_data['telefone1'],
+                telefone2 = form_endereco_trabalho.cleaned_data['telefone2'],
             )
             novo_trabalho = Trabalho.objects.create(
                 trabalho = form_trabalho.cleaned_data['trabalho'],
@@ -194,6 +196,9 @@ def cadastra_aluno(request, aluno=None):
             novo_aluno.save()
             messages.success(request, 'Aluno cadastrado com sucesso!')
             return redirect('aluno:detalhes_aluno', aluno=novo_aluno.slug)
+        
+        print(form_graduacao.errors)
+        return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho': form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno})        
 
     return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho': form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno})
 

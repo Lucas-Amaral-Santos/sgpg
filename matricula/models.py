@@ -5,7 +5,7 @@ from disciplina.models import DisciplinaOfertada
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
-from config.models import LinhaPesquisa
+from config.models import LinhaPesquisa, Grau
 
 class Curso(models.Model):
 
@@ -25,6 +25,8 @@ class Probatorio(models.Model):
     data_inscricao = models.DateField(verbose_name='Data da inscrição:')
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True, verbose_name='Nota:')
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno', verbose_name='Aluno:')
+    grau = models.ForeignKey(Grau, on_delete=models.CASCADE, related_name='probatorio_grau', verbose_name='Grau de Aplicação:')
+
     probatorio = models.BooleanField(default=True)
     linha_pesquisa = models.ForeignKey(LinhaPesquisa, on_delete=models.DO_NOTHING, null=True, blank=True)
 

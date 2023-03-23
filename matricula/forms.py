@@ -8,10 +8,10 @@ class MatriculaForm(forms.ModelForm):
         fields = ['numero', 'probatorio', 'requisita_bolsa']
 
 class ProbatorioForm(forms.ModelForm):
-
+    data_inscricao = forms.DateField(required=False, label="Data de Inscrição:", widget=forms.NumberInput(attrs={'type':'date'}))
     class Meta:
         model = Probatorio
-        fields = ['data_inscricao', 'aluno']
+        fields = ['data_inscricao', 'aluno', 'grau']
 
 class BolsaForm(forms.ModelForm):
 

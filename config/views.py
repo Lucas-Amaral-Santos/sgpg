@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
-from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions, LinhaPesquisa
-from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm, LinhaPesquisaForm
+from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions, LinhaPesquisa, Instituicao, Colegio, InstituicaoResidencia, Grau
+from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm, LinhaPesquisaForm, InstituicaoForm, ColegioForm, InstituicaoResidenciaForm, GrauForm
 from django.contrib import messages
 
 
@@ -16,6 +16,10 @@ def lista_tabelas(request):
     form_vinculo = VinculoForm()
     form_status = StatusOptionsForm()
     form_linha_pesquisa = LinhaPesquisaForm()
+    form_instituicao = InstituicaoForm()
+    form_colegio = ColegioForm()
+    form_instituicao_residencia = InstituicaoResidenciaForm()
+    form_grau = GrauForm()
 
     context = {}
 
@@ -146,6 +150,77 @@ def lista_tabelas(request):
             'form': form_linha_pesquisa,
         }
 
+    try:
+        instituicao = Instituicao.objects.all()
+        context['instituicao'] = {
+            'values': instituicao.values(),
+            'colunas': instituicao.values()[0].keys(),
+            'form': form_instituicao,
+        }
+    except:
+        context['instituicao'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_instituicao,
+        }
+
+    try:
+        colegio = Colegio.objects.all()
+        context['colegio'] = {
+            'values': colegio.values(),
+            'colunas': colegio.values()[0].keys(),
+            'form': form_colegio,
+        }
+    except:
+        context['colegio'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_colegio,
+        }
+
+    try:
+        colegio = Colegio.objects.all()
+        context['colegio'] = {
+            'values': colegio.values(),
+            'colunas': colegio.values()[0].keys(),
+            'form': form_colegio,
+        }
+    except:
+        context['colegio'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_colegio,
+        }
+
+    try:
+        instituicao_residencia = InstituicaoResidencia.objects.all()
+        context['instituicao_residencia'] = {
+            'values': instituicao_residencia.values(),
+            'colunas': instituicao_residencia.values()[0].keys(),
+            'form': form_instituicao_residencia,
+        }
+    except:
+        context['instituicao_residencia'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_instituicao_residencia,
+        }
+
+    try:
+        grau = Grau.objects.all()
+        context['grau'] = {
+            'values': grau.values(),
+            'colunas': grau.values()[0].keys(),
+            'form': form_grau,
+        }
+    except:
+        context['grau'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_grau,
+        }
+
+
     if(request.method == 'POST'):
         form_disciplina = DisciplinaForm(request.POST)
         if(form_disciplina.is_valid()):
@@ -235,7 +310,7 @@ def lista_tabelas(request):
         if(form_status.is_valid()):
             nova_status = StatusOptions.objects.create(
                 status_options = form_status.cleaned_data['status_options'],
-                cor = form_etnia.cleaned_data['cor'],
+                cor = form_status.cleaned_data['cor'],
             )    
             nova_status.save()
             messages.success(request, 'Novo status cadastrado com sucesso!')
@@ -246,10 +321,56 @@ def lista_tabelas(request):
         if(form_linha_pesquisa.is_valid()):
             nova_linha_pesquisa = LinhaPesquisa.objects.create(
                 linha_pesquisa = form_linha_pesquisa.cleaned_data['linha_pesquisa'],
-                cor = form_etnia.cleaned_data['cor'],
+                cor = form_linha_pesquisa.cleaned_data['cor'],
             )    
             nova_linha_pesquisa.save()
             messages.success(request, 'Novo linha de pesquisa cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
+        
+    if(request.method == 'POST'):
+        form_instituicao = InstituicaoForm(request.POST)
+        if(form_instituicao.is_valid()):
+            nova_instituicao = Instituicao.objects.create(
+                instituicao = form_instituicao.cleaned_data['instituicao'],
+                sigla = form_instituicao.cleaned_data['sigla'],
+                cor = form_instituicao.cleaned_data['cor'],
+            )    
+            nova_instituicao.save()
+            messages.success(request, 'Nova instituição cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
+        
+    if(request.method == 'POST'):
+        form_colegio = ColegioForm(request.POST)
+        if(form_colegio.is_valid()):
+            nova_colegio = Colegio.objects.create(
+                colegio = form_colegio.cleaned_data['colegio'],
+                sigla = form_colegio.cleaned_data['sigla'],
+                cor = form_colegio.cleaned_data['cor'],
+            )    
+            nova_colegio.save()
+            messages.success(request, 'Nova colégio cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
+        
+    if(request.method == 'POST'):
+        form_instituicao_residencia = InstituicaoResidenciaForm(request.POST)
+        if(form_instituicao_residencia.is_valid()):
+            nova_instituicao_residencia = InstituicaoResidencia.objects.create(
+                instituicao_residencia = form_instituicao_residencia.cleaned_data['instituicao_residencia'],
+                cor = form_instituicao_residencia.cleaned_data['cor'],
+            )    
+            nova_instituicao_residencia.save()
+            messages.success(request, 'Nova instituição de residência cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
+        
+    if(request.method == 'POST'):
+        form_grau = GrauForm(request.POST)
+        if(form_grau.is_valid()):
+            novo_grau = Grau.objects.create(
+                grau = form_grau.cleaned_data['grau'],
+                cor = form_grau.cleaned_data['cor'],
+            )    
+            novo_grau.save()
+            messages.success(request, 'Nova grau cadastrado com sucesso!')
             return redirect('config:lista_tabelas')
 
     return render(request, "lista_tabelas.html", {'context': context})

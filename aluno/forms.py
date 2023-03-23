@@ -2,7 +2,7 @@ from django.forms import ModelForm, CharField, TextInput, DateField, NumberInput
 from .models import Aluno, Graduacao, Endereco, Trabalho, Residencia, Titulacao, Afastamento, EnsinoMedio
 
 class AlunoForm(ModelForm):
-    dt_nascimento = DateField(required=False, label="Data de Nascimento:", widget=NumberInput(attrs={'type':'date'}))
+    dt_nascimento = DateField(label="Data de Nascimento:", widget=NumberInput(attrs={'type':'date'}))
     cpf = CharField(max_length="14", label="CPF:", required=False, widget=TextInput(attrs={"data-mask": "000.000.000-00"}))
     class Meta:
         model = Aluno
@@ -21,8 +21,8 @@ class EnderecoForm(ModelForm):
         fields = '__all__'
 
 class EnderecoTrabalhoForm(ModelForm):
-    cep = CharField(label="CEP:", required=False, widget=TextInput(attrs={"data-mask": "00000-000", "id": "id_trabalho_cep", "name": "trabalho_cep"}))
-    endereco = CharField(label="Rua:", required=False, widget=TextInput(attrs={"id": "id_trabalho_rua", "name": "trabalho_rua"}))
+    cep = CharField(label="CEP: ", required=False, widget=TextInput(attrs={"data-mask": "00000-000", "id": "id_trabalho_cep", "name": "trabalho_cep"}))
+    endereco = CharField(label="Rua: ", required=False, widget=TextInput(attrs={"id": "id_trabalho_rua", "name": "trabalho_rua"}))
     numero = CharField(label = "Número: ", required=False, widget=NumberInput(attrs={"id": "id_trabalho_numero", "name": "trabalho_numero"}))
     complemento = CharField(label = "Complemento: ", required=False, widget=TextInput(attrs={"id": "id_trabalho_complemento", "name": "trabalho_complemento"}))
     bairro = CharField(label = "Bairro: ", required=False, widget=TextInput(attrs={"id": "id_trabalho_bairro", "name": "trabalho_bairro"}))

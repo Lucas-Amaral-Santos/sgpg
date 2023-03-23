@@ -2,6 +2,7 @@ from django.db import models
 from aluno.models import Endereco, Titulacao, Graduacao
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from config.models import Sexo, UnidadeFederativa, Instituicao
 from datetime import datetime
 
 class Colegiado(models.Model):
@@ -19,14 +20,14 @@ class PosDoutorado(models.Model):
       concluido = models.BooleanField(verbose_name='Concluído:')
       ano_inicio = models.IntegerField(null=True, blank=True, verbose_name='Ano de início:')
       ano_fim = models.IntegerField(null=True, blank=True, verbose_name='Ano de término:')
-      instituicao_posdoc = models.CharField(max_length=200, null=True, blank=True, verbose_name='Instituição de Pós-doutorado:')
+      instituicao_posdoc = models.ForeignKey(Instituicao, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name='Instituição de Pós-doutorado:')
       pais = models.CharField(max_length=200, null=True, blank=True, verbose_name='País:')
 
       def __str__(self):
             return str(self.id)
 
 class Trabalho(models.Model):
-      instituicao_trabalho = models.CharField(max_length=200, verbose_name='Instituição:')
+      instituicao_trabalho = models.ForeignKey(Instituicao, on_delete=models.DO_NOTHING, verbose_name='Instituição:')
       setor = models.CharField(max_length=200, null=True, blank=True, verbose_name='Setor:')
       admissao = models.DateField(null=True, blank=True, verbose_name='Admissão:')
       cargo = models.CharField(max_length=200, verbose_name='Cargo:')
@@ -48,11 +49,11 @@ class Professor(models.Model):
       )
 
       nome = models.CharField(max_length=200, verbose_name='Nome:')
-      sexo = models.CharField(max_length=50, null=True, blank=True, verbose_name='Sexo:')
+      sexo = models.ForeignKey(Sexo, on_delete=models.DO_NOTHING , null=True, blank=True, verbose_name='Sexo:')
       dt_nascimento = models.DateField(null=True, blank=True, verbose_name='Data de nascimento:')
       estrangeiro = models.BooleanField(default=False, verbose_name='Estrangeiro:')
       nacionalidade = models.CharField(max_length=100, null=True, blank=True, verbose_name='Nacionalidade:')
-      naturalidade = models.CharField(max_length=2, null=True, blank=True, verbose_name='Naturalidade:')
+      naturalidade = models.ForeignKey(UnidadeFederativa, on_delete=models.DO_NOTHING,  null=True, blank=True, verbose_name='Naturalidade:')
       cpf = models.CharField(max_length=14, null=True, blank=True, verbose_name='CPF:')
       identidade = models.CharField(max_length=12, null=True, blank=True, verbose_name='Identidade:')
       identidade_uf= models.CharField(max_length=2, null=True, blank=True, verbose_name='UF:')

@@ -1,7 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from config.models import UnidadeFederativa, Sexo, EstadoCivil, Etnia, Vinculo, StatusOptions
+from config.models import UnidadeFederativa, Sexo, EstadoCivil, Etnia, Vinculo, StatusOptions, Instituicao, Colegio
 
 class EnsinoMedio(models.Model):
 
@@ -10,7 +10,7 @@ class EnsinoMedio(models.Model):
         ('Particular', 'Particular'),
     )
 
-    ensino_medio_instituicao = models.CharField(max_length=200, null=True, blank=True, verbose_name="Instituição:")
+    ensino_medio_instituicao = models.ForeignKey(Colegio, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Colégio:")
     ensino_medio_ano_inicio = models.IntegerField(null=True, blank=True, verbose_name="Ano de Início:")
     ensino_medio_ano_conclusao = models.IntegerField(null=True, blank=True, verbose_name="Ano de Conclusão:")
     ensino_medio_municipio = models.CharField(max_length=200, null=True, blank=True, verbose_name="Município:")
@@ -75,7 +75,7 @@ class Trabalho(models.Model):
 
 class Graduacao(models.Model):
     graduacao_area = models.CharField(max_length=200, verbose_name="Área:") 
-    instituicao = models.CharField(max_length=200, verbose_name="Instituição:")
+    instituicao = models.ForeignKey(Instituicao, on_delete=models.DO_NOTHING, verbose_name="Instituição")
     local = models.CharField(max_length=200, null=True, blank=True, verbose_name="Local:")
     graduacao_ano_inicio = models.IntegerField(null=True, blank=True, verbose_name="Ano de início:")
     graduacao_ano_fim = models.IntegerField(null=True, blank=True, verbose_name="Ano de término:")

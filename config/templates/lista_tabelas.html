@@ -17,20 +17,15 @@ Tabelas Auxiliares
         <div class="d-flex gap-1">
             <div class="border p-2 w-25">
                 <ul class="nav nav-pills nav-stacked flex-row gap-1 justify-content-center"> 
-                    <li><a href="#disciplina" class="btn btn-primary" style="width:300px;" data-toggle="pill">Disciplina</a></li>    
-                    <li><a  href="#disciplina_ofertada" class="btn btn-primary" style="width:300px;" data-toggle="pill">Disciplina Ofertada</a></li>
-                    <li><a  href="#linha_pesquisa" class="btn btn-primary" style="width:300px;" data-toggle="pill">Linha de Pesquisa</a></li>
-                    <li><a  href="#unidade_federativa" class="btn btn-primary" style="width:300px;" data-toggle="pill">Unidade Federativa</a></li>
-                    <li><a  href="#sexo" class="btn btn-primary" style="width:300px;" data-toggle="pill">Sexo</a></li>
-                    <li><a  href="#estado_civil" class="btn btn-primary" style="width:300px;" data-toggle="pill">Estado Civil</a></li>
-                    <li><a  href="#etnia" class="btn btn-primary" style="width:300px;" data-toggle="pill">Etnia</a></li>
-                    <li><a  href="#vinculo" class="btn btn-primary" style="width:300px;" data-toggle="pill">Vínculo</a></li>
-                    <li><a  href="#status" class="btn btn-primary" style="width:300px;" data-toggle="pill">Status</a></li>
+                    {% for t in context %}
+                    <li><a href="#{{t}}" class="btn btn-primary text-capitalize" style="width:300px;" data-toggle="pill">{{t}}</a></li>    
+                    {% endfor %}
                 </ul>
             </div>
 
             <div class="float-right w-100 border p-2">
                 <div class="tab-content">
+
                     {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo='Disciplina' tabela='disciplina' objeto=context.disciplina active='active' %}
 
                     {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_disciplina_ofertada titulo='Disciplina Ofertada' tabela='disciplina_ofertada' objeto=context.disciplina_ofertada %}
@@ -48,6 +43,12 @@ Tabelas Auxiliares
                     {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_status titulo='Status' tabela='status' objeto=context.status %}
 
                     {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_linha_pesquisa titulo='Linha de Pesquisa' tabela='linha_pesquisa' objeto=context.linha_pesquisa %}
+
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_instituicao titulo='Instituição' tabela='instituicao' objeto=context.instituicao %}
+
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_colegio titulo='Colégio' tabela='colegio' objeto=context.colegio %}
+
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_grau titulo='Colégio' tabela='grau' objeto=context.grau %}
                 </div>
             </div>
         </div>

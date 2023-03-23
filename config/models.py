@@ -51,3 +51,33 @@ class LinhaPesquisa(models.Model):
 
     def __str__(self):
             return str(self.linha_pesquisa)
+    
+class Instituicao(models.Model):
+    instituicao = models.CharField(max_length=200)
+    sigla = models.CharField(max_length=200)
+    cor = RGBColorField(default='#000000')
+
+    def __str__(self):
+            return str(self.instituicao)
+    
+class Colegio(models.Model):
+    colegio = models.CharField(max_length=200)
+    sigla = models.CharField(max_length=200)
+    cor = RGBColorField(default='#000000')
+
+    def __str__(self):
+            return str(self.colegio)
+    
+class InstituicaoResidencia(models.Model):
+    instituicao_residencia = models.CharField(max_length=200)
+    cor = RGBColorField(default='#000000')
+
+    def __str__(self):
+            return str(self.instituicao_residencia)
+    
+class Grau(models.Model):
+    grau = models.CharField(max_length=200)
+    cor = RGBColorField(default='#000000')
+
+    def __str__(self):
+            return str(self.grau)

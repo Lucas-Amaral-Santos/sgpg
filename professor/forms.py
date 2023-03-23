@@ -1,4 +1,4 @@
-from django.forms import ModelForm, ValidationError, DateField, NumberInput, TextInput
+from django.forms import ModelForm, ValidationError, DateField, NumberInput, TextInput, CharField
 from .models import Professor, Trabalho, PosDoutorado, Colegiado
 from datetime import datetime
 
@@ -22,18 +22,19 @@ class TrabalhoForm(ModelForm):
 
 class ProfessorForm(ModelForm):
     dt_nascimento = DateField(label='Data de Nascimento:', required=False, widget=TextInput(attrs={'type':'date'}))
+    cpf = CharField(max_length="14", label="CPF:", required=False, widget=TextInput(attrs={"data-mask": "000.000.000-00"}))
 
     def __init__(self, *args, **kwargs):
         super(ProfessorForm, self).__init__(*args, **kwargs)
 
-    def clean(self):
+    def clean_cpf(self):
         cleaned_data = self.cleaned_data
 
         estrangeiro = cleaned_data.get("estrangeiro")
         cpf = cleaned_data.get("cpf")
 
         if not cpf and not estrangeiro:
-            raise ValidationError('Informar CPF.')
+            raise ValidationError('Informar CPF. Não necessário em caso de profesoor estrangeiro.')
 
 
         return cleaned_data
