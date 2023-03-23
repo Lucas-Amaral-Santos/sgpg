@@ -20,6 +20,23 @@ class EnderecoForm(ModelForm):
         model = Endereco
         fields = '__all__'
 
+class EnderecoTrabalhoForm(ModelForm):
+    cep = CharField(label="CEP:", required=False, widget=TextInput(attrs={"data-mask": "00000-000", "id": "id_trabalho_cep", "name": "trabalho_cep"}))
+    endereco = CharField(label="Rua:", required=False, widget=TextInput(attrs={"id": "id_trabalho_rua", "name": "trabalho_rua"}))
+    numero = CharField(label = "Número: ", required=False, widget=NumberInput(attrs={"id": "id_trabalho_numero", "name": "trabalho_numero"}))
+    complemento = CharField(label = "Complemento: ", required=False, widget=TextInput(attrs={"id": "id_trabalho_complemento", "name": "trabalho_complemento"}))
+    bairro = CharField(label = "Bairro: ", required=False, widget=TextInput(attrs={"id": "id_trabalho_bairro", "name": "trabalho_bairro"}))
+    municipio = CharField(label = "Município: ", required=False, widget=TextInput(attrs={"id": "id_trabalho_municipio", "name": "trabalho_municipio"}))
+    uf = CharField(label = "UF: ", required=False, widget=TextInput(attrs={"id": "id_trabalho_uf", "name": "trabalho_uf"}))
+    pais = CharField(label = "País: ", required=False, widget=TextInput(attrs={"id": "id_trabalho_pais", "name": "trabalho_pais"}))
+    telefone1 = CharField(label="Telefone:", required=False, widget=TextInput(attrs={"data-mask": "(00) 00000-0000", "id": "id_trabalho_telefone", "name": "trabalho_telefone"}))
+    telefone2 = CharField(label="Telefone 2:", required=False, widget=TextInput(attrs={"data-mask": "(00) 00000-0000", "id": "id_trabalho_telefone2", "name": "trabalho_telefone2"}))
+
+    class Meta:
+        model = Endereco
+        fields = '__all__'
+
+
 class GraduacaoForm(ModelForm):
     class Meta:
         model = Graduacao

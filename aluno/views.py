@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from matricula.models import Matricula, Probatorio
-from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm, EnsinoMedioForm
+from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm, EnsinoMedioForm, EnderecoTrabalhoForm
 from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao, EnsinoMedio, Status
 from config.models import StatusOptions
 from django.core.paginator import Paginator
@@ -19,7 +19,7 @@ def cadastra_aluno(request, aluno=None):
     form_graduacao = GraduacaoForm()
     form_ensino_medio = EnsinoMedioForm()
     form_trabalho = TrabalhoForm()
-    form_endereco_trabalho = EnderecoForm()
+    form_endereco_trabalho = EnderecoTrabalhoForm(prefix="trabalho")
     form_residencia = ResidenciaForm(initial={'residencia_ano_inicio': datetime.today().year, 'residencia_ano_fim': datetime.today().year})
     form_titulacao = TitulacaoForm()
 
@@ -31,7 +31,7 @@ def cadastra_aluno(request, aluno=None):
         form_graduacao = GraduacaoForm(instance=aluno.graduacao)
         form_ensino_medio = EnsinoMedioForm(instance=aluno.ensino_medio)
         form_trabalho = TrabalhoForm(instance=aluno.trabalho)
-        form_endereco_trabalho = EnderecoForm(instance=aluno.trabalho.endereco)
+        form_endereco_trabalho = EnderecoTrabalhoForm(instance=aluno.trabalho.endereco, prefix="trabalho")
         form_residencia = ResidenciaForm(instance=aluno.residencia)
         form_titulacao = TitulacaoForm(instance=aluno.titulacao)
 
@@ -41,7 +41,7 @@ def cadastra_aluno(request, aluno=None):
             form_graduacao = GraduacaoForm(request.POST, instance=aluno.graduacao)
             form_ensino_medio = EnsinoMedioForm(request.POST, instance=aluno.ensino_medio)
             form_trabalho = TrabalhoForm(request.POST, instance=aluno.trabalho)
-            form_endereco_trabalho = EnderecoForm(request.POST, instance=aluno.trabalho.endereco)
+            form_endereco_trabalho = EnderecoTrabalhoForm(request.POST, instance=aluno.trabalho.endereco, prefix="trabalho")
             form_residencia = ResidenciaForm(request.POST, instance=aluno.residencia)
             form_titulacao = TitulacaoForm(request.POST, instance=aluno.titulacao)        
 
@@ -74,7 +74,7 @@ def cadastra_aluno(request, aluno=None):
         form_graduacao = GraduacaoForm(request.POST)
         form_ensino_medio = EnsinoMedioForm(request.POST)
         form_trabalho = TrabalhoForm(request.POST)
-        form_endereco_trabalho = EnderecoForm(request.POST)
+        form_endereco_trabalho = EnderecoTrabalhoForm(request.POST, prefix="trabalho")
         form_residencia = ResidenciaForm(request.POST)
         form_titulacao = TitulacaoForm(request.POST)
 
@@ -137,12 +137,12 @@ def cadastra_aluno(request, aluno=None):
             )
             
             novo_endereco_trabalho = Endereco.objects.create(
-                cep = form_endereco_trabalho.cleaned_data['cep'],
-                endereco = form_endereco_trabalho.cleaned_data['endereco'],
-                municipio = form_endereco_trabalho.cleaned_data['municipio'],
-                uf = form_endereco_trabalho.cleaned_data['uf'],
-                telefone1 = form_endereco_trabalho.cleaned_data['telefone1'],
-                telefone2 = form_endereco_trabalho.cleaned_data['telefone2'],
+                cep = form_endereco_trabalho.cleaned_data['trabalho_cep'],
+                endereco = form_endereco_trabalho.cleaned_data['trabalho-endereco'],
+                municipio = form_endereco_trabalho.cleaned_data['trabalho-municipio'],
+                uf = form_endereco_trabalho.cleaned_data['trabalho-uf'],
+                telefone1 = form_endereco_trabalho.cleaned_data['trabalho-telefone1'],
+                telefone2 = form_endereco_trabalho.cleaned_data['trabalho-telefone2'],
             )
             novo_trabalho = Trabalho.objects.create(
                 trabalho = form_trabalho.cleaned_data['trabalho'],
@@ -195,7 +195,7 @@ def cadastra_aluno(request, aluno=None):
             messages.success(request, 'Aluno cadastrado com sucesso!')
             return redirect('aluno:detalhes_aluno', aluno=novo_aluno.slug)
 
-    return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho':form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno})
+    return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho': form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno})
 
 def lista_aluno(request):
     alunos = Aluno.objects.all().order_by('nome')

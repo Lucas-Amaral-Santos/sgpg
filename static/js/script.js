@@ -31,7 +31,7 @@ $(".aluno #id_cep").focusout(function(){
   });
 });
 
-$(".endereco_trabalho #id_cep").focusout(function(){
+$(".endereco_trabalho #id_trabalho_cep").focusout(function(){
   //Início do Comando AJAX
   $.ajax({
     //O campo URL diz o caminho de onde virá os dados
@@ -48,14 +48,14 @@ $(".endereco_trabalho #id_cep").focusout(function(){
     success: function(resposta){
       //Agora basta definir os valores que você deseja preencher
       //automaticamente nos campos acima.
-      $(".endereco_trabalho #id_rua").val(resposta.logradouro);
-      $(".endereco_trabalho #id_complemento").val(resposta.complemento);
-      $(".endereco_trabalho #id_bairro").val(resposta.bairro);
-      $(".endereco_trabalho #id_municipio").val(resposta.localidade);
-      $(".endereco_trabalho #id_uf").val(resposta.uf);
+      $(".endereco_trabalho #id_trabalho_rua").val(resposta.logradouro);
+      $(".endereco_trabalho #id_trabalho_complemento").val(resposta.complemento);
+      $(".endereco_trabalho #id_trabalho_bairro").val(resposta.bairro);
+      $(".endereco_trabalho #id_trabalho_municipio").val(resposta.localidade);
+      $(".endereco_trabalho #id_trabalho_uf").val(resposta.uf);
       //Vamos incluir para que o Número seja focado automaticamente
       //melhorando a experiência do usuário
-      $(".endereco_trabalho #id_numero").focus();
+      $(".endereco_trabalho #id_trabalho_numero").focus();
     }
   });
 });
