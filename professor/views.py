@@ -9,9 +9,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib import messages
 
-
-# Create your views here.
 def cadastra_professor(request, professor=None):
+    pagina = "Cadastrar Professor"
     form_professor = ProfessorForm()
     form_colegiado = ColegiadoForm()
     form_trabalho = TrabalhoForm()
@@ -28,6 +27,28 @@ def cadastra_professor(request, professor=None):
         form_pos_doutorado = PosDoutoradoForm(instance=professor.pos_doutorado)
         form_endereco = EnderecoForm(instance=professor.endereco)
         form_titulacao = TitulacaoProfessorForm(instance=professor.titulacao)
+
+        if request.method == "POST" and pagina == 'Atualizar Professor':
+            form_professor = ProfessorForm(request.POST, instance=professor)
+            form_colegiado = ColegiadoForm(request.POST, instance=professor.membro_colegiado)
+            form_trabalho = TrabalhoForm(request.POST, instance=professor.trabalho)
+            form_pos_doutorado = PosDoutoradoForm(request.POST, instance=professor.pos_doutorado)
+            form_endereco = EnderecoForm(request.POST, instance=professor.endereco)
+            form_titulacao = TitulacaoProfessorForm(request.POST, instance=professor.titulacao)
+
+            if form_professor.is_valid() and form_colegiado.is_valid() and \
+                form_trabalho.is_valid() and form_pos_doutorado.is_valid() and \
+                form_endereco.is_valid() and form_titulacao.is_valid():
+
+                form_professor.save()
+                form_colegiado.save()
+                form_trabalho.save()
+                form_pos_doutorado.save()
+                form_endereco.save()
+                form_titulacao.save()
+
+                messages.success(request, 'Professor atualizado com sucesso!')
+                return redirect('professor:detalhes_professor', professor=professor.slug)
         
     if request.method == "POST":
         form_professor = ProfessorForm(request.POST)
@@ -37,7 +58,8 @@ def cadastra_professor(request, professor=None):
         form_endereco = EnderecoForm(request.POST)
         form_titulacao = TitulacaoProfessorForm(request.POST)
 
-        if form_professor.is_valid()and form_colegiado.is_valid() and form_trabalho.is_valid() and form_pos_doutorado.is_valid() and form_titulacao.is_valid() and form_endereco.is_valid():
+        if form_professor.is_valid() and form_colegiado.is_valid() and form_trabalho.is_valid() and \
+            form_pos_doutorado.is_valid() and form_titulacao.is_valid() and form_endereco.is_valid():
             
             novo_colegiado = Colegiado.objects.create(
                 colegiado_membro = form_colegiado.cleaned_data['colegiado_membro'],
@@ -102,10 +124,12 @@ def cadastra_professor(request, professor=None):
             novo_pos_doutorado.save()
             novo_trabalho.save()
             novo_professor.save()
-            novo_professor.save()
-            messages.success(request, 'Professor cadastrado com sucesso!')
+
+            messages.success(request, 'Professor cadastrado com sucesso!')            
             return redirect('professor:detalhes_professor', professor=novo_professor.slug)
-        return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao, 'pagina':'Cadastrar Professor'})
+        
+        return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao, 'pagina':pagina})
+    
     return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao, 'pagina':'Cadastrar Professor'})
 
 def lista_professor(request):

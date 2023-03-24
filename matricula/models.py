@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
 from config.models import LinhaPesquisa, Grau
+import datetime
 
 class Curso(models.Model):
 
@@ -57,6 +58,7 @@ class Matricula(models.Model):
     requisita_bolsa = models.BooleanField(verbose_name='Requisita bolsa:')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0], verbose_name='Status:')
     linha_pesquisa = models.ForeignKey(LinhaPesquisa, on_delete=models.DO_NOTHING, null=True, blank=True)
+    grau = models.ForeignKey(Grau, on_delete=models.CASCADE, related_name='matricula_grau', verbose_name='Grau de Aplicação:')
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)
@@ -156,7 +158,6 @@ class Nota(models.Model):
 
 class TrabalhoFinal(models.Model):
     titulo = models.CharField(max_length=200)
-    data = models.DateField()
     resumo = models.TextField()
     diploma = models.BooleanField(null=True, blank=True)
     dt_diploma = models.DateField(null=True, blank=True)

@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from matricula.models import Matricula, Probatorio
 from .forms import AlunoForm, EnderecoForm, GraduacaoForm, TrabalhoForm, ResidenciaForm, TitulacaoForm, EnsinoMedioForm, EnderecoTrabalhoForm
 from .models import Aluno, Endereco, Graduacao, Trabalho, Residencia, Titulacao, EnsinoMedio, Status
+from matricula.models import Probatorio
+from matricula.forms import AlunoProbatorioForm
 from config.models import StatusOptions
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -22,6 +24,7 @@ def cadastra_aluno(request, aluno=None):
     form_endereco_trabalho = EnderecoTrabalhoForm(prefix="trabalho")
     form_residencia = ResidenciaForm(initial={'residencia_ano_inicio': datetime.today().year, 'residencia_ano_fim': datetime.today().year})
     form_titulacao = TitulacaoForm()
+    form_probatorio = AlunoProbatorioForm(initial={'data_inscricao': datetime.today().strftime(format="%d-%m-%Y")})
 
     if(aluno is not None):
         pagina = "Atualizar Aluno"
@@ -30,20 +33,22 @@ def cadastra_aluno(request, aluno=None):
         form_endereco = EnderecoForm(instance=aluno.endereco)
         form_graduacao = GraduacaoForm(instance=aluno.graduacao)
         form_ensino_medio = EnsinoMedioForm(instance=aluno.ensino_medio)
-        form_trabalho = TrabalhoForm(instance=aluno.trabalho)
+        form_trabalho = TrabalhoForm(instance=aluno.trabalho, prefix="trabalho")
         form_endereco_trabalho = EnderecoTrabalhoForm(instance=aluno.trabalho.endereco, prefix="trabalho")
         form_residencia = ResidenciaForm(instance=aluno.residencia)
         form_titulacao = TitulacaoForm(instance=aluno.titulacao)
+        form_probatorio = AlunoProbatorioForm(instance=Probatorio.objects.get(aluno=aluno.slug))
 
         if request.method == "POST" and pagina == 'Atualizar Aluno':
             form_aluno = AlunoForm(request.POST, instance=aluno)
             form_endereco = EnderecoForm(request.POST, instance=aluno.endereco)
             form_graduacao = GraduacaoForm(request.POST, instance=aluno.graduacao)
             form_ensino_medio = EnsinoMedioForm(request.POST, instance=aluno.ensino_medio)
-            form_trabalho = TrabalhoForm(request.POST, instance=aluno.trabalho)
+            form_trabalho = TrabalhoForm(request.POST, instance=aluno.trabalho, prefix="trabalho")
             form_endereco_trabalho = EnderecoTrabalhoForm(request.POST, instance=aluno.trabalho.endereco, prefix="trabalho")
             form_residencia = ResidenciaForm(request.POST, instance=aluno.residencia)
-            form_titulacao = TitulacaoForm(request.POST, instance=aluno.titulacao)        
+            form_titulacao = TitulacaoForm(request.POST, instance=aluno.titulacao)  
+            form_probatorio = AlunoProbatorioForm(request.POST, instance=Probatorio.objects.get(aluno=aluno.slug))      
 
             if form_aluno.is_valid() and \
                 form_endereco.is_valid() and \
@@ -52,8 +57,8 @@ def cadastra_aluno(request, aluno=None):
                 form_endereco_trabalho.is_valid() and \
                 form_residencia.is_valid() and \
                 form_titulacao.is_valid() and \
-                form_ensino_medio.is_valid():
-
+                form_ensino_medio.is_valid() and \
+                form_probatorio.is_valid():
 
                 form_aluno.save()
                 form_endereco.save()
@@ -63,22 +68,21 @@ def cadastra_aluno(request, aluno=None):
                 form_endereco_trabalho.save()
                 form_residencia.save()
                 form_titulacao.save()
+                form_probatorio.save()
+
                 messages.success(request, 'Aluno atualizado com sucesso!')
                 return redirect('aluno:detalhes_aluno', aluno=aluno.slug)
-
-
 
     if request.method == "POST":
         form_aluno = AlunoForm(request.POST)
         form_endereco = EnderecoForm(request.POST)
         form_graduacao = GraduacaoForm(request.POST)
         form_ensino_medio = EnsinoMedioForm(request.POST)
-        form_trabalho = TrabalhoForm(request.POST)
+        form_trabalho = TrabalhoForm(request.POST, prefix="trabalho")
         form_endereco_trabalho = EnderecoTrabalhoForm(request.POST, prefix="trabalho")
         form_residencia = ResidenciaForm(request.POST)
         form_titulacao = TitulacaoForm(request.POST)
-
-        print(form_aluno.is_valid())
+        form_probatorio = AlunoProbatorioForm(request.POST)
 
         if form_aluno.is_valid() and \
             form_endereco.is_valid() and \
@@ -87,15 +91,17 @@ def cadastra_aluno(request, aluno=None):
             form_endereco_trabalho.is_valid() and \
             form_residencia.is_valid() and \
             form_titulacao.is_valid() and \
-            form_ensino_medio.is_valid():
+            form_ensino_medio.is_valid() and \
+            form_probatorio.is_valid():
 
             status_opcao = None
             novo_status = None
+
             try:
-                status_opcao = StatusOptions.objects.get(status_options='Não ativo')
+                status_opcao = StatusOptions.objects.get(status_options='Probatório')
             except:
-                StatusOptions.objects.create(status_options='Não ativo', cor=Factory.create().hex_color()).save()
-                status_opcao = StatusOptions.objects.get(status_options='Não ativo')
+                StatusOptions.objects.create(status_options='Probatório', cor=Factory.create().hex_color()).save()
+                status_opcao = StatusOptions.objects.get(status_options='Probatório')
 
             novo_status = Status.objects.create(
                 status = status_opcao
@@ -136,8 +142,8 @@ def cadastra_aluno(request, aluno=None):
                 agencia = form_graduacao.cleaned_data['agencia'],
                 iniciacao_cientifica = form_graduacao.cleaned_data['iniciacao_cientifica'],
                 residencia = novo_residencia
-            )
-            
+            )   
+
             novo_endereco_trabalho = Endereco.objects.create(
                 cep = form_endereco_trabalho.cleaned_data['cep'],
                 endereco = form_endereco_trabalho.cleaned_data['endereco'],
@@ -146,12 +152,14 @@ def cadastra_aluno(request, aluno=None):
                 telefone1 = form_endereco_trabalho.cleaned_data['telefone1'],
                 telefone2 = form_endereco_trabalho.cleaned_data['telefone2'],
             )
+
             novo_trabalho = Trabalho.objects.create(
                 trabalho = form_trabalho.cleaned_data['trabalho'],
                 endereco = novo_endereco_trabalho,
                 email = form_trabalho.cleaned_data['email'],
                 data_termino = form_trabalho.cleaned_data['data_termino'],
             )
+
             novo_endereco = Endereco.objects.create(
                 cep = form_endereco.cleaned_data['cep'],
                 endereco = form_endereco.cleaned_data['endereco'],
@@ -160,6 +168,7 @@ def cadastra_aluno(request, aluno=None):
                 telefone1 = form_endereco.cleaned_data['telefone1'],
                 telefone2 = form_endereco.cleaned_data['telefone2'],
             )
+
             novo_aluno = Aluno.objects.create(
                 nome = form_aluno.cleaned_data['nome'],
                 cpf = form_aluno.cleaned_data['cpf'],
@@ -175,6 +184,8 @@ def cadastra_aluno(request, aluno=None):
                 sexo = form_aluno.cleaned_data['sexo'],
                 email = form_aluno.cleaned_data['email'],
                 etnia = form_aluno.cleaned_data['etnia'],
+                portador_deficiencia = form_aluno.cleaned_data['portador_deficiencia'],
+                portador_deficiencia_qual = form_aluno.cleaned_data['portador_deficiencia_qual'],
                 foto = form_aluno.cleaned_data['foto'],
                 status = novo_status,
                 cadastrado_por = request.user,
@@ -186,6 +197,13 @@ def cadastra_aluno(request, aluno=None):
                 ensino_medio = novo_ensino_medio,
             )
 
+            novo_probatorio = Probatorio.objects.create(
+                data_inscricao = form_probatorio.cleaned_data['data_inscricao'],
+                aluno = novo_aluno,
+                grau = form_probatorio.cleaned_data['grau'],
+                cadastrado_por = request.user,
+            )
+
             novo_ensino_medio.save()
             novo_titulacao.save()
             novo_residencia.save()
@@ -194,13 +212,18 @@ def cadastra_aluno(request, aluno=None):
             novo_endereco.save()
             novo_trabalho.save()
             novo_aluno.save()
+            novo_probatorio.save()
             messages.success(request, 'Aluno cadastrado com sucesso!')
             return redirect('aluno:detalhes_aluno', aluno=novo_aluno.slug)
         
         print(form_graduacao.errors)
-        return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho': form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno})        
+        return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 
+                                                       'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 
+                                                       'form_trabalho':form_trabalho, 'form_endereco_trabalho': form_endereco_trabalho, 
+                                                       'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 
+                                                       'form_probatorio': form_probatorio, 'aluno': aluno})        
 
-    return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho': form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'aluno': aluno})
+    return render(request, "cadastra_aluno.html", {'pagina': pagina, 'form_aluno':form_aluno, 'form_endereco':form_endereco, 'form_graduacao':form_graduacao, 'form_ensino_medio': form_ensino_medio, 'form_trabalho':form_trabalho, 'form_endereco_trabalho': form_endereco_trabalho, 'form_residencia':form_residencia, 'form_titulacao':form_titulacao, 'form_probatorio': form_probatorio, 'aluno': aluno})
 
 def lista_aluno(request):
     alunos = Aluno.objects.all().order_by('nome')

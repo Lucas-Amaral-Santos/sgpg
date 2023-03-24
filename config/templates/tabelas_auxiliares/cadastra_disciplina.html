@@ -11,7 +11,10 @@
             <a class="nav-link active" data-toggle="tab" href="#id_registros_{{tabela}}">Registros</a>
         </li>
         {% endif %}
-    </ul>            
+    </ul>  
+    <div class="container my-2">
+        <span>Quantidade: <b>{{objeto.values|length}}</b></span>
+    </div>          
     <div class="tab-content">                        
         <div id="id_cadastro_{{tabela}}" class="tab-pane container pt-4 {% if objeto.values is None %}active{% endif %}">
             <form method="POST">
@@ -24,9 +27,7 @@
             </form>
         </div>
         {% if objeto.values is not None %}
-            <div class="container my-2">
-                <span>Quantidade: <b>{{objeto.values|length}}</b></span>
-            </div>
+            
             <div id="id_registros_{{tabela}}" class="tab-pane container active">
                 
                 <table class="table">

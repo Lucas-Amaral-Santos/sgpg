@@ -29,12 +29,16 @@ def lista_tabelas(request):
             'values': disciplina.values(),
             'colunas': disciplina.values()[0].keys(),
             'form': form_disciplina,
+            'titulo': 'Disciplina',
+            'tabela': 'disciplina'
         }
     except:
         context['disciplina'] = {
             'values': None,
             'colunas': None,
             'form': form_disciplina,
+            'titulo': 'Disciplina',
+            'tabela': 'disciplina'
         }
 
     try:
@@ -43,12 +47,16 @@ def lista_tabelas(request):
             'values': disciplina_ofertada.values(),
             'colunas': disciplina_ofertada.values()[0].keys(),
             'form': form_disciplina_ofertada,
+            'titulo': 'Disciplina Ofertada',
+            'tabela': 'disciplina_ofertada'
         }
     except:
         context['disciplina_ofertada'] = {
             'values': None,
             'colunas': None,
             'form': form_disciplina_ofertada,
+            'titulo': 'Disciplina Ofertada',
+            'tabela': 'disciplina_ofertada'
         }
 
     try:
@@ -57,12 +65,16 @@ def lista_tabelas(request):
             'values': unidade_federativa.values(),
             'colunas': unidade_federativa.values()[0].keys(),
             'form': form_unidade_federativa,
+            'titulo': 'Unidade Federativa',
+            'tabela': 'unidade_federativa'
         }
     except:
         context['unidade_federativa'] = {
             'values': None,
             'colunas': None,
             'form': form_unidade_federativa,
+            'titulo': 'Unidade Federativa',
+            'tabela': 'unidade_federativa'
         }
 
     try:
@@ -71,12 +83,16 @@ def lista_tabelas(request):
             'values': sexo.values(),
             'colunas': sexo.values()[0].keys(),
             'form': form_sexo,
+            'titulo': 'Sexo',
+            'tabela': 'sexo'
         }
     except:
         context['sexo'] = {
             'values': None,
             'colunas': None,
             'form': form_sexo,
+            'titulo': 'Sexo',
+            'tabela': 'sexo'
         }
 
     try:
@@ -85,12 +101,16 @@ def lista_tabelas(request):
             'values': etnia.values(),
             'colunas': etnia.values()[0].keys(),
             'form': form_etnia,
+            'titulo': 'Etnia',
+            'tabela': 'etnia'
         }
     except:
         context['etnia'] = {
             'values': None,
             'colunas': None,
             'form': form_etnia,
+            'titulo': 'Etnia',
+            'tabela': 'etnia'
         }
 
     try:
@@ -99,12 +119,16 @@ def lista_tabelas(request):
             'values': estado_civil.values(),
             'colunas': estado_civil.values()[0].keys(),
             'form': form_estado_civil,
+            'titulo': 'Estado Civil',
+            'tabela': 'estado_civil'
         }
     except:
         context['estado_civil'] = {
             'values': None,
             'colunas': None,
             'form': form_estado_civil,
+            'titulo': 'Estado Civil',
+            'tabela': 'estado_civil'
         }
 
 
@@ -114,12 +138,16 @@ def lista_tabelas(request):
             'values': vinculo.values(),
             'colunas': vinculo.values()[0].keys(),
             'form': form_vinculo,
+            'titulo': 'Vínculo',
+            'tabela': 'vinculo'
         }
     except:
         context['vinculo'] = {
             'values': None,
             'colunas': None,
             'form': form_vinculo,
+            'titulo': 'Vínculo',
+            'tabela': 'vinculo'
         }
 
     try:
@@ -128,12 +156,16 @@ def lista_tabelas(request):
             'values': status.values(),
             'colunas': status.values()[0].keys(),
             'form': form_status,
+            'titulo': 'Status',
+            'tabela': 'status'
         }
     except:
         context['status'] = {
             'values': None,
             'colunas': None,
             'form': form_status,
+            'titulo': 'Status',
+            'tabela': 'status'
         }
 
     try:
@@ -142,12 +174,16 @@ def lista_tabelas(request):
             'values': linha_pesquisa.values(),
             'colunas': linha_pesquisa.values()[0].keys(),
             'form': form_linha_pesquisa,
+            'titulo': 'Linha de Pesquisa',
+            'tabela': 'linha_pesquisa'
         }
     except:
         context['linha_pesquisa'] = {
             'values': None,
             'colunas': None,
             'form': form_linha_pesquisa,
+            'titulo': 'Linha de Pesquisa',
+            'tabela': 'linha_pesquisa'
         }
 
     try:
@@ -156,12 +192,17 @@ def lista_tabelas(request):
             'values': instituicao.values(),
             'colunas': instituicao.values()[0].keys(),
             'form': form_instituicao,
+            'titulo': 'Instituição',
+            'tabela': 'instituicao'
+            
         }
     except:
         context['instituicao'] = {
             'values': None,
             'colunas': None,
             'form': form_instituicao,
+            'titulo': 'Instituição',
+            'tabela': 'instituicao'
         }
 
     try:
@@ -170,26 +211,16 @@ def lista_tabelas(request):
             'values': colegio.values(),
             'colunas': colegio.values()[0].keys(),
             'form': form_colegio,
+            'titulo': 'Colégio',
+            'tabela': 'colegio'
         }
     except:
         context['colegio'] = {
             'values': None,
             'colunas': None,
             'form': form_colegio,
-        }
-
-    try:
-        colegio = Colegio.objects.all()
-        context['colegio'] = {
-            'values': colegio.values(),
-            'colunas': colegio.values()[0].keys(),
-            'form': form_colegio,
-        }
-    except:
-        context['colegio'] = {
-            'values': None,
-            'colunas': None,
-            'form': form_colegio,
+            'titulo': 'Colégio',
+            'tabela': 'colegio'
         }
 
     try:
@@ -198,12 +229,16 @@ def lista_tabelas(request):
             'values': instituicao_residencia.values(),
             'colunas': instituicao_residencia.values()[0].keys(),
             'form': form_instituicao_residencia,
+            'titulo': 'Instuição de Residência',
+            'tabela': 'instituicao_residencia'
         }
     except:
         context['instituicao_residencia'] = {
             'values': None,
             'colunas': None,
             'form': form_instituicao_residencia,
+            'titulo': 'Instuição de Residência',
+            'tabela': 'instituicao_residencia'
         }
 
     try:
@@ -212,12 +247,16 @@ def lista_tabelas(request):
             'values': grau.values(),
             'colunas': grau.values()[0].keys(),
             'form': form_grau,
+            'titulo': 'Grau',
+            'tabela': 'grau'
         }
     except:
         context['grau'] = {
             'values': None,
             'colunas': None,
             'form': form_grau,
+            'titulo': 'Grau',
+            'tabela': 'grau'
         }
 
 

@@ -1,14 +1,25 @@
-from django.forms import ModelForm, CharField, TextInput, DateField, NumberInput, ChoiceField
+from django.forms import ModelForm, CharField, TextInput, DateField, NumberInput, ChoiceField, ValidationError
 from .models import Aluno, Graduacao, Endereco, Trabalho, Residencia, Titulacao, Afastamento, EnsinoMedio
 
 class AlunoForm(ModelForm):
     dt_nascimento = DateField(label="Data de Nascimento:", widget=NumberInput(attrs={'type':'date'}))
     cpf = CharField(max_length="14", label="CPF:", required=False, widget=TextInput(attrs={"data-mask": "000.000.000-00"}))
+
+    def clean_portador_deficiencia_qual(self):
+        cleaned_data = self.cleaned_data
+
+        portador_deficiencia_qual = cleaned_data.get("portador_deficiencia_qual")
+
+        if not portador_deficiencia_qual and cleaned_data.get("portador_deficiencia"):
+            raise ValidationError('Especifique a deficiência.')
+
+        return cleaned_data['portador_deficiencia_qual']
     class Meta:
         model = Aluno
         fields = ['nome', 'cpf', 'nome_pai', 'nome_mae', 'naturalidade', 
                   'nacionalidade', 'dt_nascimento', 'estado_civil', 'identidade',
-                 'identidade_uf', 'identidade_orgao', 'sexo', 'email', 'etnia','foto']
+                 'identidade_uf', 'identidade_orgao', 'sexo', 'email', 'etnia',
+                 'portador_deficiencia','portador_deficiencia_qual', 'foto']
 
 class EnderecoForm(ModelForm):
     cep = CharField(label="CEP:", required=False, widget=TextInput(attrs={"data-mask": "00000-000"}))

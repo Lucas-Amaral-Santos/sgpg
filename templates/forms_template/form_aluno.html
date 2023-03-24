@@ -32,17 +32,26 @@
     </div>
 </div>
 
-    <div class="row">
-        <div class="col">
-            {{form_aluno.identidade|as_crispy_field}}
-        </div>
-        <div class="col">  
-            {{form_aluno.identidade_uf|as_crispy_field}}
-        </div>
-        <div class="col">  
-            {{form_aluno.identidade_orgao|as_crispy_field}}
-        </div>
+<div class="row">
+    <div class="col">
+        {{form_aluno.identidade|as_crispy_field}}
     </div>
+    <div class="col">  
+        {{form_aluno.identidade_uf|as_crispy_field}}
+    </div>
+    <div class="col">  
+        {{form_aluno.identidade_orgao|as_crispy_field}}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-10">
+        {{form_aluno.portador_deficiencia|as_crispy_field}}
+    </div>
+    <div class="col-8">  
+        {{form_aluno.portador_deficiencia_qual|as_crispy_field}}
+    </div>
+</div>
 
 
 {{form_aluno.email|as_crispy_field}}

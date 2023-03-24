@@ -128,6 +128,7 @@ def cadastra_matricula(request):
                 numero = form.cleaned_data['numero'],
                 probatorio = form.cleaned_data['probatorio'],
                 requisita_bolsa = form.cleaned_data['requisita_bolsa'],
+                grau = form.cleaned_data['grau'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
             try:
@@ -324,7 +325,6 @@ def cadastra_trabalho_final(request, matricula):
         if(trabalho_final_form.is_valid() and linha_pesquisa_form.is_valid()):
             novo_trabalho_final = TrabalhoFinal.objects.create(
                 titulo = trabalho_final_form.cleaned_data['titulo'],
-                data = trabalho_final_form.cleaned_data['data'],
                 resumo = trabalho_final_form.cleaned_data['resumo'],
                 orientador = trabalho_final_form.cleaned_data['orientador'],
                 matricula = matricula,
@@ -396,7 +396,6 @@ def cadastra_trabalho_probatorio(request, probatorio):
         if(trabalho_final_form.is_valid() and linha_pesquisa_form.is_valid()):
             novo_trabalho_final = TrabalhoFinal.objects.create(
                 titulo = trabalho_final_form.cleaned_data['titulo'],
-                data = trabalho_final_form.cleaned_data['data'],
                 resumo = trabalho_final_form.cleaned_data['resumo'],
                 orientador = trabalho_final_form.cleaned_data['orientador'],
                 probatorio = probatorio,

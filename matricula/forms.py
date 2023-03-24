@@ -1,17 +1,41 @@
 from django import forms
 from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio, VersaoFinal, Nota
+import datetime
+
+class ProbatorioMatriculaForm(forms.ModelForm):
+
+    def __init__(self, matricula,  *args, **kwargs):
+        super(ProbatorioMatriculaForm, self).__init__(*args, **kwargs)
+        self.fields['grau'] = Matricula.objects.get(slug=matricula).probatorio.grau
+        self.fields['probatorio'] = Matricula.objects.get(slug=matricula).probatorio
+
+    class Meta:
+        model = Matricula
+        fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa']
+
 
 class MatriculaForm(forms.ModelForm):
 
     class Meta:
         model = Matricula
-        fields = ['numero', 'probatorio', 'requisita_bolsa']
+        fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa']
 
 class ProbatorioForm(forms.ModelForm):
-    data_inscricao = forms.DateField(required=False, label="Data de Inscrição:", widget=forms.NumberInput(attrs={'type':'date'}))
+    data_inscricao = forms.DateField(label="Data de Inscrição:", widget=forms.NumberInput(attrs={'type':'date'}))
+
     class Meta:
         model = Probatorio
         fields = ['data_inscricao', 'aluno', 'grau']
+
+class AlunoProbatorioForm(forms.ModelForm):
+    data_inscricao = forms.DateField(label="Data de Inscrição:", widget=forms.NumberInput(attrs={'type':'date'}))
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    
+    class Meta:
+        model = Probatorio
+        fields = ['data_inscricao', 'grau']
 
 class BolsaForm(forms.ModelForm):
 
@@ -41,7 +65,7 @@ class TrabalhoFinalForm(forms.ModelForm):
 
     class Meta:
         model = TrabalhoFinal
-        fields = ['titulo', 'data', 'resumo', 'orientador']
+        fields = ['titulo', 'resumo', 'orientador']
 
 class VersaoFinalForm(forms.ModelForm):
     class Meta:

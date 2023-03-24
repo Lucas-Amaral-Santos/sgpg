@@ -40,6 +40,7 @@ class InstituicaoForm(ModelForm):
     class Meta:
         model = Instituicao
         fields = '__all__'
+        verbose_name = 'Instituição'
 
 class ColegioForm(ModelForm):
     class Meta:

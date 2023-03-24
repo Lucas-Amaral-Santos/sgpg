@@ -50,6 +50,9 @@ Cadastra Aluno
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#id_titulacao">Titulação</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#id_probatorio">Probatório</a>
+                </li>
             </ul>
 
             {% if form_aluno.errors or form_endereco.errors or form_graduacao.errors or form_ensino_medio.errors or form_trabalho.errors or form_endereco_trabalho.errors or form_residencia.errors or form_titulacao.errors %}
@@ -175,6 +178,21 @@ Cadastra Aluno
                             {% endfor %}
                         </div>
                         {% endif %}
+                        {% if form_probatorio.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;"><u>Probatório</u></p>
+                            {% for field in form_probatorio %}
+                            <tr>
+                                {% if field.errors %}
+                                <td>{{ field.label_tag }}</td>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endif %}
@@ -223,6 +241,10 @@ Cadastra Aluno
                     <div id="id_titulacao" class="tab-pane container pt-4">
                         {% include 'forms_template/form_titulacao.html' with form_titulacao=form_titulacao %}
                         {% comment %} {{form_titulacao|crispy}} {% endcomment %}
+                    </div>
+                    <div id="id_probatorio" class="tab-pane container pt-4">
+                        {% comment %} {% include 'forms_template/form_titulacao.html' with form_titulacao=form_titulacao %} {% endcomment %}
+                        {{form_probatorio|crispy}}
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">

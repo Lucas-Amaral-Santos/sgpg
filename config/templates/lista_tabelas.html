@@ -17,8 +17,8 @@ Tabelas Auxiliares
         <div class="d-flex gap-1">
             <div class="border p-2 w-25">
                 <ul class="nav nav-pills nav-stacked flex-row gap-1 justify-content-center"> 
-                    {% for t in context %}
-                    <li><a href="#{{t}}" class="btn btn-primary text-capitalize" style="width:300px;" data-toggle="pill">{{t}}</a></li>    
+                    {% for k,v in context.items %}
+                    <li><a href="#{{v.tabela}}" class="btn btn-primary" style="width:300px;" data-toggle="pill">{{v.titulo}}</a></li>    
                     {% endfor %}
                 </ul>
             </div>
@@ -26,29 +26,13 @@ Tabelas Auxiliares
             <div class="float-right w-100 border p-2">
                 <div class="tab-content">
 
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo='Disciplina' tabela='disciplina' objeto=context.disciplina active='active' %}
+                    {% for k,v in context.items %}
+                        {% if forloop.counter == 1 %}
+                            {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo=v.titulo tabela=v.tabela objeto=v active='active' %}    
+                        {% endif %}
+                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo=v.titulo tabela=v.tabela objeto=v %}
+                    {% endfor %}
 
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_disciplina_ofertada titulo='Disciplina Ofertada' tabela='disciplina_ofertada' objeto=context.disciplina_ofertada %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_unidade_federativa titulo='Unidade Federativa' tabela='unidade_federativa' objeto=context.unidade_federativa %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_sexo titulo='Unidade Federativa' tabela='sexo' objeto=context.sexo %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_estado_civil titulo='Unidade Federativa' tabela='estado_civil' objeto=context.estado_civil %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_etnia titulo='Unidade Federativa' tabela='etnia' objeto=context.etnia %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_vinculo titulo='Unidade Federativa' tabela='vinculo' objeto=context.vinculo %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_status titulo='Status' tabela='status' objeto=context.status %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_linha_pesquisa titulo='Linha de Pesquisa' tabela='linha_pesquisa' objeto=context.linha_pesquisa %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_instituicao titulo='Instituição' tabela='instituicao' objeto=context.instituicao %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_colegio titulo='Colégio' tabela='colegio' objeto=context.colegio %}
-
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with form=form_grau titulo='Colégio' tabela='grau' objeto=context.grau %}
                 </div>
             </div>
         </div>

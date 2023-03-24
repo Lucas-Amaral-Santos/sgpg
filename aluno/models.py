@@ -57,13 +57,6 @@ class Endereco(models.Model):
         return str(self.id)
 
 class Trabalho(models.Model):
-    VINCULO_CHOICES = (
-        ("Estatutário", "Estatutário"),
-        ("CLT", "CLT"),
-        ("Autônomo", "Autônomo"),
-        ("Outros", "Outros"),
-    )
-
     trabalho = models.CharField(max_length=200, null=True, blank=True, verbose_name='Trabalho:')
     tipo_vinculo = models.ForeignKey(Vinculo, on_delete=models.DO_NOTHING, verbose_name='Tipo de Vínculo:', null=True, blank=True)
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING, null=True, blank=True) 
@@ -85,7 +78,7 @@ class Graduacao(models.Model):
     iniciacao_cientifica = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.instituicao
+        return str(self.instituicao)
 
 class Status(models.Model):
     status = models.ForeignKey(StatusOptions, on_delete=models.CASCADE)
@@ -108,6 +101,8 @@ class Aluno(models.Model):
     sexo = models.ForeignKey(Sexo, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Sexo:", related_name="aluno_sexo")
     email = models.EmailField(null=True, blank=True, verbose_name="Email:")
     etnia = models.ForeignKey(Etnia, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Etnia:")
+    portador_deficiencia = models.BooleanField()
+    portador_deficiencia_qual = models.CharField(max_length=200, verbose_name="Qual deficiência:*", blank=True, null=True)
     situacao = models.CharField(max_length=50, null=True, blank=True, verbose_name="Situação:")
     foto = models.ImageField(null=True, blank=True, upload_to='img')
 

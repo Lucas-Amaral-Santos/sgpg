@@ -30,14 +30,12 @@ class ProfessorForm(ModelForm):
     def clean_cpf(self):
         cleaned_data = self.cleaned_data
 
-        estrangeiro = cleaned_data.get("estrangeiro")
         cpf = cleaned_data.get("cpf")
 
-        if not cpf and not estrangeiro:
+        if not cpf and not cleaned_data.get("estrangeiro"):
             raise ValidationError('Informar CPF. Não necessário em caso de profesoor estrangeiro.')
 
-
-        return cleaned_data
+        return cleaned_data['cpf']
 
     class Meta:
         model = Professor

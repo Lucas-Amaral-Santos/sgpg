@@ -2,6 +2,20 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
 
+
+
+$("#div_id_portador_deficiencia_qual").hide();
+$("#id_portador_deficiencia").click(function() {
+  if($(this).prop('checked')) {
+    console.log("Checked");
+    $("#div_id_portador_deficiencia_qual").fadeIn(700);
+  } else {
+    $("#div_id_portador_deficiencia_qual").fadeOut(700);
+  }
+});
+
+
+
 $(".aluno #id_cep").focusout(function(){
   //Início do Comando AJAX
   $.ajax({
