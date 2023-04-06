@@ -1,22 +1,26 @@
 import django_filters
 from django import forms
 from aluno.models import Aluno
-from matricula.models import Matricula
+from matricula.models import Matricula, Probatorio
 from config.models import Sexo, EstadoCivil, Etnia, StatusOptions
 
 class AlunoFilter(django_filters.FilterSet):
-    # nome = django_filters.CharFilter(lookup_expr='icontains')
-    # cpf = django_filters.CharFilter(lookup_expr='icontains')
-    # nome_pai = django_filters.CharFilter(lookup_expr='icontains')
+    nome = django_filters.CharFilter(lookup_expr='icontains')
+    sexo = django_filters.ChoiceFilter(choices=[], label="Sexo:")
+    estado_civil = django_filters.ChoiceFilter(choices=[], label="Estado Civil:")
+    etnia = django_filters.ChoiceFilter(choices=[], label="Etnia:")    
     status__status = django_filters.ChoiceFilter(choices=[], label="Status:")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.filters['sexo'].extra['choices'] = [(sexo.id, sexo) for sexo in Sexo.objects.all()]
+        self.filters['estado_civil'].extra['choices'] = [(estado_civil.id, estado_civil) for estado_civil in EstadoCivil.objects.all()]
+        self.filters['etnia'].extra['choices'] = [(etnia.id, etnia) for etnia in Etnia.objects.all()]
         self.filters['status__status'].extra['choices'] = [(status.id, status) for status in StatusOptions.objects.all()]
 
     class Meta:
         models = Aluno
-        fields = ['status__status']
+        fields = ['nome', 'sexo', 'estado_civil', 'etnia', 'status__status']
 
 
 class MatriculaFilter(django_filters.FilterSet):
@@ -36,3 +40,10 @@ class MatriculaFilter(django_filters.FilterSet):
     class Meta:
         models = Matricula
         fields = ['probatorio__aluno__sexo', 'probatorio__aluno__estado_civil', 'probatorio__aluno__etnia', 'probatorio__probatorio', 'probatorio__aluno__status__status']
+
+class ProbatorioFilter(django_filters.FilterSet):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    class Meta:
+        models = Probatorio

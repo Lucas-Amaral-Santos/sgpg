@@ -62,8 +62,12 @@ Relatórios
         <!-- Aba de Informações pessoais -->
         <div id="id_dashboard" class="tab-pane container active">
 
-            <p>Alunos matriculados</p>
-            <hr>
+            <div class="row text-center">
+                <div class="col-12 bg-light rounded-2s">
+                    <h3 class="display-5 text-center">{{alunos|length}}</h3>                    
+                    <p class="display-10 text-center">ALUNOS</p>                    
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-6">
@@ -121,29 +125,90 @@ Relatórios
 
 
             <div class="col">
-                <table class="table"> 
-                    <thead>
+                <table id="filtra_alunos" class="table text-center"> 
+                    <tr class="bg-light">
+                        <th colspan="18" class="border">Informações pessoais</th>
+                        <th colspan="4" class="border">Probatório</th>
+                        <th colspan="11" class="border">Matrícula</th>
+                    <tr>
                       <tr>
-                        <th scope="col">Matrícula</th>
                         <th scope="col">Nome</th>
                         <th scope="col">CPF</th>
-                        <th scope="col">Nota do Probatório</th>
-                        <th scope="col">Curso</th>
+                        <th scope="col">Sexo</th>
+                        <th scope="col">Nome do pai</th>
+                        <th scope="col">Nome da mãe</th>
+                        <th scope="col">Naturalidade</th>
+                        <th scope="col">Nacionalidade</th>
+                        <th scope="col">Data de Nascimento</th>
+                        <th scope="col">Estado Civil</th>
+                        <th scope="col">Identidade</th>
+                        <th scope="col">ID-UF</th>
+                        <th scope="col">ID-Orgão</th>
+                        <th scope="col">Sexo</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Etnia</th>
+                        <th scope="col">Portador de Deficiência</th>
+                        <th scope="col">Deficiência</th>
                         <th scope="col">Status</th>
+                        {% comment %} Probatórtio {% endcomment %}
+                        <th scope="col" class="border-start">Probatório</th>
+                        <th scope="col">Data de Inscrição</th>
+                        <th scope="col">Linha de Pesquisa</th>
+                        <th scope="col">Grau</th>
+                        {% comment %} Matrícula {% endcomment %}
+                        <th scope="col" class="border-start">Nº Matrícula</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Requisita Bolsa</th>
+                        <th scope="col">Linha de Pesquisa</th>
+                        <th scope="col">Grau</th>
+                        <th scope="col">Trabalho Final</th>
+                        <th scope="col">Orientador</th>
+                        <th scope="col">Nota</th>
+                        <th scope="col">Versão Final</th>
+                        <th scope="col">Data do diploma:</th>
+                        <th scope="col">Diploma</th>
                       </tr>
-                    </thead>  
-                    {% for m in alunos %}
-                    <a href="">
-                    <tr>
-                        <td>{{m.numero}}</td>
-                        <td>{{m.probatorio.aluno.nome}}</td>
-                        <td>{{m.probatorio.aluno.cpf}}</td>
-                        <td>{{m.probatorio.nota}}</td>
-                        <td>{{m.curso}}</td>
-                        <td>{{m.status}}</td>
-                    </tr>
-                    </a>
-              
+                    {% for a in filter.qs %}                        
+                        <a href="">
+                        <tr>
+                            <td>{{a.nome}}</td>
+                            <td>{{a.cpf}}</td>
+                            <td>{{a.sexo}}</td>
+                            <td>{{a.nome_pai}}</td>
+                            <td>{{a.nome_mae}}</td>
+                            <td>{{a.naturalidade}}</td>
+                            <td>{{a.nacionalidade}}</td>
+                            <td>{{a.dt_nascimento|date:"d/M/Y"}}</td>
+                            <td>{{a.estado_civil}}</td>
+                            <td>{{a.identidade}}</td>
+                            <td>{{a.identidade_uf}}</td>
+                            <td>{{a.identidade_orgao}}</td>
+                            <td>{{a.sexo}}</td>
+                            <td>{{a.email}}</td>
+                            <td>{{a.etnia}}</td>
+                            <td>{{a.portador_deficiencia}}</td>
+                            <td>{{a.portador_deficiencia_qual}}</td>
+                            <td>{{a.status}}</td>
+
+                            <td class="border-start">{{a.probatorio_aluno.first.probatorio}}</td>
+                            <td>{{a.probatorio_aluno.first.data_inscricao}}</td>
+                            <td>{{a.probatorio_aluno.first.linha_pesquisa}}</td>
+                            <td>{{a.probatorio_aluno.first.grau}}</td>
+
+                            <td class="border-start">{{a.probatorio_aluno.first.matricula_probatorio.first.numero}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.curso}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.requisita_bolsa}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.linha_pesquisa}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.grau}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.matricula_trabalho_final.titulo}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.matricula_trabalho_final.orientador}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.matricula_trabalho_final.nota}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.matricula_trabalho_final.versao_final}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.matricula_trabalho_final.dt_diploma}}</td>
+                            <td>{{a.probatorio_aluno.first.matricula_probatorio.first.matricula_trabalho_final.diploma}}</td>
+                            
+                        </tr>
+                        </a>
                     {% endfor %}
                   </table>
                 </div>
@@ -164,7 +229,7 @@ Relatórios
         datasets: [
         {% for sexo in grafico_sexo  %}
         {
-            label: '{{sexo.probatorio__aluno__sexo__sexo}}',
+            label: '{{sexo.sexo__sexo}}',
             data: [{{sexo.nviews}},],
             backgroundColor: [
                 '{{sexo.cor}}'+33,
@@ -194,7 +259,7 @@ Relatórios
             plugins: {
                 title: {
                     display: true,
-                    text: 'Sexo de alunos matrículados'
+                    text: 'Sexo'
                 }
             }
         }
@@ -251,7 +316,7 @@ Relatórios
     const data_estado_civil = {
         labels: [
             {% for ec in grafico_estado_civil  %}
-            '{{ec.probatorio__aluno__estado_civil__estado_civil}}',
+            '{{ec.estado_civil__estado_civil}}',
             {% endfor %}
         ],
         datasets: [
@@ -283,7 +348,7 @@ Relatórios
             plugins: {
                 title: {
                     display: true,
-                    text: 'Estado civil de alunos matrículados'
+                    text: 'Estado civil'
                 }
             }
         }
@@ -300,7 +365,7 @@ Relatórios
         datasets: [
         {% for etnia in grafico_etnia  %}
         {
-            label: ['{{etnia.probatorio__aluno__etnia__etnia}}',],
+            label: ['{{etnia.etnia__etnia}}',],
             data: ["{{etnia.nviews}}",],
             backgroundColor: [
                 '{{etnia.cor}}'+33,
@@ -347,7 +412,7 @@ Relatórios
         datasets: [
         {% for s in grafico_status %}
         {
-            label: ['{{s.probatorio__aluno__status__status__status_options}}'],
+            label: ['{{s.status__status__status_options}}'],
             data: [{{s.nviews}},],
             backgroundColor: [
                 '{{s.cor}}'+33,

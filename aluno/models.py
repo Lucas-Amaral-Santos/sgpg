@@ -98,12 +98,11 @@ class Aluno(models.Model):
     identidade = models.CharField(max_length=12, verbose_name="Identidade:")
     identidade_uf = models.CharField(max_length=2, verbose_name="UF:")
     identidade_orgao = models.CharField(max_length=100, verbose_name="Orgão expedidor:")
-    sexo = models.ForeignKey(Sexo, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Sexo:", related_name="aluno_sexo")
+    sexo = models.ForeignKey(Sexo, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Sexo:")
     email = models.EmailField(null=True, blank=True, verbose_name="Email:")
     etnia = models.ForeignKey(Etnia, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Etnia:")
     portador_deficiencia = models.BooleanField()
     portador_deficiencia_qual = models.CharField(max_length=200, verbose_name="Qual deficiência:*", blank=True, null=True)
-    situacao = models.CharField(max_length=50, null=True, blank=True, verbose_name="Situação:")
     foto = models.ImageField(null=True, blank=True, upload_to='img')
 
     status = models.OneToOneField(Status, on_delete=models.CASCADE, related_name='aluno_status')

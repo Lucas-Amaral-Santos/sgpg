@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
 from config.models import LinhaPesquisa, Grau
-import datetime
 
 class Curso(models.Model):
 

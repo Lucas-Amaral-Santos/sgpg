@@ -60,7 +60,7 @@ Cadastra Aluno
                     <div class="row">
                         {% if form_aluno.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;"><u>Aluno</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Aluno</u></p>
                             {% for field in form_aluno %}
                             <tr>
                                 {% if field.errors %}
@@ -75,7 +75,7 @@ Cadastra Aluno
                         {% endif %}                        
                         {% if form_endereco.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;"><u>Endereço</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Endereço</u></p>
                             {% for field in form_endereco  %}
                             <tr>
                                 {% if field.errors %}
@@ -90,7 +90,7 @@ Cadastra Aluno
                         {% endif %}
                         {% if form_graduacao.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;"><u>Graduação</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Graduação</u></p>
                             {% for field in form_graduacao %}
                             <tr>
                                 {% if field.errors %}
@@ -105,7 +105,7 @@ Cadastra Aluno
                         {% endif %}
                         {% if form_ensino_medio.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;"><u>Ensino Médio</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Ensino Médio</u></p>
                             {% for field in form_ensino_medio %}
                             <tr>
                                 {% if field.errors %}
@@ -120,7 +120,7 @@ Cadastra Aluno
                         {% endif %}
                         {% if form_trabalho.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;"><u>Trabalho</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Trabalho</u></p>
                             {% for field in form_trabalho %}
                             <tr>
                                 {% if field.errors %}
@@ -135,7 +135,7 @@ Cadastra Aluno
                         {% endif %}
                         {% if form_endereco_trabalho.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;"><u>Endereço do Trabalho</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Endereço do Trabalho</u></p>
                             {% for field in form_endereco_trabalho %}
                             <tr>
                                 {% if field.errors %}
@@ -150,7 +150,7 @@ Cadastra Aluno
                         {% endif %}
                         {% if form_residencia.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;"><u>Residência</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Residência</u></p>
                             {% for field in form_residencia %}
                             <tr>
                                 {% if field.errors %}
@@ -165,7 +165,7 @@ Cadastra Aluno
                         {% endif %}
                         {% if form_titulacao.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;"><u>Titulação</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Titulação</u></p>
                             {% for field in form_titulacao %}
                             <tr>
                                 {% if field.errors %}
@@ -180,7 +180,7 @@ Cadastra Aluno
                         {% endif %}
                         {% if form_probatorio.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;"><u>Probatório</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Probatório</u></p>
                             {% for field in form_probatorio %}
                             <tr>
                                 {% if field.errors %}
@@ -202,17 +202,17 @@ Cadastra Aluno
             <form action="" method="POST" class="">
                 {% csrf_token %}
 
-                
-
 
                 <div class="tab-content">
                     <div id="id_info" class="tab-pane container pt-4 active">
                         {% include 'forms_template/form_aluno.html' with form_aluno=form_aluno %}
                         {% comment %} {{form_aluno|crispy}} {% endcomment %}
+                        
                     </div>
                     <div id="id_endereco" class="tab-pane container pt-4">
                         {% include 'forms_template/form_endereco.html' with form_endereco=form_endereco pagina='aluno' %}
                         {% comment %} {{form_endereco|crispy}} {% endcomment %}
+                        
                     </div>
                     <div id="id_graduacao" class="tab-pane container pt-4">
                         <h5 class="mb-4">Ensino Superior</h5>
@@ -224,6 +224,7 @@ Cadastra Aluno
                         <hr>
                         {% include 'forms_template/form_ensino_medio.html' with form_ensino_medio=form_ensino_medio %}
                         {% comment %} {{form_ensino_medio|crispy}} {% endcomment %}
+                        
                     </div>
                     <div id="id_trabalho" class="tab-pane container pt-4">
                         {% include 'forms_template/form_trabalho.html' with form_trabalho=form_trabalho %}
@@ -233,14 +234,17 @@ Cadastra Aluno
                         {% include 'forms_template/form_endereco.html' with form_endereco=form_endereco_trabalho pagina='endereco_trabalho' %}
 
                         {% comment %} {{form_endereco_trabalho|crispy}} {% endcomment %}
+                        
                     </div>
                     <div id="id_residencia" class="tab-pane container pt-4">
                         {% include 'forms_template/form_residencia.html' with form_residencia=form_residencia %}
                         {% comment %} {{form_residencia|crispy}} {% endcomment %}
+                        
                     </div>
                     <div id="id_titulacao" class="tab-pane container pt-4">
                         {% include 'forms_template/form_titulacao.html' with form_titulacao=form_titulacao %}
                         {% comment %} {{form_titulacao|crispy}} {% endcomment %}
+                        
                     </div>
                     <div id="id_probatorio" class="tab-pane container pt-4">
                         {% comment %} {% include 'forms_template/form_titulacao.html' with form_titulacao=form_titulacao %} {% endcomment %}
@@ -251,12 +255,30 @@ Cadastra Aluno
                     {% if pagina == 'Atualizar Aluno' %}
                     <a class="btn btn-danger m-4" href="{% url 'aluno:detalhes_aluno' aluno.slug %}">Cancelar</a>
                     {% endif %}
-                    <button class="btn btn-primary m-4" type="submit" formnovalidate="formnovalidate">Salvar</button>
+                    <input class="btn btn-primary m-4" type="submit" formnovalidate="formnovalidate" value="Salvar"/>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    {% comment %} $(document).ready(function (){
+        validate();
+        $('#id_nome, #id_email, #id_telefone1').change(validate);
+    });
+    
+    function validate(){
+        if ($('#id_nome').val().length > 0 &&
+            $('#id_email').val().length > 0 &&
+            $('#id_telefone1').val().length > 0) {
+            $("input[type=submit]").prop("disabled", false);
+        }
+        else {
+            $("input[type=submit]").prop("disabled", true);
+        }
+    } {% endcomment %}
+</script>
 
 
 
