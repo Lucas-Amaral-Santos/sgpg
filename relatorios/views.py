@@ -12,6 +12,7 @@ from django.db.models import Count
 def filtra_aluno(request):    
     f = AlunoFilter(request.GET, queryset=Aluno.objects.all())
 
+
     grafico_sexo = f.qs.values("sexo__sexo").annotate(nviews=Count('sexo'))
     print(grafico_sexo)
     for i in grafico_sexo:

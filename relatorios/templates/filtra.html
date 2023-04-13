@@ -34,12 +34,37 @@ Relatórios
                 <div class="modal-body">
 
                     <form method="GET">
-                        {{ filter.form|crispy }}
+                        <div class="row gap-3">
+                        {% for field in filter.form %}
+                        <div class="col-6">
+                            {% if field.field.choices  %}
+                            <div class="row">
+                                {{field.label_tag}}
+                                    {% for value, text in field.field.choices %}
+                                    <div class="col-3">
+                                        <div class="ui slider checkbox">
+                                            <input class='form-check-input' id="id_{{ field.name }}" name="{{ field.name }}" type="checkbox" value="{{ value }}">
+                                            <label for="id_{{ field.name }}">{{ text }}</label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}                                
+                            </div>
+                            {% else %}
+                                {{field|as_crispy_field}}
+                            {% endif %}
+                        </div>
+                        
+                        {% endfor %}
+
+            
+
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Filtrar</button>
                         </div>
                         
+                    </div>
                     </form>
 
 
@@ -48,7 +73,16 @@ Relatórios
             </div>
         </div>
     </div>
-
+    <div>
+        {% for v  in request.GET %}
+        <div class="row">
+            <div class="col-12">
+                {{v}}
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link nav-aluno active" data-toggle="tab" href="#id_dashboard"><i>Dashboard</i></a>
