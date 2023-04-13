@@ -6,10 +6,10 @@ from config.models import Sexo, EstadoCivil, Etnia, StatusOptions
 
 class AlunoFilter(django_filters.FilterSet):
     nome = django_filters.CharFilter(lookup_expr='icontains')
-    sexo = django_filters.ChoiceFilter(choices=[], label="Sexo:")
-    estado_civil = django_filters.ChoiceFilter(choices=[], label="Estado Civil:")
-    etnia = django_filters.ChoiceFilter(choices=[], label="Etnia:")    
-    status__status = django_filters.ChoiceFilter(choices=[], label="Status:")
+    sexo = django_filters.MultipleChoiceFilter(choices=[], widget=forms.CheckboxSelectMultiple, label="Sexo:")
+    estado_civil = django_filters.MultipleChoiceFilter(choices=[], widget=forms.CheckboxSelectMultiple, label="Estado Civil:")
+    etnia = django_filters.MultipleChoiceFilter(choices=[], widget=forms.CheckboxSelectMultiple, label="Etnia:")    
+    status__status = django_filters.MultipleChoiceFilter(choices=[], widget=forms.CheckboxSelectMultiple, label="Status:")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
