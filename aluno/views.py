@@ -20,7 +20,7 @@ def cadastra_aluno(request, aluno=None):
     form_endereco = EnderecoForm()
     form_graduacao = GraduacaoForm()
     form_ensino_medio = EnsinoMedioForm()
-    form_trabalho = TrabalhoForm()
+    form_trabalho = TrabalhoForm(prefix="trabalho")
     form_endereco_trabalho = EnderecoTrabalhoForm(prefix="trabalho")
     form_residencia = ResidenciaForm(initial={'residencia_ano_inicio': datetime.today().year, 'residencia_ano_fim': datetime.today().year})
     form_titulacao = TitulacaoForm()
