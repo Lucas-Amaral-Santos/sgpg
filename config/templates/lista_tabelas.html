@@ -30,7 +30,7 @@ Tabelas Auxiliares
                         {% if forloop.counter == 1 %}
                             {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo=v.titulo tabela=v.tabela objeto=v active='active' %}    
                         {% endif %}
-                    {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo=v.titulo tabela=v.tabela objeto=v %}
+                        {% include 'tabelas_auxiliares/cadastra_disciplina.html' with titulo=v.titulo tabela=v.tabela objeto=v %}
                     {% endfor %}
 
                 </div>
