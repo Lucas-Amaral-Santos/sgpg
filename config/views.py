@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
-from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions, LinhaPesquisa, Instituicao, Colegio, InstituicaoResidencia, Grau
-from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm, LinhaPesquisaForm, InstituicaoForm, ColegioForm, InstituicaoResidenciaForm, GrauForm
+from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions, LinhaPesquisa, Instituicao, Colegio, InstituicaoResidencia, Grau, TipoDocente
+from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm, LinhaPesquisaForm, InstituicaoForm, ColegioForm, InstituicaoResidenciaForm, GrauForm, TipoDocenteForm
 from django.contrib import messages
 
 
@@ -20,6 +20,8 @@ def lista_tabelas(request):
     form_colegio = ColegioForm()
     form_instituicao_residencia = InstituicaoResidenciaForm()
     form_grau = GrauForm()
+    form_tipo_docente = TipoDocenteForm()
+
 
     context = {}
 
@@ -259,6 +261,24 @@ def lista_tabelas(request):
             'tabela': 'grau'
         }
 
+    try:
+        tipo_docente = TipoDocente.objects.all()
+        context['tipo_docente'] = {
+            'values': tipo_docente.values(),
+            'colunas': tipo_docente.values()[0].keys(),
+            'form': form_tipo_docente,
+            'titulo': 'Tipo de Docente',
+            'tabela': 'tipo_docente'
+        }
+    except:
+        context['tipo_docente'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_tipo_docente,
+            'titulo': 'Tipo de Docente',
+            'tabela': 'tipo_docente'
+        }
+
 
     if(request.method == 'POST'):
         form_disciplina = DisciplinaForm(request.POST)
@@ -411,5 +431,15 @@ def lista_tabelas(request):
             novo_grau.save()
             messages.success(request, 'Nova grau cadastrado com sucesso!')
             return redirect('config:lista_tabelas')
-
+        
+    if(request.method == 'POST'):
+        form_tipo_docente = TipoDocenteForm(request.POST)
+        if(form_tipo_docente.is_valid()):
+            novo_tipo_docente = TipoDocente.objects.create(
+                TipoDocente = form_tipo_docente.cleaned_data['Tipo_Docente'],
+                cor = form_tipo_docente.cleaned_data['cor'],
+            )    
+            novo_tipo_docente.save()
+            messages.success(request, 'Novo tipo de docente cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
     return render(request, "lista_tabelas.html", {'context': context})
