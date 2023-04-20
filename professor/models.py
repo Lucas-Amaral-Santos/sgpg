@@ -1,5 +1,5 @@
 from django.db import models
-from aluno.models import Endereco, Titulacao, Graduacao
+from aluno.models import Endereco, Titulacao
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from config.models import Sexo, UnidadeFederativa, Instituicao
@@ -25,6 +25,16 @@ class PosDoutorado(models.Model):
 
       def __str__(self):
             return str(self.id)
+      
+class Graduacao(models.Model):
+    graduacao_area = models.CharField(max_length=200, verbose_name="Área:") 
+    instituicao = models.ForeignKey(Instituicao, on_delete=models.DO_NOTHING, related_name="professor_graduacao_instituicao", verbose_name="Instituição")
+    local = models.CharField(max_length=200, null=True, blank=True, verbose_name="Local:")
+    graduacao_ano_inicio = models.IntegerField(null=True, blank=True, verbose_name="Ano de início:")
+    graduacao_ano_fim = models.IntegerField(null=True, blank=True, verbose_name="Ano de término:")
+
+    def __str__(self):
+        return str(self.instituicao)
 
 class Trabalho(models.Model):
       instituicao_trabalho = models.ForeignKey(Instituicao, on_delete=models.DO_NOTHING, verbose_name='Instituição:')
@@ -62,7 +72,7 @@ class Professor(models.Model):
       
       endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
       titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING)
-      graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, null=True)
+      graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, related_name="professor_graduacao")
       trabalho = models.ForeignKey(Trabalho, on_delete=models.DO_NOTHING, related_name="professor_trabalho")
       pos_doutorado = models.ForeignKey(PosDoutorado, on_delete=models.DO_NOTHING, related_name="professor_pos_doutorado")
       membro_colegiado = models.ForeignKey(Colegiado, on_delete=models.DO_NOTHING, related_name="professor_membro_colegiado")

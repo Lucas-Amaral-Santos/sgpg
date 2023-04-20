@@ -68,7 +68,7 @@ class Trabalho(models.Model):
 
 class Graduacao(models.Model):
     graduacao_area = models.CharField(max_length=200, verbose_name="Área:") 
-    instituicao = models.ForeignKey(Instituicao, on_delete=models.DO_NOTHING, verbose_name="Instituição")
+    instituicao = models.ForeignKey(Instituicao, on_delete=models.DO_NOTHING, related_name="aluno_graduacao_instituicao", verbose_name="Instituição")
     local = models.CharField(max_length=200, null=True, blank=True, verbose_name="Local:")
     graduacao_ano_inicio = models.IntegerField(null=True, blank=True, verbose_name="Ano de início:")
     graduacao_ano_fim = models.IntegerField(null=True, blank=True, verbose_name="Ano de término:")

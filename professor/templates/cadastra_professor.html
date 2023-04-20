@@ -26,6 +26,9 @@ Cadastra Professor
                 <a class="nav-link" data-toggle="tab" href="#id_endereco">Endereço</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#id_graduacao">Graduação</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#id_trabalho">Trabalho</a>
             </li>
             <li class="nav-item">
@@ -59,6 +62,21 @@ Cadastra Professor
                         <div class="col">
                             <p style="text-transform: uppercase;">Aba <u>Colegiado</u></p>
                             {% for field in form_colegiado  %}
+                            <tr>
+                                {% if field.errors %}
+                                <td>{{ field.label_tag }}</td>
+                                <td>                                    
+                                    {{field.errors}}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if form_graduacao.errors %}
+                        <div class="col">
+                            <p style="text-transform: uppercase;">Aba <u>Graduação</u></p>
+                            {% for field in form_graduacao  %}
                             <tr>
                                 {% if field.errors %}
                                 <td>{{ field.label_tag }}</td>
@@ -149,6 +167,10 @@ Cadastra Professor
                 <h1>Endereço</h1>
                 {% include 'forms_template/form_endereco.html' with form_endereco=form_endereco pagina='professor' %}
                 {% comment %} {{form_endereco|crispy}} {% endcomment %}
+            </div>
+            <div id="id_graduacao" class="tab-pane container">
+                <h1>Graduação</h1>
+                {% include 'forms_template/form_graduacao_professor.html' with form_graduacao=form_graduacao pagina='graduacao' %}
             </div>
             <div id="id_trabalho" class="tab-pane container">
                 <h1>Trabalho</h1>

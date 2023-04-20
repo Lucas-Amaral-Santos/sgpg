@@ -1,5 +1,5 @@
 from django.forms import ModelForm, ValidationError, DateField, NumberInput, TextInput, CharField
-from .models import Professor, Trabalho, PosDoutorado, Colegiado
+from .models import Professor, Trabalho, PosDoutorado, Colegiado, Graduacao
 from datetime import datetime
 
 class ColegiadoForm(ModelForm):
@@ -12,6 +12,11 @@ class ColegiadoForm(ModelForm):
 class PosDoutoradoForm(ModelForm):
     class Meta:
         model = PosDoutorado
+        fields = '__all__'
+
+class GraduacaoForm(ModelForm):
+    class Meta:
+        model = Graduacao
         fields = '__all__'
 
 class TrabalhoForm(ModelForm):

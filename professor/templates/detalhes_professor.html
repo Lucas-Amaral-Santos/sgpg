@@ -48,6 +48,9 @@
                       <a class="nav-link nav-professor" data-toggle="tab" href="#id_endereco">Endereço</a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link nav-professor" data-toggle="tab" href="#id_graduacao">Graduação</a>
+                </li>
+                  <li class="nav-item">
                       <a class="nav-link nav-professor" data-toggle="tab" href="#id_trabalho">Trabalho</a>
                   </li>
                   <li class="nav-item">
@@ -226,6 +229,59 @@
                           </div>
                       </div>
                   </div>
+                  <!-- Aba de Graduação -->
+                  <div id="id_graduacao" class="tab-pane container">
+                    <!-- Área -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Área</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.graduacao.graduacao_area}}
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Instituição -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Instituição</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.graduacao.instituicao}}
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Local -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Local</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.graduacao.local}}
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Ano de Início -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Ano de Início</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.graduacao.graduacao_ano_inicio}}
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Ano de Término -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Ano de Término</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.graduacao.graduacao_ano_fim}}
+                        </div>
+                    </div>
+                    <hr>               
+                </div>
                   <!-- Aba de Trabalho -->
                   <div id="id_trabalho" class="tab-pane container">
                       <!-- Instituição -->
