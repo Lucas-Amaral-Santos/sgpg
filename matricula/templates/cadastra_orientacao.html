@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Novo Evento
+{% endblock %}
+
+{% block content %}
+    {% include 'navbar.html' %}
+    <div class="body container d-flex-inline justify-content-center mb-5">      
+      {% include 'msg/message.html' %}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'matricula:lista_matricula' %}">Pesquisar Matricula</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
+              <li class="breadcrumb-item" aria-current="page"><a href="{% url 'matricula:detalhe_trabalho_final' matricula.slug %}">{{trabalho_final}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_orientacao' matricula.slug trabalho_final.slug %}">{{trabalho_final.orientacao_trabalho_final}}</a></li>
+            </ol>
+          </nav>
+      <h1 class="text-center">{{pagina}}</h1>
+
+      <form action="" method="POST" class="cadastro_form">
+        {% csrf_token %}
+        
+        {{form|crispy}}
+
+
+        <div class="d-flex justify-content-center gap-2 m-3">
+          <a class="btn btn-danger btn-group-sm" href="{% url 'matricula:detalhe_trabalho_final' matricula.slug %}">Cancelar</a>
+          <input class="btn btn-primary btn-group-sm" type="submit" value="Adicionar">
+        </div>
+      </form>
+    </div>
+
+
+{% include 'footer.html' %}
+{% endblock %}

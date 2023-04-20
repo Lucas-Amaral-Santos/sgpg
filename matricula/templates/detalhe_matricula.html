@@ -81,7 +81,17 @@ Detalhes Matrícula
                     Titulação: {{matricula.probatorio.aluno.titulacao.titulacao}}
                 </div>
                 <div class="col-6">
-                    Orientador: {% if trabalho_final == None %}<span class="text-danger">Não informado</span>{% else %}<b>{{ trabalho_final.orientador }}</b>{% endif %}
+                    Orientador: {% if trabalho_final.orientacao_trabalho_final == None %}<span class="text-danger">Não informado</span>{% else %}
+                    <div class="row">
+                    {% for t in trabalho_final.orientacao_trabalho_final.all %}
+                        <div class="col-3 text-center">
+                            <span>
+                                {{t.professor}} ({{t.tipo}})
+                            </span>
+                        </div>
+                    {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
 

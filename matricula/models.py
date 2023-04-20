@@ -53,6 +53,7 @@ class Matricula(models.Model):
 
     numero = models.CharField(max_length=10, verbose_name='Número:')
     probatorio = models.ForeignKey(Probatorio, on_delete=models.CASCADE, related_name='matricula_probatorio', verbose_name='Probatório:')
+    dt_matricula = models.DateField(verbose_name="Data de Matrícula:")
     curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, related_name="matricula_curso", null=True, blank=True, verbose_name='Curso:')
     requisita_bolsa = models.BooleanField(verbose_name='Requisita bolsa:')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0], verbose_name='Status:')
@@ -155,12 +156,12 @@ class Nota(models.Model):
         else:
             return 'Não'
 
+
 class TrabalhoFinal(models.Model):
     titulo = models.CharField(max_length=200)
     resumo = models.TextField()
     diploma = models.BooleanField(null=True, blank=True)
     dt_diploma = models.DateField(null=True, blank=True)
-    orientador = models.ForeignKey(Professor, on_delete=models.CASCADE, related_name="orientador_trabalho_final")
 
     matricula = models.OneToOneField(Matricula, on_delete=models.CASCADE, null=True, related_name="matricula_trabalho_final")
     probatorio = models.OneToOneField(Probatorio, on_delete=models.CASCADE, null=True, related_name="probatorio_trabalho_final")
@@ -181,3 +182,22 @@ class TrabalhoFinal(models.Model):
 
     class Meta:
         verbose_name_plural = "Trabalhos Finais"
+
+
+class Orientacao(models.Model):
+
+    TIPO_ORIENTACAO_CHOICES = (
+        ("Orientador", "Orientador"),
+        ("Coorientador", "Coorientador"),
+    )
+
+    professor = models.ForeignKey(Professor, on_delete=models.DO_NOTHING, related_name="orientacao_professor")
+    tipo = models.CharField(max_length=200, choices=TIPO_ORIENTACAO_CHOICES)
+    professor_externo = models.BooleanField()
+    trabalho_final = models.ForeignKey(TrabalhoFinal, on_delete=models.DO_NOTHING, related_name="orientacao_trabalho_final")
+
+    def __str__(self):
+        return str(self.professor)
+
+    class Meta:
+        verbose_name_plural = "Orientações"

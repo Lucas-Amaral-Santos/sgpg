@@ -22,7 +22,7 @@ Detalhes Probatório
           </nav>
         {% comment %} <h1 class='text-center'>{{pagina}}</h1> {% endcomment %}
     
-        <div class='text-center my-3' style="padding:0% 20%;">
+        <div class='text-center my-3 row gap-4' style="padding:0% 20%;">
             <div class="">
                 <div class="">
                     <h5>Titulo</h5>
@@ -49,27 +49,24 @@ Detalhes Probatório
         
             <div>
                 <div>
-                    <h5>Orientador</h5>
+                    <h5>Orientadores</h5>
                 </div>
                 <div>
-                    <p>
-                    {{trabalho_final.orientador}}
-                    </p>
-                </div>
-            </div>
-
-            <div>
-                <div>
-                    <h5>Coorientador</h5>
-                </div>
-                <div>
-                    {% if coorientador is None %}
-                        <span><i>Não há coorientadores cadastrados</i></span>
-                    {% elif coorientador is not None %}
-                        <p>
-                        {{coorientador}}
-                        </p>
-                    {% endif %}                    
+                    {% if trabalho_final.orientacao_trabalho_final is None %}
+                        <span><i>Não há orientadores cadastrados</i></span>
+                        
+                    {% elif trabalho_final.orientacao_trabalho_final is not None %}
+                    <div class="row my-2">
+                        {% for t in trabalho_final.orientacao_trabalho_final.all %}
+                        <div class="col-12">
+                            <span>
+                                {{t.professor}} ({{t.tipo}})
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %} 
+                    <a class="btn btn-outline-primary" href="{% url 'matricula:cadastra_orientacao' matricula.slug trabalho_final.slug %}">Adicionar Orientador</a>
                 </div>
             </div>
 

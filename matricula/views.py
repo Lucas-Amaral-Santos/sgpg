@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm, LinhaPesquisaForm
+from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm, LinhaPesquisaForm, OrientacaoForm
 from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio
 from config.models import StatusOptions, LinhaPesquisa
 from django.core.paginator import Paginator
@@ -129,6 +129,7 @@ def cadastra_matricula(request):
                 probatorio = form.cleaned_data['probatorio'],
                 requisita_bolsa = form.cleaned_data['requisita_bolsa'],
                 grau = form.cleaned_data['grau'],
+                dt_matricula = form.cleaned_data['dt_matricula'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
             try:
@@ -326,7 +327,6 @@ def cadastra_trabalho_final(request, matricula):
             novo_trabalho_final = TrabalhoFinal.objects.create(
                 titulo = trabalho_final_form.cleaned_data['titulo'],
                 resumo = trabalho_final_form.cleaned_data['resumo'],
-                orientador = trabalho_final_form.cleaned_data['orientador'],
                 matricula = matricula,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
@@ -338,6 +338,22 @@ def cadastra_trabalho_final(request, matricula):
             return redirect('matricula:detalhe_trabalho_final', matricula.slug)
     
     return render(request, 'cadastra_trabalho_final.html', {'trabalho_final_form':trabalho_final_form, 'linha_pesquisa_form':linha_pesquisa_form, 'pagina':'Cadastra Trabalho Final'})
+
+def cadastra_orientacao(request, matricula, trabalho_final):
+    matricula = Matricula.objects.get(slug=matricula)
+    form = OrientacaoForm()
+
+    if(request.method == 'POST'):
+        form = OrientacaoForm(request.POST)
+        
+        if(form.is_valid()):
+            nova_orientacao = form.save(commit=False)
+            nova_orientacao.trabalho_final = matricula.matricula_trabalho_final
+            nova_orientacao.save()
+            return redirect("matricula:detalhe_trabalho_final", matricula.slug)
+
+    return render(request, 'cadastra_orientacao.html', {'form': form, 'matricula': matricula, 'trabalho_final': matricula.matricula_trabalho_final, 'pagina': 'Cadastrar Orientadores'})
+
 
 def detalhe_trabalho_final(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)

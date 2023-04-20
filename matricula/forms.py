@@ -1,5 +1,5 @@
 from django import forms
-from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio, VersaoFinal, Nota
+from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio, VersaoFinal, Nota, Orientacao
 import datetime
 
 class ProbatorioMatriculaForm(forms.ModelForm):
@@ -11,14 +11,14 @@ class ProbatorioMatriculaForm(forms.ModelForm):
 
     class Meta:
         model = Matricula
-        fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa']
+        fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa', 'dt_matricula']
 
 
 class MatriculaForm(forms.ModelForm):
 
     class Meta:
         model = Matricula
-        fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa']
+        fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa', 'dt_matricula']
 
 class ProbatorioForm(forms.ModelForm):
     data_inscricao = forms.DateField(label="Data de Inscrição:", widget=forms.NumberInput(attrs={'type':'date'}))
@@ -65,7 +65,7 @@ class TrabalhoFinalForm(forms.ModelForm):
 
     class Meta:
         model = TrabalhoFinal
-        fields = ['titulo', 'resumo', 'orientador']
+        fields = ['titulo', 'resumo']
 
 class VersaoFinalForm(forms.ModelForm):
     class Meta:
@@ -82,3 +82,9 @@ class LinhaPesquisaForm(forms.ModelForm):
     class Meta:
         model = Matricula
         fields = ['linha_pesquisa']
+
+class OrientacaoForm(forms.ModelForm):
+    
+    class Meta:
+        model = Orientacao
+        fields = ['professor', 'tipo', 'professor_externo']

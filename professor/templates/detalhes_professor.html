@@ -53,6 +53,9 @@
                   <li class="nav-item">
                       <a class="nav-link nav-professor" data-toggle="tab" href="#id_titulacao">Titulação</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link nav-pos-doutorado" data-toggle="tab" href="#id_pos_doutorado">Pós Doutorado</a>
+                </li>
               </ul>
               <div class="py-3 mb-3 tab-content">
                   <!-- Aba de Informações pessoais -->
@@ -366,7 +369,60 @@
                               {{professor.titulacao.obs_geral}}
                           </div>
                       </div>
-                  </div>                        
+                  </div>
+                  <!-- Aba Pós doutorado -->
+                  <div id="id_pos_doutorado" class="tab-pane container">
+                    <!-- Concluído -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Concluído</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.pos_doutorado.concluido}}
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Ano de início -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Ano de Início</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.pos_doutorado.ano_inicio}}
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Ano de término -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Ano de término</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.pos_doutorado.ano_fim}}
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Instituição de Pós Doutorado -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Instituição de Pós Doutorado</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.pos_doutorado.instituicao_posdoc}}
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- País -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">País</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{professor.pos_doutorado.pais}}
+                        </div>
+                    </div>
+                    <hr>
+                  </div>             
               </div>
           </div>
       </div>
