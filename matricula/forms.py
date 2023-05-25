@@ -1,5 +1,5 @@
 from django import forms
-from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio, VersaoFinal, Nota, Orientacao
+from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio, VersaoFinal, Nota, Orientacao, ExameLinguas
 import datetime
 
 class ProbatorioMatriculaForm(forms.ModelForm):
@@ -88,3 +88,9 @@ class OrientacaoForm(forms.ModelForm):
     class Meta:
         model = Orientacao
         fields = ['professor', 'tipo', 'professor_externo']
+
+class ExameLinguasForm(forms.ModelForm):
+    
+    class Meta:
+        model = ExameLinguas
+        fields = ['lingua', 'nota']

@@ -81,3 +81,11 @@ class Grau(models.Model):
 
     def __str__(self):
             return str(self.grau)
+    
+class Linguas(models.Model):
+      lingua = models.CharField(max_length=200)
+      cor = RGBColorField(default='#000000')
+
+      def __str__(self):
+            return str(self.lingua)
+      

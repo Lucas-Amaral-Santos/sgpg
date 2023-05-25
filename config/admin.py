@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UnidadeFederativa, Sexo, EstadoCivil, Etnia, StatusOptions, LinhaPesquisa, Instituicao, Colegio, Grau
+from .models import UnidadeFederativa, Sexo, EstadoCivil, Etnia, StatusOptions, LinhaPesquisa, Instituicao, Colegio, Grau, Linguas
 
 # Register your models here.
 @admin.register(UnidadeFederativa)
@@ -34,6 +34,7 @@ class InstituicaoAdmin(admin.ModelAdmin):
 class ColegioAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(Grau)
-class GrauAdmin(admin.ModelAdmin):
+@admin.register(Linguas)
+class LinguasAdmin(admin.ModelAdmin):
     pass
+

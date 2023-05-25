@@ -5,7 +5,7 @@ from disciplina.models import DisciplinaOfertada
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
-from config.models import LinhaPesquisa, Grau
+from config.models import LinhaPesquisa, Grau, Linguas
 
 class Curso(models.Model):
 
@@ -21,9 +21,20 @@ class Curso(models.Model):
         self.slug = slugify(self.id)
         super(Curso, self).save(*args, **kwargs)
 
+class Nota(models.Model):
+    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    dt_nota = models.DateField(auto_now=True)
+
+    def __str__(self):
+        if self.nota:
+            return 'Sim'
+        else:
+            return 'Não'
+
+
 class Probatorio(models.Model):
     data_inscricao = models.DateField(verbose_name='Data da inscrição:')
-    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True, verbose_name='Nota:')
+    nota = models.OneToOneField(Nota, on_delete=models.DO_NOTHING, related_name='probatorio_nota', null=True, verbose_name='Nota:')
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno', verbose_name='Aluno:')
     grau = models.ForeignKey(Grau, on_delete=models.CASCADE, related_name='probatorio_grau', verbose_name='Grau de Aplicação:')
 
@@ -146,17 +157,6 @@ class VersaoFinal(models.Model):
         verbose_name_plural = "Versões Finais"
 
 
-class Nota(models.Model):
-    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
-    dt_nota = models.DateField(auto_now=True)
-
-    def __str__(self):
-        if self.nota:
-            return 'Sim'
-        else:
-            return 'Não'
-
-
 class TrabalhoFinal(models.Model):
     titulo = models.CharField(max_length=200)
     resumo = models.TextField()
@@ -183,6 +183,18 @@ class TrabalhoFinal(models.Model):
     class Meta:
         verbose_name_plural = "Trabalhos Finais"
 
+class ExameLinguas(models.Model):
+    lingua = models.ForeignKey(Linguas, on_delete=models.DO_NOTHING, related_name="exame_linguas")
+    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    dt_nota = models.DateField(auto_now=True)
+    probatorio = models.OneToOneField(Probatorio, on_delete=models.CASCADE, related_name="probatorio_exame_linguas")
+
+    def __str__(self):
+        return str(self.lingua)
+
+    class Meta:
+        verbose_name = "Exame de Lingua"
+        verbose_name_plural = "Exames de Linguas"
 
 class Orientacao(models.Model):
 

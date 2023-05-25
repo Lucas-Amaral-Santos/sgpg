@@ -18,9 +18,9 @@ Detalhes Matrícula
               <li class="breadcrumb-item"><a href="{% url 'matricula:lista_matricula' %}">Pesquisar Matricula</a></li>
               <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
             </ol>
-          </nav>
+        </nav>
 
-          <div class="row gap-2 my-1">
+        <div class="row gap-2 my-1">
             <div class="col-3">
                 <a class="btn btn-danger" href="{% url 'matricula:gera_historico' matricula.slug %}" ><i class="fa-solid fa-file-pdf"></i> Gerar Histórico</a>
             </div>
@@ -28,7 +28,8 @@ Detalhes Matrícula
           
         <h1 class='text-center'>Matrícula</h1>
         <div class='text-center my-4'>
-            <span class='border border-2 rounded-2 text-info border-info p-2'>{{matricula.probatorio.aluno.status}}</span>
+            <span class="d-flex my-2 justify-content-center">{{matricula.dt_matricula}}</span>
+            <span class='border border-2 rounded-2 text-info border-info p-2'>{{matricula.probatorio.aluno.status}}</span>            
         </div>
         <div class="row mt-5 px-5">
             <div class="col-md-6">
@@ -65,7 +66,7 @@ Detalhes Matrícula
                     Município: {{matricula.probatorio.aluno.endereco.municipio}}
                 </div>
                 <div class="col-6">
-                    Semestre/Ano de início:
+                    Semestre/Ano de início: {% if matricula.dt_matricula.month < 6 %}1º/{{matricula.dt_matricula.year}}{% else %}2º/{{matricula.dt_matricula.year}}{% endif %}
                 </div>
             </div>
             <div class="row">
@@ -98,11 +99,11 @@ Detalhes Matrícula
         </div>
       </div>
 
-      <div class="row my-3 gap-2">
+    <div class="row my-3 gap-2">
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_inscricao' matricula.slug %}">Adicionar Disciplina</a>
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_bolsa' matricula.slug %}">Adicionar Bolsa</a>
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">Adicionar Afastamento</a>  
-    </div>
+    </div> 
 
     <div class="secao-disciplina">
         <h1>Disciplina Cursadas</h1>

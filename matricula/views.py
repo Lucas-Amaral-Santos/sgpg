@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm, LinhaPesquisaForm, OrientacaoForm
+from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm, LinhaPesquisaForm, OrientacaoForm, ExameLinguasForm
 from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio
 from config.models import StatusOptions, LinhaPesquisa
 from django.core.paginator import Paginator
@@ -177,10 +177,13 @@ def detalhe_matricula(request, matricula):
     bolsas = Bolsa.objects.filter(matricula=matricula)
     afastamentos = Afastamento.objects.filter(matricula=matricula)
     inscricoes = Inscricao.objects.filter(matricula=matricula)
+    
     try:
         trabalho_final = TrabalhoFinal.objects.get(matricula=matricula)
     except TrabalhoFinal.DoesNotExist:
         trabalho_final = None
+
+    
 
     return render(request, 'detalhe_matricula.html', {'matricula':matricula, 'bolsas': bolsas, 'afastamentos': afastamentos, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final}) 
 
@@ -227,13 +230,35 @@ def detalhe_probatorio(request, probatorio):
     
     probatorio = Probatorio.objects.get(id=probatorio)
     inscricoes = InscricaoProbatorio.objects.filter(probatorio=probatorio.slug)
-    
+    form_exame = ExameLinguasForm()
+    form_nota = NotaForm()
     try:
         trabalho_final = TrabalhoFinal.objects.get(probatorio=probatorio)
     except TrabalhoFinal.DoesNotExist:
         trabalho_final = None
+    
+    if(request.method == 'POST' and "btn_nota_probatorio" in request.POST):
+        form_nota = NotaForm(request.POST)
+        if(form_nota.is_valid()):
+            nova_nota = form_nota.save(commit=False)
+            nova_nota.probatorio = probatorio
+            probatorio.nota = nova_nota
+            nova_nota.save()
+            probatorio.save()
+            messages.success(request, 'Nota do probatório cadastrado com sucesso!')
+            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota}) 
 
-    return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final}) 
+    if(request.method == 'POST' and "btn_nota_exame" in request.POST):
+        form_exame = ExameLinguasForm(request.POST)
+        if(form_exame.is_valid()):
+            nova_nota = form_exame.save(commit=False)
+            nova_nota.probatorio = probatorio
+            nova_nota.save()
+            messages.success(request, 'Exame de linguas cadastrado com sucesso!')
+            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota}) 
+
+
+    return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota}) 
 
 def cadastra_bolsa(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
@@ -413,7 +438,6 @@ def cadastra_trabalho_probatorio(request, probatorio):
             novo_trabalho_final = TrabalhoFinal.objects.create(
                 titulo = trabalho_final_form.cleaned_data['titulo'],
                 resumo = trabalho_final_form.cleaned_data['resumo'],
-                orientador = trabalho_final_form.cleaned_data['orientador'],
                 probatorio = probatorio,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )

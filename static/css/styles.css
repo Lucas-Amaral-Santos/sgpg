@@ -250,3 +250,10 @@ label.required::after {
 #filtra_alunos tbody {
     display: table;
 }
+
+@media screen and (min-width: 500px) {
+    .nota-probatorio {
+        position: absolute; 
+        left: 900px;
+    }
+}

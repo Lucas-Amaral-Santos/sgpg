@@ -20,8 +20,19 @@ Detalhes Probatório
             </ol>
           </nav>
         <h1 class='text-center'>Probatório</h1>
+        
+        
+        {% if probatorio.nota%}
+        <div class="d-flex justify-content-center nota-probatorio">
+            <div class="card p-4  border-1 rounded-1">
+                <span>Nota</span>
+                <span>{{probatorio.nota.nota}}</span>
+            </div>
+        </div>
+        {% endif %}
 
         <div class='text-center my-4'>
+            <span class="d-flex my-2 justify-content-center">{{probatorio.data_inscricao}}</span>
             <span class='border border-2 rounded-2 text-primary border-primary p-2'>{{probatorio.aluno.status}}</span>
         </div>
         <div class="row">
@@ -58,7 +69,7 @@ Detalhes Probatório
                     Município: {{probatorio.aluno.endereco.municipio}}
                 </div>
                 <div class="col-6">
-                    Semestre/Ano de início:
+                    Semestre/Ano de início: {% if probatorio.data_inscricao.month < 6 %}1º/{{probatorio.data_inscricao.year}}{% else %}2º/{{probatorio.data_inscricao.year}}{% endif %}
                 </div>
             </div>
             <div class="row">
@@ -83,8 +94,82 @@ Detalhes Probatório
 
       <div class="row my-3 gap-2">
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_inscricao_probatorio' probatorio.slug %}">Adicionar Disciplina</a>
+        <a class="btn btn-success col" data-toggle="modal" data-target="#id_nota_exame">Exame de Línguas</a>
+        {% if not probatorio.nota %}
+        <a class="btn btn-success col" data-toggle="modal" data-target="#id_nota_probatorio">Nota</a>
+        {% endif %}
     </div>
 
+
+    <div id="id_nota_probatorio" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <div class="container">
+                    <h5 class="modal-title">Nota do Probatório</h5>
+                    <span id="data-modal"><i></i></span>
+                </div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="POST" class="cadastro_form">
+            {% csrf_token %}
+                <div class="modal-body ">
+                    {{form_nota|crispy}}
+                </div>
+                <div class="modal-footer">
+                <button type="submit" name="btn_nota_probatorio" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+    <div id="id_nota_exame" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <div class="container">
+                    <h5 class="modal-title">Exame de Linguas</h5>
+                    <span id="data-modal"><i></i></span>
+                </div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="POST" class="cadastro_form">
+            {% csrf_token %}
+                <div class="modal-body ">
+                    {{form_exame|crispy}}
+                </div>
+                <div class="modal-footer">
+                <button type="submit" name="btn_nota_exame" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {% if probatorio.probatorio_exame_linguas %}
+      <div class="secao-disciplina mx-2 my-5">
+        <p><b><u>Exame de Línguas</u></b></p>
+    
+                <div class="row pt-2 border-1 rounded-1 text-white" style="background-color: #224EAC ;">
+                    <div class="col">
+                        <p><b>Exame:</b> {{probatorio.probatorio_exame_linguas.lingua}}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Nota:</b> {{probatorio.probatorio_exame_linguas.nota}}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Data:</b> {{probatorio.probatorio_exame_linguas.dt_nota}}</p>
+                    </div>
+
+                </div>
+      </div>
+      {% endif %}
     <div class="secao-disciplina">
         <h1>Disciplina Cursadas</h1>
         <hr>

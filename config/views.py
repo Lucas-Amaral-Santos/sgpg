@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
-from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions, LinhaPesquisa, Instituicao, Colegio, InstituicaoResidencia, Grau
-from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm, LinhaPesquisaForm, InstituicaoForm, ColegioForm, InstituicaoResidenciaForm, GrauForm
+from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions, LinhaPesquisa, Instituicao, Colegio, InstituicaoResidencia, Grau, Linguas
+from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm, LinhaPesquisaForm, InstituicaoForm, ColegioForm, InstituicaoResidenciaForm, GrauForm, LinguasForm
 from django.contrib import messages
 
 
@@ -20,6 +20,7 @@ def lista_tabelas(request):
     form_colegio = ColegioForm()
     form_instituicao_residencia = InstituicaoResidenciaForm()
     form_grau = GrauForm()
+    form_linguas = LinguasForm()
 
     context = {}
 
@@ -259,6 +260,23 @@ def lista_tabelas(request):
             'tabela': 'grau'
         }
 
+    try:
+        linguas = Linguas.objects.all()
+        context['linguas'] = {
+            'values': linguas.values(),
+            'colunas': linguas.values()[0].keys(),
+            'form': form_linguas,
+            'titulo': 'Linguas',
+            'tabela': 'linguas'
+        }
+    except:
+        context['linguas'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_linguas,
+            'titulo': 'Linguas',
+            'tabela': 'linguas'
+        }
 
     if(request.method == 'POST'):
         form_disciplina = DisciplinaForm(request.POST)
@@ -410,6 +428,17 @@ def lista_tabelas(request):
             )    
             novo_grau.save()
             messages.success(request, 'Nova grau cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
+    
+    if(request.method == 'POST'):
+        form_linguas = LinguasForm(request.POST)
+        if(form_linguas.is_valid()):
+            novo_linguas = Linguas.objects.create(
+                lingua = form_linguas.cleaned_data['lingua'],
+                cor = form_linguas.cleaned_data['cor'],
+            )    
+            novo_linguas.save()
+            messages.success(request, 'Nova lingua cadastrado com sucesso!')
             return redirect('config:lista_tabelas')
 
     return render(request, "lista_tabelas.html", {'context': context})
