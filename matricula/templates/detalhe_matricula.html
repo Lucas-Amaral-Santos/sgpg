@@ -28,8 +28,8 @@ Detalhes Matrícula
           
         <h1 class='text-center'>Matrícula</h1>
         <div class='text-center my-4'>
+            <span class="badge badge-secondary" style="background-color: {{matricula.probatorio.aluno.status.status.cor}}">{{matricula.probatorio.aluno.status}}</span>
             <span class="d-flex my-2 justify-content-center">{{matricula.dt_matricula}}</span>
-            <span class='border border-2 rounded-2 text-info border-info p-2'>{{matricula.probatorio.aluno.status}}</span>            
         </div>
         <div class="row mt-5 px-5">
             <div class="col-md-6">
@@ -50,7 +50,7 @@ Detalhes Matrícula
                     CPF: {{matricula.probatorio.aluno.cpf}}
                 </div>
                 <div class="col-6">
-                    Curso:
+                    Curso: {{matricula.curso}}
                 </div>
             </div>
             <div class="row">

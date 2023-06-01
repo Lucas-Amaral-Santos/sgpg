@@ -49,6 +49,7 @@
           {% endif %}
           <th scope="col">Nome</th>
           <th scope="col">Email</th>
+          <th scope="col">Status</th>
         </tr>
       </thead>  
       {% for m in matriculas %}
@@ -59,6 +60,7 @@
           {% endif %}
             <td>{% if pagina == 'Pesquisar Matrícula' %}{{m.probatorio.aluno.nome}}{% elif pagina == 'Pesquisar Probatório' %}{{m.aluno.nome}}{% endif %}</td>
             <td>{% if pagina == 'Pesquisar Matrícula' %}{{m.probatorio.aluno.email}}{% elif pagina == 'Pesquisar Probatório' %}{{m.aluno.email}}{% endif %}</td>
+            <td class="text-primary">{% if pagina == 'Pesquisar Matrícula' %}<span class="badge badge-secondary" style="background-color: {{m.probatorio.aluno.status.status.cor}}">{{m.probatorio.aluno.status}}</span>{% elif pagina == 'Pesquisar Probatório' %}<span class="badge badge-secondary" style="background-color: {{m.aluno.status.status.cor}}">{{m.aluno.status}}</span>{% endif %}</td>
         </tr>
       </a>
 

@@ -93,8 +93,6 @@ TEMPLATES = [
 ]
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
-DATE_INPUT_FORMATS = ["%d/%m/%Y"]
-DATE_INPUT_FORMATS = ["%d/%m/%Y"]
 
 WSGI_APPLICATION = 'sgpg.wsgi.application'
 
@@ -162,6 +160,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATE_INPUT_FORMATS = ["%d/%m/%Y"]
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 # Static files (CSS, JavaScript, Images)

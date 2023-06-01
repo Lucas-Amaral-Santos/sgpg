@@ -35,7 +35,7 @@ class Nota(models.Model):
 class Probatorio(models.Model):
     data_inscricao = models.DateField(verbose_name='Data da inscrição:')
     nota = models.OneToOneField(Nota, on_delete=models.DO_NOTHING, related_name='probatorio_nota', null=True, verbose_name='Nota:')
-    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno', verbose_name='Aluno:')
+    aluno = models.OneToOneField(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno', verbose_name='Aluno:')
     grau = models.ForeignKey(Grau, on_delete=models.CASCADE, related_name='probatorio_grau', verbose_name='Grau de Aplicação:')
 
     probatorio = models.BooleanField(default=True)
@@ -187,7 +187,7 @@ class ExameLinguas(models.Model):
     lingua = models.ForeignKey(Linguas, on_delete=models.DO_NOTHING, related_name="exame_linguas")
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
     dt_nota = models.DateField(auto_now=True)
-    probatorio = models.OneToOneField(Probatorio, on_delete=models.CASCADE, related_name="probatorio_exame_linguas")
+    probatorio = models.ManyToManyField(Probatorio, related_name="probatorio_exame_linguas")
 
     def __str__(self):
         return str(self.lingua)

@@ -32,8 +32,8 @@ Detalhes Probatório
         {% endif %}
 
         <div class='text-center my-4'>
-            <span class="d-flex my-2 justify-content-center">{{probatorio.data_inscricao}}</span>
-            <span class='border border-2 rounded-2 text-primary border-primary p-2'>{{probatorio.aluno.status}}</span>
+            <span class="badge badge-secondary" style="background-color: {{probatorio.aluno.status.status.cor}}">{{probatorio.aluno.status}}</span>
+            <span class="d-flex my-2 justify-content-center">{{probatorio.data_inscricao}}</span>            
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -116,7 +116,14 @@ Detalhes Probatório
             <form action="" method="POST" class="cadastro_form">
             {% csrf_token %}
                 <div class="modal-body ">
+                    <div class="text-center">
+                        <p>Informe a nota final do probatório:</p>
+                        </div>
+                    <div class="d-flex justify-content-center">                        
+                    <div class="col-2">
                     {{form_nota|crispy}}
+                    </div>
+                </div>
                 </div>
                 <div class="modal-footer">
                 <button type="submit" name="btn_nota_probatorio" class="btn btn-primary">Salvar</button>
@@ -152,24 +159,31 @@ Detalhes Probatório
         </div>
       </div>
 
-      {% if probatorio.probatorio_exame_linguas %}
+      {% if probatorio.probatorio_exame_linguas.all %}
       <div class="secao-disciplina mx-2 my-5">
+      {% for ex in probatorio.probatorio_exame_linguas.all %}
+      
+        {% if forloop.counter == 1 %}
         <p><b><u>Exame de Línguas</u></b></p>
-    
-                <div class="row pt-2 border-1 rounded-1 text-white" style="background-color: #224EAC ;">
+      {% endif %}        
+                
+                <div class="row pt-2 border-1 rounded-1 mt-1 text-white" style="background-color: #224EAC ;">
                     <div class="col">
-                        <p><b>Exame:</b> {{probatorio.probatorio_exame_linguas.lingua}}</p>
+                        <p><b>Exame:</b> {{ex.lingua}}</p>
                     </div>
                     <div class="col">
-                        <p><b>Nota:</b> {{probatorio.probatorio_exame_linguas.nota}}</p>
+                        <p><b>Nota:</b> {{ex.nota}}</p>
                     </div>
                     <div class="col">
-                        <p><b>Data:</b> {{probatorio.probatorio_exame_linguas.dt_nota}}</p>
+                        <p><b>Data:</b> {{ex.dt_nota}}</p>
                     </div>
 
-                </div>
-      </div>
-      {% endif %}
+                </div>      
+
+      {% endfor %}
+    </div>
+    {% endif %}
+
     <div class="secao-disciplina">
         <h1>Disciplina Cursadas</h1>
         <hr>

@@ -251,9 +251,9 @@ def detalhe_probatorio(request, probatorio):
     if(request.method == 'POST' and "btn_nota_exame" in request.POST):
         form_exame = ExameLinguasForm(request.POST)
         if(form_exame.is_valid()):
-            nova_nota = form_exame.save(commit=False)
-            nova_nota.probatorio = probatorio
-            nova_nota.save()
+            nova_nota = form_exame.save()
+            nova_nota.probatorio.add(probatorio)
+            # nova_nota.save()
             messages.success(request, 'Exame de linguas cadastrado com sucesso!')
             return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota}) 
 

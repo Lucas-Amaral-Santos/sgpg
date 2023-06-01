@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load custom_tags %}
+
 {% block title %}
 Detalhes Aluno
 {% endblock %}
@@ -34,12 +36,13 @@ Detalhes Aluno
                             
                                 <div class="mt-3">
                                     <h4>{{aluno}}</h4>
-                                    <p class="text-secondary mb-0">{{aluno.cpf}}</p>
-                                    <p class="text-secondary mb-0">{{aluno.dt_nascimento|date:'d/M/Y'}}</p>
+                                    <span class="badge badge-secondary" style="background-color: {{aluno.status.status.cor}}">{{aluno.status}}</span>
+                                    <p class="text-secondary mb-0"><b>{{aluno.probatorio_aluno.grau}}</b></p>
+                                    <p class="text-secondary mb-0">{{aluno.dt_nascimento|get_age}} anos</p>
                                     <p class="text-secondary mb-0">{{aluno.graduacao.graduacao_area }}</p>
                                     <p class="text-secondary mb-0">{{aluno.graduacao.instituicao}}</p>
-                                    <p class="text-primary mb-0">{{aluno.status}}</p>
-                                    <p class="text-secondary mb-0">{{aluno.probatorio_aluno.grau}}</p>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
