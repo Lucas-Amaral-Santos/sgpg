@@ -108,10 +108,12 @@ def cadastra_aluno(request, aluno=None):
             )
             novo_ensino_medio = EnsinoMedio.objects.create(
                 ensino_medio_instituicao = form_ensino_medio.cleaned_data['ensino_medio_instituicao'],
-                ensino_medio_ano_inicio = form_ensino_medio.cleaned_data['ensino_medio_ano_inicio'],
-                ensino_medio_ano_conclusao = form_ensino_medio.cleaned_data['ensino_medio_ano_conclusao'],
+                # ensino_medio_ano_inicio = form_ensino_medio.cleaned_data['ensino_medio_ano_inicio'],
+                # ensino_medio_ano_conclusao = form_ensino_medio.cleaned_data['ensino_medio_ano_conclusao'],
                 ensino_medio_municipio = form_ensino_medio.cleaned_data['ensino_medio_municipio'],
                 ensino_medio_tipo = form_ensino_medio.cleaned_data['ensino_medio_tipo'],
+                ensino_medio_bolsa = form_ensino_medio.cleaned_data['ensino_medio_bolsa'],
+                ensino_medio_bolsa_int_parc = form_ensino_medio.cleaned_data['ensino_medio_bolsa_int_parc'],
             )
 
             novo_titulacao = Titulacao.objects.create(
