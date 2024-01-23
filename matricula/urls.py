@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import cadastra_afastamento, cadastra_bolsa, cadastra_inscricao, cadastra_matricula, cadastra_trabalho_final, lista_matricula, detalhe_matricula, cadastra_probatorio, lista_probatorio, detalhe_probatorio, cadastra_trabalho_probatorio, cadastra_inscricao_probatorio, detalhe_trabalho_final, gera_historico, cadastra_orientacao
+from .views import cadastra_afastamento, cadastra_bolsa, cadastra_inscricao, cadastra_matricula, cadastra_trabalho_final, lista_matricula, detalhe_matricula, cadastra_probatorio, lista_probatorio, detalhe_probatorio, cadastra_trabalho_probatorio, cadastra_inscricao_probatorio, detalhe_trabalho_final, gera_historico, cadastra_orientacao, edita_inscricao_probatorio, edita_inscricao
 
 app_name = 'matricula'
 
@@ -17,7 +17,9 @@ urlpatterns = [
     path('<int:matricula>/cadastra_afastamento', cadastra_afastamento, name='cadastra_afastamento'),
     path('<int:matricula>/cadastra_inscricao', cadastra_inscricao, name='cadastra_inscricao'),
     path('probatorio/<int:probatorio>/cadastra_inscricao_probatorio', cadastra_inscricao_probatorio, name='cadastra_inscricao_probatorio'),
+    path('probatorio/<int:probatorio>/edita_inscricao_probatorio/<int:inscricao>', edita_inscricao_probatorio, name="edita_inscricao_probatorio"),
     path('<int:matricula>/<int:trabalho_final>/cadastra_orientacao', cadastra_orientacao, name='cadastra_orientacao'),
+    path('<int:matricula>/edita_inscricao/<int:inscricao>', edita_inscricao, name='edita_inscricao'),
     path('<int:matricula>/cadastra_trabalho_final', cadastra_trabalho_final, name='cadastra_trabalho_final'),
     path('probatorio/<int:probatorio>/cadastra_trabalho_probatorio', cadastra_trabalho_probatorio, name='cadastra_trabalho_probatorio'),
 ]

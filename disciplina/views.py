@@ -11,11 +11,11 @@ def cadastra_disciplina(request):
             nova_disciplina = Disciplina.objects.create(
                 codigo = form.cleaned_data['codigo'],
                 nome = form.cleaned_data['nome'],
-                carater = form.cleaned_data['carater'],
+                # carater = form.cleaned_data['carater'],
                 carga = form.cleaned_data['carga'],
                 creditos = form.cleaned_data['creditos'],
-                nivel = form.cleaned_data['nivel'],
-                tipo = form.cleaned_data['tipo'],
+                # nivel = form.cleaned_data['nivel'],
+                # tipo = form.cleaned_data['tipo'],
             )    
             nova_disciplina.save()
             return redirect('/')

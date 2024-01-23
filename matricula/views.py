@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm, LinhaPesquisaForm, OrientacaoForm, ExameLinguasForm
+from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm, LinhaPesquisaForm, OrientacaoForm, ExameLinguasForm, EditaInscricaoProbatorioForm, EditaInscricaoForm
 from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio
 from config.models import StatusOptions, LinhaPesquisa
 from django.core.paginator import Paginator
@@ -312,6 +312,7 @@ def cadastra_inscricao(request, matricula):
             nova_inscricao = Inscricao.objects.create(
                 disciplina_ofertada = form.cleaned_data['disciplina_ofertada'],
                 nota = form.cleaned_data['nota'],
+                situacao = form.cleaned_data['situacao'],
                 matricula = matricula,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
@@ -323,14 +324,15 @@ def cadastra_inscricao(request, matricula):
 
 def cadastra_inscricao_probatorio(request, probatorio):
     probatorio = Probatorio.objects.get(slug=probatorio)
-    form = InscricaoForm()
+    form = InscricaoProbatorioForm()
 
     if(request.method == 'POST'):
-        form = InscricaoForm(request.POST)
+        form = InscricaoProbatorioForm(request.POST)
         if(form.is_valid()):
             nova_inscricao = InscricaoProbatorio.objects.create(
                 disciplina_ofertada = form.cleaned_data['disciplina_ofertada'],
                 nota = form.cleaned_data['nota'],
+                situacao = form.cleaned_data['situacao'],
                 probatorio = probatorio,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
@@ -379,7 +381,6 @@ def cadastra_orientacao(request, matricula, trabalho_final):
 
     return render(request, 'cadastra_orientacao.html', {'form': form, 'matricula': matricula, 'trabalho_final': matricula.matricula_trabalho_final, 'pagina': 'Cadastrar Orientadores'})
 
-
 def detalhe_trabalho_final(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
     trabalho_final = TrabalhoFinal.objects.get(matricula=matricula)
@@ -425,6 +426,7 @@ def detalhe_trabalho_final(request, matricula):
     return render(request, 'detalhe_trabalho_final.html', {'matricula':matricula, 'pagina':'Trabalho Final', 'trabalho_final':trabalho_final, 'coorientador': coorientador, 'form_versao': versao_final_form, 'form_nota':nota_form})
 
 def cadastra_trabalho_probatorio(request, probatorio):
+
     probatorio = Probatorio.objects.get(slug=probatorio)
     trabalho_final_form = TrabalhoFinalForm()
     linha_pesquisa_form = LinhaPesquisaForm()
@@ -448,3 +450,31 @@ def cadastra_trabalho_probatorio(request, probatorio):
             return redirect('/')
     
     return render(request, 'cadastra_trabalho_final.html', {'trabalho_final_form':trabalho_final_form, 'linha_pesquisa_form': linha_pesquisa_form,  'pagina':'Cadastra Trabalho Final'})
+
+def edita_inscricao_probatorio(request, probatorio, inscricao):
+    probatorio = Probatorio.objects.get(id=probatorio)
+    inscricao = InscricaoProbatorio.objects.get(id=inscricao)
+    form = EditaInscricaoProbatorioForm(instance=inscricao)
+
+    if request.method == "POST":
+        form = EditaInscricaoProbatorioForm(request.POST, instance=inscricao)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Inscrição atualizada com sucesso!')            
+            return redirect('matricula:detalhe_probatorio', probatorio=probatorio.slug)
+    
+    return render(request, "cadastra_matricula.html", {"form": form, "probatorio": probatorio, "pagina": "Edita Inscrição em Probatório"})
+
+def edita_inscricao(request, matricula, inscricao):
+    matricula = Matricula.objects.get(id=matricula)
+    inscricao = Inscricao.objects.get(id=inscricao)
+    form = EditaInscricaoForm(instance=inscricao)
+
+    if request.method == "POST":
+        form = EditaInscricaoForm(request.POST, instance=inscricao)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Inscrição atualizada com sucesso!')            
+            return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
+    
+    return render(request, "cadastra_matricula.html", {"form": form, "matricula": matricula, "pagina": "Edita Inscrição em Matrícula"})

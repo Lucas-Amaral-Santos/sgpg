@@ -284,11 +284,11 @@ def lista_tabelas(request):
             nova_disciplina = Disciplina.objects.create(
                 codigo = form_disciplina.cleaned_data['codigo'],
                 nome = form_disciplina.cleaned_data['nome'],
-                carater = form_disciplina.cleaned_data['carater'],
+                # carater = form_disciplina.cleaned_data['carater'],
                 carga = form_disciplina.cleaned_data['carga'],
                 creditos = form_disciplina.cleaned_data['creditos'],
-                nivel = form_disciplina.cleaned_data['nivel'],
-                tipo = form_disciplina.cleaned_data['tipo'],
+                # nivel = form_disciplina.cleaned_data['nivel'],
+                # tipo = form_disciplina.cleaned_data['tipo'],
             )    
             nova_disciplina.save()
             messages.success(request, 'Nova disciplina cadastrada com sucesso!')

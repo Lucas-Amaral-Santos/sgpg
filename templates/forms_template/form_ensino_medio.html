@@ -1,23 +1,46 @@
 {% load crispy_forms_tags %}
 
 <div class="row">
+    {% if form_ensino_medio.ensino_medio_instituicao %}
     <div class="col-6">
         {{form_ensino_medio.ensino_medio_instituicao|as_crispy_field}}
     </div>
+    {% endif %}
+    {% if form_ensino_medio.ensino_medio_ano_inicio %}
     <div class="col-3">
         {{form_ensino_medio.ensino_medio_ano_inicio|as_crispy_field}}
     </div>
+    {% endif %}
+    {% if form_ensino_medio.ensino_medio_ano_conclusao %}
     <div class="col-3">        
         {{form_ensino_medio.ensino_medio_ano_conclusao|as_crispy_field}}
     </div>
+    {% endif %}
 </div>
 <div class="row">
-    
+    {% if form_ensino_medio.ensino_medio_municipio %}
     <div class="col-6">  
         {{form_ensino_medio.ensino_medio_municipio|as_crispy_field}}
     </div>
+    {% endif %}
+    {% if form_ensino_medio.ensino_medio_tipo %}
     <div class="col-6">  
         {{form_ensino_medio.ensino_medio_tipo|as_crispy_field}}
     </div>
+    {% endif %}
+</div>
+<div class="row my-3">
+    {% if form_ensino_medio.ensino_medio_bolsa %}
+    <div class="col-6">  
+        {{form_ensino_medio.ensino_medio_bolsa|as_crispy_field}}
+    </div>    
+    {% endif %}
 </div>
 
+<div class="row">
+    {% if form_ensino_medio.ensino_medio_bolsa_int_parc %}    
+    <div class="col-6">  
+        {{form_ensino_medio.ensino_medio_bolsa_int_parc|as_crispy_field}}
+    </div>    
+    {% endif %}
+</div>

@@ -251,6 +251,10 @@ label.required::after {
     display: table;
 }
 
+i.fa-solid.fa-pen-to-square {
+    color: #224EAC;
+}
+
 @media screen and (min-width: 500px) {
     .nota-probatorio {
         position: absolute; 

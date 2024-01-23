@@ -31,7 +31,6 @@ class Nota(models.Model):
         else:
             return 'Não'
 
-
 class Probatorio(models.Model):
     data_inscricao = models.DateField(verbose_name='Data da inscrição:')
     nota = models.OneToOneField(Nota, on_delete=models.DO_NOTHING, related_name='probatorio_nota', null=True, verbose_name='Nota:')
@@ -108,9 +107,17 @@ class Afastamento(models.Model):
         return self.motivo
 
 class InscricaoProbatorio(models.Model):
+    SITUACAO_CHOICES = (
+        ("Cursando","Cursando"),
+        ("Aprovado","Aprovado"),
+        ("Reprovado", "Reprovado"),
+        ("Trancado", "Trancado")
+    )
+
     disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.CASCADE, related_name='inscricao_probatorio_disciplina_ofertada')
     probatorio = models.ForeignKey(Probatorio, on_delete=models.CASCADE, related_name="inscricao_probatorio_probatorio")
-    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    situacao = models.CharField(max_length=200, choices=SITUACAO_CHOICES, default=SITUACAO_CHOICES[0])
+    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True, blank=True)
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)
@@ -124,9 +131,17 @@ class InscricaoProbatorio(models.Model):
         return str(self.disciplina_ofertada)
 
 class Inscricao(models.Model):
+    SITUACAO_CHOICES = (
+        ("Cursando","Cursando"),
+        ("Aprovado","Aprovado"),
+        ("Reprovado", "Reprovado"),
+        ("Trancado", "Trancado")
+    )
+
     disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.CASCADE, related_name='inscricao_disciplina_ofertada')
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name="inscricao_matricula")
-    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True, blank=True)
+    situacao = models.CharField(max_length=200, choices=SITUACAO_CHOICES, default=SITUACAO_CHOICES[0])
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)

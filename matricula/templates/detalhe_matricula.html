@@ -127,6 +127,19 @@ Detalhes Matrícula
                     <div class="col">
                         <p><b>Período:</b> {{i.disciplina_ofertada.semestre}}/{{i.disciplina_ofertada.ano}}</p>
                     </div>
+                    {% if i.nota %}
+                    <div class="col">
+                        <p><b>Nota:</b> {{i.nota}}</p>
+                    </div>
+                    {% endif %}
+                    <div class="col">
+                        <p><b>Situação:</b> {{i.situacao}}<p>
+                    </div>
+                    <div class="col-1">
+                        <a class="edit-card-disciplina" href="{% url "matricula:edita_inscricao" matricula.id i.id %}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </div>
 
                 </div>
 

@@ -57,7 +57,7 @@ class GraduacaoForm(ModelForm):
 class EnsinoMedioForm(ModelForm):
     class Meta:
         model = EnsinoMedio
-        fields = '__all__'
+        fields = ['ensino_medio_instituicao', 'ensino_medio_municipio', 'ensino_medio_tipo', 'ensino_medio_bolsa', 'ensino_medio_bolsa_int_parc']
 
 class TrabalhoForm(ModelForm):
     data_termino = DateField(widget=NumberInput(attrs={'type':'date'}), required=False, label="Data de Término:")

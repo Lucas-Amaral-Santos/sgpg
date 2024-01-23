@@ -13,7 +13,6 @@ class ProbatorioMatriculaForm(forms.ModelForm):
         model = Matricula
         fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa', 'dt_matricula']
 
-
 class MatriculaForm(forms.ModelForm):
 
     class Meta:
@@ -53,13 +52,25 @@ class InscricaoForm(forms.ModelForm):
 
     class Meta:
         model = Inscricao
-        fields = ['disciplina_ofertada', 'nota']
+        fields = ['disciplina_ofertada', 'nota', 'situacao']
 
 class InscricaoProbatorioForm(forms.ModelForm):
 
     class Meta:
         model = InscricaoProbatorio
-        fields = ['disciplina_ofertada', 'nota']
+        fields = ['disciplina_ofertada', 'nota', 'situacao']
+
+class EditaInscricaoProbatorioForm(forms.ModelForm):
+
+    class Meta:
+        model = InscricaoProbatorio
+        fields = ['nota', 'situacao']
+
+class EditaInscricaoForm(forms.ModelForm):
+
+    class Meta:
+        model = Inscricao
+        fields = ['nota', 'situacao']
 
 class TrabalhoFinalForm(forms.ModelForm):
 

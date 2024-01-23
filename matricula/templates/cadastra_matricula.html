@@ -22,6 +22,9 @@
           {% elif pagina == 'Cadastra Inscrição' %}
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_inscricao' matricula.slug %}">{{pagina}}</a></li>
+          {% elif pagina == 'dita Inscrição em Matrícula' %}
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_inscricao' matricula.slug %}">{{pagina}}</a></li>
           {% elif pagina == 'Cadastra Afastamento' %}
           <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">{{pagina}}</a></li>
@@ -29,6 +32,9 @@
           <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">{{pagina}}</a></li>
           {% elif pagina == 'Cadastra Inscrição em Probatório' %}
+          <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_probatorio' probatorio.slug %}">Probatório: {{probatorio}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_inscricao_probatorio' probatorio.slug %}">{{pagina}}</a></li>
+          {% elif pagina == 'Edita Inscrição em Probatório' %}
           <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_probatorio' probatorio.slug %}">Probatório: {{probatorio}}</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_inscricao_probatorio' probatorio.slug %}">{{pagina}}</a></li>
           {% elif pagina == 'Cadastra Disciplina' %}

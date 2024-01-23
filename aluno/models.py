@@ -5,6 +5,11 @@ from config.models import UnidadeFederativa, Sexo, EstadoCivil, Etnia, Vinculo, 
 
 class EnsinoMedio(models.Model):
 
+    ENSINO_MEDIO_BOLSA_INT_PARC = (
+        ('Integral', 'Integral'),
+        ('Parcial', 'Parcial'),
+    )
+
     ENSINO_MEDIO_TIPO_CHOICES = (
         ('Pública', 'Pública'),
         ('Particular', 'Particular'),
@@ -15,6 +20,8 @@ class EnsinoMedio(models.Model):
     ensino_medio_ano_conclusao = models.IntegerField(null=True, blank=True, verbose_name="Ano de Conclusão:")
     ensino_medio_municipio = models.CharField(max_length=200, null=True, blank=True, verbose_name="Município:")
     ensino_medio_tipo = models.CharField(max_length=200, choices=ENSINO_MEDIO_TIPO_CHOICES, verbose_name='Tipo de instituição:', null=True, blank=True)
+    ensino_medio_bolsa = models.BooleanField(default=False, verbose_name="Teve bolsa")
+    ensino_medio_bolsa_int_parc = models.CharField(max_length=200, choices=ENSINO_MEDIO_BOLSA_INT_PARC, null=True, blank=True, verbose_name="Tipo de bolsa:")
 
     def __str__(self):
         return str(self.ensino_medio_instituicao)
