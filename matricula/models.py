@@ -157,7 +157,6 @@ class Inscricao(models.Model):
     class Meta:
         verbose_name_plural = "Inscrições"
 
-
 class VersaoFinal(models.Model):
     versao_final = models.BooleanField()
     dt_versao = models.DateField(auto_now=True)
@@ -170,7 +169,6 @@ class VersaoFinal(models.Model):
     
     class Meta:
         verbose_name_plural = "Versões Finais"
-
 
 class TrabalhoFinal(models.Model):
     titulo = models.CharField(max_length=200)

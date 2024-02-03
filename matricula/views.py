@@ -381,6 +381,22 @@ def cadastra_orientacao(request, matricula, trabalho_final):
 
     return render(request, 'cadastra_orientacao.html', {'form': form, 'matricula': matricula, 'trabalho_final': matricula.matricula_trabalho_final, 'pagina': 'Cadastrar Orientadores'})
 
+def cadastra_orientacao_probatorio(request, probatorio, trabalho_final):
+    probatorio = Probatorio.objects.get(slug=probatorio)
+    form = OrientacaoForm()
+
+    if(request.method == 'POST'):
+        form = OrientacaoForm(request.POST)
+        
+        if(form.is_valid()):
+            nova_orientacao = form.save(commit=False)
+            nova_orientacao.trabalho_final = probatorio.probatorio_trabalho_final
+            nova_orientacao.save()
+            return redirect("matricula:detalhe_trabalho_final_probatorio", probatorio.slug)
+
+    return render(request, 'cadastra_orientacao_probatorio.html', {'form': form, 'probatorio': probatorio, 'trabalho_final': probatorio.probatorio_trabalho_final, 'pagina': 'Cadastrar Orientadores'})
+
+
 def detalhe_trabalho_final(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
     trabalho_final = TrabalhoFinal.objects.get(matricula=matricula)
@@ -447,9 +463,17 @@ def cadastra_trabalho_probatorio(request, probatorio):
             probatorio.save()
             novo_trabalho_final.save()
 
-            return redirect('/')
+            return redirect('matricula:detalhe_trabalho_final', probatorio.slug)
     
     return render(request, 'cadastra_trabalho_final.html', {'trabalho_final_form':trabalho_final_form, 'linha_pesquisa_form': linha_pesquisa_form,  'pagina':'Cadastra Trabalho Final'})
+
+def detalhe_trabalho_final_probatorio(request, probatorio):
+    probatorio = Probatorio.objects.get(slug=probatorio)
+    trabalho_final = TrabalhoFinal.objects.get(probatorio=probatorio)
+    coorientador = None # Implementar coorientador
+
+
+    return render(request, 'detalhe_trabalho_final_probatorio.html', {'probatorio':probatorio, 'pagina':'Trabalho Final', 'trabalho_final':trabalho_final, 'coorientador': coorientador})
 
 def edita_inscricao_probatorio(request, probatorio, inscricao):
     probatorio = Probatorio.objects.get(id=probatorio)

@@ -20,5 +20,5 @@ class DisciplinaOfertada(models.Model):
     semestre = models.IntegerField()
 
     def __str__(self):
-        return str(self.disciplina)
+        return str(self.disciplina) + " - " + str(self.professor) + "(" + str(self.semestre)+ "º/" + str(self.ano) + ")"
 
