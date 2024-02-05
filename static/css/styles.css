@@ -255,6 +255,17 @@ i.fa-solid.fa-pen-to-square {
     color: #224EAC;
 }
 
+.orientador-edit .orientador-close a{
+    opacity: 100%;
+    color: rgba(34, 78, 172, 0);
+}
+
+.orientador-edit:hover .orientador-close a{
+    opacity: 100%;
+    cursor: pointer;
+    color: rgba(34, 78, 172, 1);
+}
+
 @media screen and (min-width: 500px) {
     .nota-probatorio {
         position: absolute; 

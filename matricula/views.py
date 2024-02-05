@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import AfastamentoForm, BolsaForm, InscricaoForm, MatriculaForm, ProbatorioForm, TrabalhoFinalForm, InscricaoProbatorioForm, VersaoFinalForm, NotaForm, LinhaPesquisaForm, OrientacaoForm, ExameLinguasForm, EditaInscricaoProbatorioForm, EditaInscricaoForm
-from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio
+from .forms import AfastamentoForm, BolsaForm, InscricaoForm, \
+                    MatriculaForm, ProbatorioForm, TrabalhoFinalForm, \
+                    InscricaoProbatorioForm, VersaoFinalForm, NotaForm, \
+                    LinhaPesquisaForm, OrientacaoForm, ExameLinguasForm, \
+                    EditaInscricaoProbatorioForm, EditaInscricaoForm
+from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, \
+                    TrabalhoFinal, InscricaoProbatorio, Orientacao
 from config.models import StatusOptions, LinhaPesquisa
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -396,7 +401,6 @@ def cadastra_orientacao_probatorio(request, probatorio, trabalho_final):
 
     return render(request, 'cadastra_orientacao_probatorio.html', {'form': form, 'probatorio': probatorio, 'trabalho_final': probatorio.probatorio_trabalho_final, 'pagina': 'Cadastrar Orientadores'})
 
-
 def detalhe_trabalho_final(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
     trabalho_final = TrabalhoFinal.objects.get(matricula=matricula)
@@ -502,3 +506,10 @@ def edita_inscricao(request, matricula, inscricao):
             return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
     
     return render(request, "cadastra_matricula.html", {"form": form, "matricula": matricula, "pagina": "Edita Inscrição em Matrícula"})
+
+def deleta_orientador(request, trabalho_final, orientacao):
+    orientacao = Orientacao.objects.get(id=orientacao)
+    probatorio = orientacao.trabalho_final.probatorio.slug
+    orientacao.delete()
+    messages.success(request, 'Orientador removido com sucesso!')            
+    return redirect('matricula:detalhe_trabalho_final_probatorio', probatorio=probatorio)
