@@ -36,6 +36,7 @@ class Probatorio(models.Model):
     nota = models.OneToOneField(Nota, on_delete=models.DO_NOTHING, related_name='probatorio_nota', null=True, verbose_name='Nota:')
     aluno = models.OneToOneField(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno', verbose_name='Aluno:')
     grau = models.ForeignKey(Grau, on_delete=models.CASCADE, related_name='probatorio_grau', verbose_name='Grau de Aplicação:')
+    nota_selecao = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
 
     probatorio = models.BooleanField(default=True)
     linha_pesquisa = models.ForeignKey(LinhaPesquisa, on_delete=models.DO_NOTHING, null=True, blank=True)
@@ -66,6 +67,7 @@ class Matricula(models.Model):
     dt_matricula = models.DateField(verbose_name="Data de Matrícula:")
     curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, related_name="matricula_curso", null=True, blank=True, verbose_name='Curso:')
     requisita_bolsa = models.BooleanField(verbose_name='Requisita bolsa:')
+    cotista = models.BooleanField(verbose_name='Cotista:')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0], verbose_name='Status:')
     linha_pesquisa = models.ForeignKey(LinhaPesquisa, on_delete=models.DO_NOTHING, null=True, blank=True)
     grau = models.ForeignKey(Grau, on_delete=models.CASCADE, related_name='matricula_grau', verbose_name='Grau de Aplicação:')

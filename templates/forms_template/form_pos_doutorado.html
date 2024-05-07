@@ -1,10 +1,10 @@
 {% load crispy_forms_tags %}
 
-{{form_pos_doutorado.concluido|as_crispy_field}}
+{{form_pos_doutorado.pos_doutorado|as_crispy_field}}
 <div class="row">
-    <div class="col-6">
+    {% comment %} <div class="col-6">
         {{form_pos_doutorado.ano_inicio|as_crispy_field}}
-    </div>
+    </div> {% endcomment %}
     <div class="col-6">
         {{form_pos_doutorado.ano_fim|as_crispy_field}}
     </div>

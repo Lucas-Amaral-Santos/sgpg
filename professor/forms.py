@@ -1,5 +1,5 @@
 from django.forms import ModelForm, ValidationError, DateField, NumberInput, TextInput, CharField
-from .models import Professor, Trabalho, PosDoutorado, Colegiado, Graduacao
+from .models import Professor, Trabalho, PosDoutorado, Colegiado, Graduacao, Doutorado
 from datetime import datetime
 
 class ColegiadoForm(ModelForm):
@@ -12,6 +12,11 @@ class ColegiadoForm(ModelForm):
 class PosDoutoradoForm(ModelForm):
     class Meta:
         model = PosDoutorado
+        fields = '__all__'
+
+class DoutoradoForm(ModelForm):
+    class Meta:
+        model = Doutorado
         fields = '__all__'
 
 class GraduacaoForm(ModelForm):
@@ -45,4 +50,4 @@ class ProfessorForm(ModelForm):
     class Meta:
         model = Professor
         fields = "__all__"
-        exclude = ['endereco', 'titulacao', 'graduacao', 'trabalho', 'pos_doutorado', 'slug', 'updated', 'cadastrado_por', 'membro_colegiado']
+        exclude = ['endereco', 'doutorado', 'graduacao', 'trabalho', 'pos_doutorado', 'slug', 'updated', 'cadastrado_por', 'membro_colegiado']

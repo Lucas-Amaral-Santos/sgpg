@@ -102,7 +102,7 @@ def lista_tabelas(request):
             'values': etnia.values(),
             'colunas': etnia.values()[0].keys(),
             'form': form_etnia,
-            'titulo': 'Etnia',
+            'titulo': 'Raça/Etnia',
             'tabela': 'etnia'
         }
     except:
@@ -110,7 +110,7 @@ def lista_tabelas(request):
             'values': None,
             'colunas': None,
             'form': form_etnia,
-            'titulo': 'Etnia',
+            'titulo': 'Raça/Etnia',
             'tabela': 'etnia'
         }
 

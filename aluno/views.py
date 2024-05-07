@@ -203,6 +203,7 @@ def cadastra_aluno(request, aluno=None):
                 data_inscricao = form_probatorio.cleaned_data['data_inscricao'],
                 aluno = novo_aluno,
                 grau = form_probatorio.cleaned_data['grau'],
+                nota_selecao = form_probatorio.cleaned_data['nota_selecao'],
                 cadastrado_por = request.user,
             )
 

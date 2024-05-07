@@ -89,6 +89,15 @@ Detalhes Probatório
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-6">
+                    Nota de Seleção: {{probatorio.nota_selecao}}
+                </div>
+                <div class="col-6">
+
+                </div>
+            </div>
+
         </div>
       </div>
 
@@ -228,29 +237,42 @@ Detalhes Probatório
 
     </div>
     
-    <div class= 'd-flex justify-content-end'>
-        <div class="my-2 row gap-3">
-            <div class="col-3 d-flex">
+
+    {% if probatorio.aluno.status.status == 'Desistência' %}
+    <div class= 'd-flex my-2 justify-content-end'>
+        <div class="row gap-3">
+            <div class="col-2 d-flex">
+                <a class="btn btn-primary btn-lg" 
+                type="submit" 
+                onclick="location.href='{% url 'matricula:edita_desistencia' probatorio.id %}'" 
+                data-toggle="tooltip" 
+                data-placement="right" 
+                title="Aluno desistiu do curso">
+                    <i class="fa-solid fa-person-walking-arrow-right"></i>
+                </a>
+            </div>
+            <div class="col-2 d-flex">
                 <a class="btn btn-primary btn-lg" 
                 type="submit" 
                 onclick="location.href='{% url 'matricula:cadastra_matricula' %}'" 
                 data-toggle="tooltip" 
                 data-placement="right" 
                 title="Aluno abandonou o curso">
-                <i class="fa-solid fa-door-open"></i>
-            </a>
-        </div>        
-        <div class="col-3 d-flex">
-            <a class="btn btn-primary btn-lg" 
-                type="submit" 
-                onclick="location.href='{% url 'matricula:cadastra_matricula' %}'" 
-                data-toggle="tooltip" 
-                data-placement="right" 
-                title="Aluno requisitou cancelamento de estágio probatório">
-                <i class="fa-solid fa-circle-xmark"></i>
-            </a>
-        </div> 
-            <div class="col-3 d-flex">
+                    <i class="fa-solid fa-door-open"></i>
+                </a>
+            </div>        
+            <div class="col-2 d-flex">
+                <a class="btn btn-primary btn-lg" 
+                    type="submit" 
+                    onclick="location.href='{% url 'matricula:cadastra_matricula' %}'" 
+                    data-toggle="tooltip" 
+                    data-placement="right" 
+                    title="Aluno requisitou cancelamento de estágio probatório">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </a>
+            </div> 
+            
+            <div class="col-2 d-flex">
                 <a class="btn btn-primary btn-lg" 
                     type="submit" 
                     onclick="location.href='{% url 'matricula:cadastra_matricula' %}'" 
@@ -262,6 +284,7 @@ Detalhes Probatório
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 {% include 'footer.html' %}

@@ -17,14 +17,14 @@ class MatriculaForm(forms.ModelForm):
 
     class Meta:
         model = Matricula
-        fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa', 'dt_matricula']
+        fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa', 'cotista', 'dt_matricula']
 
 class ProbatorioForm(forms.ModelForm):
     data_inscricao = forms.DateField(label="Data de Inscrição:", widget=forms.NumberInput(attrs={'type':'date'}))
 
     class Meta:
         model = Probatorio
-        fields = ['data_inscricao', 'aluno', 'grau']
+        fields = ['data_inscricao', 'aluno', 'grau', 'nota_selecao']
 
 class AlunoProbatorioForm(forms.ModelForm):
     data_inscricao = forms.DateField(label="Data de Inscrição:", widget=forms.NumberInput(attrs={'type':'date'}))
@@ -34,7 +34,7 @@ class AlunoProbatorioForm(forms.ModelForm):
     
     class Meta:
         model = Probatorio
-        fields = ['data_inscricao', 'grau']
+        fields = ['data_inscricao', 'grau', 'nota_selecao']
 
 class BolsaForm(forms.ModelForm):
 

@@ -51,10 +51,10 @@
                     <a class="nav-link nav-professor" data-toggle="tab" href="#id_graduacao">Graduação</a>
                 </li>
                   <li class="nav-item">
-                      <a class="nav-link nav-professor" data-toggle="tab" href="#id_trabalho">Trabalho</a>
+                      <a class="nav-link nav-professor" data-toggle="tab" href="#id_trabalho">Instituição</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link nav-professor" data-toggle="tab" href="#id_titulacao">Titulação</a>
+                      <a class="nav-link nav-professor" data-toggle="tab" href="#id_doutorado">Doutorado</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link nav-pos-doutorado" data-toggle="tab" href="#id_pos_doutorado">Pós Doutorado</a>
@@ -354,15 +354,15 @@
                           </div>
                       </div>
                   </div>
-                  <!-- Aba de Titulação -->
-                  <div id="id_titulacao" class="tab-pane container">
-                      <!-- Titulação -->
+                  <!-- Aba de Doutorado -->
+                  <div id="id_doutorado" class="tab-pane container">
+                      <!-- Doutorado -->
                       <div class="row">
                           <div class="col-sm-3">
-                              <h6 class="mb-0">Titulação</h6>
+                              <h6 class="mb-0">Doutorado</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                              {{professor.titulacao}}
+                              {{professor.doutorado}}
                           </div>
                       </div>
                       <hr>
@@ -372,27 +372,17 @@
                               <h6 class="mb-0">Área</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                              {{professor.titulacao.titulacao_area}}
+                              {{professor.doutorado.doutorado_area}}
                           </div>
                       </div>
                       <hr>
                       <!-- Ano -->
                       <div class="row">
                           <div class="col-sm-3">
-                              <h6 class="mb-0">Ano</h6>
+                              <h6 class="mb-0">Ano do Título</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                              {{professor.titulacao.titulacao_ano}}
-                          </div>
-                      </div>
-                      <hr>
-                      <!-- Data da Qualificação -->
-                      <div class="row">
-                          <div class="col-sm-3">
-                              <h6 class="mb-0">Data da Qualificação</h6>
-                          </div>
-                          <div class="col-sm-9 text-secondary">
-                              {{professor.titulacao.data_qualificacao}}
+                              {{professor.doutorado.doutorado_ano}}
                           </div>
                       </div>
                       <hr>
@@ -402,7 +392,7 @@
                               <h6 class="mb-0">UF</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                              {{professor.titulacao.uf}}
+                              {{professor.doutorado.uf}}
                           </div>
                       </div>
                       <hr>
@@ -412,7 +402,7 @@
                               <h6 class="mb-0">Instituição</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                              {{professor.titulacao.instituicao_titulacao}}
+                              {{professor.doutorado.instituicao_doutorado}}
                           </div>
                       </div>
                       <hr>
@@ -422,7 +412,7 @@
                               <h6 class="mb-0">Observações Geral</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                              {{professor.titulacao.obs_geral}}
+                              {{professor.doutorado.obs_geral}}
                           </div>
                       </div>
                   </div>
@@ -431,15 +421,15 @@
                     <!-- Concluído -->
                     <div class="row">
                         <div class="col-sm-3">
-                            <h6 class="mb-0">Concluído</h6>
+                            <h6 class="mb-0">Tem Pós-Doutorado?</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                            {{professor.pos_doutorado.concluido}}
+                            {{professor.pos_doutorado.pos_doutorado}}
                         </div>
                     </div>
                     <hr>
                     <!-- Ano de início -->
-                    <div class="row">
+                    {% comment %} <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Ano de Início</h6>
                         </div>
@@ -447,7 +437,7 @@
                             {{professor.pos_doutorado.ano_inicio}}
                         </div>
                     </div>
-                    <hr>
+                    <hr> {% endcomment %}
                     <!-- Ano de término -->
                     <div class="row">
                         <div class="col-sm-3">

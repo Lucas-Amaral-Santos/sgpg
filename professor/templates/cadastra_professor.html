@@ -29,13 +29,13 @@ Cadastra Professor
                 <a class="nav-link" data-toggle="tab" href="#id_graduacao">Graduação</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#id_trabalho">Trabalho</a>
+                <a class="nav-link" data-toggle="tab" href="#id_trabalho">Instituição</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#id_posdoc">Pós-Doutorado</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#id_titulacao">Titulação</a>
+                <a class="nav-link" data-toggle="tab" href="#id_doutorado">Doutorado</a>
             </li>
         </ul>
 
@@ -45,7 +45,7 @@ Cadastra Professor
                     <div class="row">
                         {% if form_professor.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;">Aba <u>Professor</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Informações Pessoais</u></p>
                             {% for field in form_professor %}
                             <tr>
                                 {% if field.errors %}
@@ -90,7 +90,7 @@ Cadastra Professor
                         {% endif %}
                         {% if form_trabalho.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;">Aba <u>Trabalho</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Instituição</u></p>
                             {% for field in form_trabalho %}
                             <tr>
                                 {% if field.errors %}
@@ -133,10 +133,10 @@ Cadastra Professor
                             {% endfor %}
                         </div>
                         {% endif %}
-                        {% if form_titulacao.errors %}
+                        {% if form_doutorado.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;">Aba <u>Titulação</u></p>
-                            {% for field in form_titulacao %}
+                            <p style="text-transform: uppercase;">Aba <u>Doutorado</u></p>
+                            {% for field in form_doutorado %}
                             <tr>
                                 {% if field.errors %}
                                 <td>{{ field.label_tag }}</td>
@@ -173,16 +173,16 @@ Cadastra Professor
                 {% include 'forms_template/form_graduacao_professor.html' with form_graduacao=form_graduacao pagina='graduacao' %}
             </div>
             <div id="id_trabalho" class="tab-pane container">
-                <h1>Trabalho</h1>
+                <h1>Instituição</h1>
                 {% include 'forms_template/form_trabalho_professor.html' with form_trabalho_professor=form_trabalho pagina='trabalho_professor' %}
             </div>
             <div id="id_posdoc" class="tab-pane container">
                 <h1>Pos-Doutorado</h1>
                 {% include 'forms_template/form_pos_doutorado.html' with form_pos_doutorado=form_pos_doutorado %}
             </div>
-            <div id="id_titulacao" class="tab-pane container">
-                <h1>Titulação</h1>
-                {% include 'forms_template/form_titulacao_professor.html' with form_titulacao=form_titulacao %}
+            <div id="id_doutorado" class="tab-pane container">
+                <h1>Doutorado</h1>
+                {% include 'forms_template/form_doutorado.html' with form_doutorado=form_doutorado %}
             </div>
         </div>
         <div class="d-flex justify-content-center">

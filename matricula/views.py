@@ -133,6 +133,7 @@ def cadastra_matricula(request):
                 numero = form.cleaned_data['numero'],
                 probatorio = form.cleaned_data['probatorio'],
                 requisita_bolsa = form.cleaned_data['requisita_bolsa'],
+                cotista = form.cleaned_data['cotista'],
                 grau = form.cleaned_data['grau'],
                 dt_matricula = form.cleaned_data['dt_matricula'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
@@ -204,6 +205,7 @@ def cadastra_probatorio(request):
             novo_probatorio = Probatorio.objects.create(
                 data_inscricao = form.cleaned_data['data_inscricao'],
                 aluno = form.cleaned_data['aluno'],
+                nota_selecao = form.cleaned_data['nota_selecao'],
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
             aluno_probatorio = novo_probatorio.aluno
@@ -513,3 +515,16 @@ def deleta_orientador(request, trabalho_final, orientacao):
     orientacao.delete()
     messages.success(request, 'Orientador removido com sucesso!')            
     return redirect('matricula:detalhe_trabalho_final_probatorio', probatorio=probatorio)
+
+
+def edita_desistencia(request, probatorio):
+
+    status_opcao = StatusOptions.objects.get_or_create(status_options='Desistência', defaults={'cor': Factory.create().hex_color()})
+
+    probatorio = Probatorio.objects.get(id=probatorio)
+    aluno_status = probatorio.aluno.status
+    aluno_status.status = status_opcao[0]
+    aluno_status.save()
+
+    messages.success(request, 'Alterado o status para desistência.')
+    return redirect("matricula:detalhe_probatorio", probatorio=probatorio.slug)

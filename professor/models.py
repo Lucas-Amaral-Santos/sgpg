@@ -1,9 +1,21 @@
 from django.db import models
-from aluno.models import Endereco, Titulacao
+from aluno.models import Endereco
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from config.models import Sexo, UnidadeFederativa, Instituicao
 from datetime import datetime
+
+class Doutorado(models.Model):
+    doutorado = models.CharField(max_length=200, null=True, blank=True, verbose_name="Doutorado:")
+    doutorado_area = models.CharField(max_length=200, null=True, blank=True, verbose_name="Área:")
+    doutorado_ano = models.IntegerField(null=True, blank=True, verbose_name="Ano do Título:")
+    uf = models.CharField(max_length=2, null=True, blank=True, verbose_name="UF:")
+    instituicao_doutorado = models.CharField(max_length=200, null=True, blank=True, verbose_name="Instituição:")
+    obs_geral = models.TextField(null=True, blank=True, verbose_name="Observações Gerais")
+
+    def __str__(self):
+        return str(self.doutorado)
+
 
 class Colegiado(models.Model):
       colegiado_membro = models.BooleanField(default=False)
@@ -17,8 +29,8 @@ class Colegiado(models.Model):
                   return 'Não Membro'
 
 class PosDoutorado(models.Model):
-      concluido = models.BooleanField(verbose_name='Concluído:')
-      ano_inicio = models.IntegerField(null=True, blank=True, verbose_name='Ano de início:')
+      pos_doutorado = models.BooleanField(verbose_name="Tem Pós-Doutorado?")
+      # ano_inicio = models.IntegerField(null=True, blank=True, verbose_name='Ano de início:')
       ano_fim = models.IntegerField(null=True, blank=True, verbose_name='Ano de término:')
       instituicao_posdoc = models.ForeignKey(Instituicao, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name='Instituição de Pós-doutorado:')
       pais = models.CharField(max_length=200, null=True, blank=True, verbose_name='País:')
@@ -71,7 +83,7 @@ class Professor(models.Model):
       tipo_docente = models.CharField(max_length=100, choices=TIPO_DOCENTE_CHOICES, null=True, blank=True, verbose_name='Tipo de docente:')
       
       endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
-      titulacao = models.OneToOneField(Titulacao, on_delete=models.DO_NOTHING)
+      doutorado = models.OneToOneField(Doutorado, on_delete=models.DO_NOTHING)
       graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, related_name="professor_graduacao")
       trabalho = models.ForeignKey(Trabalho, on_delete=models.DO_NOTHING, related_name="professor_trabalho")
       pos_doutorado = models.ForeignKey(PosDoutorado, on_delete=models.DO_NOTHING, related_name="professor_pos_doutorado")

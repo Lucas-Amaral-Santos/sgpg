@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import ProfessorForm, TrabalhoForm, PosDoutoradoForm, ColegiadoForm, GraduacaoForm
-from  .models import Professor, Trabalho, PosDoutorado, Colegiado, Graduacao
+from .forms import ProfessorForm, TrabalhoForm, PosDoutoradoForm, ColegiadoForm, GraduacaoForm, DoutoradoForm
+from  .models import Professor, Trabalho, PosDoutorado, Colegiado, Graduacao, Doutorado
 from django.contrib.auth.models import User
 
-from aluno.models import Endereco, Titulacao
+from aluno.models import Endereco
 from aluno.forms import EnderecoForm, TitulacaoProfessorForm
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -17,7 +17,7 @@ def cadastra_professor(request, professor=None):
     form_trabalho = TrabalhoForm()
     form_pos_doutorado = PosDoutoradoForm()
     form_endereco = EnderecoForm()
-    form_titulacao = TitulacaoProfessorForm()
+    form_doutorado = DoutoradoForm()
 
     if (professor is not None):
         pagina = "Atualizar Professor"
@@ -28,7 +28,7 @@ def cadastra_professor(request, professor=None):
         form_trabalho = TrabalhoForm(instance=professor.trabalho)
         form_pos_doutorado = PosDoutoradoForm(instance=professor.pos_doutorado)
         form_endereco = EnderecoForm(instance=professor.endereco)
-        form_titulacao = TitulacaoProfessorForm(instance=professor.titulacao)
+        form_doutorado = DoutoradoForm(instance=professor.doutorado)
 
         if request.method == "POST" and pagina == 'Atualizar Professor':
             form_professor = ProfessorForm(request.POST, instance=professor)
@@ -37,12 +37,12 @@ def cadastra_professor(request, professor=None):
             form_trabalho = TrabalhoForm(request.POST, instance=professor.trabalho)
             form_pos_doutorado = PosDoutoradoForm(request.POST, instance=professor.pos_doutorado)
             form_endereco = EnderecoForm(request.POST, instance=professor.endereco)
-            form_titulacao = TitulacaoProfessorForm(request.POST, instance=professor.titulacao)
+            form_doutorado = DoutoradoForm(request.POST, instance=professor.doutorado)
 
             if form_professor.is_valid() and form_colegiado.is_valid() and \
                 form_graduacao.is_valid() and form_trabalho.is_valid() and \
                 form_pos_doutorado.is_valid() and form_endereco.is_valid() and \
-                form_titulacao.is_valid():
+                form_doutorado.is_valid():
 
                 form_professor.save()
                 form_colegiado.save()
@@ -50,7 +50,7 @@ def cadastra_professor(request, professor=None):
                 form_trabalho.save()
                 form_pos_doutorado.save()
                 form_endereco.save()
-                form_titulacao.save()
+                form_doutorado.save()
 
                 messages.success(request, 'Professor atualizado com sucesso!')
                 return redirect('professor:detalhes_professor', professor=professor.slug)
@@ -62,11 +62,11 @@ def cadastra_professor(request, professor=None):
         form_trabalho = TrabalhoForm(request.POST)
         form_pos_doutorado = PosDoutoradoForm(request.POST)
         form_endereco = EnderecoForm(request.POST)
-        form_titulacao = TitulacaoProfessorForm(request.POST)
+        form_doutorado = DoutoradoForm(request.POST)
 
         if form_professor.is_valid() and form_colegiado.is_valid() and \
             form_graduacao.is_valid() and form_trabalho.is_valid() and \
-            form_pos_doutorado.is_valid() and form_titulacao.is_valid() and \
+            form_pos_doutorado.is_valid() and form_doutorado.is_valid() and \
             form_endereco.is_valid():
             
             novo_colegiado = Colegiado.objects.create(
@@ -75,13 +75,13 @@ def cadastra_professor(request, professor=None):
                 colegiado_data_saida = form_colegiado.cleaned_data['colegiado_data_saida'],
             )
 
-            novo_titulacao = Titulacao.objects.create(
-                titulacao = form_titulacao.cleaned_data['titulacao'],
-                titulacao_area = form_titulacao.cleaned_data['titulacao_area'],
-                titulacao_ano = form_titulacao.cleaned_data['titulacao_ano'],
-                uf = form_titulacao.cleaned_data['uf'],
-                instituicao_titulacao = form_titulacao.cleaned_data['instituicao_titulacao'],
-                obs_geral = form_titulacao.cleaned_data['obs_geral'],
+            novo_doutorado = Doutorado.objects.create(
+                doutorado = form_doutorado.cleaned_data['doutorado'],
+                doutorado_area = form_doutorado.cleaned_data['doutorado_area'],
+                doutorado_ano = form_doutorado.cleaned_data['doutorado_ano'],
+                uf = form_doutorado.cleaned_data['uf'],
+                instituicao_doutorado = form_doutorado.cleaned_data['instituicao_doutorado'],
+                obs_geral = form_doutorado.cleaned_data['obs_geral'],
             )
             
             novo_endereco = Endereco.objects.create(
@@ -131,13 +131,13 @@ def cadastra_professor(request, professor=None):
                 trabalho = novo_trabalho,
                 graduacao = nova_graduacao,
                 pos_doutorado = novo_pos_doutorado,
-                titulacao = novo_titulacao,
+                doutorado = novo_doutorado,
                 endereco = novo_endereco,
                 membro_colegiado = novo_colegiado,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
             novo_colegiado.save()
-            novo_titulacao.save()
+            novo_doutorado.save()
             novo_endereco.save()
             novo_pos_doutorado.save()
             novo_trabalho.save()
@@ -147,9 +147,9 @@ def cadastra_professor(request, professor=None):
             messages.success(request, 'Professor cadastrado com sucesso!')            
             return redirect('professor:detalhes_professor', professor=novo_professor.slug)
         
-        return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao, 'pagina':pagina})
+        return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_doutorado': form_doutorado, 'pagina':pagina})
     
-    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_titulacao': form_titulacao, 'pagina':'Cadastrar Professor'})
+    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_colegiado': form_colegiado, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_doutorado': form_doutorado, 'pagina':'Cadastrar Professor'})
 
 def lista_professor(request):
     professores = Professor.objects.all().order_by('nome')

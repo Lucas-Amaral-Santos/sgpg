@@ -107,7 +107,7 @@ class Aluno(models.Model):
     identidade_orgao = models.CharField(max_length=100, verbose_name="Orgão expedidor:")
     sexo = models.ForeignKey(Sexo, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Sexo:")
     email = models.EmailField(null=True, blank=True, verbose_name="Email:")
-    etnia = models.ForeignKey(Etnia, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Etnia:")
+    etnia = models.ForeignKey(Etnia, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Raça/Etnia:")
     portador_deficiencia = models.BooleanField()
     portador_deficiencia_qual = models.CharField(max_length=200, verbose_name="Qual deficiência:*", blank=True, null=True)
     foto = models.ImageField(null=True, blank=True, upload_to='img')
