@@ -237,10 +237,12 @@ Detalhes Probatório
 
     </div>
     
+    {% if probatorio.aluno.status.status != "Desistência" %}
 
-    {% if probatorio.aluno.status.status == 'Desistência' %}
     <div class= 'd-flex my-2 justify-content-end'>
         <div class="row gap-3">
+
+
             <div class="col-2 d-flex">
                 <a class="btn btn-primary btn-lg" 
                 type="submit" 
@@ -251,6 +253,8 @@ Detalhes Probatório
                     <i class="fa-solid fa-person-walking-arrow-right"></i>
                 </a>
             </div>
+
+
             <div class="col-2 d-flex">
                 <a class="btn btn-primary btn-lg" 
                 type="submit" 
@@ -261,6 +265,8 @@ Detalhes Probatório
                     <i class="fa-solid fa-door-open"></i>
                 </a>
             </div>        
+
+
             <div class="col-2 d-flex">
                 <a class="btn btn-primary btn-lg" 
                     type="submit" 
@@ -271,6 +277,8 @@ Detalhes Probatório
                     <i class="fa-solid fa-circle-xmark"></i>
                 </a>
             </div> 
+
+
             
             <div class="col-2 d-flex">
                 <a class="btn btn-primary btn-lg" 
@@ -282,9 +290,14 @@ Detalhes Probatório
                     <i class="fa-solid fa-graduation-cap"></i>
                 </a>
             </div>
+
+
         </div>
     </div>
+
+
     {% endif %}
+
 </div>
 
 {% include 'footer.html' %}

@@ -279,7 +279,7 @@ def cadastra_bolsa(request, matricula):
                 nome = form.cleaned_data['nome'],
                 agencia = form.cleaned_data['agencia'],
                 dt_inicio = form.cleaned_data['dt_inicio'],
-                iniciacao_cientifica = form.cleaned_data['iniciacao_cientifica'],
+                dt_fim = form.cleaned_data['dt_fim'],
                 matricula = matricula
             )
 
@@ -469,7 +469,7 @@ def cadastra_trabalho_probatorio(request, probatorio):
             probatorio.save()
             novo_trabalho_final.save()
 
-            return redirect('matricula:detalhe_trabalho_final', probatorio.slug)
+            return redirect('matricula:detalhe_trabalho_final_probatorio', probatorio.slug)
     
     return render(request, 'cadastra_trabalho_final.html', {'trabalho_final_form':trabalho_final_form, 'linha_pesquisa_form': linha_pesquisa_form,  'pagina':'Cadastra Trabalho Final'})
 

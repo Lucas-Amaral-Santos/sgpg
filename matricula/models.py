@@ -91,7 +91,7 @@ class Bolsa(models.Model):
     nome = models.CharField(max_length=200, verbose_name='Bolsa:')
     agencia = models.CharField(max_length=200, verbose_name='Agência:')
     dt_inicio = models.DateField(verbose_name='Data de início:')
-    iniciacao_cientifica = models.BooleanField(verbose_name='Iniciação científica:')
+    dt_final = models.DateField(verbose_name='Data Final:')
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name='bolsa_matricula', verbose_name='Matrícula:')
     dt_cadastro = models.DateTimeField(auto_now=True)
 

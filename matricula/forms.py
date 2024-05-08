@@ -14,6 +14,7 @@ class ProbatorioMatriculaForm(forms.ModelForm):
         fields = ['numero', 'probatorio', 'grau', 'requisita_bolsa', 'dt_matricula']
 
 class MatriculaForm(forms.ModelForm):
+    dt_matricula = forms.DateField(label="Data da Matrícula:", widget=forms.NumberInput(attrs={'type':'date'}))
 
     class Meta:
         model = Matricula
@@ -37,10 +38,15 @@ class AlunoProbatorioForm(forms.ModelForm):
         fields = ['data_inscricao', 'grau', 'nota_selecao']
 
 class BolsaForm(forms.ModelForm):
+    dt_inicio = forms.DateField(label="Data de Início:", widget=forms.NumberInput(attrs={'type':'date'}))
+    dt_final = forms.DateField(label="Data Final:", widget=forms.NumberInput(attrs={'type':'date'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     class Meta:
         model = Bolsa
-        fields = ['iniciacao_cientifica', 'nome', 'agencia', 'dt_inicio']
+        fields = ['nome', 'agencia', 'dt_inicio', 'dt_final']
 
 class AfastamentoForm(forms.ModelForm):
 

@@ -94,8 +94,8 @@ def cadastra_professor(request, professor=None):
             )
 
             novo_pos_doutorado = PosDoutorado.objects.create(
-                concluido =  form_pos_doutorado.cleaned_data['concluido'],
-                ano_inicio = form_pos_doutorado.cleaned_data['ano_inicio'],
+                pos_doutorado =  form_pos_doutorado.cleaned_data['pos_doutorado'],
+                # ano_inicio = form_pos_doutorado.cleaned_data['ano_inicio'],
                 ano_fim = form_pos_doutorado.cleaned_data['ano_fim'],
                 instituicao_posdoc = form_pos_doutorado.cleaned_data['instituicao_posdoc'],
                 pais = form_pos_doutorado.cleaned_data['pais'],

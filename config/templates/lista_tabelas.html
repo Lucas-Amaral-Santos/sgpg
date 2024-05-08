@@ -18,7 +18,7 @@ Tabelas Auxiliares
             <div class="border p-2 w-25">
                 <ul class="nav nav-pills nav-stacked flex-row gap-1 justify-content-center"> 
                     {% for k,v in context.items %}
-                    <li><a href="#{{v.tabela}}" class="btn btn-primary" style="width:300px;" data-toggle="pill">{{v.titulo}}</a></li>    
+                    <li><a href="#{{v.tabela}}" class="btn btn-primary" style="min-width:190px;" data-toggle="pill">{{v.titulo}}</a></li>    
                     {% endfor %}
                 </ul>
             </div>
