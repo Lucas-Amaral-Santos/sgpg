@@ -20,9 +20,15 @@ Detalhes Probatório
             </ol>
           </nav>
         <h1 class='text-center'>Probatório</h1>
-        <h2>{{data_final_remanescente}}</h2>
-        
-        
+        {% if probatorio.aluno.status.status.status_options != 'Desistência' %}
+        {% if data_final_remanescente < 0 %} 
+        <span class="text-danger">O aluno já atingiu a data limite de probatório há <b>{{ data_final_remanescente }} dias</b>!</span>
+        <a href="" class="btn btn-danger">Prorrogar</a>
+        {% else  %}
+        <span class="text-success">Restam <b>{{ data_final_remanescente }} dias</b> para a data limite do probatório!</span>
+        {% endif %}
+        {% endif %}
+
         {% if probatorio.nota%}
         <div class="d-flex justify-content-center nota-probatorio">
             <div class="card p-4  border-1 rounded-1">
@@ -77,9 +83,15 @@ Detalhes Probatório
                 <div class="col-6">
                     UF: {{probatorio.aluno.endereco.uf}}
                 </div>
+                {% if probatorio.aluno.status.status.status_options != 'Desistência' %}
                 <div class="col-6 truncate" {% if trabalho_final is not None %} data-toggle="tooltip" data-placement="right" title="{{trabalho_final}}" {% endif %}>
                     Título do Projeto: {% if trabalho_final == None %}<a href="{% url 'matricula:cadastra_trabalho_probatorio' probatorio.slug %}" style="color:dodgerblue;">Adicionar Projeto  <i class='fas fa-exclamation-circle' style='font-size:24px;color:red'></i></a>{% else %}<a class='link-projeto' href="{% url 'matricula:detalhe_trabalho_final_probatorio' probatorio.slug %}"><b>{{ trabalho_final }}</b><a>{% endif %}
                 </div>
+                {% else %}
+                <div class="col-6 truncate" {% if trabalho_final is not None %} data-toggle="tooltip" data-placement="right" title="{{trabalho_final}}" {% endif %}>
+                    Título do Projeto: {% if trabalho_final == None %}<span class="text-danger">Não informado <span>{% else %}<a class='link-projeto' href="{% url 'matricula:detalhe_trabalho_final_probatorio' probatorio.slug %}"><b>{{ trabalho_final }}</b><a>{% endif %}
+                </div>
+                {% endif %}
             </div>
             <div class="row">
                 <div class="col-6">
@@ -102,14 +114,15 @@ Detalhes Probatório
         </div>
       </div>
 
+      {% if probatorio.aluno.status.status.status_options != 'Desistência' %}
       <div class="row my-3 gap-2">
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_inscricao_probatorio' probatorio.slug %}">Adicionar Disciplina</a>
         <a class="btn btn-success col" data-toggle="modal" data-target="#id_nota_exame">Exame de Línguas</a>
         {% if not probatorio.nota %}
         <a class="btn btn-success col" data-toggle="modal" data-target="#id_nota_probatorio">Nota</a>
         {% endif %}
-    </div>
-
+        </div>
+        {% endif %}
 
     <div id="id_nota_probatorio" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-xl" role="document">
@@ -239,9 +252,7 @@ Detalhes Probatório
     </div>
     
 
-    {{probatorio.aluno.status.status}}
-
-    {% if probatorio.aluno.status.status != 'Desistência' %}
+    {% if probatorio.aluno.status.status.status_options != 'Desistência' %}
 
     <div class= 'd-flex my-2 justify-content-end'>
         <div class="row gap-3">
