@@ -237,7 +237,10 @@ Detalhes Probatório
 
     </div>
     
-    {% if probatorio.aluno.status.status != "Desistência" %}
+
+    {{probatorio.aluno.status.status}}
+
+    {% if probatorio.aluno.status.status != 'Desistência' %}
 
     <div class= 'd-flex my-2 justify-content-end'>
         <div class="row gap-3">
@@ -294,7 +297,6 @@ Detalhes Probatório
 
         </div>
     </div>
-
 
     {% endif %}
 

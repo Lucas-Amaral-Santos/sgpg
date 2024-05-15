@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
 from disciplina.forms import DisciplinaForm, DisciplinaOfertadaForm
 from disciplina.models import Disciplina, DisciplinaOfertada
-from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, StatusOptions, LinhaPesquisa, Instituicao, Colegio, InstituicaoResidencia, Grau, Linguas
-from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, VinculoForm, StatusOptionsForm, LinhaPesquisaForm, InstituicaoForm, ColegioForm, InstituicaoResidenciaForm, GrauForm, LinguasForm
+from .models import UnidadeFederativa, Sexo, Etnia, EstadoCivil, Vinculo, \
+                    StatusOptions, LinhaPesquisa, Instituicao, Colegio, \
+                    InstituicaoResidencia, Grau, Linguas, AgenciaFomento
+from .forms import UnidadeFederativaForm, SexoForm, EtniaForm, EstadoCivilForm, \
+                    VinculoForm, StatusOptionsForm, LinhaPesquisaForm, InstituicaoForm, \
+                    ColegioForm, InstituicaoResidenciaForm, GrauForm, LinguasForm, AgenciaFomentoForm
 from django.contrib import messages
 
 
@@ -21,6 +25,7 @@ def lista_tabelas(request):
     form_instituicao_residencia = InstituicaoResidenciaForm()
     form_grau = GrauForm()
     form_linguas = LinguasForm()
+    form_agencia_fomento = AgenciaFomentoForm()
 
     context = {}
 
@@ -278,6 +283,24 @@ def lista_tabelas(request):
             'tabela': 'linguas'
         }
 
+    try:
+        agencia_fomento = AgenciaFomento.objects.all()
+        context['agencia_fomento'] = {
+            'values': agencia_fomento.values(),
+            'colunas': agencia_fomento.values()[0].keys(),
+            'form': form_agencia_fomento,
+            'titulo': 'Agência de Fomento',
+            'tabela': 'agencia_fomento'
+        }
+    except:
+        context['agencia_fomento'] = {
+            'values': None,
+            'colunas': None,
+            'form': form_agencia_fomento,
+            'titulo': 'Agência de Fomento',
+            'tabela': 'agencia_fomento'
+        }
+
     if(request.method == 'POST'):
         form_disciplina = DisciplinaForm(request.POST)
         if(form_disciplina.is_valid()):
@@ -439,6 +462,17 @@ def lista_tabelas(request):
             )    
             novo_linguas.save()
             messages.success(request, 'Nova lingua cadastrado com sucesso!')
+            return redirect('config:lista_tabelas')
+        
+    if(request.method == 'POST'):
+        form_agencia_fomento = AgenciaFomentoForm(request.POST)
+        if(form_agencia_fomento.is_valid()):
+            novo_agencia_fomento = AgenciaFomento.objects.create(
+                agencia_fomento = form_agencia_fomento.cleaned_data['agencia_fomento'],
+                cor = form_agencia_fomento.cleaned_data['cor'],
+            )    
+            novo_agencia_fomento.save()
+            messages.success(request, 'Nova agência de fomento cadastrado com sucesso!')
             return redirect('config:lista_tabelas')
 
     return render(request, "lista_tabelas.html", {'context': context})

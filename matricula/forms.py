@@ -46,7 +46,7 @@ class BolsaForm(forms.ModelForm):
 
     class Meta:
         model = Bolsa
-        fields = ['nome', 'agencia', 'dt_inicio', 'dt_final']
+        fields = ['nome', 'bolsa_agencia', 'dt_inicio', 'dt_final']
 
 class AfastamentoForm(forms.ModelForm):
 

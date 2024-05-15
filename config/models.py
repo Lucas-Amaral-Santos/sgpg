@@ -89,3 +89,9 @@ class Linguas(models.Model):
       def __str__(self):
             return str(self.lingua)
       
+class AgenciaFomento(models.Model):
+      agencia_fomento = models.CharField(max_length=200)
+      cor = RGBColorField(default='#000000')
+
+      def __str__(self):
+            return str(self.agencia_fomento)

@@ -5,7 +5,7 @@ from disciplina.models import DisciplinaOfertada
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
-from config.models import LinhaPesquisa, Grau, Linguas
+from config.models import LinhaPesquisa, Grau, Linguas, AgenciaFomento
 
 class Curso(models.Model):
 
@@ -89,7 +89,7 @@ class Matricula(models.Model):
 
 class Bolsa(models.Model):
     nome = models.CharField(max_length=200, verbose_name='Bolsa:')
-    agencia = models.CharField(max_length=200, verbose_name='Agência:')
+    bolsa_agencia = models.ForeignKey(AgenciaFomento, on_delete=models.DO_NOTHING, related_name='bolsa_agencia', verbose_name='Agência de Fomento:')
     dt_inicio = models.DateField(verbose_name='Data de início:')
     dt_final = models.DateField(verbose_name='Data Final:')
     matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name='bolsa_matricula', verbose_name='Matrícula:')
@@ -151,7 +151,7 @@ class Inscricao(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.id)
-        super(Inscricao, self).save(*args, **kwargs)
+        super(Inscricao, self).save(*args, **kwargs) 
 
     def __str__(self):
         return str(self.disciplina_ofertada)

@@ -277,9 +277,9 @@ def cadastra_bolsa(request, matricula):
         if(form.is_valid()):
             nova_bolsa = Bolsa.objects.create(
                 nome = form.cleaned_data['nome'],
-                agencia = form.cleaned_data['agencia'],
+                bolsa_agencia = form.cleaned_data['bolsa_agencia'],
                 dt_inicio = form.cleaned_data['dt_inicio'],
-                dt_fim = form.cleaned_data['dt_fim'],
+                dt_final = form.cleaned_data['dt_final'],                                
                 matricula = matricula
             )
 
