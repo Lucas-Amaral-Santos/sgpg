@@ -16,6 +16,9 @@ from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from datetime            import datetime
 from faker import Factory
+from datetime import datetime
+from dateutil.relativedelta import relativedelta   
+
 
 def gera_historico(request, matricula):
 
@@ -239,6 +242,24 @@ def detalhe_probatorio(request, probatorio):
     inscricoes = InscricaoProbatorio.objects.filter(probatorio=probatorio.slug)
     form_exame = ExameLinguasForm()
     form_nota = NotaForm()
+    
+    data_final_probatorio = None
+    print(probatorio.grau)
+    print(probatorio.data_inscricao)
+    data_temp = datetime(probatorio.data_inscricao.year, probatorio.data_inscricao.month, probatorio.data_inscricao.day)
+    print(data_temp)
+    if (probatorio.grau.grau == "Mestrado"):
+        print("Cheguei aqui================================================")
+        data_final_probatorio = data_temp + relativedelta(years=2)
+    elif (probatorio.grau.grau == "Doutorado"):
+        print("Cheguei ali================================================")
+
+    print("DATA FINAL PROBATÓRIO")
+    print(data_final_probatorio)
+
+    data_final_remanescente = data_final_probatorio - datetime.now() 
+    print(data_final_remanescente.days)
+
     try:
         trabalho_final = TrabalhoFinal.objects.get(probatorio=probatorio)
     except TrabalhoFinal.DoesNotExist:
@@ -265,7 +286,7 @@ def detalhe_probatorio(request, probatorio):
             return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota}) 
 
 
-    return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota}) 
+    return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota, 'data_final_remanescente': data_final_remanescente.days}) 
 
 def cadastra_bolsa(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
