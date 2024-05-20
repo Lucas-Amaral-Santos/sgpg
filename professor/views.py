@@ -156,13 +156,12 @@ def lista_professor(request):
 def detalhes_professor(request, professor):
 
     professor = Professor.objects.get(slug=professor)
+    colegiados = professor.membro_colegiado.all()
     form_colegiado = ColegiadoForm()
 
     if request.method == 'POST':
-        print("Form é POST")
         form_colegiado = ColegiadoForm(request.POST)
         if form_colegiado.is_valid():
-            print("Form é valido")
             novo_colegiado = Colegiado.objects.create(
                 colegiado_data_entrada = form_colegiado.cleaned_data['colegiado_data_entrada'],
                 colegiado_data_saida = form_colegiado.cleaned_data['colegiado_data_saida'],
@@ -173,7 +172,7 @@ def detalhes_professor(request, professor):
             messages.success(request, 'Colegiado atualizado com sucesso!')
             return redirect('professor:detalhes_professor', professor=professor.slug)
 
-    return render(request, 'detalhes_professor.html', {'professor':professor, 'form_colegiado':form_colegiado, 'pagina': 'Detalhes Professor'})
+    return render(request, 'detalhes_professor.html', {'professor':professor, 'colegiados':colegiados, 'form_colegiado':form_colegiado, 'pagina': 'Detalhes Professor'})
 
 def detalhes_colegiado(request, membros_ativos=True):
     colegiado = Professor.objects.filter(membro_colegiado__colegiado_membro=True)
