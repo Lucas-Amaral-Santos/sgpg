@@ -18,15 +18,20 @@ class Doutorado(models.Model):
 
 
 class Colegiado(models.Model):
-      colegiado_membro = models.BooleanField(default=False)
-      colegiado_data_entrada = models.DateField(null=True, blank=True)
+
+      STATUS_COLEGIADO_CHOICES = (
+            ("Titular", "Titular"),
+            ("Suplente", "Suplente"),
+      )
+      colegiado_data_entrada = models.DateField()
       colegiado_data_saida = models.DateField(null=True, blank=True)
+      status_membro = models.CharField(max_length=100, choices=STATUS_COLEGIADO_CHOICES, verbose_name='Status:')
 
       def __str__(self):
-            if self.colegiado_membro:
-                  return 'Membro'
-            else:
+            if self.colegiado_data_saida:
                   return 'Não Membro'
+            else:
+                  return 'Membro'
 
 class PosDoutorado(models.Model):
       pos_doutorado = models.BooleanField(verbose_name="Tem Pós-Doutorado?")
@@ -87,7 +92,7 @@ class Professor(models.Model):
       graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, related_name="professor_graduacao")
       trabalho = models.ForeignKey(Trabalho, on_delete=models.DO_NOTHING, related_name="professor_trabalho")
       pos_doutorado = models.ForeignKey(PosDoutorado, on_delete=models.DO_NOTHING, related_name="professor_pos_doutorado")
-      membro_colegiado = models.ForeignKey(Colegiado, on_delete=models.DO_NOTHING, related_name="professor_membro_colegiado")
+      membro_colegiado = models.ManyToManyField(Colegiado, blank=True)
 
       slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
       updated = models.DateTimeField(auto_now=True)

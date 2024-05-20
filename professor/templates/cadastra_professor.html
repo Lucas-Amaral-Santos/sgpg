@@ -40,7 +40,7 @@ Cadastra Professor
         </ul>
 
 
-        {% if form_professor.errors or form_colegiado.errors or form_trabalho.errors or form_pos_doutorado.errors or form_endereco.errors or form_titulacao.errors %}
+        {% if form_professor.errors or form_trabalho.errors or form_pos_doutorado.errors or form_endereco.errors or form_titulacao.errors %}
                 <div class="alert alert-danger mt-3 text-sm">
                     <div class="row">
                         {% if form_professor.errors %}
@@ -58,21 +58,7 @@ Cadastra Professor
                             {% endfor %}
                         </div>
                         {% endif %}                        
-                        {% if form_colegiado.errors %}
-                        <div class="col">
-                            <p style="text-transform: uppercase;">Aba <u>Colegiado</u></p>
-                            {% for field in form_colegiado  %}
-                            <tr>
-                                {% if field.errors %}
-                                <td>{{ field.label_tag }}</td>
-                                <td>                                    
-                                    {{field.errors}}
-                                </td>
-                                {% endif %}
-                            </tr>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
+                        
                         {% if form_graduacao.errors %}
                         <div class="col">
                             <p style="text-transform: uppercase;">Aba <u>Graduação</u></p>
@@ -160,8 +146,7 @@ Cadastra Professor
             <div id="id_info" class="tab-pane container active">
                 <h1>Informações Pessoais</h1>
                 {% include 'forms_template/form_professor.html' with form_professor=form_professor %}
-                <h1>Colegiado</h1>
-                {% include 'forms_template/form_colegiado.html' with form_colegiado=form_colegiado %}
+                
             </div>
             <div id="id_endereco" class="tab-pane container">
                 <h1>Endereço</h1>
