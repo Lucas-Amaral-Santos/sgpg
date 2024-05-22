@@ -157,6 +157,7 @@ def detalhes_professor(request, professor):
 
     professor = Professor.objects.get(slug=professor)
     colegiados = professor.membro_colegiado.all()
+    membro = professor.membro_colegiado.last
     form_colegiado = ColegiadoForm()
 
     if request.method == 'POST':
@@ -172,7 +173,7 @@ def detalhes_professor(request, professor):
             messages.success(request, 'Colegiado atualizado com sucesso!')
             return redirect('professor:detalhes_professor', professor=professor.slug)
 
-    return render(request, 'detalhes_professor.html', {'professor':professor, 'colegiados':colegiados, 'form_colegiado':form_colegiado, 'pagina': 'Detalhes Professor'})
+    return render(request, 'detalhes_professor.html', {'professor':professor, 'colegiados':colegiados, 'form_colegiado':form_colegiado, 'pagina': 'Detalhes Professor', 'membro': membro})
 
 def detalhes_colegiado(request, membros_ativos=True):
     colegiado = Professor.objects.filter(membro_colegiado__colegiado_membro=True)
@@ -219,3 +220,19 @@ def delete_professor(request, professor):
     professor.delete()
     messages.success(request, 'Professor apagado do sistema!')
     return redirect('professor:lista_professor')
+
+
+def edita_colegiado(request, colegiado):
+    colegiado = Colegiado.objects.get(id=colegiado)
+    professor = colegiado.professor_colegiado.first()
+    form_colegiado = ColegiadoForm(instance=colegiado)
+
+    print(professor.nome)
+
+    if request.method == 'POST':
+        form_colegiado = ColegiadoForm(request.POST, instance=colegiado)
+        if form_colegiado.is_valid():
+            form_colegiado.save()
+            messages.success(request, 'Colegiado atualizado com sucesso!')
+            return redirect('professor:detalhes_professor', professor=professor.slug)
+    return render(request, 'edita_colegiado.html', {'form': form_colegiado, 'professor':professor})

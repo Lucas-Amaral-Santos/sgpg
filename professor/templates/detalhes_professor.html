@@ -48,17 +48,21 @@
                             {% if not colegiados %}
                             <p class="text-secondary mb-0"><i>Nenhuma participação deste professor</i></p>
                             {% else %}
-                                
+                                <p>{{membro}}</p>
                                 <table class="table">
                                     <thead>
                                         <th>Entrada</th>
                                         <th>Saída</th>
+                                        <th>Status</th>
+                                        <th></th>
                                     <thead>
                                     <tbody>
                                         {% for c in colegiados %}
                                         <tr>
                                         <td>{{c.colegiado_data_entrada|date:"d/m/Y"}}</td>
                                         <td>{{c.colegiado_data_saida|date:"d/m/Y"}}</td>
+                                        <td>{{c.status_membro}}</td>
+                                        <td><a href="{% url "professor:edita_colegiado" c.id%}"><i class="fas fa-edit"></i></a></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -564,7 +568,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- 
   ==================================================================

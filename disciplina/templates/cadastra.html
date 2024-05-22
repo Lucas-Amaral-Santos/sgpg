@@ -16,8 +16,15 @@ Cadastra Disciplina
         <form action="" method="POST" class="cadastro_form">
             {% csrf_token %}
             {{form|crispy}}
-          
-            <input type="submit">
+            
+            <div class="modal-footer row mt-2">
+                <div class="col-3">
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-primary" type="submit" >Salvar</button>
+                </div>
+            </div>
+            
         </form>
     </div>
 </div>

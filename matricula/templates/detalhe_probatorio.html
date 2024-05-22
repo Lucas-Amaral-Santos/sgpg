@@ -21,12 +21,12 @@ Detalhes Probatório
           </nav>
         <h1 class='text-center'>Probatório</h1>
         {% if probatorio.aluno.status.status.status_options != 'Desistência' %}
-        {% if data_final_remanescente < 0 %} 
-        <span class="text-danger">O aluno já atingiu a data limite de probatório há <b>{{ data_final_remanescente }} dias</b>!</span>
-        <a href="" class="btn btn-danger">Prorrogar</a>
-        {% else  %}
-        <span class="text-success">Restam <b>{{ data_final_remanescente }} dias</b> para a data limite do probatório!</span>
-        {% endif %}
+            {% if data_final_remanescente <= 0 %} 
+                <span class="text-danger">O aluno já atingiu a data limite de probatório há <b>{{ data_final_remanescente }} dias</b>!</span>
+                <a href="" class="btn btn-danger">Prorrogar</a>
+            {% elif data_final_remanescente > 0  %}
+                <span class="text-success">Restam <b>{{ data_final_remanescente }} dias</b> para a data limite do probatório!</span>
+            {% endif %}
         {% endif %}
 
         {% if probatorio.nota%}

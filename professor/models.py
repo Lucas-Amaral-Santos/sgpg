@@ -92,7 +92,7 @@ class Professor(models.Model):
       graduacao = models.OneToOneField(Graduacao, on_delete=models.DO_NOTHING, related_name="professor_graduacao")
       trabalho = models.ForeignKey(Trabalho, on_delete=models.DO_NOTHING, related_name="professor_trabalho")
       pos_doutorado = models.ForeignKey(PosDoutorado, on_delete=models.DO_NOTHING, related_name="professor_pos_doutorado")
-      membro_colegiado = models.ManyToManyField(Colegiado, blank=True)
+      membro_colegiado = models.ManyToManyField(Colegiado, blank=True, related_name='professor_colegiado')
 
       slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
       updated = models.DateTimeField(auto_now=True)
