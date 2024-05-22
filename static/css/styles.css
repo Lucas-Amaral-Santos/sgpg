@@ -29,10 +29,6 @@ nav svg {
     color: #224EAC;
 }
 
-.card-total {
-    max-width: 200px;
-    max-width: 200px;
-}
 .card-home:hover {
     color: #efefefe7;
     background-color: #224EAC;
@@ -69,12 +65,6 @@ footer .footer-copyright{
     color: white;
 }
 
-
-svg {
-    fill:#224EAC;
-    height: 200px;
-    width: 200px;
-}
 
 a i.fa-sharp {
     color:#224EAC;
@@ -270,9 +260,43 @@ a i.fa-edit {
     color: rgba(34, 78, 172, 1);
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (max-width: 600px) {
+    svg {
+        fill:#224EAC;
+        height: 50px;
+        width: 50px;
+    }
+
+    .card-total {
+        max-width: 50px;
+        max-width: 50px;
+    }
+    .card-title {
+        font-size: 5pt;
+    }
+
+    .btn-primary {
+        background-color: #224EAC !important;
+        border-style: none !important;
+        margin-bottom: 5px;
+    }
+
+}
+
+@media screen and (min-width: 600px) {
     .nota-probatorio {
         position: absolute; 
         left: 900px;
+    }
+
+    svg {
+        fill:#224EAC;
+        height: 150px;
+        width: 150px;
+    }
+
+    .card-total {
+        max-width: 200px;
+        max-width: 200px;
     }
 }
