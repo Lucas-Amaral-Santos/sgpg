@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
+
+from professor.forms import ColegiadoForm
+from professor.models import Colegiado
 from .forms import AfastamentoForm, BolsaForm, InscricaoForm, \
                     MatriculaForm, ProbatorioForm, TrabalhoFinalForm, \
                     InscricaoProbatorioForm, VersaoFinalForm, NotaForm, \
@@ -186,15 +189,30 @@ def detalhe_matricula(request, matricula):
     bolsas = Bolsa.objects.filter(matricula=matricula)
     afastamentos = Afastamento.objects.filter(matricula=matricula)
     inscricoes = Inscricao.objects.filter(matricula=matricula)
+
+    colegiados = matricula.membro_colegiado.all()
+    membro = matricula.membro_colegiado.last
+    form_colegiado = ColegiadoForm()
+
+    if request.method == 'POST':
+        form_colegiado = ColegiadoForm(request.POST)
+        if form_colegiado.is_valid():
+            novo_colegiado = Colegiado.objects.create(
+                colegiado_data_entrada = form_colegiado.cleaned_data['colegiado_data_entrada'],
+                colegiado_data_saida = form_colegiado.cleaned_data['colegiado_data_saida'],
+                status_membro = form_colegiado.cleaned_data['status_membro']
+            )
+            novo_colegiado.save()
+            matricula.membro_colegiado.add(novo_colegiado)
+            messages.success(request, 'Colegiado atualizado com sucesso!')
+            return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
     
     try:
         trabalho_final = TrabalhoFinal.objects.get(matricula=matricula)
     except TrabalhoFinal.DoesNotExist:
         trabalho_final = None
 
-    
-
-    return render(request, 'detalhe_matricula.html', {'matricula':matricula, 'bolsas': bolsas, 'afastamentos': afastamentos, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final}) 
+    return render(request, 'detalhe_matricula.html', {'matricula':matricula, 'bolsas': bolsas, 'afastamentos': afastamentos, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'colegiados': colegiados, 'membro': membro, 'form_colegiado': form_colegiado}) 
 
 def cadastra_probatorio(request):
     form = ProbatorioForm()
@@ -549,3 +567,17 @@ def edita_desistencia(request, probatorio):
 
     messages.success(request, 'Alterado o status para desistência.')
     return redirect("matricula:detalhe_probatorio", probatorio=probatorio.slug)
+
+
+def edita_colegiado(request, colegiado):
+    colegiado = Colegiado.objects.get(id=colegiado)
+    matricula = colegiado.matricula_colegiado.first()
+    form_colegiado = ColegiadoForm(instance=colegiado)
+
+    if request.method == 'POST':
+        form_colegiado = ColegiadoForm(request.POST, instance=colegiado)
+        if form_colegiado.is_valid():
+            form_colegiado.save()
+            messages.success(request, 'Colegiado atualizado com sucesso!')
+            return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
+    return render(request, 'edita_colegiado_matricula.html', {'form': form_colegiado, 'matricula':matricula})

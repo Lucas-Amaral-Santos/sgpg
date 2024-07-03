@@ -1,6 +1,6 @@
 from django.db import models
 from aluno.models import Aluno
-from professor.models import Professor
+from professor.models import Professor, Colegiado
 from disciplina.models import DisciplinaOfertada
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
@@ -71,6 +71,7 @@ class Matricula(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0], verbose_name='Status:')
     linha_pesquisa = models.ForeignKey(LinhaPesquisa, on_delete=models.DO_NOTHING, null=True, blank=True)
     grau = models.ForeignKey(Grau, on_delete=models.CASCADE, related_name='matricula_grau', verbose_name='Grau de Aplicação:')
+    membro_colegiado = models.ManyToManyField(Colegiado, blank=True, related_name='matricula_colegiado')
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)

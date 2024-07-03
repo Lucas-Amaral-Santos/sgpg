@@ -24,6 +24,9 @@ Detalhes Matrícula
             <div class="col-3">
                 <a class="btn btn-danger" href="{% url 'matricula:gera_historico' matricula.slug %}" ><i class="fa-solid fa-file-pdf"></i> Gerar Histórico</a>
             </div>
+            <div class="col-3">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#visualiza-colegiado"><i class="fa-solid fa-people-group"></i> Participações Colegiado</a>
+            </div>
         </div>
           
         <h1 class='text-center'>Matrícula</h1>
@@ -103,6 +106,7 @@ Detalhes Matrícula
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_inscricao' matricula.slug %}">Adicionar Disciplina</a>
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_bolsa' matricula.slug %}">Adicionar Bolsa</a>
         <a class="btn btn-success col" href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">Adicionar Afastamento</a>  
+        <a class="btn btn-success col" data-toggle="modal" data-target="#adiciona-colegiado">Adicionar Colegiado</a>  
     </div> 
 
     <div class="secao-disciplina">
@@ -203,6 +207,109 @@ Detalhes Matrícula
     </div>
 
     </div>
+
+
+
+    
+<!-- 
+  ==================================================================
+          Tela Modal - Visualizar participação no  colegiado
+  ==================================================================
+-->
+  
+<div id="visualiza-colegiado" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+                <div class="modal-header">
+                        <div class="container">
+                            <h5 class="modal-title">Adicionar participação no colegiado</h5>
+                            <span id="data-modal"><i></i></span>
+                        </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            <div class="modal-body">
+                <h5>Participações do Colegiado</h5>
+                <p class='text-center'></p>
+                <div class="d-flex flex-column align-items-center text-center">
+                    <div class="mt-3">
+                        {% if not colegiados %}
+                        <p class="text-secondary mb-0"><i>Nenhuma participação deste aluno</i></p>
+                        {% else %}
+                            <p>{{membro}}</p>
+                            <table class="table">
+                                <thead>
+                                    <th>Entrada</th>
+                                    <th>Saída</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                <thead>
+                                <tbody>
+                                    {% for c in colegiados %}
+                                    <tr>
+                                    <td>{{c.colegiado_data_entrada|date:"d/m/Y"}}</td>
+                                    <td>{{c.colegiado_data_saida|date:"d/m/Y"}}</td>
+                                    <td>{{c.status_membro}}</td>
+                                    <td><a href="{% url "matricula:edita_colegiado" c.id%}"><i class="fas fa-edit"></i></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+                            
+                        {% endif %}
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+    
+<!-- 
+  ==================================================================
+          Tela Modal - Adicionar participação no colegiado
+  ==================================================================
+-->
+  
+<div id="adiciona-colegiado" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+                <div class="modal-header">
+                        <div class="container">
+                            <h5 class="modal-title">Adicionar participação no colegiado</h5>
+                            <span id="data-modal"><i></i></span>
+                        </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            <div class="modal-body">
+                <h5>Adicionar participação no colegiado</h5>
+                <p class='text-center'></p>
+                <form method='POST'>
+                    {% csrf_token %}
+                    {{form_colegiado|crispy}}
+
+                    <div class="modal-footer row">
+                        <div class="col-3">
+                            <a class="btn btn-danger btn-md"  data-dismiss="modal">Cancelar</a>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-success m-4" type="submit" formnovalidate="formnovalidate">Salvar</button>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+
 
 {% include 'footer.html' %}
 {% endblock %}

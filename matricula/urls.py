@@ -5,7 +5,7 @@ from .views import cadastra_afastamento, cadastra_bolsa, cadastra_inscricao, cad
                     lista_probatorio, detalhe_probatorio, cadastra_trabalho_probatorio, \
                     cadastra_inscricao_probatorio, detalhe_trabalho_final, gera_historico, cadastra_orientacao, \
                     edita_inscricao_probatorio, edita_inscricao, detalhe_trabalho_final_probatorio, \
-                    cadastra_orientacao_probatorio, deleta_orientador, edita_desistencia
+                    cadastra_orientacao_probatorio, deleta_orientador, edita_desistencia, edita_colegiado
 
 app_name = 'matricula'
 
@@ -31,4 +31,5 @@ urlpatterns = [
     path('<int:matricula>/cadastra_trabalho_final', cadastra_trabalho_final, name='cadastra_trabalho_final'),
     path('probatorio/<int:probatorio>/cadastra_trabalho_probatorio', cadastra_trabalho_probatorio, name='cadastra_trabalho_probatorio'),
     path('<int:trabalho_final>/<int:orientacao>/deleta_orientador', deleta_orientador, name="deleta_orientador"),
+    path('edita_colegiado/<int:colegiado>', edita_colegiado, name='edita_colegiado'),
 ]
