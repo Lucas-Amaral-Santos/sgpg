@@ -170,7 +170,7 @@ def detalhes_professor(request, professor):
                 status_membro = form_colegiado.cleaned_data['status_membro']
             )
             novo_colegiado.save()
-            novo_colegiado.professor_set.add(professor)
+            professor.membro_colegiado.add(novo_colegiado)
             messages.success(request, 'Colegiado atualizado com sucesso!')
             return redirect('professor:detalhes_professor', professor=professor.slug)
 
