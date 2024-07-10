@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
 from config.models import LinhaPesquisa, Grau, Linguas, AgenciaFomento
+from datetime import datetime
 
 class Curso(models.Model):
 
@@ -37,6 +38,7 @@ class Probatorio(models.Model):
     aluno = models.OneToOneField(Aluno, on_delete=models.CASCADE, related_name='probatorio_aluno', verbose_name='Aluno:')
     grau = models.ForeignKey(Grau, on_delete=models.CASCADE, related_name='probatorio_grau', verbose_name='Grau de Aplicação:')
     nota_selecao = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    data_limite = models.DateField()
 
     probatorio = models.BooleanField(default=True)
     linha_pesquisa = models.ForeignKey(LinhaPesquisa, on_delete=models.DO_NOTHING, null=True, blank=True)
@@ -48,6 +50,8 @@ class Probatorio(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.id)
+        if not self.data_limite: 
+            self.data_limite = datetime(year=self.data_inscricao.year+2, month=self.data_inscricao.month, day=self.data_inscricao.day)
         super(Probatorio, self).save(*args, **kwargs)
 
     def __str__(self):

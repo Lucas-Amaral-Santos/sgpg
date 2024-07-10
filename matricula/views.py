@@ -126,6 +126,18 @@ def gera_historico(request, matricula):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='historico'+str(matricula.numero)+'.pdf')
 
+
+def prorroga_data_limite_probatorio(request, probatorio):
+    probatorio = Probatorio.objects.get(id=probatorio)
+    print(f'Probatotio data limite: {probatorio.data_limite}')
+    probatorio.data_limite = str(datetime(year=probatorio.data_limite.year+2, month=probatorio.data_limite.month, day=probatorio.data_limite.day).date())
+    print(f'Probatotio data limite atualizada: {probatorio.data_limite}')
+    
+    probatorio.save()
+
+    messages.success(request, 'Data limite atualizada com sucesso!')
+    return redirect('matricula:detalhe_probatorio', probatorio.slug)
+
 def cadastra_matricula(request):
     form = MatriculaForm()
 
@@ -261,22 +273,14 @@ def detalhe_probatorio(request, probatorio):
     form_exame = ExameLinguasForm()
     form_nota = NotaForm()
     
-    data_final_probatorio = None
-    print(probatorio.grau)
-    print(probatorio.data_inscricao)
-    data_temp = datetime(probatorio.data_inscricao.year, probatorio.data_inscricao.month, probatorio.data_inscricao.day)
-    print(data_temp)
-    if (probatorio.grau.grau == "Mestrado"):
-        print("Cheguei aqui================================================")
-        data_final_probatorio = data_temp + relativedelta(years=2)
-    elif (probatorio.grau.grau == "Doutorado"):
-        print("Cheguei ali================================================")
 
-    print("DATA FINAL PROBATÓRIO")
-    print(data_final_probatorio)
+    data_limite = datetime(year=probatorio.data_limite.year, 
+                           month=probatorio.data_limite.month, 
+                           day=probatorio.data_limite.day)
 
-    data_final_remanescente = data_final_probatorio - datetime.now() 
-    print(data_final_remanescente.days)
+    print(f'Data limite: {probatorio.data_limite}')
+    data_final_remanescente = data_limite - datetime.now() 
+    print(data_final_remanescente)
 
     try:
         trabalho_final = TrabalhoFinal.objects.get(probatorio=probatorio)
