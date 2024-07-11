@@ -1,5 +1,5 @@
 from django import forms
-from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, InscricaoProbatorio, VersaoFinal, Nota, Orientacao, ExameLinguas
+from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, TrabalhoFinal, VersaoFinal, Nota, Orientacao, ExameLinguas
 import datetime
 
 class ProbatorioMatriculaForm(forms.ModelForm):
@@ -63,13 +63,13 @@ class InscricaoForm(forms.ModelForm):
 class InscricaoProbatorioForm(forms.ModelForm):
 
     class Meta:
-        model = InscricaoProbatorio
+        model = Inscricao
         fields = ['disciplina_ofertada', 'nota', 'situacao']
 
 class EditaInscricaoProbatorioForm(forms.ModelForm):
 
     class Meta:
-        model = InscricaoProbatorio
+        model = Inscricao
         fields = ['nota', 'situacao']
 
 class EditaInscricaoForm(forms.ModelForm):

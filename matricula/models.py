@@ -113,29 +113,6 @@ class Afastamento(models.Model):
     def __str__(self):
         return self.motivo
 
-class InscricaoProbatorio(models.Model):
-    SITUACAO_CHOICES = (
-        ("Cursando","Cursando"),
-        ("Aprovado","Aprovado"),
-        ("Reprovado", "Reprovado"),
-        ("Trancado", "Trancado")
-    )
-
-    disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.CASCADE, related_name='inscricao_probatorio_disciplina_ofertada')
-    probatorio = models.ForeignKey(Probatorio, on_delete=models.CASCADE, related_name="inscricao_probatorio_probatorio")
-    situacao = models.CharField(max_length=200, choices=SITUACAO_CHOICES, default=SITUACAO_CHOICES[0])
-    nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True, blank=True)
-
-    slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
-    updated = models.DateTimeField(auto_now=True)
-    cadastrado_por = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='inscricao_probatorio_cadastrado_por')
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.id)
-        super(InscricaoProbatorio, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return str(self.disciplina_ofertada)
 
 class Inscricao(models.Model):
     SITUACAO_CHOICES = (
@@ -146,7 +123,9 @@ class Inscricao(models.Model):
     )
 
     disciplina_ofertada = models.ForeignKey(DisciplinaOfertada, on_delete=models.CASCADE, related_name='inscricao_disciplina_ofertada')
-    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name="inscricao_matricula")
+    matricula = models.ForeignKey(Matricula, null=True, on_delete=models.CASCADE, related_name="inscricao_matricula")
+    probatorio = models.ForeignKey(Probatorio, null=True, on_delete=models.CASCADE, related_name="inscricao_probatorio_probatorio")
+
     nota = models.FloatField(validators=[MaxValueValidator(100),MinValueValidator(0)], null=True, blank=True)
     situacao = models.CharField(max_length=200, choices=SITUACAO_CHOICES, default=SITUACAO_CHOICES[0])
 

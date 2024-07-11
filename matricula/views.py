@@ -8,7 +8,7 @@ from .forms import AfastamentoForm, BolsaForm, InscricaoForm, \
                     LinhaPesquisaForm, OrientacaoForm, ExameLinguasForm, \
                     EditaInscricaoProbatorioForm, EditaInscricaoForm
 from .models import Afastamento, Bolsa, Matricula, Probatorio, Inscricao, \
-                    TrabalhoFinal, InscricaoProbatorio, Orientacao
+                    TrabalhoFinal, Orientacao
 from config.models import StatusOptions, LinhaPesquisa
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -168,6 +168,8 @@ def cadastra_matricula(request):
             if nova_matricula.probatorio.linha_pesquisa is not None:
                 nova_matricula.linha_pesquisa = nova_matricula.probatorio.linha_pesquisa
 
+            Inscricao.objects.filter(probatorio=nova_matricula.probatorio).update(matricula=nova_matricula)
+
             edita_aluno = nova_matricula.probatorio.aluno
             status_aluno = edita_aluno.status
             status_aluno.status = status_opcao[0]
@@ -269,9 +271,10 @@ def lista_probatorio(request):
 def detalhe_probatorio(request, probatorio):
     
     probatorio = Probatorio.objects.get(id=probatorio)
-    inscricoes = InscricaoProbatorio.objects.filter(probatorio=probatorio.slug)
+    inscricoes = Inscricao.objects.filter(probatorio=probatorio.slug)
     form_exame = ExameLinguasForm()
     form_nota = NotaForm()
+    form_edita_nota = NotaForm(instance=probatorio.nota)
     
 
     data_limite = datetime(year=probatorio.data_limite.year, 
@@ -286,7 +289,15 @@ def detalhe_probatorio(request, probatorio):
         trabalho_final = TrabalhoFinal.objects.get(probatorio=probatorio)
     except TrabalhoFinal.DoesNotExist:
         trabalho_final = None
-    
+
+
+    if request.method == 'POST' and "btn_edita_nota_probatorio" in request.POST:
+        form_edita_nota = NotaForm(request.POST, instance=probatorio.nota)
+        if (form_edita_nota.is_valid()):
+            form_edita_nota.save()
+            messages.success(request, 'Nota do probatório cadastrado com sucesso!')
+            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota, 'form_edita_nota': form_edita_nota}) 
+
     if(request.method == 'POST' and "btn_nota_probatorio" in request.POST):
         form_nota = NotaForm(request.POST)
         if(form_nota.is_valid()):
@@ -379,7 +390,7 @@ def cadastra_inscricao_probatorio(request, probatorio):
     if(request.method == 'POST'):
         form = InscricaoProbatorioForm(request.POST)
         if(form.is_valid()):
-            nova_inscricao = InscricaoProbatorio.objects.create(
+            nova_inscricao = Inscricao.objects.create(
                 disciplina_ofertada = form.cleaned_data['disciplina_ofertada'],
                 nota = form.cleaned_data['nota'],
                 situacao = form.cleaned_data['situacao'],
@@ -526,7 +537,7 @@ def detalhe_trabalho_final_probatorio(request, probatorio):
 
 def edita_inscricao_probatorio(request, probatorio, inscricao):
     probatorio = Probatorio.objects.get(id=probatorio)
-    inscricao = InscricaoProbatorio.objects.get(id=inscricao)
+    inscricao = Inscricao.objects.get(id=inscricao)
     form = EditaInscricaoProbatorioForm(instance=inscricao)
 
     if request.method == "POST":
@@ -585,3 +596,4 @@ def edita_colegiado(request, colegiado):
             messages.success(request, 'Colegiado atualizado com sucesso!')
             return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
     return render(request, 'edita_colegiado_matricula.html', {'form': form_colegiado, 'matricula':matricula})
+

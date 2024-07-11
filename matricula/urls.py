@@ -33,5 +33,5 @@ urlpatterns = [
     path('probatorio/<int:probatorio>/cadastra_trabalho_probatorio', cadastra_trabalho_probatorio, name='cadastra_trabalho_probatorio'),
     path('<int:trabalho_final>/<int:orientacao>/deleta_orientador', deleta_orientador, name="deleta_orientador"),
     path('edita_colegiado/<int:colegiado>', edita_colegiado, name='edita_colegiado'),
-    path('probatorio/<int:probatorio>/prorroga_data_limite_probatorio', prorroga_data_limite_probatorio, name='prorroga_probatorio')
+    path('probatorio/<int:probatorio>/prorroga_data_limite_probatorio', prorroga_data_limite_probatorio, name='prorroga_probatorio'),
 ]

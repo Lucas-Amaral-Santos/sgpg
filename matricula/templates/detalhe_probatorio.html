@@ -31,11 +31,13 @@ Detalhes Probatório
 
         {% if probatorio.nota%}
         <div class="d-flex justify-content-center nota-probatorio">
-            <div class="card p-4  border-1 rounded-1">
+            <div class="card p-4  border-1 rounded-1 mx-2">
                 <span>Nota</span>
-                <span>{{probatorio.nota.nota}}</span>
+                <span>{{probatorio.nota.nota}}</span>                    
             </div>
+            <a href="" data-toggle="modal" data-target="#id_edita_nota_probatorio"><i class="fa-solid fa-pen-to-square"></i></a>
         </div>
+        
         {% endif %}
 
         <div class='text-center my-4'>
@@ -123,7 +125,8 @@ Detalhes Probatório
         {% endif %}
         </div>
         {% endif %}
-
+    
+        <!-- Cadastra nota do probatório -->
     <div id="id_nota_probatorio" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-xl" role="document">
           <div class="modal-content">
@@ -155,6 +158,41 @@ Detalhes Probatório
           </div>
         </div>
       </div>
+
+      <!-- Edita nota do probatório -->
+      <div id="id_edita_nota_probatorio" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <div class="container">
+                    <h5 class="modal-title">Edita Nota do Probatório</h5>
+                    <span id="data-modal"><i></i></span>
+                </div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="POST" class="cadastro_form">
+            {% csrf_token %}
+                <div class="modal-body ">
+                    <div class="text-center">
+                        <p>Informe a nota final do probatório:</p>
+                        </div>
+                    <div class="d-flex justify-content-center">                        
+                    <div class="col-2">
+                    {{form_edita_nota|crispy}}
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                <button type="submit" name="btn_edita_nota_probatorio" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
 
 
     <div id="id_nota_exame" class="modal" tabindex="-1" role="dialog">
