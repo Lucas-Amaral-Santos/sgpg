@@ -28,11 +28,22 @@ Novo Evento
           <td>Hora:</td>
           <td>{{evento.evento_hora}}</td>
         </tr>
-        <tr>
+        {% if evento.evento_trabalho_final %}
+        <tr>          
           <td>Título:</td>
           <td>{{evento.evento_trabalho_final}}</td>
         </tr>
+        <tr>
+          <td>Aluno:</td>
+          <td>{{evento.evento_trabalho_final.probatorio}}</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td>Tipo:</td>
+          <td>{{evento.evento_tipo}}</td>
+        </tr>
       </table>
+        {% if evento.evento_tipo == 'Defesa de Tese' or evento.evento_tipo == 'Defesa de Dissertação' %}
         <a href="{% url 'evento:cadastra_participante' evento.slug %}">
           <div class="card my-3 adicionar-participante-btn text-center">
             <div class="card-body">
@@ -41,6 +52,17 @@ Novo Evento
             </div>
           </div>
         </a>
+        {% else %}
+        <a href="{% url 'evento:cadastra_convidado' evento.slug %}">
+          <div class="card my-3 adicionar-participante-btn text-center">
+            <div class="card-body">
+              <i class="fa-solid fa-plus fa-2x"></i>
+              <p class="card-text">Adicionar Convidado</p>
+            </div>
+          </div>
+        </a>
+
+        {% endif %}
 
         {% for p in participantes_cadastradas %}
           <div href="#blank" class="card my-3 text-center">
@@ -53,6 +75,23 @@ Novo Evento
                 <tr>
                   <td>Tipo:</td>
                   <td>{{p.participante_tipo}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        {% endfor %}
+
+        {% for c in convidados_cadastrados %}
+          <div href="#blank" class="card my-3 text-center">
+            <div class="card-body">
+              <table>
+                <tr>
+                  <td>Participante:</td>
+                  <td>{{c}}</td>
+                </tr>
+                <tr>
+                  <td>Tipo:</td>
+                  <td>{{c.convidado_tipo}}</td>
                 </tr>
               </table>
             </div>

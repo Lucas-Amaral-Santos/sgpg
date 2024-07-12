@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from calendar import HTMLCalendar
 from datetime import datetime
-from .models import Evento, Participante
-from .forms import EventoForm, ParticipanteForm
+from .models import Evento, Participante, Convidados
+from .forms import EventoForm, ParticipanteForm, ConvidadosForm
 from dateutil.relativedelta import relativedelta
 from django.contrib import messages
 
@@ -80,6 +80,7 @@ def cadastra_evento(request, data=datetime.today().date().strftime('%d/%m/%Y'), 
                 evento = form_evento.cleaned_data['evento'],
                 evento_data = form_evento.cleaned_data['evento_data'],
                 evento_hora = form_evento.cleaned_data['evento_hora'],
+                evento_tipo = form_evento.cleaned_data['evento_tipo'],
                 evento_trabalho_final = form_evento.cleaned_data['evento_trabalho_final'],
                 cadastrado_por = request.user,
             )
@@ -108,9 +109,30 @@ def cadastra_participante(request, evento):
     
     return render(request, 'cadastra_participante.html', {'form_participante': form_participante, 'evento':evento, 'pagina': 'Cadastra Participante'})
 
+
+def cadastra_convidado(request, evento):
+    evento = Evento.objects.get(slug=evento)
+    form_convidado = ConvidadosForm()
+    
+    if request.method == 'POST':
+        form_convidado = ConvidadosForm(request.POST)
+        if form_convidado.is_valid():
+            novo_convidado = Convidados.objects.create(
+                convidado = form_convidado.cleaned_data['convidado'],
+                convidado_tipo = form_convidado.cleaned_data['convidado_tipo'],
+                evento = evento,
+            )
+            novo_convidado.save()
+            messages.success(request, 'Convidado cadastrado com sucesso!')
+        return redirect('evento:detalhes_evento', evento=evento.slug)
+    
+    return render(request, 'cadastra_participante.html', {'form_participante': form_convidado, 'evento':evento, 'pagina': 'Cadastra Participante'})
+
+
 def detalhes_evento(request, evento):
     evento = Evento.objects.get(slug=evento)
     participantes_cadastradas = Participante.objects.filter(evento=evento.slug)
+    convidados_cadastrados = Convidados.objects.filter(evento=evento.slug)
 
-    return render(request, 'detalhes_evento.html', {'evento': evento, 'participantes_cadastradas':participantes_cadastradas})
+    return render(request, 'detalhes_evento.html', {'evento': evento, 'participantes_cadastradas':participantes_cadastradas, 'convidados_cadastrados': convidados_cadastrados})
 

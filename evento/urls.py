@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import mostra_eventos, cadastra_evento, cadastra_participante, detalhes_evento
+from .views import mostra_eventos, cadastra_evento, cadastra_participante, detalhes_evento, cadastra_convidado
 app_name = 'evento'
 
 urlpatterns = [
@@ -8,5 +8,6 @@ urlpatterns = [
     path('detalhes_evento/<int:evento>', detalhes_evento, name='detalhes_evento'),
     path('cadastra', cadastra_evento, name='cadastra_evento'),
     path('cadastra/<str:data>', cadastra_evento, name='cadastra_evento_data'),
-    path('cadastra_participante/<int:evento>', cadastra_participante, name='cadastra_participante')
+    path('cadastra_participante/<int:evento>', cadastra_participante, name='cadastra_participante'),
+    path('cadastra_convidado/<int:evento>', cadastra_convidado, name='cadastra_convidado')
 ]

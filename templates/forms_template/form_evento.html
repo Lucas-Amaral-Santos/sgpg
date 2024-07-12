@@ -1,14 +1,33 @@
 {% load crispy_forms_tags %}
-
-{{form_evento.evento|as_crispy_field}}
 <div class="row">
-    <div class="col-3">
-    {{form_evento.evento_data|as_crispy_field}}
+    <div class="col-8">
+        {{form_evento.evento|as_crispy_field}}
     </div>
-    <div class="col-3">
-    {{form_evento.evento_hora|as_crispy_field}}
-    </div>
-    <div class="col">
-    {{form_evento.evento_trabalho_final|as_crispy_field}}
+    <div class="col-4">
+        {{form_evento.evento_tipo|as_crispy_field}}
     </div>
 </div>
+<div class="row">
+    <div class="col-3">
+        {{form_evento.evento_data|as_crispy_field}}
+    </div>
+    <div class="col-3">
+        {{form_evento.evento_hora|as_crispy_field}}
+    </div>
+    <div class="col">
+        {{form_evento.evento_trabalho_final|as_crispy_field}}
+    </div>
+</div>
+
+<script>
+    console.log("Aqui")
+    $('#div_id_evento_trabalho_final').hide()
+    $('#id_evento_tipo').change(function() {
+        if($('#id_evento_tipo').val() == "Defesa de Dissertação" || $('#id_evento_tipo').val() == "Defesa de Tese"){
+            console.log("click")
+            $('#div_id_evento_trabalho_final').fadeIn(700)
+        } else {
+            $('#div_id_evento_trabalho_final').fadeOut(700)
+        }
+    })
+</script>
