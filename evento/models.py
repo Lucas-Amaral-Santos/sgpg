@@ -18,6 +18,7 @@ class Evento(models.Model):
     evento_hora = models.TimeField(verbose_name="Hora:")
     evento_trabalho_final = models.ForeignKey(TrabalhoFinal, null=True, blank=True, on_delete=models.CASCADE, related_name='evento_trabalho_final', verbose_name="Trabalho final:")
     evento_tipo = models.CharField(max_length=200, choices=evento_tipo_choices, verbose_name='Tipo: ')
+    evento_obs = models.TextField(null=True, blank=True)
 
     slug = models.SlugField(max_length=250, unique_for_date='dt_cadastro')
     updated = models.DateTimeField(auto_now=True)

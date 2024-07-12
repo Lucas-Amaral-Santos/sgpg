@@ -5,7 +5,7 @@ class EventoForm(ModelForm):
     evento_data = DateField(widget=TextInput(attrs={'type':'date'}), label="Data do evento:")
     class Meta:
         model = Evento
-        fields = ['evento', 'evento_data', 'evento_hora', 'evento_trabalho_final', 'evento_tipo']
+        fields = ['evento', 'evento_data', 'evento_hora', 'evento_trabalho_final', 'evento_tipo', 'evento_obs']
         exclude = ['slug', 'updated', 'dt_cadastro', 'cadastrado_por']
 
 

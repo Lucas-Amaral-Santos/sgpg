@@ -43,7 +43,17 @@ Novo Evento
           <td>{{evento.evento_tipo}}</td>
         </tr>
       </table>
-        {% if evento.evento_tipo == 'Defesa de Tese' or evento.evento_tipo == 'Defesa de Dissertação' %}
+      {% if evento.evento_tipo == 'Defesa de Tese' or evento.evento_tipo == 'Defesa de Dissertação' or evento.evento_tipo == 'Qualificação' %}
+        <div class="row m-4">
+          <h4 class="m-2">Resumo</h4>
+          {{evento.evento_trabalho_final.resumo}}
+        </div>
+        {% endif %}
+      <div class="row m-4">
+        <h4 class="m-2">Observações</h4>
+        {{evento.evento_obs}}
+      </div>
+        {% if evento.evento_tipo == 'Defesa de Tese' or evento.evento_tipo == 'Defesa de Dissertação' or evento.evento_tipo == 'Qualificação' %}
         <a href="{% url 'evento:cadastra_participante' evento.slug %}">
           <div class="card my-3 adicionar-participante-btn text-center">
             <div class="card-body">

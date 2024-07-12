@@ -81,6 +81,7 @@ def cadastra_evento(request, data=datetime.today().date().strftime('%d/%m/%Y'), 
                 evento_data = form_evento.cleaned_data['evento_data'],
                 evento_hora = form_evento.cleaned_data['evento_hora'],
                 evento_tipo = form_evento.cleaned_data['evento_tipo'],
+                evento_obs = form_evento.cleaned_data['evento_obs'],
                 evento_trabalho_final = form_evento.cleaned_data['evento_trabalho_final'],
                 cadastrado_por = request.user,
             )
