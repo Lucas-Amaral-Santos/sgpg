@@ -214,10 +214,10 @@ def detalhe_matricula(request, matricula):
             novo_colegiado = Colegiado.objects.create(
                 colegiado_data_entrada = form_colegiado.cleaned_data['colegiado_data_entrada'],
                 colegiado_data_saida = form_colegiado.cleaned_data['colegiado_data_saida'],
-                status_membro = form_colegiado.cleaned_data['status_membro']
+                status_membro = form_colegiado.cleaned_data['status_membro'],
+                matricula = matricula
             )
             novo_colegiado.save()
-            matricula.membro_colegiado.add(novo_colegiado)
             messages.success(request, 'Colegiado atualizado com sucesso!')
             return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
     
@@ -296,7 +296,7 @@ def detalhe_probatorio(request, probatorio):
         if (form_edita_nota.is_valid()):
             form_edita_nota.save()
             messages.success(request, 'Nota do probatório cadastrado com sucesso!')
-            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota, 'form_edita_nota': form_edita_nota}) 
+            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota, 'form_edita_nota': form_edita_nota, 'data_final_remanescente': data_final_remanescente.days}) 
 
     if(request.method == 'POST' and "btn_nota_probatorio" in request.POST):
         form_nota = NotaForm(request.POST)
@@ -307,7 +307,7 @@ def detalhe_probatorio(request, probatorio):
             nova_nota.save()
             probatorio.save()
             messages.success(request, 'Nota do probatório cadastrado com sucesso!')
-            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota}) 
+            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota, 'form_edita_nota': form_edita_nota, 'data_final_remanescente': data_final_remanescente.days}) 
 
     if(request.method == 'POST' and "btn_nota_exame" in request.POST):
         form_exame = ExameLinguasForm(request.POST)
@@ -316,10 +316,10 @@ def detalhe_probatorio(request, probatorio):
             nova_nota.probatorio.add(probatorio)
             # nova_nota.save()
             messages.success(request, 'Exame de linguas cadastrado com sucesso!')
-            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota}) 
+            return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota, 'form_edita_nota': form_edita_nota, 'data_final_remanescente': data_final_remanescente.days}) 
 
 
-    return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota, 'data_final_remanescente': data_final_remanescente.days}) 
+    return render(request, 'detalhe_probatorio.html', {'probatorio':probatorio, 'inscricoes':inscricoes, 'trabalho_final':trabalho_final, 'form_exame': form_exame, 'form_nota': form_nota, 'form_edita_nota': form_edita_nota, 'data_final_remanescente': data_final_remanescente.days}) 
 
 def cadastra_bolsa(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
