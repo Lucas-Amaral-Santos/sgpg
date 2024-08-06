@@ -139,9 +139,12 @@ def prorroga_data_limite_probatorio(request, probatorio):
     return redirect('matricula:detalhe_probatorio', probatorio.slug)
 
 def cadastra_matricula(request, probatorio=None):
+    print(probatorio)
     if probatorio:
         probatorio = Probatorio.objects.get(id=probatorio)
-    form = MatriculaForm(initial={'probatorio':probatorio, 'grau':probatorio.grau, 'dt_matricula': datetime.today().date})
+        form = MatriculaForm(initial={'probatorio':probatorio, 'grau':probatorio.grau, 'dt_matricula': datetime.today().date})
+    else:
+        form = MatriculaForm(initial={'dt_matricula': datetime.today().date})
 
     if(request.method == 'POST'):
         form = MatriculaForm(request.POST)
