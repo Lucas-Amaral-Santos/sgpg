@@ -22,7 +22,7 @@ Detalhes Matrícula
 
         <div class="row my-1">
             <div class="col-3">
-                <a class="btn btn-danger" href="{% url 'matricula:gera_historico' matricula.slug %}" ><i class="fa-solid fa-file-pdf"></i> Gerar Histórico</a>
+                <a class="btn btn-danger" href="{% url 'matricula:render_pdf' %}" ><i class="fa-solid fa-file-pdf"></i> Gerar Histórico</a>
             </div>
             <div class="col-4">
                 <a class="btn btn-primary" data-toggle="modal" data-target="#visualiza-colegiado"><i class="fa-solid fa-people-group"></i> Participações Colegiado</a>

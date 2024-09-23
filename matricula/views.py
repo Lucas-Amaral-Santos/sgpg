@@ -13,117 +13,35 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import messages
-import io
-from django.http import FileResponse
-from reportlab.pdfgen import canvas
 from datetime            import datetime
 from faker import Factory
 from datetime import datetime
-from dateutil.relativedelta import relativedelta   
+from dateutil.relativedelta import relativedelta  
 
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
-def gera_historico(request, matricula):
+def render_pdf_view(request):
+    template_path = 'historico_template.html'
+    context = {'myvar': 'this is your template context'}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
 
-    matricula = Matricula.objects.get(id=matricula)
-    bolsas = Bolsa.objects.filter(matricula=matricula)
-    afastamentos = Afastamento.objects.filter(matricula=matricula)
-    inscricoes = Inscricao.objects.filter(matricula=matricula)
-    try:
-        trabalho_final = TrabalhoFinal.objects.get(matricula=matricula)
-    except TrabalhoFinal.DoesNotExist:
-        trabalho_final = None
-
-
-    buffer = io.BytesIO()
-
-    p = canvas.Canvas(buffer)
-    p.setFont("Helvetica", 9)
-    # Tela (595.27,841.89)
-    
-    width = 595.27
-    height = 841.89
-    margin = 30
-
-
-    # Desenhando o cabeçalho top-left
-    p.line(margin, height-margin, width-margin-200, height-margin)
-    p.line(margin, height-margin, margin, height-margin-70)
-    
-    p.drawString(75, height-margin-20, "UNIVERSIDADE FEDERAL FLUMINENSE")
-    p.drawString(150, height-margin-35, "CENTRO")
-    p.drawString(75, height-margin-50, "PROGRAMA DE PÓS-GRADUAÇÃO EM")
-    p.line(margin,height-margin-70, width-margin-200, height-margin-70)
-    p.line(width-margin-200, height-margin, width-margin-200, height-margin-70)
-
-    p.line(margin,height-105, width-margin-200, height-105)
-    p.line(margin,height-105, margin, height-125)
-    p.drawString(70, height-120, "HISTÓRICO ESCOLAR / PÓS-GRADUAÇÃO")
-    p.line(margin,height-125, width-margin-200, height-125)
-    p.line(width-margin-200,height-105, width-margin-200, height-125)
-
-
-    p.line(width-margin-190, height-margin, width-margin, height-margin)
-    p.line(width-margin-190, height-margin, width-margin-190, height-125)
-
-
-    p.line(width-margin-190, height-125, width-margin, height-125)
-    p.line(width-margin, height-margin, width-margin, height-125)
-
-
-
-    # Informações do aluno
-    p.line(margin, 0.845*height, width-margin, 0.845*height)
-    p.line(margin, 0.845*height, margin, 0.75*height)
-
-    p.drawString(1.2*margin, 0.83*height, "ALUNO   " + matricula.probatorio.aluno.nome)
-    p.drawString(1.2*margin, 0.81*height, "MATRÍCULA   " + matricula.numero)
-    p.drawString(6*margin, 0.81*height, "NACIONALIDADE   " + matricula.probatorio.aluno.nacionalidade)
-    p.drawString(12*margin, 0.81*height, "DATA NASCIMENTO   " + matricula.probatorio.aluno.dt_nascimento.strftime("%d/%m/%Y"))
-    p.drawString(1.2*margin, 0.79*height, "CÉDULA DE IDENTIFICAÇÃO   " + matricula.probatorio.aluno.identidade)
-    p.drawString(8*margin, 0.79*height, "ORGÃO EXPEDITOR   " + matricula.probatorio.aluno.identidade_orgao)
-    p.drawString(13*margin, 0.79*height, "ESTADO EXPEDITOR   " + matricula.probatorio.aluno.identidade_uf)
-    p.drawString(1.2*margin, 0.77*height, "CIC   " + matricula.probatorio.aluno.identidade_uf)
-
-    p.line(margin, 0.75*height, width-margin, 0.75*height)
-    p.line(width-margin, 0.845*height, width-margin, 0.75*height)
-
-    # Informações da Matrícula
-    p.line(margin, 0.745*height, width-margin, 0.745*height)
-    p.line(width-margin, 0.745*height, width-margin, 0.625*height)
-    p.drawString(1.2*margin, 0.73*height, "CURSO   " + matricula.probatorio.aluno.nome)
-    p.drawString(1.2*margin, 0.71*height, "ÁREA DE CONCENTRAÇÃO/")
-    p.drawString(1.2*margin, 0.70*height, "CAMPO DE CONCENTRAÇÃO")
-    p.drawString(6*margin, 0.705*height, "[valor]")
-    p.drawString(1.2*margin, 0.68*height, "CONCEITO CAPES")
-    p.drawString(6*margin, 0.68*height, "[valor]")
-    
-    p.line(margin, 0.675*height, width-margin, 0.675*height)
-    p.drawString(1.2*margin, 0.660*height, "RESULTADO DO EXAME DE SELEÇÃO")
-    p.drawString(7*margin, 0.660*height, "[valor]")
-    p.line(margin, 0.656*height, width-margin, 0.656*height)
-
-
-    p.drawString(1.2*margin, 0.645*height, "EXAME(S) DE LÍNGUA")
-    p.drawString(7*margin, 0.645*height, "[valor]")
-    p.line(margin, 0.640*height, width-margin, 0.640*height)
-
-    p.drawString(1.2*margin, 0.629*height, "MESIANO DE INGRESSO NO CURSO")
-    p.drawString(7*margin, 0.629*height, "[valor]")
-    p.line(margin, 0.625*height, width-margin, 0.625*height)
-
-    p.line(margin, 0.745*height, margin, 0.625*height)
-
-    p.line(margin, 0.615*height, width-margin, 0.615*height)
-    p.line(margin, 0.615*height, margin, margin)
-    p.line(width-margin, 0.615*height, width-margin, margin)
-
-    p.line(margin,margin, width-margin, margin)
-
-    p.showPage()
-    p.save()
-
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='historico'+str(matricula.numero)+'.pdf')
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 def prorroga_data_limite_probatorio(request, probatorio):
     probatorio = Probatorio.objects.get(id=probatorio)

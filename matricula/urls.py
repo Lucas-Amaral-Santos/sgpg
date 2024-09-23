@@ -3,10 +3,10 @@ from django.urls import path
 from .views import cadastra_afastamento, cadastra_bolsa, cadastra_inscricao, cadastra_matricula, \
                     cadastra_trabalho_final, lista_matricula, detalhe_matricula, cadastra_probatorio, \
                     lista_probatorio, detalhe_probatorio, cadastra_trabalho_probatorio, \
-                    cadastra_inscricao_probatorio, detalhe_trabalho_final, gera_historico, cadastra_orientacao, \
+                    cadastra_inscricao_probatorio, detalhe_trabalho_final, cadastra_orientacao, \
                     edita_inscricao_probatorio, edita_inscricao, detalhe_trabalho_final_probatorio, \
                     cadastra_orientacao_probatorio, deleta_orientador, edita_desistencia, edita_colegiado, \
-                    prorroga_data_limite_probatorio
+                    prorroga_data_limite_probatorio, render_pdf_view
 
 app_name = 'matricula'
 
@@ -19,7 +19,7 @@ urlpatterns = [
     path('probatorio/<int:probatorio>/', detalhe_probatorio, name='detalhe_probatorio'),
     path('trabalho_final/<int:matricula>/', detalhe_trabalho_final, name='detalhe_trabalho_final'),
     path('<int:matricula>/', detalhe_matricula, name='detalhe_matricula'),
-    path('gera_historico/<int:matricula>', gera_historico, name='gera_historico'),
+    # path('gera_historico/<int:matricula>', gera_historico, name='gera_historico'),
     path('<int:matricula>/cadastra_bolsa', cadastra_bolsa, name='cadastra_bolsa'),
     path('<int:matricula>/cadastra_afastamento', cadastra_afastamento, name='cadastra_afastamento'),
     path('<int:matricula>/cadastra_inscricao', cadastra_inscricao, name='cadastra_inscricao'),
@@ -35,4 +35,5 @@ urlpatterns = [
     path('<int:trabalho_final>/<int:orientacao>/deleta_orientador', deleta_orientador, name="deleta_orientador"),
     path('edita_colegiado/<int:colegiado>', edita_colegiado, name='edita_colegiado'),
     path('probatorio/<int:probatorio>/prorroga_data_limite_probatorio', prorroga_data_limite_probatorio, name='prorroga_probatorio'),
+    path('render_pdf', render_pdf_view, name='render_pdf')
 ]
