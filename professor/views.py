@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import ProfessorForm, TrabalhoForm, PosDoutoradoForm, ColegiadoForm, GraduacaoForm, DoutoradoForm
-from  .models import Professor, Trabalho, PosDoutorado, Colegiado, Graduacao, Doutorado
+from .forms import ProfessorForm, TrabalhoForm, PosDoutoradoForm, GraduacaoForm, DoutoradoForm
+from  .models import Professor, Trabalho, PosDoutorado, Graduacao, Doutorado
 from django.contrib.auth.models import User
-
+from colegiado.models import Colegiado
+from colegiado.forms import ColegiadoForm
 from matricula.models import Matricula
 from aluno.models import Endereco
 from aluno.forms import EnderecoForm, TitulacaoProfessorForm
@@ -157,8 +158,8 @@ def lista_professor(request):
 def detalhes_professor(request, professor):
 
     professor = Professor.objects.get(slug=professor)
-    colegiados = professor.membro_colegiado.all()
-    membro = professor.membro_colegiado.last
+    colegiados = Colegiado.objects.filter(professor_membro=professor.id)
+    membro = colegiados.last
     form_colegiado = ColegiadoForm()
 
     if request.method == 'POST':
@@ -167,58 +168,14 @@ def detalhes_professor(request, professor):
             novo_colegiado = Colegiado.objects.create(
                 colegiado_data_entrada = form_colegiado.cleaned_data['colegiado_data_entrada'],
                 colegiado_data_saida = form_colegiado.cleaned_data['colegiado_data_saida'],
-                status_membro = form_colegiado.cleaned_data['status_membro']
+                status_membro = form_colegiado.cleaned_data['status_membro'],
+                professor_membro = professor
             )
             novo_colegiado.save()
-            professor.membro_colegiado.add(novo_colegiado)
             messages.success(request, 'Colegiado atualizado com sucesso!')
             return redirect('professor:detalhes_professor', professor=professor.slug)
 
     return render(request, 'detalhes_professor.html', {'professor':professor, 'colegiados':colegiados, 'form_colegiado':form_colegiado, 'pagina': 'Detalhes Professor', 'membro': membro})
-
-def detalhes_colegiado(request, membros_ativos=True):
-    professores = Professor.objects.all()
-    matriculas = Matricula.objects.all()
-    colegiado = Colegiado.objects.all()
-    total = len(colegiado)
-    # membros = colegiados.filter(colegiado_data_saida=None)
-
-    data_entrada_inicio = request.GET.get('data_entrada_inicio')
-    data_entrada_fim = request.GET.get('data_entrada_fim')
-    data_saida_inicio = request.GET.get('data_saida_inicio')
-    data_saida_fim = request.GET.get('data_saida_fim')
-    membros_ativos = request.GET.get('membros_ativos')
-    membros_anteriores = request.GET.get('membros_passados')    
-    busca = request.GET.get('search')
-
-    if membros_ativos:
-        colegiado = colegiado.filter(colegiado_data_saida=None)
-        total = len(colegiado)
-
-    # # Utiliza o método GET para fazer os filtros no intervalo das datas de entrada do professor como membro do colegiado
-    if data_entrada_inicio and not data_entrada_fim:
-        colegiado = colegiado.filter(colegiado_data_entrada__lte=data_entrada_inicio)
-    elif not data_entrada_inicio and data_entrada_fim:
-        colegiado = colegiado.filter(colegiado_data_entrada__lte=data_entrada_fim)
-    elif data_entrada_inicio and data_entrada_fim:
-        colegiado = colegiado.filter(colegiado_data_entrada__range=[data_entrada_inicio, data_entrada_fim])
-    
-    # # Utiliza o método GET para fazer os filtros no intervalo das datas de saída do professor como membro do colegiado
-    if not membros_ativos:
-        if data_saida_inicio and not data_saida_fim:
-            colegiado = colegiado.filter(colegiado_data_saida__lte=data_saida_inicio)
-        elif not data_saida_inicio and data_saida_fim:
-            colegiado = colegiado.filter(colegiado_data_saida__lte=data_saida_fim)
-        elif data_saida_inicio and data_saida_fim:
-            colegiado = colegiado.filter(colegiado_data_saida__range=[data_saida_inicio, data_saida_fim])
-
-    if busca:
-        search_list = colegiado.filter((Q(professor_colegiado__nome__icontains = busca)| Q(professor_colegiado__cpf__icontains = busca))| (Q(matricula_colegiado__probatorio__aluno__nome__icontains = busca)| Q(matricula_colegiado__probatorio__aluno__cpf__icontains = busca)))
-        paginator = Paginator(search_list, 15)
-        page = request.GET.get('page')
-        colegiado = paginator.get_page(page)  
-
-    return render(request, 'lista_colegiado.html', {'colegiado':colegiado, 'pagina': 'Colegiado', 'total':total, 'busca': busca})
 
 def delete_professor(request, professor):
     professor = Professor.objects.get(slug=professor)
@@ -226,10 +183,9 @@ def delete_professor(request, professor):
     messages.success(request, 'Professor apagado do sistema!')
     return redirect('professor:lista_professor')
 
-
 def edita_colegiado(request, colegiado):
     colegiado = Colegiado.objects.get(id=colegiado)
-    professor = colegiado.professor_colegiado.first()
+    professor = colegiado.professor_membro
     form_colegiado = ColegiadoForm(instance=colegiado)
 
     print(professor.nome)

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
-
-from professor.forms import ColegiadoForm
-from professor.models import Colegiado
+from colegiado.models import Colegiado
+from colegiado.forms import ColegiadoForm
 from .forms import AfastamentoForm, BolsaForm, InscricaoForm, \
                     MatriculaForm, ProbatorioForm, TrabalhoFinalForm, \
                     InscricaoProbatorioForm, VersaoFinalForm, NotaForm, \
@@ -126,7 +125,6 @@ def gera_historico(request, matricula):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='historico'+str(matricula.numero)+'.pdf')
 
-
 def prorroga_data_limite_probatorio(request, probatorio):
     probatorio = Probatorio.objects.get(id=probatorio)
     print(f'Probatotio data limite: {probatorio.data_limite}')
@@ -209,8 +207,8 @@ def detalhe_matricula(request, matricula):
     afastamentos = Afastamento.objects.filter(matricula=matricula)
     inscricoes = Inscricao.objects.filter(matricula=matricula)
 
-    colegiados = matricula.membro_colegiado.all()
-    membro = matricula.membro_colegiado.last
+    colegiados = Colegiado.objects.filter(matricula_membro=matricula)
+    membro = colegiados.last
     form_colegiado = ColegiadoForm()
 
     if request.method == 'POST':
@@ -220,7 +218,7 @@ def detalhe_matricula(request, matricula):
                 colegiado_data_entrada = form_colegiado.cleaned_data['colegiado_data_entrada'],
                 colegiado_data_saida = form_colegiado.cleaned_data['colegiado_data_saida'],
                 status_membro = form_colegiado.cleaned_data['status_membro'],
-                matricula = matricula
+                matricula_membro = matricula
             )
             novo_colegiado.save()
             messages.success(request, 'Colegiado atualizado com sucesso!')
@@ -591,7 +589,7 @@ def edita_desistencia(request, probatorio):
 
 def edita_colegiado(request, colegiado):
     colegiado = Colegiado.objects.get(id=colegiado)
-    matricula = colegiado.matricula_colegiado.first()
+    matricula = colegiado.matricula_membro
     form_colegiado = ColegiadoForm(instance=colegiado)
 
     if request.method == 'POST':
