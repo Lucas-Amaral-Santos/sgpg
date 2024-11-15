@@ -174,7 +174,7 @@ def cadastra_probatorio(request):
             messages.success(request, 'Novo probatório cadastrado com sucesso!')
             return redirect('matricula:detalhe_probatorio', novo_probatorio.slug)
     
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Probatório'})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastrar Probatório'})
 
 def lista_probatorio(request):
     probatorios = Probatorio.objects.all().order_by('aluno')
@@ -262,7 +262,7 @@ def cadastra_bolsa(request, matricula):
             messages.success(request, 'Nova bolsa cadastrada com sucesso!')
             return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
     
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Bolsa', 'matricula': matricula})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastrar Bolsa', 'matricula': matricula})
 
 def cadastra_afastamento(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
@@ -282,7 +282,7 @@ def cadastra_afastamento(request, matricula):
             messages.success(request, 'Novo afastamento cadastrado com sucesso!')
             return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
     
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Afastamento', 'matricula': matricula})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastrar Afastamento', 'matricula': matricula})
 
 def cadastra_inscricao(request, matricula):
     matricula = Matricula.objects.get(slug=matricula)
@@ -302,7 +302,7 @@ def cadastra_inscricao(request, matricula):
             nova_inscricao.save()
             return redirect('matricula:detalhe_matricula', matricula=matricula.slug)
 
-    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastra Inscrição', 'matricula': matricula})
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Cadastrar Inscrição', 'matricula': matricula})
 
 def cadastra_inscricao_probatorio(request, probatorio):
     probatorio = Probatorio.objects.get(slug=probatorio)

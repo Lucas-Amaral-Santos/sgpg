@@ -13,6 +13,78 @@
                     left: 50pt; width: 512pt; top: 5pt; height: 632pt;
                 }
             }
+
+
+            :root {
+                --grid-columns: 12;
+                --column-gap: 10px;
+                --row-gap: 10px;
+              }
+              
+              .grid {
+                display: grid;
+                grid-template-columns: repeat(var(--grid-columns), 1fr);
+                grid-column-gap: var(--column-gap);
+                grid-row-gap: var(--row-gap);
+                justify-content: center;
+              }
+              
+              [class*=l-] {
+                border: 1px solid red;
+              }
+              
+              .l-1 {
+                grid-column-start: span 1;
+              }
+              
+              .l-2 {
+                grid-column-start: span 2;
+              }
+              
+              .l-3 {
+                grid-column-start: span 3;
+              }
+              
+              .l-4 {
+                grid-column-start: span 4;
+              }
+              
+              .l-5 {
+                grid-column-start: span 5;
+              }
+              
+              .l-6 {
+                grid-column-start: span 6;
+              }
+              
+              .l-7 {
+                grid-column-start: span 7;
+              }
+              
+              .l-8 {
+                grid-column-start: span 8;
+              }
+              
+              .l-9 {
+                grid-column-start: span 9;
+              }
+              
+              .l-10 {
+                grid-column-start: span 10;
+              }
+              
+              .l-11 {
+                grid-column-start: span 11;
+              }
+              
+              .l-12 {
+                grid-column-start: span 12;
+              }
+
+
+
+
+
     
 
             .border {
@@ -46,9 +118,20 @@
             
 
         </style>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
     </head>
 
     <body>
+        <div class='grid'>
+            <div class='l-6'>
+                kjalkakl
+            </div>
+            <div class='l-6'>
+                kjalkakl
+            </div>
+        </div>
         <div>
             <div class=''>
                 <table>

@@ -15,20 +15,20 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
           
-          {% if pagina == 'Cadastra Probatório' %}
+          {% if pagina == 'Cadastrar Probatório' %}
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_probatorio'%}">{{pagina}}</a></li>
           {% elif pagina == 'Cadastrar Matricula' %}
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_matricula' %}">{{pagina}}</a></li>
-          {% elif pagina == 'Cadastra Inscrição' %}
+          {% elif pagina == 'Cadastrar Inscrição' %}
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_inscricao' matricula.slug %}">{{pagina}}</a></li>
           {% elif pagina == 'dita Inscrição em Matrícula' %}
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_inscricao' matricula.slug %}">{{pagina}}</a></li>
-          {% elif pagina == 'Cadastra Afastamento' %}
+          {% elif pagina == 'Cadastrar Afastamento' %}
           <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">{{pagina}}</a></li>
-          {% elif pagina == 'Cadastra Bolsa' %}
+          {% elif pagina == 'Cadastrar Bolsa' %}
           <li class="breadcrumb-item"><a href="{% url 'matricula:detalhe_matricula' matricula.slug %}">Matricula: {{matricula.probatorio}}</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'matricula:cadastra_afastamento' matricula.slug %}">{{pagina}}</a></li>
           {% elif pagina == 'Cadastra Inscrição em Probatório' %}

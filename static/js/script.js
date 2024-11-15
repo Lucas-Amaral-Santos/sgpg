@@ -127,4 +127,8 @@ $("#id_membros_ativos_view").change(function () {
 });
 
 
+$("input[type=text]").keyup(function(){
+  $(this).val( $(this).val().toUpperCase() );
+});
+
 
