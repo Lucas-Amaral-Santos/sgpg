@@ -5,6 +5,7 @@
 
             @page {
                 size: a4 portrait;
+
                 @frame header_frame {           /* Static Frame */
                     -pdf-frame-content: header_content;
                     left: 50pt; width: 512pt; top: 10pt; height: 40pt;
@@ -12,76 +13,11 @@
                 @frame content_frame {          /* Content Frame */
                     left: 50pt; width: 512pt; top: 5pt; height: 632pt;
                 }
+                @frame footer_frame {           /* Another static Frame */
+                    -pdf-frame-content: footer_content;
+                    left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+                }
             }
-
-
-            :root {
-                --grid-columns: 12;
-                --column-gap: 10px;
-                --row-gap: 10px;
-              }
-              
-              .grid {
-                display: grid;
-                grid-template-columns: repeat(var(--grid-columns), 1fr);
-                grid-column-gap: var(--column-gap);
-                grid-row-gap: var(--row-gap);
-                justify-content: center;
-              }
-              
-              [class*=l-] {
-                border: 1px solid red;
-              }
-              
-              .l-1 {
-                grid-column-start: span 1;
-              }
-              
-              .l-2 {
-                grid-column-start: span 2;
-              }
-              
-              .l-3 {
-                grid-column-start: span 3;
-              }
-              
-              .l-4 {
-                grid-column-start: span 4;
-              }
-              
-              .l-5 {
-                grid-column-start: span 5;
-              }
-              
-              .l-6 {
-                grid-column-start: span 6;
-              }
-              
-              .l-7 {
-                grid-column-start: span 7;
-              }
-              
-              .l-8 {
-                grid-column-start: span 8;
-              }
-              
-              .l-9 {
-                grid-column-start: span 9;
-              }
-              
-              .l-10 {
-                grid-column-start: span 10;
-              }
-              
-              .l-11 {
-                grid-column-start: span 11;
-              }
-              
-              .l-12 {
-                grid-column-start: span 12;
-              }
-
-
 
 
 
@@ -110,12 +46,35 @@
                 padding: 2px;
             }
 
+            .pt-2 {
+                padding: 2px 0px 0px 0px;
+            }
+
+            .pt-10 {
+                padding: 10px 5px 0px 0px;
+            }
+
+            .pt-5 {
+                padding: 5px 0px 0px 0px;
+            }
+
+            .padding-5 {
+                padding: 5px;
+            }
+
+            .align-center {
+                flex: 1;
+                align: center;
+            }
+
             .align-bottom {
                 flex: 1;
                 align: bottom;
             }
             
-            
+            .uff {
+                font-size: 40pt;
+            }
 
         </style>
 
@@ -124,14 +83,7 @@
     </head>
 
     <body>
-        <div class='grid'>
-            <div class='l-6'>
-                kjalkakl
-            </div>
-            <div class='l-6'>
-                kjalkakl
-            </div>
-        </div>
+        
         <div>
             <div class=''>
                 <table>
@@ -147,7 +99,7 @@
                             </table>
                         
                         </td>
-                        <td class='text-center border'>
+                        <td class='text-center border pt-5 uff'>
                             UFF
                         </td>
                     </tr>
@@ -164,22 +116,22 @@
                         <td class="border">
                             <table>
                                 <tr>
-                                    <td>ALUNO: </td>
+                                    <td>ALUNO: {{matricula.probatorio.aluno}}</td>
                                 </tr>
                             </table>
                             <table>
                                 <tr>
-                                    <td>MATRÍCULA: </td>
-                                    <td>NACIONALIDADE</td>
-                                    <td>NASCIMENTO</td>
+                                    <td>MATRÍCULA: {{matricula.numero}}</td>
+                                    <td>NACIONALIDADE: {{matricula.probatorio.aluno.nacionalidade}}</td>
+                                    <td>NASCIMENTO: {{matricula.probatorio.aluno.dt_nascimento}}</td>
                                 </tr>
                             </table>
                             <table>
                                 <tr>
-                                    <td>IDENTIDADE: </td>
-                                    <td>ORGÃO: </td>
-                                    <td>EST. </td>
-                                    <td>CPF: </td>
+                                    <td>IDENTIDADE: {{matricula.probatorio.aluno.identidade}}</td>
+                                    <td>ORGÃO: {{matricula.probatorio.aluno.identidade_orgao}}</td>
+                                    <td>EST. {{matricula.probatorio.aluno.identidade_uf}}</td>
+                                    <td>CPF: {{matricula.probatorio.aluno.cpf}}</td>
                                 </tr>
                             </table>
                         </td>
@@ -189,20 +141,29 @@
                 <table>
                     <tr><td class="border">
                     <table>
-                        <tr><td class="border padding-2">
+                        <tr><td class="padding-2">
                             <table>
                                 <tr><td class="">
                                     <table>
-                                        <tr><td>CURSO: </td></tr>
-                                        <tr><td>ÁREA DE CONCENTRAÇÃO/CAMPO DE INFLUÊNCIA: </td></tr>
-                                        <tr><td>CONCEIDO CAPES: </td></tr>
+                                        <tr><td>CURSO: {{matricula.grau}}</td></tr>
+                                        <tr><td>ÁREA DE CONCENTRAÇÃO/CAMPO DE INFLUÊNCIA: {{matricula.linha_pesquisa}} </td></tr>
+                                        <tr><td>CONCEITO CAPES: </td></tr>
                                     </td></tr>
                                     </table>
                             </table>
+                            <hr>
                         </td></tr>
-                        <tr><td class="padding-2">RESULTADO DO EXAME DE SELEÇÃO: </td></tr>
-                        <tr><td class="padding-2">EXAME(S) DE LÍNGUA(S): </td></tr>
-                        <tr><td class="padding-2">DATA DE MATRÍCULA NO CURSO: </td></tr>
+                        <tr><td class="padding-2">RESULTADO DO EXAME DE SELEÇÃO: {{matricula.probatorio.nota_selecao}}</td></tr>
+                        <tr>
+                            <td class="padding-2">EXAME(S) DE LÍNGUA(S): 
+                                {% for l in matricula.probatorio.probatorio_exame_linguas.all %}
+                                {{ l }}
+                                {% endfor %}
+                                
+
+                            </td>
+                        </tr>
+                        <tr><td class="padding-2">DATA DE MATRÍCULA NO CURSO: {{matricula.dt_matricula}}</td></tr>
                     </table>
                 </td></tr>
                 </table>
@@ -219,64 +180,94 @@
             </div>
 
             <div style="margin-top: 3px;" class='text-center'>
-                <table>
-                    
-                    <tr><td class="border">
-                        <table>
-                        <th style="margin-top: 15px;"> 
-                            <td>CÓDIGO</td>
-                            <td>DENOMINAÇÃO</td>
-                            <td>CRÉD.</td>
-                            <td>C.H.</td>
-                            <td>PERÍODO</td>
-                            <td>NOTA/CONC.</td>
-                        </th>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                    </td></tr>
-                    
+                <table>                    
+                    <tr>
+                        <td class="border pt-2">
+                            <table>
+                                <thead>
+                                        <td>CÓDIGO</td>
+                                        <td>DENOMINAÇÃO</td>
+                                        <td>CRÉD.</td>
+                                        <td>C.H.</td>
+                                        <td>PERÍODO</td>
+                                        <td>NOTA/CONC.</td>
+                                </thead>
+                                <tbody>
+                                {% for inscricoes in matricula.inscricao_matricula.all %}
+                                <tr>
+                                    <td>
+                                        {{inscricoes.disciplina_ofertada.disciplina.codigo}}
+                                    </td>
+                                    <td>
+                                        {{inscricoes.disciplina_ofertada.disciplina.nome}}
+                                    </td>
+                                    <td>
+                                        {{inscricoes.disciplina_ofertada.disciplina.creditos}}
+                                    </td>
+                                    <td>
+                                        {{inscricoes.disciplina_ofertada.disciplina.carga}}
+                                    </td>
+                                    <td>
+                                        {{inscricoes.disciplina_ofertada.semestre}}/{{inscricoes.disciplina_ofertada.ano}}
+                                    </td>
+                                    <td>
+                                        {{inscricoes.nota.nota}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                        </td>
+                    </tr>                    
                 </table>
 
             </div>
 
             <div style="margin-top: 3px;">
                 <table>
-                    <tr><td class="border text-center padding-2">
-                        TESE / DISSERTAÇÃO
-                    </td></tr>
+                    <tr>
+                        <td class="border text-center padding-2">
+                            TESE / DISSERTAÇÃO
+                        </td>
+                    </tr>
                 </table>
             </div>
         
-            <div style="margin-top: 3px;">
+            <div class="padding-2" style="margin-top: 0px">
                 <table>
-                    <tr><td class="">
-                        TÍTULO: 
-                    </td></tr>
-                    <td>
-
-                    </td>
-                    <tr><td class="">
-                        DATA DA DEFESA: 
-                    </td>
-                    <td>
-                        JULGAMENTO:     
-                    </td>
-                    </tr>
-                    <tr><td class="">
-                        ORIENTADOR: 
-                    </td>
-                    <td>
-                    </td>
+                    <tr>
+                        <td class='border'>
+                            <table>
+                                <tr>
+                                    <td class="">
+                                        TÍTULO: {{matricula.matricula_trabalho_final}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="">
+                                        DATA DA DEFESA: {{matricula.matricula_trabalho_final.evento_trabalho_final.evento_data}}
+                                    </td>
+                                    <td>
+                                        JULGAMENTO:
+                                        {% if matricula.matricula_trabalho_final.nota %}
+                                        {{matricula.matricula_trabalho_final.nota.nota}}
+                                        {% endif %}                                            
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="">
+                                        ORIENTADOR:
+                                        {% for orientadores in matricula.matricula_trabalho_final.orientacao_trabalho_final.all %}
+                                        {{orientadores}} 
+                                        {% endfor %}
+                                        
+                                                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
                 </table>
-
             </div>
 
             <div style="margin-top: 3px;">
@@ -295,27 +286,23 @@
                 </table>
             </div>
 
-            <div style="margin-top: 3px;">
+            <div style="margin-top: 5px;">
                 <table>
-                    <tr>
-                        <td class="border padding-2">
-                            [data] 
+                    <tr style="height: 60px;">
+                        <td class="border text-center padding-2">
+                            {{data}} 
                         </td>
-                        <td class="border padding-2 text-center">
-                            <hr>
+                        <td class="border pt-10 text-center">
                             Coordenação do Curso
                         </td>
                         <td class="border padding-2 text-center">
-                            PAG. <div><pdf:pagenumber></div>
-                                
-                            
+                            <div id="footer_content">
+                                <div> <pdf:pagenumber> </div>
+                            </div>                                                   
                         </td>
                     </tr>
                 </table>
             </div>
-
         </div>
-
     </body>
-
 </html>
