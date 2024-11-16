@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from matricula.models import Matricula, Probatorio
 from aluno.models import Aluno
 from .filter import MatriculaFilter, AlunoFilter, ProbatorioFilter
@@ -11,7 +10,6 @@ from datetime import datetime
 import csv
 from io import BytesIO
 from django.http import HttpResponse
-
 
 
 # Create your views here.
@@ -44,8 +42,6 @@ def filtra_aluno(request):
 
     grafico_dt_nascimento = f.qs.values("dt_nascimento__year").annotate(nviews=Count('dt_nascimento'))
 
-
-
     grafico_dt_cadastro = f.qs.values("dt_cadastro__year").annotate(nviews=Count('dt_cadastro'))
     grafico_mestrado = f.qs.filter(probatorio_aluno__grau__grau='Mestrado').values("dt_cadastro__year").annotate(nviews=Count('dt_cadastro'))
 
@@ -55,7 +51,10 @@ def filtra_aluno(request):
     for i in grafico_doutorado:
         i['cor'] = Grau.objects.get(grau=i['probatorio_aluno__grau__grau']).cor
 
+
+
     # TODO GRAFICO DOS ALUNOS QUE ENTRARAM NOS ÚLTIMOS ANOS
+
     # curr_year = datetime.now().year
     # quadrienio = [curr_year, curr_year-1, curr_year-2, curr_year-3, curr_year-4, curr_year-5, curr_year-6]
     # num_mat = []
