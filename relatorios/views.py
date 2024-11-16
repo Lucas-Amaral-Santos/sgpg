@@ -94,7 +94,7 @@ def export_cliente_csv(request, clientes):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="alunos.csv"'
 
-    fields = ['Nome', 'Idade', 'CPF', 'Email', 'Sexo', 'Estado Civil', 'Profissão']
+    fields = ['Nome', 'CPF', 'Sexo', 'Pai', 'Mãe', 'Naturalidade', 'Nacionalidade', 'Data de Nasc', 'Estado Civil', 'Identidade', 'Id-UF', 'Id-Orgão', 'Sexo', 'Email', 'Etnia', 'Port. Deficiência', 'Qual Deficiência', 'Status', 'Probatório', 'Data da Inscrição', 'Linha de Pesquisa', 'Grau', 'Número', 'Curso', 'Requisita bolsa', 'Título TRabalho Final', 'Nota Trabalho Final', 'Entregue Versão Final', 'Data do Diploma', 'Diploma Entregue', 'Orientadores']
     writer = csv.writer(response)
     writer.writerow(fields)    
 
@@ -102,7 +102,7 @@ def export_cliente_csv(request, clientes):
 
         obj = [c.nome, c.cpf, c.sexo, c.nome_pai, c.nome_mae, c.naturalidade, c.nacionalidade, c.dt_nascimento, c.estado_civil, c.identidade, c.identidade_uf, c.identidade_orgao, c.sexo, c.email, c.etnia, c.portador_deficiencia, c.portador_deficiencia_qual, c.status, c.probatorio_aluno.probatorio, c.probatorio_aluno.data_inscricao, c.probatorio_aluno.linha_pesquisa, c.probatorio_aluno.grau]
         if(c.probatorio_aluno.matricula_probatorio.first() is not None):
-            obj += [c.probatorio_aluno.matricula_probatorio.first().numero, c.probatorio_aluno.matricula_probatorio.first().curso, c.probatorio_aluno.matricula_probatorio.first().requisita_bolsa, c.probatorio_aluno.matricula_probatorio.first().linha_pesquisa, c.probatorio_aluno.matricula_probatorio.first().grau, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.titulo, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.nota, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.versao_final, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.dt_diploma, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.diploma]
+            obj += [c.probatorio_aluno.matricula_probatorio.first().numero, c.probatorio_aluno.matricula_probatorio.first().curso, c.probatorio_aluno.matricula_probatorio.first().requisita_bolsa, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.titulo, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.nota, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.versao_final, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.dt_diploma, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.diploma]
             if(c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.orientacao_trabalho_final is not None):                
                 aux = ''
                 for o in c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.orientacao_trabalho_final.all():
