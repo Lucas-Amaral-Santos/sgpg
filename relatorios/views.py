@@ -7,6 +7,7 @@ from config.models import Sexo, EstadoCivil, Etnia, StatusOptions
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from faker import Factory
+from datetime import datetime
 
 
 
@@ -32,6 +33,18 @@ def filtra_aluno(request):
     grafico_status = f.qs.values("status__status__status_options").annotate(nviews=Count('status')).filter(status__status__status_options__isnull=False)
     for i in grafico_status:
         i['cor'] = StatusOptions.objects.get(status_options=i['status__status__status_options']).cor
+
+    # TODO GRAFICO DOS ALUNOS QUE ENTRARAM NOS ÚLTIMOS ANOS
+    # curr_year = datetime.now().year
+    # quadrienio = [curr_year, curr_year-1, curr_year-2, curr_year-3, curr_year-4, curr_year-5, curr_year-6]
+    # num_mat = []
+    # num_mest = []
+    # num_doc = []
+    # for years in quadrienio:
+    #     num_mat += [Matricula.objects.filter(dt_cadastro__year = years).count()]
+    #     num_mest += [Matricula.objects.filter(grau=1).filter(dt_cadastro__year = years).count()]
+    #     num_doc += [Matricula.objects.filter(grau=2).filter(dt_cadastro__year = years).count()]
+
 
     paginator = Paginator(f.qs, 5)
 
