@@ -245,13 +245,36 @@ i.fa-solid.fa-pen-to-square {
     color: #224EAC;
 }
 
-a i.fa-edit {
+/* a i.fa-edit {
     color:#224EAC;
+} */
+
+.row-close .close{
+    opacity: 100%;
+    color: rgba(255, 255, 255, 0);
 }
+
+.row-close:hover .close{
+    opacity: 100%;
+    cursor: pointer;
+    color: rgba(34, 78, 172, 1);
+}
+
+.row-close .edit{
+    opacity: 100%;
+    color: rgba(255, 255, 255, 0);
+}
+
+.row-close:hover .edit{
+    opacity: 100%;
+    cursor: pointer;
+    color: rgba(34, 78, 172, 1);
+}
+
 
 .orientador-edit .orientador-close a{
     opacity: 100%;
-    color: rgba(34, 78, 172, 0);
+    color: rgba(255, 255, 255, 0);
 }
 
 .orientador-edit:hover .orientador-close a{

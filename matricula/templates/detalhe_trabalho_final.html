@@ -58,10 +58,15 @@
                     {% elif trabalho_final.orientacao_trabalho_final is not None %}
                     <div class="row my-2">
                         {% for t in trabalho_final.orientacao_trabalho_final.all %}
-                        <div class="col-12">
-                            <span>
-                                {{t.professor}} ({{t.tipo}})
-                            </span>
+                        <div class="row orientador-edit">
+                            <div class="col-8">
+                                <span>
+                                    {{t.professor}} ({{t.tipo}})
+                                </span>
+                            </div>
+                            <div class="col-2 orientador-close">
+                                <a href="{% url "matricula:deleta_orientador" trabalho_final.id t.id %}"><i class="fa-solid fa-xmark"></i></a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>

@@ -85,6 +85,7 @@ class Matricula(models.Model):
         self.slug = slugify(self.id)
         super(Matricula, self).save(*args, **kwargs)
 
+
     def __str__(self):
         return str(self.probatorio.aluno)
     

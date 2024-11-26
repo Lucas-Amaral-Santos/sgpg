@@ -35,5 +35,5 @@ urlpatterns = [
     path('<int:trabalho_final>/<int:orientacao>/deleta_orientador', deleta_orientador, name="deleta_orientador"),
     path('edita_colegiado/<int:colegiado>', edita_colegiado, name='edita_colegiado'),
     path('probatorio/<int:probatorio>/prorroga_data_limite_probatorio', prorroga_data_limite_probatorio, name='prorroga_probatorio'),
-    path('render_pdf', render_pdf_view, name='render_pdf')
+    path('render_pdf/<int:matricula>', render_pdf_view, name='render_pdf')
 ]

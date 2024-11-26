@@ -331,18 +331,32 @@ Detalhes Probatório
                 </a>
             </div> 
 
+            {% if probatorio.matricula_probatorio.first is None %}
 
-            
             <div class="col-2 d-flex">
                 <a class="btn btn-primary btn-lg" 
                     type="submit" 
-                    onclick="location.href='{% url 'matricula:cadastra_matricula_com_probatorio' probatorio=probatorio.id %}'" 
+                    onclick="location.href='{% url 'matricula:cadastra_matricula_com_probatorio' probatorio=probatorio.id %}'"                     
                     data-toggle="tooltip" 
                     data-placement="right" 
                     title="Abrir Matrícula">
                     <i class="fa-solid fa-graduation-cap"></i>
                 </a>
             </div>
+
+            {% else %}
+            <div class="col-2 d-flex">
+                <a class="btn btn-primary btn-lg" 
+                    type="submit" 
+                    onclick="location.href='{% url 'matricula:detalhe_matricula' matricula=probatorio.matricula_probatorio.first.id %}'" 
+                    data-toggle="tooltip" 
+                    data-placement="right" 
+                    title="Acessar Matrícula">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </a>
+            </div>
+            {% endif %}
+            
 
 
         </div>

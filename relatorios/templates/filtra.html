@@ -16,7 +16,14 @@ Relatórios
             <button class="btn btn-primary" style="width: 70%;" data-toggle="modal" data-target="#modal-filtro"><i class='fas fa-filter' style='font-size:20px'></i> Filtro</button>
         </div>
         <div class="col-3">
+            <form method='POST'>  
+                {% csrf_token %}
+                <input type="hidden" value='csv' name="export">
+            <button class="btn btn-success" style="width: 70%;" type="submit"><i class='fa-solid fa-file-csv' style='font-size:20px'></i> Exportar CSV</button>
+            </form>
+            <!--
             <button class="btn btn-success" style="width: 70%;" data-toggle="modal" data-target="#modal-filtro"><i class='fa-solid fa-file-csv' style='font-size:20px'></i> Exportar CSV</button>
+            -->
         </div>
         <hr>
     </div>
@@ -36,23 +43,31 @@ Relatórios
                     <form method="GET">
                         <div class="row gap-3">
                         {% for field in filter.form %}
-                        <div class="col-6">
-                            {% if field.field.choices  %}
-                            <div class="row">
-                                {{field.label_tag}}
-                                    {% for value, text in field.field.choices %}
-                                    <div class="col-3">
-                                        <div class="ui slider checkbox">
-                                            <input class='form-check-input' id="id_{{ field.name }}" name="{{ field.name }}" type="checkbox" value="{{ value }}">
-                                            <label for="id_{{ field.name }}">{{ text }}</label>
+                            
+                                <div class="col-6">                            
+                                    {% if field.field.choices  %}
+
+                                        
+                                        <div class="row">
+                                            {{field.label_tag}}
+                                                {% for value, text in field.field.choices %}
+                                                <div class="col-3">
+                                                    <div class="ui slider checkbox">
+                                                        <input class='form-check-input' id="id_{{ field.name }}" name="{{ field.name }}" type="checkbox" value="{{ value }}">
+                                                        <label for="id_{{ field.name }}">{{ text }}</label>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}                                
                                         </div>
-                                    </div>
-                                    {% endfor %}                                
-                            </div>
-                            {% else %}
-                                {{field|as_crispy_field}}
-                            {% endif %}
-                        </div>
+                                        
+
+                                    {% else %}
+                                        
+                                        {{field|as_crispy_field}}
+                                        
+                                    {% endif %}
+                                </div>
+                            
                         
                         {% endfor %}
 
@@ -115,7 +130,7 @@ Relatórios
 
                 <div class="col-6">
                     <div>
-                        <canvas id="linha"></canvas>                        
+                        <canvas id="linha_cadastro"></canvas>                        
                     </div>
                 </div>
 
@@ -142,6 +157,25 @@ Relatórios
                 
 
             </div> 
+            <div class="row">
+                <div class="col-6">
+
+                    <div>
+                        <canvas id="barra_grau"></canvas>
+                        
+                    </div>
+
+                </div>
+                <div class="col-6">
+
+                    <div>
+                        <canvas id="linha_dt_nasc"></canvas>
+                        
+                    </div>
+
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col">
 
@@ -301,14 +335,33 @@ Relatórios
     const ctx_barra_genero = document.getElementById('barra_genero').getContext('2d');
     const barra_genero = new Chart(ctx_barra_genero, config_barra_genero);
 
+    let labels_linha_dt_cadastro = [];
+    {% for i in grafico_dt_cadastro %}labels_linha_dt_cadastro.push("{{i.dt_cadastro__year}}");{% endfor %}
 
-    
-    const labels_linha = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
-    const data_linha = {
-    labels: labels_linha,
+    let data_dt_cadastro = [];
+    {% for i in grafico_dt_cadastro %}data_dt_cadastro.push("{{i.nviews}}");{% endfor %}
+
+
+    let data_mestrado = [];
+    {% for i in grafico_mestrado %}data_mestrado.push("{{i.nviews}}");{% endfor %}
+
+    let data_doutorado = [];
+    {% for i in grafico_doutorado %}data_doutorado.push("{{i.nviews}}");{% endfor %}
+
+    const data_linha_cadastro = {
+    labels: labels_linha_dt_cadastro,
         datasets: [{
-            label: 'My First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
+            label: 'Total',
+            data: data_dt_cadastro,
+            fill: false,
+            borderColor: [
+            'rgba(0, 0, 0, 1)',
+                ],
+            tension: 0.1
+            },
+            {
+            label: 'Mestrado',
+            data: data_mestrado,
             fill: false,
             borderColor: [
             'rgba(255, 99, 132, 1)',
@@ -316,8 +369,8 @@ Relatórios
             tension: 0.1
             },
             {
-                label: 'My Second Dataset',
-                data: [65, 99, 30, 51, 76, 25, 80],
+                label: 'Doutorado',
+                data: data_doutorado,
                 fill: false,
                 borderColor: [
                 'rgba(54, 162, 235)',
@@ -327,9 +380,9 @@ Relatórios
         ]
     };
 
-    const config_linha = {
+    const config_linha_cadastro = {
         type: 'line',
-        data: data_linha,
+        data: data_linha_cadastro,
         options: {
             scales: {
                 y: {
@@ -342,8 +395,65 @@ Relatórios
         }
     };
 
-    const ctx_linha = document.getElementById('linha').getContext('2d');
-    const linha = new Chart(ctx_linha, config_linha)
+    const ctx_linha_cadastro = document.getElementById('linha_cadastro').getContext('2d');
+    const linha_cadastro = new Chart(ctx_linha_cadastro, config_linha_cadastro)
+
+    /**
+    *
+    * Gráfico Grau
+    *
+    **/
+
+    const data_barra_grau = {
+        labels: ['Grau'],
+        datasets: [
+        {% for grau in grafico_grau  %}
+        {
+            label: '{{grau.probatorio_aluno__grau__grau}}',
+            data: [{{grau.nviews}},],
+            backgroundColor: [
+                '{{grau.cor}}'+33,
+            ],
+            borderColor: [
+                '{{grau.cor}}',
+            ],
+            borderWidth: 1
+        },
+        {% endfor %}
+        ]
+    },
+
+    config_barra_grau = {
+        type: 'bar',
+        data: data_barra_grau,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Quantidade'
+                    }
+                }                
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Grau'
+                }
+            }
+        }
+    }
+    const ctx_barra_grau = document.getElementById('barra_grau').getContext('2d');
+    const barra_grau = new Chart(ctx_barra_grau, config_barra_grau);
+
+
+    /**
+    *
+    * Fim Gráfico Grau 
+    *
+    **/
+
 
 
 
@@ -484,7 +594,54 @@ Relatórios
     const ctx_barra_3 = document.getElementById('barra_3').getContext('2d');
     const barra_3 = new Chart(ctx_barra_3, config_barra_3);
 
+    /**
+    *
+    *  Gráfico de Data de Nascimento
+    *
+    **/
+    let labels_linha_dt_nasc = [];
+    let data_dt_nasc = [];    
 
+    {% for i in grafico_dt_nascimento %}labels_linha_dt_nasc.push("{{i.dt_nascimento__year}}");{% endfor %}
+    {% for i in grafico_dt_nascimento %}data_dt_nasc.push("{{i.nviews}}");{% endfor %}
+    
+    const data_linha_dt_nasc = {
+    labels: labels_linha_dt_nasc,
+        datasets: [{
+            label: 'Data de Nascimento',
+            data: data_dt_nasc,
+            fill: false,
+            borderColor: [
+            'rgba(255, 99, 132, 1)',
+                ],
+            tension: 0.1
+            },   
+        ]
+    };
+
+    const config_linha_dt_nasc = {
+        type: 'line',
+        data: data_linha_dt_nasc,
+        options: {
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Quantidade'
+                    }
+                }
+            },
+        }
+    };
+
+    const ctx_linha_dt_nasc = document.getElementById('linha_dt_nasc').getContext('2d');
+    const linha_dt_nasc = new Chart(ctx_linha_dt_nasc, config_linha_dt_nasc)
+
+    /**
+    *
+    *  FIM Gráfico de Data de Nascimento
+    *
+    **/
 
 
     </script>

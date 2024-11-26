@@ -476,3 +476,149 @@ def lista_tabelas(request):
             return redirect('config:lista_tabelas')
 
     return render(request, "lista_tabelas.html", {'context': context})
+
+
+def delete_object(request, tabela, id):
+
+    if (tabela=='disciplina'):
+        obj = Disciplina.objects.get(id=id)
+    elif (tabela=='disciplina_ofertada'):
+        obj = DisciplinaOfertada.objects.get(id=id)
+    elif (tabela=='unidade_federativa'):
+        obj = UnidadeFederativa.objects.get(id=id)
+    elif (tabela=='sexo'):
+        obj = Sexo.objects.get(id=id)
+    elif (tabela=='etnia'):
+        obj = Etnia.objects.get(id=id)
+    elif (tabela=='estado_civil'):
+        obj = EstadoCivil.objects.get(id=id)
+    elif (tabela=='vinculo'):
+        obj = Vinculo.objects.get(id=id)
+    elif (tabela=='status'):
+        obj = StatusOptions.objects.get(id=id)
+    elif (tabela=='linha_pesquisa'):
+        obj = LinhaPesquisa.objects.get(id=id)
+    elif (tabela=='instituicao'):
+        obj = Instituicao.objects.get(id=id)
+    elif (tabela=='colegio'):
+        obj = Colegio.objects.get(id=id)
+    elif (tabela=='instituicao_residencia'):
+        obj = InstituicaoResidencia.objects.get(id=id)
+    elif (tabela=='grau'):
+        obj = Grau.objects.get(id=id)
+    elif (tabela=='linguas'):
+        obj = Linguas.objects.get(id=id)
+    elif (tabela=='agencia_fomento'):
+        obj = AgenciaFomento.objects.get(id=id)
+    
+    try:
+        obj.delete()
+        messages.success(request, 'Valor deletado com sucesso!')
+
+    except:
+        messages.warning(request, 'Este valor está sendo usado em algum objeto!')
+    return redirect('config:lista_tabelas')
+
+
+def edit_object(request, tabela, id):
+
+    if (tabela=='disciplina'):
+        obj = Disciplina.objects.get(id=id)
+        form = DisciplinaForm(instance=obj)
+        if(request.method == 'POST'):
+            form = DisciplinaForm(request.POST, instance=obj)
+            
+    elif (tabela=='disciplina_ofertada'):
+        obj = DisciplinaOfertada.objects.get(id=id)
+        form = DisciplinaOfertadaForm(instance=obj)        
+        if(request.method == 'POST'):
+            form = DisciplinaOfertadaForm(request.POST, instance=obj)
+            
+    elif (tabela=='unidade_federativa'):
+        obj = UnidadeFederativa.objects.get(id=id)
+        form = UnidadeFederativaForm(instance=obj)
+        if(request.method == 'POST'):
+            form = UnidadeFederativaForm(request.POST, instance=obj)
+    
+    elif (tabela=='sexo'):
+        obj = Sexo.objects.get(id=id)
+        form = SexoForm(instance=obj)
+        if(request.method == 'POST'):
+            form = SexoForm(request.POST, instance=obj)
+    
+    elif (tabela=='etnia'):
+        obj = Etnia.objects.get(id=id)
+        form = EtniaForm(instance=obj)
+        if(request.method == 'POST'):
+            form = EtniaForm(request.POST, instance=obj)
+    
+    elif (tabela=='estado_civil'):
+        obj = EstadoCivil.objects.get(id=id)
+        form = EstadoCivilForm(instance=obj)
+        if(request.method == 'POST'):
+            form = EstadoCivilForm(request.POST, instance=obj)
+    
+    elif (tabela=='vinculo'):
+        obj = Vinculo.objects.get(id=id)
+        form = VinculoForm(instance=obj)
+        if(request.method == 'POST'):
+            form = VinculoForm(request.POST, instance=obj)
+    
+    elif (tabela=='status'):
+        obj = StatusOptions.objects.get(id=id)
+        form = StatusOptionsForm(instance=obj)
+        if(request.method == 'POST'):
+            form = StatusOptionsForm(request.POST, instance=obj)
+    
+    elif (tabela=='linha_pesquisa'):
+        obj = LinhaPesquisa.objects.get(id=id)
+        form = LinhaPesquisaForm(instance=obj)
+        if(request.method == 'POST'):
+            form = LinhaPesquisaForm(request.POST, instance=obj)
+    
+    elif (tabela=='instituicao'):
+        obj = Instituicao.objects.get(id=id)
+        form = InstituicaoForm(instance=obj)
+        if(request.method == 'POST'):
+            form = InstituicaoForm(request.POST, instance=obj)
+    
+    elif (tabela=='colegio'):
+        obj = Colegio.objects.get(id=id)
+        form = ColegioForm(instance=obj)
+        if(request.method == 'POST'):
+            form = ColegioForm(request.POST, instance=obj)
+    
+    elif (tabela=='instituicao_residencia'):
+        obj = InstituicaoResidencia.objects.get(id=id)
+        form = InstituicaoResidenciaForm(instance=obj)
+        if(request.method == 'POST'):
+            form = InstituicaoResidenciaForm(request.POST, instance=obj)
+    
+    elif (tabela=='grau'):
+        obj = Grau.objects.get(id=id)
+        form = GrauForm(instance=obj)
+        if(request.method == 'POST'):
+            form = GrauForm(request.POST, instance=obj)
+    
+    elif (tabela=='linguas'):
+        obj = Linguas.objects.get(id=id)
+        form = LinguasForm(instance=obj)
+        if(request.method == 'POST'):
+            form = LinguasForm(request.POST, instance=obj)
+    
+    elif (tabela=='agencia_fomento'):
+        obj = AgenciaFomento.objects.get(id=id)
+        form = AgenciaFomentoForm(instance=obj)
+        if(request.method == 'POST'):
+            form = AgenciaFomentoForm(request.POST, instance=obj)
+    
+    try:
+        if(form.is_valid()):
+                form.save()
+                messages.success(request, 'Edição efetuada com sucesso com sucesso!')
+                return redirect('config:lista_tabelas')
+
+    except:
+        messages.warning(request, 'Este valor está sendo usado em algum objeto!')
+
+    return render(request, 'cadastra_matricula.html', {'form':form, 'pagina':'Editar Tabela'})

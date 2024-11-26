@@ -138,9 +138,9 @@ def cadastra_professor(request, professor=None):
             messages.success(request, 'Docente cadastrado com sucesso!')            
             return redirect('professor:detalhes_professor', professor=novo_professor.slug)
         
-        return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_doutorado': form_doutorado, 'pagina':pagina})
+        return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_doutorado': form_doutorado, 'pagina':pagina, 'professor': professor})
     
-    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_doutorado': form_doutorado, 'pagina':pagina})
+    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_doutorado': form_doutorado, 'pagina': pagina, 'professor': professor})
 
 def lista_professor(request):
     professores = Professor.objects.all().order_by('nome')
