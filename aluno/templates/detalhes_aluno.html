@@ -5,7 +5,7 @@
 {% load custom_tags %}
 
 {% block title %}
-Detalhes Aluno
+Detalhes Discente
 {% endblock %}
 
 {% block content %}
@@ -16,11 +16,11 @@ Detalhes Aluno
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'aluno:lista_aluno' %}">Pesquisar alunos</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'aluno:lista_aluno' %}">Pesquisar dicentes</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:detalhes_aluno' aluno.slug %}">{{aluno}}</a></li>
             </ol>
         </nav>
-        <h1 class="text-center">Detalhes do Aluno</h1>
+        <h1 class="text-center">Detalhes do Discente</h1>
         <div class="container">
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
@@ -644,18 +644,18 @@ Detalhes Aluno
                         </div>
                     </div>
                     <div class="col-3 d-flex justify-content-end">
-                        <a class="btn btn-primary btn-lg" href="{% url 'aluno:edita_aluno' aluno.slug %}" data-toggle="tooltip" data-placement="right" title="Editar cadastro de aluno"><i class="fa-solid fa-pencil"></i></a>
+                        <a class="btn btn-primary btn-lg" href="{% url 'aluno:edita_aluno' aluno.slug %}" data-toggle="tooltip" data-placement="right" title="Editar cadastro do discente"><i class="fa-solid fa-pencil"></i></a>
                     </div>
                 
                     {% if probatorio is not None %}
                     <div class="col-3 d-flex justify-content-end">
-                        <a class="btn btn-primary btn-lg" onclick="location.href='{% url 'matricula:detalhe_probatorio' probatorio.slug %}'" data-toggle="tooltip" data-placement="right" title="Acessar a tela de probatório do aluno"><i class="fa-solid fa-arrow-up-right-dots"></i></a>
+                        <a class="btn btn-primary btn-lg" onclick="location.href='{% url 'matricula:detalhe_probatorio' probatorio.slug %}'" data-toggle="tooltip" data-placement="right" title="Acessar a tela de probatório do discente"><i class="fa-solid fa-arrow-up-right-dots"></i></a>
                     </div>
                     {% endif %}
 
                     {% if matricula is not None %}
                     <div class="col-3 d-flex justify-content-end">
-                        <a class="btn btn-primary btn-lg" type="submit" onclick="location.href='{% url 'matricula:detalhe_matricula' matricula.slug %}'" data-toggle="tooltip" data-placement="right" title="Acessar tela de matrícula do aluno"><i class="fa-solid fa-graduation-cap"></i></a>
+                        <a class="btn btn-primary btn-lg" type="submit" onclick="location.href='{% url 'matricula:detalhe_matricula' matricula.slug %}'" data-toggle="tooltip" data-placement="right" title="Acessar tela de matrícula do discente"><i class="fa-solid fa-graduation-cap"></i></a>
                     </div>
                     {% endif %}
                 </div>
@@ -682,9 +682,9 @@ Detalhes Aluno
                     </button>
                     </div>
                 <div class="modal-body">
-                    <h5>Tem certeza que deseja deletar o aluno?</h5>
+                    <h5>Tem certeza que deseja remover o discente?</h5>
                     <p class='text-center'>Caso esta ação seja confirmada, também serão excluidos 
-                        os registros do probatório, matrícula, eventos e quaisquer outras informações ligadas ao aluno.</p>
+                        os registros do probatório, matrícula, eventos e quaisquer outras informações ligadas ao discente.</p>
                 </div>
                 <div class="modal-footer row">
                     <div class="col-3">

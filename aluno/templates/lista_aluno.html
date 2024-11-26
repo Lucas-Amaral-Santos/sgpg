@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Pesquisar Aluno
+Pesquisar Discente
 {% endblock %}
 
 {% block content %}
@@ -14,11 +14,11 @@ Pesquisar Aluno
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:lista_aluno'%}">Pesquisar alunos</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:lista_aluno'%}">Pesquisar discentes</a></li>
       </ol>
     </nav>
   </div>
-    <h1 class="text-center">Alunos cadastrados</h1>
+    <h1 class="text-center">Pesquisar Discentes</h1>
 
     <form method='GET' class="m-4">
       <div class="input-group rounded">

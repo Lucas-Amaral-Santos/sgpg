@@ -14,11 +14,11 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'professor:lista_professor'%}">Pesquisar Professor</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'professor:lista_professor'%}">Pesquisar Docente</a></li>
         <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'professor:detalhes_professor' professor.slug %}">{{professor}}</a></li>        
       </ol>
     </nav>
-    <h1 class="text-center">Detalhes do Professor</h1>
+    <h1 class="text-center">Detalhes do Docente</h1>
 
 
     <div class="container">
@@ -46,7 +46,7 @@
                         <div class="mt-3">
                             <b>Participações do Colegiado</b>
                             {% if not colegiados %}
-                            <p class="text-secondary mb-0"><i>Nenhuma participação deste professor</i></p>
+                            <p class="text-secondary mb-0"><i>Nenhuma participação deste docente</i></p>
                             {% else %}
                                 <p>{{membro}}</p>
                                 <table class="table">

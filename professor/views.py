@@ -12,7 +12,7 @@ from django.db.models import Q
 from django.contrib import messages
 
 def cadastra_professor(request, professor=None):
-    pagina = "Cadastrar Professor"
+    pagina = "Cadastrar Docente"
     form_professor = ProfessorForm()
     form_graduacao = GraduacaoForm()
     form_trabalho = TrabalhoForm()
@@ -21,7 +21,7 @@ def cadastra_professor(request, professor=None):
     form_doutorado = DoutoradoForm()
 
     if (professor is not None):
-        pagina = "Atualizar Professor"
+        pagina = "Atualizar Docente"
         professor = Professor.objects.get(slug=professor)
         form_professor = ProfessorForm(instance=professor)
         form_graduacao = GraduacaoForm(instance=professor.graduacao)
@@ -30,7 +30,7 @@ def cadastra_professor(request, professor=None):
         form_endereco = EnderecoForm(instance=professor.endereco)
         form_doutorado = DoutoradoForm(instance=professor.doutorado)
 
-        if request.method == "POST" and pagina == 'Atualizar Professor':
+        if request.method == "POST" and pagina == 'Atualizar Docente':
             form_professor = ProfessorForm(request.POST, instance=professor)
             form_graduacao = GraduacaoForm(request.POST, instance=professor.graduacao)
             form_trabalho = TrabalhoForm(request.POST, instance=professor.trabalho)
@@ -50,7 +50,7 @@ def cadastra_professor(request, professor=None):
                 form_endereco.save()
                 form_doutorado.save()
 
-                messages.success(request, 'Professor atualizado com sucesso!')
+                messages.success(request, 'Docente atualizado com sucesso!')
                 return redirect('professor:detalhes_professor', professor=professor.slug)
         
     if request.method == "POST":
@@ -135,12 +135,12 @@ def cadastra_professor(request, professor=None):
             nova_graduacao.save()
             novo_professor.save()
 
-            messages.success(request, 'Professor cadastrado com sucesso!')            
+            messages.success(request, 'Docente cadastrado com sucesso!')            
             return redirect('professor:detalhes_professor', professor=novo_professor.slug)
         
         return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_doutorado': form_doutorado, 'pagina':pagina})
     
-    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_doutorado': form_doutorado, 'pagina':'Cadastrar Professor'})
+    return render(request, "cadastra_professor.html", {'form_professor': form_professor, 'form_graduacao': form_graduacao, 'form_trabalho': form_trabalho, 'form_pos_doutorado':form_pos_doutorado, 'form_endereco': form_endereco, 'form_doutorado': form_doutorado, 'pagina':pagina})
 
 def lista_professor(request):
     professores = Professor.objects.all().order_by('nome')
@@ -175,12 +175,12 @@ def detalhes_professor(request, professor):
             messages.success(request, 'Colegiado atualizado com sucesso!')
             return redirect('professor:detalhes_professor', professor=professor.slug)
 
-    return render(request, 'detalhes_professor.html', {'professor':professor, 'colegiados':colegiados, 'form_colegiado':form_colegiado, 'pagina': 'Detalhes Professor', 'membro': membro})
+    return render(request, 'detalhes_professor.html', {'professor':professor, 'colegiados':colegiados, 'form_colegiado':form_colegiado, 'pagina': 'Detalhes do Docente', 'membro': membro})
 
 def delete_professor(request, professor):
     professor = Professor.objects.get(slug=professor)
     professor.delete()
-    messages.success(request, 'Professor apagado do sistema!')
+    messages.success(request, 'Docente apagado do sistema!')
     return redirect('professor:lista_professor')
 
 def edita_colegiado(request, colegiado):

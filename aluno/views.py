@@ -14,7 +14,7 @@ from faker import Factory
 # Create your views here.
 
 def cadastra_aluno(request, aluno=None):
-    pagina = "Cadastrar Aluno"
+    pagina = "Cadastrar Discente"
 
     form_aluno = AlunoForm()
     form_endereco = EnderecoForm()
@@ -27,7 +27,7 @@ def cadastra_aluno(request, aluno=None):
     form_probatorio = AlunoProbatorioForm(initial={'data_inscricao': datetime.today().strftime(format="%d-%m-%Y")})
 
     if(aluno is not None):
-        pagina = "Atualizar Aluno"
+        pagina = "Atualizar Discente"
         aluno = Aluno.objects.get(slug=aluno)
         form_aluno = AlunoForm(instance=aluno)
         form_endereco = EnderecoForm(instance=aluno.endereco)
@@ -216,7 +216,7 @@ def cadastra_aluno(request, aluno=None):
             novo_trabalho.save()
             novo_aluno.save()
             novo_probatorio.save()
-            messages.success(request, 'Aluno cadastrado com sucesso!')
+            messages.success(request, 'Discente cadastrado com sucesso!')
             return redirect('aluno:detalhes_aluno', aluno=novo_aluno.slug)
         
         print(form_graduacao.errors)

@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Cadastra Aluno
+Cadastra Discente
 {% endblock %}
 
 {% block content %}
@@ -16,13 +16,13 @@ Cadastra Aluno
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'aluno:lista_aluno' %}">Pesquisar alunos</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'aluno:lista_aluno' %}">Pesquisar dicentes</a></li>
               
-              {% if pagina == 'Atualizar Aluno' %}
+              {% if pagina == 'Atualizar Discente' %}
               <li class="breadcrumb-item"><a href="{% url 'aluno:detalhes_aluno' aluno.slug %}">{{aluno}}</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:edita_aluno' aluno.slug %}">Atualizar Aluno</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:edita_aluno' aluno.slug %}">Atualizar Discente</a></li>
               {% else %}
-              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:cadastra_aluno' %}">Cadastra Aluno</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'aluno:cadastra_aluno' %}">Cadastrar Discente</a></li>
               {% endif %}
             </ol>
           </nav>
@@ -58,7 +58,7 @@ Cadastra Aluno
                     <div class="row">
                         {% if form_aluno.errors %}
                         <div class="col">
-                            <p style="text-transform: uppercase;">Aba <u>Aluno</u></p>
+                            <p style="text-transform: uppercase;">Aba <u>Informações Pessoais</u></p>
                             {% for field in form_aluno %}
                             <tr>
                                 {% if field.errors %}

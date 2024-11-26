@@ -17,14 +17,14 @@
           <li data-toggle="tooltip" data-placement="right" title="Início">
             <a class="nav-item nav-link" href="{% url 'home' %}"><i class="fa-solid fa-house fa-lg"></i></a>
           </li>        
-          <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar alunos e matrículas">
+          <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar discentes e matrículas">
             <a class="nav-item nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-graduate fa-lg"></i></a>
             <ul class="dropdown-menu">            
               <div class="dropdown dropright">
-                <a class="dropdown-item">Aluno {% include 'svg/dropright.html' %} </a>
+                <a class="dropdown-item">Discente {% include 'svg/dropright.html' %} </a>
                 <div class="dropdown-menu">
-                  <li><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Aluno</a></li>
-                  <li><a href="{% url 'aluno:cadastra_aluno' %}" class="dropdown-item">Cadastrar Aluno</a></li>
+                  <li><a href="{% url 'aluno:lista_aluno' %}" class="dropdown-item">Pesquisar Discentes</a></li>
+                  <li><a href="{% url 'aluno:cadastra_aluno' %}" class="dropdown-item">Cadastrar Discente</a></li>
                 </div>
               </div>
               <div class="dropdown dropright">
@@ -53,8 +53,8 @@
         <li class="dropdown" data-toggle="tooltip" data-placement="right" title="Gerenciar professores">
           <a class="nav-item nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-chalkboard-user fa-lg"></i></a>
           <ul class="dropdown-menu">
-            <li><a href="{% url 'professor:lista_professor' %}" class="dropdown-item">Pesquisar Professor</a></li>
-            <li><a href="{% url 'professor:cadastra_professor' %}" class="dropdown-item">Cadastrar Professor</a></li>
+            <li><a href="{% url 'professor:lista_professor' %}" class="dropdown-item">Pesquisar Docente</a></li>
+            <li><a href="{% url 'professor:cadastra_professor' %}" class="dropdown-item">Cadastrar Docente</a></li>
             <li><a href="{% url 'colegiado:detalhes_colegiado' %}" class="dropdown-item">Pesquisar Colegiado</a></li>
           </ul>
         </li>
