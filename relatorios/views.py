@@ -38,7 +38,7 @@ def filtra_aluno(request):
 
     grafico_grau = f.qs.values("probatorio_aluno__grau__grau").annotate(nviews=Count('probatorio_aluno__grau__grau'))
     for i in grafico_grau:
-        i['cor'] = Grau.objects.get(grau=i['probatorio_aluno__grau']).cor
+        i['cor'] = Grau.objects.get(grau=i['probatorio_aluno__grau__grau']).cor
 
     grafico_dt_nascimento = f.qs.values("dt_nascimento__year").annotate(nviews=Count('dt_nascimento'))
 
