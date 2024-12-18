@@ -45,11 +45,9 @@ def filtra_aluno(request):
     grafico_dt_cadastro = f.qs.values("dt_cadastro__year").annotate(nviews=Count('dt_cadastro'))
     grafico_mestrado = f.qs.filter(probatorio_aluno__grau__grau='Mestrado').values("dt_cadastro__year").annotate(nviews=Count('dt_cadastro'))
 
-
-
     grafico_doutorado = f.qs.filter(probatorio_aluno__grau__grau='Doutorado').values("dt_cadastro__year").annotate(nviews=Count('dt_cadastro'))
-    for i in grafico_doutorado:
-        i['cor'] = Grau.objects.get(grau=i['probatorio_aluno__grau__grau']).cor
+    # for i in grafico_doutorado:
+    #     i['cor'] = Grau.objects.get(grau=i['probatorio_aluno__grau__grau']).cor
 
 
 
