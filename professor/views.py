@@ -153,7 +153,7 @@ def lista_professor(request):
         page = request.GET.get('page')
         professores = paginator.get_page(page)  
 
-    return render(request, 'lista_professor.html' , {'professores': professores, 'pagina': 'Pesquisar Professor', 'busca': busca, 'total':total})
+    return render(request, 'lista_professor.html' , {'professores': professores, 'pagina': 'Pesquisar Docente', 'busca': busca, 'total':total})
 
 def detalhes_professor(request, professor):
 
