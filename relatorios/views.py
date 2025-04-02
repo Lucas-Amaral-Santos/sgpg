@@ -80,7 +80,7 @@ def filtra_aluno(request):
             return export_cliente_csv(request, f.qs)
 
 
-    return render(request, 'filtra.html', {'filter': f, 'alunos': response, 'grafico_sexo': grafico_sexo, 'grafico_estado_civil': grafico_estado_civil, 'grafico_etnia': grafico_etnia, 'grafico_status': grafico_status, 'grafico_grau': grafico_grau, 'grafico_dt_nascimento': grafico_dt_nascimento, 'grafico_dt_cadastro': grafico_dt_cadastro, 'grafico_mestrado': grafico_mestrado, 'grafico_doutorado': grafico_doutorado})
+    return render(request, 'filtra.html', {'filter': f, 'alunos': f.qs.all(), 'grafico_sexo': grafico_sexo, 'grafico_estado_civil': grafico_estado_civil, 'grafico_etnia': grafico_etnia, 'grafico_status': grafico_status, 'grafico_grau': grafico_grau, 'grafico_dt_nascimento': grafico_dt_nascimento, 'grafico_dt_cadastro': grafico_dt_cadastro, 'grafico_mestrado': grafico_mestrado, 'grafico_doutorado': grafico_doutorado})
 
 
 def export_cliente_csv(request, clientes):
