@@ -336,7 +336,7 @@ Relatórios
     const barra_genero = new Chart(ctx_barra_genero, config_barra_genero);
 
     let labels_linha_dt_cadastro = [];
-    {% for i in grafico_dt_cadastro %}labels_linha_dt_cadastro.push("{{i.dt_cadastro__year}}");{% endfor %}
+    {% for i in grafico_dt_cadastro %}labels_linha_dt_cadastro.push("{{i.probatorio_aluno__data_inscricao__year}}");{% endfor %}
 
     let data_dt_cadastro = [];
     {% for i in grafico_dt_cadastro %}data_dt_cadastro.push("{{i.nviews}}");{% endfor %}
@@ -350,34 +350,34 @@ Relatórios
 
     const data_linha_cadastro = {
     labels: labels_linha_dt_cadastro,
-        datasets: [{
-            label: 'Total',
-            data: data_dt_cadastro,
+    datasets: [{
+        label: 'Total',
+        data: data_dt_cadastro,
+        fill: false,
+        borderColor: [
+        'rgba(0, 0, 0, 1)',
+            ],
+        tension: 0.1
+        },
+        {
+        label: 'Mestrado',
+        data: data_mestrado,
+        fill: false,
+        borderColor: [
+        'rgba(255, 99, 132, 1)',
+            ],
+        tension: 0.1
+        },
+        {
+            label: 'Doutorado',
+            data: data_doutorado,
             fill: false,
             borderColor: [
-            'rgba(0, 0, 0, 1)',
+            'rgba(54, 162, 235)',
                 ],
-            tension: 0.1
-            },
-            {
-            label: 'Mestrado',
-            data: data_mestrado,
-            fill: false,
-            borderColor: [
-            'rgba(255, 99, 132, 1)',
-                ],
-            tension: 0.1
-            },
-            {
-                label: 'Doutorado',
-                data: data_doutorado,
-                fill: false,
-                borderColor: [
-                'rgba(54, 162, 235)',
-                    ],
-                tension: 0.4
-            },        
-        ]
+            tension: 0.4
+        },        
+    ]
     };
 
     const config_linha_cadastro = {
