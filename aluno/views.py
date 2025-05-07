@@ -39,7 +39,7 @@ def cadastra_aluno(request, aluno=None):
         form_titulacao = TitulacaoForm(instance=aluno.titulacao)
         form_probatorio = AlunoProbatorioForm(instance=Probatorio.objects.get(aluno=aluno.slug))
 
-        if request.method == "POST" and pagina == 'Atualizar Aluno':
+        if request.method == "POST" and pagina == 'Atualizar Discente':
             form_aluno = AlunoForm(request.POST, instance=aluno)
             form_endereco = EnderecoForm(request.POST, instance=aluno.endereco)
             form_graduacao = GraduacaoForm(request.POST, instance=aluno.graduacao)
