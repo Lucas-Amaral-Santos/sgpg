@@ -134,7 +134,7 @@ Detalhes Matrícula
                     </div>
                     {% if i.nota %}
                     <div class="col">
-                        <p><b>Nota:</b> {{i.nota}}</p>
+                        <p><b>Nota:</b> {{i.nota|floatformat:2}}</p>
                     </div>
                     {% endif %}
                     <div class="col">

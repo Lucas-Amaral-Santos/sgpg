@@ -20,7 +20,7 @@ def filtra_aluno(request):
     grafico_sexo = f.qs.values("sexo__sexo").annotate(nviews=Count('sexo')).filter(sexo__sexo__isnull=False)
     print(grafico_sexo)
     for i in grafico_sexo:  
-            i['cor'] = Sexo.objects.get(sexo=i['sexo__sexo']).cor
+        i['cor'] = Sexo.objects.get(sexo=i['sexo__sexo']).cor
          
 
     grafico_estado_civil = f.qs.values("estado_civil__estado_civil").annotate(nviews=Count('estado_civil')).filter(estado_civil__estado_civil__isnull=False)

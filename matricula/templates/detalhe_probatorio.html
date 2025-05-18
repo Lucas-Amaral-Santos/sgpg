@@ -116,7 +116,7 @@ Detalhes Probatório
 
             <div class="row">
                 <div class="col-6">
-                    Nota de Seleção: {{probatorio.nota_selecao}}
+                    Nota de Seleção: {{probatorio.nota_selecao|floatformat:2}}
                 </div>
                 <div class="col-6">
 
@@ -279,7 +279,7 @@ Detalhes Probatório
                     </div>
                     {% if i.nota %}
                     <div class="col">
-                        <p><b>Nota:</b> {{i.nota}}</p>
+                        <p><b>Nota:</b> {{i.nota|floatformat:2}}</p>
                     </div>
                     {% endif %}
                     <div class="col">

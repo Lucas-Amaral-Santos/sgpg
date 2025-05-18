@@ -211,7 +211,7 @@
                                         {{inscricoes.disciplina_ofertada.semestre}}/{{inscricoes.disciplina_ofertada.ano}}
                                     </td>
                                     <td>
-                                        {{inscricoes.nota.nota}}
+                                        {% if inscricoes.nota is None %} {% else %} {{inscricoes.nota|floatformat:2}} {% endif %}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -271,17 +271,39 @@
             </div>
 
             <div style="margin-top: 3px;">
-                <table>
+                <table class="">
                     <tr><td class="border text-center padding-2">
                         MEMBROS DA BANCA EXAMINADORA
-                    </td></tr>
+                    </td>
+                    </tr>
+                    <table>
+                        <tr>
+                        
+                        <td class="border"> 
+                            <table>
+                        <tr class="padding-2">
+                           
+                    {% for participante in matricula.matricula_trabalho_final.evento_trabalho_final.first.participantes_evento.all %}
+
+                            <td class="col-12">               
+                        {{participante.participante_professor}}                                            
+                            </td>
+                        {% endfor %}
+                    
+                    </tr>
+                            </table>
+                    </td>
+                                            
+                                            
+                    </tr>
+                    </table>
                 </table>
             </div>
 
             <div style="margin-top: 3px;">
                 <table>
                     <tr><td class="border padding-2">
-                        OBSERVAÇÕES: 
+                        OBSERVAÇÕES: {{matricula.matricula_trabalho_final.evento_trabalho_final.first.evento_obs}}
                     </td></tr>
                 </table>
             </div>
