@@ -177,7 +177,7 @@ class TrabalhoFinal(models.Model):
         super(TrabalhoFinal, self).save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.titulo) + " - " + str(self.matricula)
+        return str(self.matricula.numero)+' '+str(self.titulo)
 
     class Meta:
         verbose_name_plural = "Trabalhos Finais"
