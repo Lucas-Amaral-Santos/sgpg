@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from matricula.models import Matricula, Probatorio, TrabalhoFinal
 from aluno.models import Aluno
-from .filter import MatriculaFilter, AlunoFilter, ProbatorioFilter
+from relatorios.filter import MatriculaFilter, AlunoFilter, ProbatorioFilter
 from config.models import Sexo, EstadoCivil, Etnia, StatusOptions, Grau
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
