@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from matricula.models import Matricula, Probatorio
+from matricula.models import Matricula, Probatorio, TrabalhoFinal
 from aluno.models import Aluno
 from .filter import MatriculaFilter, AlunoFilter, ProbatorioFilter
 from config.models import Sexo, EstadoCivil, Etnia, StatusOptions, Grau
@@ -101,7 +101,7 @@ def export_cliente_csv(request, clientes):
         obj = [c.nome, c.cpf, c.sexo, c.nome_pai, c.nome_mae, c.naturalidade, c.nacionalidade, c.dt_nascimento, c.estado_civil, c.identidade, c.identidade_uf, c.identidade_orgao, c.sexo, c.email, c.etnia, c.portador_deficiencia, c.portador_deficiencia_qual, c.status, c.probatorio_aluno.probatorio, c.probatorio_aluno.data_inscricao, c.probatorio_aluno.linha_pesquisa, c.probatorio_aluno.grau]
         if(c.probatorio_aluno.matricula_probatorio.first() is not None):
             obj += [c.probatorio_aluno.matricula_probatorio.first().numero, c.probatorio_aluno.matricula_probatorio.first().curso, c.probatorio_aluno.matricula_probatorio.first().requisita_bolsa]
-            if(c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final is not None):
+            if(TrabalhoFinal.objects.filter(matricula=c.probatorio_aluno.matricula_probatorio.first()).first() is not None):
                 if(c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.orientacao_trabalho_final is not None):         
                     obj += [c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.titulo, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.nota, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.versao_final, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.dt_diploma, c.probatorio_aluno.matricula_probatorio.first().matricula_trabalho_final.diploma]       
                     aux = ''
