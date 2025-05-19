@@ -340,6 +340,7 @@ def cadastra_trabalho_final(request, matricula):
                 titulo = trabalho_final_form.cleaned_data['titulo'],
                 resumo = trabalho_final_form.cleaned_data['resumo'],
                 matricula = matricula,
+                probatorio = matricula.probatorio,
                 cadastrado_por = User.objects.get(pk=request.user.id),
             )
 
